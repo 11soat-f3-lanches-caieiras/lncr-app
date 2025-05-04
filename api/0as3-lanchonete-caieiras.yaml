@@ -1,0 +1,350 @@
+openapi: 3.0.1
+info:
+  title: Lanchonete Caieiras
+  description: 'Gerenciador de Pedidos, Ordem de Preparo, Produtos e Pagamento'
+  contact: 
+    email: titoparizotto@gmail.com
+    name: Tito de Morais Parizotto
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8080/lanchoneteCaieiras/v1'
+tags:
+  - name: CollectionOperations
+    description: Operações que utilizam arquétipo Coleções
+  - name: ManagedOperations
+    description: Operações que utilizam arquétipo Gerenciável
+paths:
+  '/customers':
+    post:
+      operationId: createCustomer
+      description: Criar um novo cliente
+      summary: Criar um novo cliente
+      tags:
+        - CollectionOperations
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCustomer'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedCustomer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      operationId: listCustomers
+      description: Listar cliente es
+      summary: Listar clientes com de filtros
+      tags:
+        - CollectionOperations
+      parameters:
+        - $ref: '#/components/parameters/Status'
+        - $ref: '#/components/parameters/LimitTemplate'
+      responses:
+        '200': 
+          $ref: '#/components/responses/ListCustomersOK'
+        '400': 
+           $ref: '#/components/responses/BadRequest'
+        '500': 
+           $ref: '#/components/responses/InternalServerError'
+  '/customer/{customerDocument}':
+    get:
+      operationId: getCustomer
+      description: Obter um cliente pelo documento
+      summary: Obter informações de um cliente pelo documento
+      tags:
+        - ManagedOperationsOperations
+      parameters:
+        $ref: '#/components/parameters/GetCustomerId'
+      requestBody: 
+      responses:
+        '200': 
+          $ref: '#/components/responses/GetCustomerOk'
+        '404': 
+          $ref: '#/components/responses/NotFound'
+        '500': 
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      operationId: getCustomer
+      description: Obter um cliente por id
+      summary: Obter informações de um cliente por id
+      tags:
+        - ManagedOperationsOperations
+      parameters:
+        $ref: '#/components/parameters/GetCustomerDocument'
+      requestBody: 
+      responses:
+        '200': 
+          $ref: '#/components/responses/GetCustomerOk'
+        '404': 
+          $ref: '#/components/responses/NotFound'
+        '500': 
+          $ref: '#/components/responses/InternalServerError'
+  '/foodItems':
+    post:
+      operationId: createFoodItem
+      description: Criar um novo item
+      summary: Cirar um novo Item de Alimentação
+      tags:
+        - CollectionOperations
+      requestBody:
+       $ref: '#/components/requestBodies/CreateFoodItem'
+      responses:
+        '201': 
+         $ref: '#/components/responses/CreateFoodItemCreated'
+        '400': 
+         $ref: '#/components/responses/BadRequest'
+        '500': 
+         $ref: '#/components/responses/InternalServerError'
+    get:
+      operationId: listFoodItems
+      description: Listar lista de Items de Alimentação
+      summary: Listar lista de Items de Alimentação com filtros
+      tags:
+        - CollectionOperations
+      parameters: 
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/category'
+        - $ref: '#/components/parameters/LimitTemplate'
+      responses:
+        '200':
+          $ref: '#/components/responses/CreateFoodItemCreated'
+        '400': 
+          $ref: '#/components/responses/BadRequest'
+        '500': 
+          $ref: '#/components/responses/InternalServerError'
+  '/foodItems/{foodItemsId}':
+    get: null
+    patch: null
+  '/orders':
+    post: null
+    get: null
+  '/order/{orderId}':
+    get: null
+    patch: null
+  '/kitchenOrders':
+    post: null
+    get: null
+  '/kitchenOrder/{kitchenOrderId}':
+    get: null
+    patch: null
+  '/notifications': null
+  '/charge': null
+  '/payment': null
+components:
+  requestBodies:
+    CreateCustomer:
+      description: Criar Cliente request body
+      content: null
+      application/json:
+        schema: null
+        $ref: '#/components/schemas/CreateCustomerType'
+        examples: null
+        201-Created:
+          summary: Cliente criado com sucesso
+          value: null
+          documentNumber: 11111111111
+          name: Jose da Silva
+          email: josedasilve@gmail.com
+        400-BadRequestWithoutDocumentNumber:
+          summary: Criação sem campo de CPF
+          value: null
+          name: Jose da Silva
+          email: josedasilve@gmail.com
+        500-InternalServerError:
+          summary: Internal server error
+          value: null
+          documentNumber: 11111111111
+          name: Jose da Silva*
+          email: josedasilve@gmail.com
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseTemplate'
+          examples:
+            RegistrationNumberWrongFormat:
+              summary: Erro de formato inválido
+              value:
+                _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                _timestamp: '2025-02-12T21:41:43.286Z'
+                _message: Formato inválido
+                _code: 400
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseTemplate'
+          examples:
+            RegistrationNumberWrongFormat:
+              summary: Erro Interno
+              value:
+                _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                _timestamp: '2025-02-12T21:41:43.286Z'
+                _message: Erro Interno
+                _code: 500
+    CreatedCustomer:
+      description: Cliente criado com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseTemplate'
+          examples:
+            Created:
+              value:
+                _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                _timestamp: '2021-02-11T21:41:43.286Z'
+                _message: Recurso criado com sucesso
+                _code: 201
+      headers:
+        Location:
+          $ref: '#/components/headers/Location'
+    
+    ListCustomersOK:
+      description: Lista de clientes retornadas com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListCustomersType
+           
+    GetCustomerOk:
+        ListCustomersOK:
+      description: Lista de clientes retornadas com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetCustomerType
+    
+    
+  parameters: 
+    GetCustomerDocument:
+      name: getCustomerId
+      in: path
+      required: true
+      description: Identificador único do cliente
+      schema:
+        $ref: '#components/schemas/CustomerDocumentType'
+    
+    Status:
+      name: 'status'
+      in: query
+      description: Status do registros a serem retornados
+      required: false
+      schema:
+        $ref: '#/components/schemas/StatusType'
+  
+    LimitTemplate:
+      name: '_limit'
+      in: query
+      description: Quantidade limite de registros retornados
+      required: false
+      schema:
+        $ref: '#/components/schema/LimitTemplate'
+      
+  headers:
+    Location:
+      description: URI do recuros
+      required: true
+      schema: null
+      type: string
+      format: uri
+  schemas:
+    CreateCustomerType:
+      allOf:
+        - $ref: '#/components/schemas/Customer'
+        - required:
+            - documentNumber
+            - name
+            - email
+
+    CustomerDocumentType:
+      description: User unique id
+      allOf:
+        - $ref: '#/components/schemas/Customer/properties/documentNumber'
+        - required:
+            - documentNumber
+            
+    GetCustomerType:
+      description: Informação de um cliente
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate
+        - $ref: '#/components/schemas/Customer
+    
+    ListCustomersType:
+      description: Lista de clientes
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate
+        - type: object
+      properties:
+        data:
+          type: array
+           items:
+             allOf:
+               - $ref: '#/components/schemas/Customer'
+               - type: object
+                   required:
+                     - documentNumber
+                     - name
+                     - email
+    
+    StatusType:
+      description:
+      type: string
+      enum:
+        - Activated
+        - Inactive
+    
+    
+    
+    LimitTemplate:
+      description: Número de registros p
+      type: integer
+      minimum: 1
+      exclusiveMinimum: false
+      maximum: 50
+      default: 10
+    
+    ResponseTemplate:
+      description: Modelo de dados para resposta 201 Created
+      type: object
+      properties:
+        _traceId:
+          type: string
+          description: UUID gerado para rastreabilidade da transação
+          required: true
+          format: uuid
+        _timestamp:
+          type: string
+          description: Timestamp da transação
+          required: true
+          format: date-time
+        _message:
+          type: string
+          description: Menssagem de resposta
+          required: true
+          maxLength: 50
+        _code:
+          type: integer
+          description: Código específico de resposta
+          required: true
+          minimum: 0
+    
+    Customer:
+      description: Modelo de dados do cliente
+      documentNumber:
+        description: Numero do documento do CPF do Cliente
+        type: string
+        minLength: 11
+        maxLength: 11
+      name:
+        description: Nome do Cliente
+        type: string
+        minLength: 1
+        maxLength: 255
+      email:
+        description: E-mail do Cliente
+        type: string
+        minLength: 1
+        maxLength: 255
