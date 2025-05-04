@@ -46,6 +46,7 @@ paths:
            $ref: '#/components/responses/BadRequest'
         '500': 
            $ref: '#/components/responses/InternalServerError'
+           
   '/customer/{customerDocument}':
     get:
       operationId: getCustomer
@@ -54,8 +55,7 @@ paths:
       tags:
         - ManagedOperationsOperations
       parameters:
-        $ref: '#/components/parameters/GetCustomerId'
-      requestBody: 
+        - $ref: '#/components/parameters/GetCustomerDocument'
       responses:
         '200': 
           $ref: '#/components/responses/GetCustomerOk'
@@ -65,13 +65,14 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     patch:
       operationId: getCustomer
-      description: Obter um cliente por id
-      summary: Obter informações de um cliente por id
+      description: Obter um cliente pelo documento
+      summary: Obter informações de um cliente pelo documento (CPF)
       tags:
         - ManagedOperationsOperations
       parameters:
-        $ref: '#/components/parameters/GetCustomerDocument'
-      requestBody: 
+        - $ref: '#/components/parameters/GetCustomerDocument'
+      requestBody:
+        $ref: '#/components/requestBodies/PartialUpdateCustomer'
       responses:
         '200': 
           $ref: '#/components/responses/GetCustomerOk'
@@ -79,83 +80,65 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500': 
           $ref: '#/components/responses/InternalServerError'
-  '/foodItems':
-    post:
-      operationId: createFoodItem
-      description: Criar um novo item
-      summary: Cirar um novo Item de Alimentação
-      tags:
-        - CollectionOperations
-      requestBody:
-       $ref: '#/components/requestBodies/CreateFoodItem'
-      responses:
-        '201': 
-         $ref: '#/components/responses/CreateFoodItemCreated'
-        '400': 
-         $ref: '#/components/responses/BadRequest'
-        '500': 
-         $ref: '#/components/responses/InternalServerError'
-    get:
-      operationId: listFoodItems
-      description: Listar lista de Items de Alimentação
-      summary: Listar lista de Items de Alimentação com filtros
-      tags:
-        - CollectionOperations
-      parameters: 
-        - $ref: '#/components/parameters/status'
-        - $ref: '#/components/parameters/category'
-        - $ref: '#/components/parameters/LimitTemplate'
-      responses:
-        '200':
-          $ref: '#/components/responses/CreateFoodItemCreated'
-        '400': 
-          $ref: '#/components/responses/BadRequest'
-        '500': 
-          $ref: '#/components/responses/InternalServerError'
-  '/foodItems/{foodItemsId}':
-    get: null
-    patch: null
-  '/orders':
-    post: null
-    get: null
-  '/order/{orderId}':
-    get: null
-    patch: null
-  '/kitchenOrders':
-    post: null
-    get: null
-  '/kitchenOrder/{kitchenOrderId}':
-    get: null
-    patch: null
-  '/notifications': null
-  '/charge': null
-  '/payment': null
+
 components:
   requestBodies:
     CreateCustomer:
       description: Criar Cliente request body
-      content: null
-      application/json:
-        schema: null
-        $ref: '#/components/schemas/CreateCustomerType'
-        examples: null
-        201-Created:
-          summary: Cliente criado com sucesso
-          value: null
-          documentNumber: 11111111111
-          name: Jose da Silva
-          email: josedasilve@gmail.com
-        400-BadRequestWithoutDocumentNumber:
-          summary: Criação sem campo de CPF
-          value: null
-          name: Jose da Silva
-          email: josedasilve@gmail.com
-        500-InternalServerError:
-          summary: Internal server error
-          value: null
-          documentNumber: 11111111111
-          name: Jose da Silva*
-          email: josedasilve@gmail.com
+      content: 
+        application/json:
+          schema: 
+            $ref: '#/components/schemas/CreateCustomerType'
+          examples: 
+            201-Created:
+              summary: Cliente criado com sucesso
+              value:
+                documentNumber: 11111111111
+                name: Jose da Silva
+                email: josedasilve@gmail.com
+                status: Activate
+            400-BadRequestWithoutDocumentNumber:
+              summary: Criação sem campo de CPF
+              value: 
+                name: Jose da Silva
+                email: josedasilve@gmail.com
+                status: Activate
+            500-InternalServerError:
+              summary: Internal server error
+              value:
+                documentNumber: 11111111111
+                name: Jose da Silva*
+                email: josedasilve@gmail.com
+                status: Activate
+    
+    PartialUpdateCustomer:
+      description: Atualizar informações parciais do cliente
+      content: 
+        application/json:
+          schema: 
+            $ref: '#/components/schemas/PartialUpdateCustomerType'
+          examples: 
+            201-Created:
+              summary: Cliente criado com sucesso
+              value: 
+                documentNumber: 11111111111
+                name: Jose da Silva
+                email: josedasilve@gmail.com
+                status: Activate
+            400-BadRequestWithoutDocumentNumber:
+              summary: Criação sem campo de CPF
+              value: 
+                name: Jose da Silva
+                email: josedasilve@gmail.com
+                status: Activate
+            500-InternalServerError:
+              summary: Internal server error
+              value: 
+                documentNumber: 11111111111
+                name: Jose da Silva*
+                email: josedasilve@gmail.com
+                status: Activate
+    
   responses:
     BadRequest:
       description: Bad Request
@@ -167,10 +150,12 @@ components:
             RegistrationNumberWrongFormat:
               summary: Erro de formato inválido
               value:
-                _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                _timestamp: '2025-02-12T21:41:43.286Z'
-                _message: Formato inválido
-                _code: 400
+                response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                  _message: Formato inválido
+                  _code: 400
+                
     InternalServerError:
       description: Internal Server Error
       content:
@@ -181,10 +166,28 @@ components:
             RegistrationNumberWrongFormat:
               summary: Erro Interno
               value:
-                _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                _timestamp: '2025-02-12T21:41:43.286Z'
-                _message: Erro Interno
-                _code: 500
+                response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                  _message: Erro Interno
+                  _code: 500
+    
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseTemplate'
+          examples:
+            RegistrationNumberWrongFormat:
+              summary: Erro Interno
+              value:
+                response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                  _message: Recurso não encontrado
+                  _code: 404
+
     CreatedCustomer:
       description: Cliente criado com sucesso
       content:
@@ -202,30 +205,39 @@ components:
         Location:
           $ref: '#/components/headers/Location'
     
+    GetCustomerOk:
+      description: Informação de cliente por documento (CPF)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetCustomerType'
+          exemples:
+            200:
+              summary: Cliente localizadocom sucesso
+              value: 
+                documentNumber: 11111111111
+                name: Jose da Silva
+                email: josedasilve@gmail.com
+                status: Activate
+    
     ListCustomersOK:
       description: Lista de clientes retornadas com sucesso.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ListCustomersType
-           
-    GetCustomerOk:
-        ListCustomersOK:
-      description: Lista de clientes retornadas com sucesso.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GetCustomerType
+            $ref: '#/components/schemas/ListCustomersType'
+            
+    
     
     
   parameters: 
     GetCustomerDocument:
-      name: getCustomerId
+      name: customerDocument
       in: path
       required: true
       description: Identificador único do cliente
       schema:
-        $ref: '#components/schemas/CustomerDocumentType'
+        $ref: '#/components/schemas/CustomerDocumentType'
     
     Status:
       name: 'status'
@@ -241,15 +253,16 @@ components:
       description: Quantidade limite de registros retornados
       required: false
       schema:
-        $ref: '#/components/schema/LimitTemplate'
+        $ref: '#/components/schemas/LimitTemplate'
       
   headers:
     Location:
       description: URI do recuros
       required: true
-      schema: null
-      type: string
-      format: uri
+      schema:
+        type: string
+        format: uri
+      
   schemas:
     CreateCustomerType:
       allOf:
@@ -258,6 +271,12 @@ components:
             - documentNumber
             - name
             - email
+            
+    PartialUpdateCustomerType:
+      description: Atualiza informações
+      allOf:
+        - $ref: '#/components/schemas/Customer'
+        
 
     CustomerDocumentType:
       description: User unique id
@@ -269,31 +288,36 @@ components:
     GetCustomerType:
       description: Informação de um cliente
       allOf:
-        - $ref: '#/components/schemas/ResponseTemplate
-        - $ref: '#/components/schemas/Customer
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/GetCustomerType'
+        
+      
+          
     
+
     ListCustomersType:
       description: Lista de clientes
       allOf:
-        - $ref: '#/components/schemas/ResponseTemplate
+        - $ref: '#/components/schemas/ResponseTemplate'
         - type: object
       properties:
         data:
           type: array
-           items:
-             allOf:
-               - $ref: '#/components/schemas/Customer'
-               - type: object
-                   required:
-                     - documentNumber
-                     - name
-                     - email
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Customer'
+              - type: object
+                required:
+                  - documentNumber
+                  - name
+                  - email
+
     
     StatusType:
-      description:
+      description: Informação de status do recurso 
       type: string
       enum:
-        - Activated
+        - Activate
         - Inactive
     
     
@@ -303,48 +327,55 @@ components:
       type: integer
       minimum: 1
       exclusiveMinimum: false
-      maximum: 50
+      maximum: 50 
       default: 10
     
     ResponseTemplate:
       description: Modelo de dados para resposta 201 Created
       type: object
       properties:
-        _traceId:
-          type: string
-          description: UUID gerado para rastreabilidade da transação
-          required: true
-          format: uuid
-        _timestamp:
-          type: string
-          description: Timestamp da transação
-          required: true
-          format: date-time
-        _message:
-          type: string
-          description: Menssagem de resposta
-          required: true
-          maxLength: 50
-        _code:
-          type: integer
-          description: Código específico de resposta
-          required: true
-          minimum: 0
+        response:
+          type: object
+          properties:
+            _traceId:
+              type: string
+              description: UUID gerado para rastreabilidade da transação
+              format: uuid
+            _timestamp:
+              type: string
+              description: Timestamp da transação
+              format: date-time
+            _message:
+              type: string
+              description: Menssagem de resposta
+              maxLength: 50
+            _code:
+              type: integer
+              description: Código específico de resposta
+              minimum: 0
     
     Customer:
       description: Modelo de dados do cliente
-      documentNumber:
-        description: Numero do documento do CPF do Cliente
-        type: string
-        minLength: 11
-        maxLength: 11
-      name:
-        description: Nome do Cliente
-        type: string
-        minLength: 1
-        maxLength: 255
-      email:
-        description: E-mail do Cliente
-        type: string
-        minLength: 1
-        maxLength: 255
+      type: object
+      properties:
+        documentNumber:
+          description: Numero do documento do CPF do Cliente
+          type: string
+          minLength: 11
+          maxLength: 11
+        name:
+          description: Nome do Cliente
+          type: string
+          minLength: 1
+          maxLength: 255
+        email:
+          description: E-mail do Cliente
+          type: string
+          minLength: 1
+          maxLength: 255    
+        status:
+          description: Status do Cliente
+          type: string
+          minLength: 1
+          maxLength: 20   
+            
