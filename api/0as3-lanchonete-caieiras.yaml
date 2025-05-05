@@ -28,11 +28,13 @@ paths:
           $ref: '#/components/responses/CreatedCustomer'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '409':
+           $ref: '#/components/responses/ConflictCustomer'
         '500':
           $ref: '#/components/responses/InternalServerError'
     get:
       operationId: listCustomers
-      description: Listar cliente es
+      description: Lista de clientes
       summary: Listar clientes com de filtros
       tags:
         - CollectionOperations
@@ -53,7 +55,7 @@ paths:
       description: Obter um cliente pelo documento
       summary: Obter informações de um cliente pelo documento
       tags:
-        - ManagedOperationsOperations
+        - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/GetCustomerDocument'
       responses:
@@ -68,7 +70,7 @@ paths:
       description: Obter um cliente pelo documento
       summary: Obter informações de um cliente pelo documento (CPF)
       tags:
-        - ManagedOperationsOperations
+        - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/GetCustomerDocument'
       requestBody:
@@ -90,26 +92,20 @@ components:
           schema: 
             $ref: '#/components/schemas/CreateCustomerType'
           examples: 
-            201-Created:
-              summary: Cliente criado com sucesso
+            201-CreateCustomer:
+              summary: Criação de Cliente
               value:
-                documentNumber: 11111111111
-                name: Jose da Silva
-                email: josedasilve@gmail.com
-                status: Activate
-            400-BadRequestWithoutDocumentNumber:
-              summary: Criação sem campo de CPF
-              value: 
-                name: Jose da Silva
-                email: josedasilve@gmail.com
-                status: Activate
-            500-InternalServerError:
-              summary: Internal server error
+                documentNumber: 1111111111
+                name: José da Silva
+                e-mail: josedasilva@email.com
+                
+            400-BadRequestWithoutFields:
+              summary: Campos faltantes
               value:
-                documentNumber: 11111111111
-                name: Jose da Silva*
-                email: josedasilve@gmail.com
-                status: Activate
+                name: José da Silva
+                e-mail: josedasilva@email.com
+            
+           
     
     PartialUpdateCustomer:
       description: Atualizar informações parciais do cliente
@@ -121,20 +117,20 @@ components:
             201-Created:
               summary: Cliente criado com sucesso
               value: 
-                documentNumber: 11111111111
+                documentNumber: "11111111111"
                 name: Jose da Silva
                 email: josedasilve@gmail.com
                 status: Activate
             400-BadRequestWithoutDocumentNumber:
               summary: Criação sem campo de CPF
-              value: 
+              value:
                 name: Jose da Silva
                 email: josedasilve@gmail.com
                 status: Activate
             500-InternalServerError:
               summary: Internal server error
               value: 
-                documentNumber: 11111111111
+                documentNumber: "11111111111"
                 name: Jose da Silva*
                 email: josedasilve@gmail.com
                 status: Activate
@@ -153,9 +149,22 @@ components:
                 response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2025-02-12T21:41:43.286Z'
-                  _message: Formato inválido
-                  _code: 400
-                
+    
+    ConflictCustomer:
+      description: Conflict Customer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseTemplate'
+          examples:
+            RegistrationNumberWrongFormat:
+              summary: Documento já utilizado 
+              value:
+                response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                  _message: Documento informado já foi utilizado.
+                  
     InternalServerError:
       description: Internal Server Error
       content:
@@ -169,8 +178,7 @@ components:
                 response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2025-02-12T21:41:43.286Z'
-                  _message: Erro Interno
-                  _code: 500
+                  
     
     NotFound:
       description: Not Found
@@ -180,13 +188,12 @@ components:
             $ref: '#/components/schemas/ResponseTemplate'
           examples:
             RegistrationNumberWrongFormat:
-              summary: Erro Interno
+              summary: Recurso não encontrado
               value:
                 response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2025-02-12T21:41:43.286Z'
-                  _message: Recurso não encontrado
-                  _code: 404
+                  
 
     CreatedCustomer:
       description: Cliente criado com sucesso
@@ -195,12 +202,14 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseTemplate'
           examples:
-            Created:
+            201-Created:
+              summary: Cliente criado com sucesso
               value:
-                _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                _timestamp: '2021-02-11T21:41:43.286Z'
-                _message: Recurso criado com sucesso
-                _code: 201
+                response:
+                    _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                    _timestamp: '2025-02-12T21:41:43.286Z'
+                customerId: 1    
+                status: Activate
       headers:
         Location:
           $ref: '#/components/headers/Location'
@@ -211,11 +220,15 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/GetCustomerType'
-          exemples:
-            200:
+          examples:
+            200-GetCustomerOk:
               summary: Cliente localizadocom sucesso
-              value: 
-                documentNumber: 11111111111
+              value:
+                response:
+                    _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                    _timestamp: '2021-02-11T21:41:43.286Z'
+                customerId: 1
+                documentNumber: "11111111111"
                 name: Jose da Silva
                 email: josedasilve@gmail.com
                 status: Activate
@@ -266,7 +279,7 @@ components:
   schemas:
     CreateCustomerType:
       allOf:
-        - $ref: '#/components/schemas/Customer'
+        - $ref: '#/components/schemas/CustomerTemplate'
         - required:
             - documentNumber
             - name
@@ -275,13 +288,13 @@ components:
     PartialUpdateCustomerType:
       description: Atualiza informações
       allOf:
-        - $ref: '#/components/schemas/Customer'
+        - $ref: '#/components/schemas/CustomerTemplate'
         
 
     CustomerDocumentType:
       description: User unique id
       allOf:
-        - $ref: '#/components/schemas/Customer/properties/documentNumber'
+        - $ref: '#/components/schemas/CustomerTemplate/properties/documentNumber'
         - required:
             - documentNumber
             
@@ -289,7 +302,7 @@ components:
       description: Informação de um cliente
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/GetCustomerType'
+        - $ref: '#/components/schemas/CustomerTemplate'
         
       
           
@@ -305,7 +318,7 @@ components:
           type: array
           items:
             allOf:
-              - $ref: '#/components/schemas/Customer'
+              - $ref: '#/components/schemas/CustomerTemplate'
               - type: object
                 required:
                   - documentNumber
@@ -331,7 +344,7 @@ components:
       default: 10
     
     ResponseTemplate:
-      description: Modelo de dados para resposta 201 Created
+      description: Modelo de dados para responses
       type: object
       properties:
         response:
@@ -354,10 +367,17 @@ components:
               description: Código específico de resposta
               minimum: 0
     
-    Customer:
+    CustomerTemplate:
       description: Modelo de dados do cliente
       type: object
       properties:
+        customerId:
+          description: Id único do cliente
+          type: integer
+          readOnly: true
+          minimum: 1
+          maximum: 9999
+          format: int32
         documentNumber:
           description: Numero do documento do CPF do Cliente
           type: string
