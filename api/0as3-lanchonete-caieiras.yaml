@@ -153,7 +153,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
       
-  /CustomerOrders:
+  /customerOrders:
     post:
       operationId: createCustomerOrder
       description: Criar um novo pedido do Cliente
