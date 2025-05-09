@@ -13,9 +13,8 @@ tags:
     description: Operações que utilizam arquetipo Colecoes
   - name: ManagedOperations
     description: Operações que utilizam arquetipo Gerenciavel
-
 paths:
-  '/customers':
+  /customers:
     post:
       operationId: createCustomer
       description: Criar um novo cliente
@@ -49,7 +48,6 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-          
   '/customer/{customerDocument}':
     get:
       operationId: getCustomer
@@ -101,9 +99,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
-          $ref: '#/components/responses/InternalServerError'  
-      
-  '/foodItems':
+          $ref: '#/components/responses/InternalServerError'
+  /foodItems:
     post:
       operationId: createFoodItem
       description: Criar um novo item
@@ -136,8 +133,7 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
-          $ref: '#/components/responses/InternalServerError'  
-  
+          $ref: '#/components/responses/InternalServerError'
   '/foodItems/{id}':
     get:
       operationId: getFoodItem
@@ -161,7 +157,7 @@ paths:
       security:
         - basicAuth: []
       tags:
-      - ManagedOperations
+        - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/id'
       requestBody:
@@ -190,8 +186,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-
-  '/customerOrders':
+  /customerOrders:
     post:
       operationId: createCustomerOrder
       description: Criar um novo pedido do Cliente
@@ -208,21 +203,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
     get:
-        operationId: getListCustomerOrders
-        description: Buscar Lista de Pedidos de Clientes
-        summary: Buscar Lista de Pedidos de Clientes
-        tags:
-          - CollectionOperations
-        parameters:
-          - $ref: '#/components/parameters/CustomerOrderStatus'
-          - $ref: '#/components/parameters/CustomerDocumentNumber'
-        responses:
-          '200':
-            $ref: '#/components/responses/ListCustomerOrders'
-          '400':
-            $ref: '#/components/responses/BadRequest'
-          '500':
-            $ref: '#/components/responses/InternalServerError'
+      operationId: getListCustomerOrders
+      description: Buscar Lista de Pedidos de Clientes
+      summary: Buscar Lista de Pedidos de Clientes
+      tags:
+        - CollectionOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerOrderStatus'
+        - $ref: '#/components/parameters/CustomerDocumentNumber'
+      responses:
+        '200':
+          $ref: '#/components/responses/ListCustomerOrders'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   '/customerOrder/{id}':
     get:
       operationId: getCustomerOrder
@@ -239,7 +234,6 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-    
   '/customerOrder/{id}/{newStatus}':
     patch:
       operationId: customerOrderUpdateStatus
@@ -257,9 +251,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-    
-    
-  '/kitchenOrders':
+  /kitchenOrders:
     post:
       operationId: createKitchenOrder
       description: Criar uma nova ordem de preparo
@@ -291,7 +283,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-    
   '/kitchenOrders/{id}':
     get:
       operationId: getKitchenOrder
@@ -308,7 +299,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  
   '/kitchenOrders/{id}/{newStatus}':
     patch:
       operationId: kitchenOrderUpdateStatus
@@ -325,14 +315,49 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
-          $ref: '#/components/responses/InternalServerError'  
-  
-  
-  
-  
-  
+          $ref: '#/components/responses/InternalServerError'
+  /customerOrderPayments:
+    post:
+      operationId: customerOrderPayments
+      description: Recebe informação que o pagamento do pedido do cliente foi realizado
+      summary: Recebe informação que o pagamento do pedido do cliente foi realizado
+      tags:
+        - CollectionOperations
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCustomerOrderPayments'
+      responses:
+        '200':
+          $ref: '#/components/responses/CreatedCustomerOrderPayments'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 components:
   requestBodies:
+    CreateCustomerOrderPayments:
+      description: Recebimento do pagamento de um pedido do cliente
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateCustomerOrderPaymentType'
+          examples:
+            CreateCustomerOrderPayment:
+              summary: Pagamento do pedido do cliente recebido com sucesso
+              value:
+                action: null
+                api_version: payment.updated
+                data:
+                  id: 1
+                date_created: '2021-11-01T02:02:02Z'
+                id: 1
+                live_mode: false
+                type: payment
+                user_id: 2425846779
+            BadRequestWithoutFields:
+              summary: Campos faltantes
+              value:
+                name: José da Silva
+                e-mail: josedasilva@email.com
     CreateCustomer:
       description: Criar Cliente request body
       content:
@@ -366,7 +391,8 @@ components:
                 category: Sandwich
                 price: 29.99
                 images:
-                  image: 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
+                  - _data: iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxEAAAsRAX9kX5EAAAGHaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49J++7vycgaWQ9J1c1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCc/Pg0KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLy
+                  - _data: iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxEAAAsRAX9kX5EAAAGHaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49J++7vycgaWQ9J1c1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCc/Pg0KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLy
             BadRequestWithoutFields:
               summary: Campos faltantes
               value:
@@ -390,48 +416,48 @@ components:
                 order:
                   foodItems:
                     - id: 1
-                      name: "X-Salada"
-                      category: "Sandwich"
-                      price: 29.90
-                      notes: "Ponto da Carne: Ao ponto"
+                      name: X-Salada
+                      category: Sandwich
+                      price: 29.9
+                      notes: 'Ponto da Carne: Ao ponto'
                     - id: 2
-                      name: "Coca-cola zero"
-                      category: "Drink"
+                      name: Coca-cola zero
+                      category: Drink
                       price: 9.99
-                      notes: "Sem gelo"
+                      notes: Sem gelo
                     - id: 3
-                      name: "Batata-frita"
-                      category: "Side"
+                      name: Batata-frita
+                      category: Side
                       price: 5.99
                     - id: 4
-                      name: "Sorvete de Chocolate"
-                      category: "Dessert"
+                      name: Sorvete de Chocolate
+                      category: Dessert
                       price: 9.99
-                      notes: "Trocar amendoin por flocos de arroz"
+                      notes: Trocar amendoin por flocos de arroz
             CreateCustomerOrderWithoutIdentification:
               summary: Novo pedido do Cliente que se não identificou
               value:
                 order:
                   foodItems:
                     - id: 1
-                      name: "X-Salada"
-                      category: "Sandwich"
-                      price: 29.90
-                      notes: "Ponto da Carne: Ao ponto"
+                      name: X-Salada
+                      category: Sandwich
+                      price: 29.9
+                      notes: 'Ponto da Carne: Ao ponto'
                     - id: 2
-                      name: "Coca-cola zero"
-                      category: "Drink"
+                      name: Coca-cola zero
+                      category: Drink
                       price: 9.99
-                      notes: "Sem gelo"
+                      notes: Sem gelo
                     - id: 3
-                      name: "Batata-frita"
-                      category: "Side"
+                      name: Batata-frita
+                      category: Side
                       price: 5.99
                     - id: 4
-                      name: "Sorvete de Chocolate"
-                      category: "Dessert"
+                      name: Sorvete de Chocolate
+                      category: Dessert
                       price: 9.99
-                      notes: "Trocar amendoin por flocos de arroz"
+                      notes: Trocar amendoin por flocos de arroz
     CreateKitchenOrder:
       description: Ordem de preparo request body
       content:
@@ -445,21 +471,21 @@ components:
                 customerOrder:
                   id: 1
                 foodItems:
-                    - id: 1
-                      name: "X-Salada"
-                      category: "Sandwich"
-                      notes: "Ponto da Carne: Ao ponto"
-                    - id: 2
-                      name: "Coca-cola zero"
-                      category: "Drink"
-                      notes: "Sem gelo"
-                    - id: 3
-                      name: "Batata-frita"
-                      category: "Side"
-                    - id: 4
-                      name: "Sorvete de Chocolate"
-                      category: "Dessert"
-                      notes: "Trocar amendoin por flocos de arroz"
+                  - id: 1
+                    name: X-Salada
+                    category: Sandwich
+                    notes: 'Ponto da Carne: Ao ponto'
+                  - id: 2
+                    name: Coca-cola zero
+                    category: Drink
+                    notes: Sem gelo
+                  - id: 3
+                    name: Batata-frita
+                    category: Side
+                  - id: 4
+                    name: Sorvete de Chocolate
+                    category: Dessert
+                    notes: Trocar amendoin por flocos de arroz
     PartialUpdateCustomer:
       description: Atualizar informacoes parciais do cliente
       content:
@@ -499,8 +525,25 @@ components:
               value:
                 description: 'Pão de Hamburger com gergelim, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup.'
                 price: 19.99
-  
   responses:
+    CreatedCustomerOrderPayments:
+      description: Resposta para pagamentos recebidos para o pedido do cleinte
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreatedCustomerOrderPaymentType'
+          examples:
+            CreatedCustomerOrderPayment:
+              summary: Pagamento de um pedido de um cliente recebido.
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                order:
+                  id: 1
+                payment:
+                  id: 1
+                  status: Paied
     BadRequest:
       description: Bad Request
       content:
@@ -528,7 +571,6 @@ components:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2025-02-12T21:41:43.286Z'
                   _message: Documento informado já foi utilizado.
-    
     CreatedCustomer:
       description: Cliente criado com sucesso
       content:
@@ -546,7 +588,6 @@ components:
       headers:
         Location:
           $ref: '#/components/headers/Location'
-          
     CreatedCustomerOrder:
       description: Pedido do cliente criado com sucesso.
       content:
@@ -562,12 +603,15 @@ components:
                   _timestamp: '2025-02-12T21:41:43.286Z'
                 order:
                   id: 1
-                  totalCost: 55.87
                   status: Pending Payment
+                payment:
+                  id: c1a59e1b-68a9-402d-a8b5-9f091d720338
+                  qr_data: 00020101021243650016COM.MERCADOLIBRE020130636c1a59e1b-68a9-402d-a8b5-9f091d7203385204000053039865802BR5909Test Test6009SAO PAULO62070503***6304A003
+                  total_amount: 29.9
+                  status: Pending
       headers:
         Location:
           $ref: '#/components/headers/Location'
-    
     CreatedKitchenOrder:
       description: Ordem de preparo criada com sucesso.
       content:
@@ -584,27 +628,6 @@ components:
                 order:
                   id: 1
                   status: Recived
-      headers:
-        Location:
-          $ref: '#/components/headers/Location'
-    
-    UpdateCustomerOrder:
-      description: Pedido do cliente criado com sucesso.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UpdatedCustomerOrderType'
-          examples:
-            UpdatedCustomerOrder:
-              summary: Pedido do Cliente atualizado
-              value:
-                _response:
-                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                  _timestamp: '2025-02-12T21:41:43.286Z'
-                order:
-                  id: 1
-                  totalCost: 55.87
-                  status: Pending Payment
       headers:
         Location:
           $ref: '#/components/headers/Location'
@@ -625,14 +648,17 @@ components:
                 images:
                   items:
                     - imageId: 1
+                      _data: XXXXX1 #base64
                     - imageId: 2
+                      _data: XXXXX1
                     - imageId: 3
+                      _data: XXXXX1
                     - imageId: 4
+                      _data: XXXXX1
                     - imageId: 5
       headers:
         Location:
           $ref: '#/components/headers/Location'
-    
     DeletedResponse:
       description: Response padrão de Exclusão
       content:
@@ -642,11 +668,10 @@ components:
           examples:
             Deleted:
               summary: Registro deletado com sucesso.
-              value: 
+              value:
                 _response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2025-02-12T21:41:43.286Z'
-    
     PartialUpdateResponse:
       description: Response padrão de atualização parcial
       content:
@@ -656,11 +681,10 @@ components:
           examples:
             PartialUpdated:
               summary: Registro atualizado com sucesso.
-              value: 
+              value:
                 _response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                  _timestamp: '2025-02-12T21:41:43.286Z'                
-      
+                  _timestamp: '2025-02-12T21:41:43.286Z'
     GetCustomer:
       description: Informação de cliente por documento (CPF)
       content:
@@ -678,7 +702,6 @@ components:
                 documentNumber: '11111111111'
                 name: José da Silva
                 email: josedasilve@gmail.com
-    
     GetCustomerOrder:
       description: Informação de um pedido de um cliente
       content:
@@ -694,21 +717,21 @@ components:
                   _timestamp: '2021-02-11T21:41:43.286Z'
                 customer:
                   id: 1
-                  documentNumber: "11111111111"
-                  name: "José da Silva"
-                  email: "josedasilva@email.com.br"
+                  documentNumber: '11111111111'
+                  name: José da Silva
+                  email: josedasilva@email.com.br
                 order:
                   id: 1
                   foodItems:
                     - id: 1
                       name: X-Salada
-                      notes: "Ponto da Carne: Ao ponto"
-                      price:  29.90
+                      notes: 'Ponto da Carne: Ao ponto'
+                      price: 29.9
                     - id: 2
                       name: Coca Zero
-                      notes: "Sem Gelo"
-                      price:  9.90
-                  totalCost: 39.80
+                      notes: Sem Gelo
+                      price: 9.9
+                  totalCost: 39.8
                   status: Preparing
             GetCustomerOrderWithoutIdentification:
               summary: Pedido de cliente sem identificação
@@ -716,19 +739,19 @@ components:
                 _response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2021-02-11T21:41:43.286Z'
-                customer:
+                customer: null
                 order:
                   id: 1
                   foodItems:
                     - id: 1
                       name: X-Salada
-                      notes: "Ponto da Carne: Ao ponto"
-                      price:  29.90
+                      notes: 'Ponto da Carne: Ao ponto'
+                      price: 29.9
                     - id: 2
                       name: Coca Zero
-                      notes: "Sem Gelo"
-                      price:  9.90
-                  totalCost: 39.80
+                      notes: Sem Gelo
+                      price: 9.9
+                  totalCost: 39.8
                   status: Preparing
     GetKitchenOrder:
       description: Informação de uma ordem de pedido
@@ -751,13 +774,12 @@ components:
                     - id: 1
                       name: X-Salada
                       category: Sandwich
-                      notes: "Ponto da Carne: Ao ponto"
+                      notes: 'Ponto da Carne: Ao ponto'
                     - id: 2
                       name: Coca Zero
                       categoty: Drink
-                      notes: "Sem Gelo"
+                      notes: Sem Gelo
                   status: Preparing
-
     GetFoodItem:
       description: Informação do Item de Alimentacao
       content:
@@ -776,7 +798,6 @@ components:
                 description: 'Pão de Hamburger, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup.'
                 category: Sandwich
                 price: 29.99
-                
     InternalServerError:
       description: Internal Server Error
       content:
@@ -796,32 +817,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ListCustomersType'
-    
     ListCustomerOrders:
       description: Lista de pedido de clientes
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ListCustomerOrdersType'
-            
     ListFoodItems:
       description: Lista de Items de Alimentacao retornados com sucesso.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ListFoodItemsType'
-    
     ListKitchenOrders:
       description: Lista de ordens de preparo
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ListKitchenOrdersType'
-    
-            
     NoContent:
       description: No Content
-    
     NotFound:
       description: Not Found
       content:
@@ -845,21 +860,18 @@ components:
       required: false
       schema:
         $ref: '#/components/schemas/CustomerTemplate/properties/documentNumber'
-        
     CustomerId:
       name: customerId
       in: query
       required: false
       schema:
         $ref: '#/components/schemas/CustomerTemplate/properties/customerId'
-    
     CustomerOrderId:
       name: id
       in: path
       required: true
       schema:
         $ref: '#/components/schemas/OrderTemplate/properties/id'
-    
     CustomerOrderNewStatus:
       description: Parâmetro para atualizar status do pedido do cliente
       name: newStatus
@@ -867,7 +879,6 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/CustomerOrderTemplate/properties/order/properties/status'
-    
     KitchenOrderNewStatus:
       description: Parâmetro para atualizar status de uma odem de pedido
       name: newStatus
@@ -875,35 +886,30 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/KitchenOrderTemplate/properties/order/properties/status'
-    
     KitchenCustomerOrderId:
       name: customerOrderId
       in: query
       required: true
       schema:
         $ref: '#/components/schemas/OrderTemplate/properties/id'
-    
     KitchenOrderId:
       name: id
       in: path
       required: true
       schema:
         $ref: '#/components/schemas/OrderTemplate/properties/id'
-    
     KitchenOrderStatus:
       name: status
       in: query
       required: true
       schema:
         $ref: '#/components/schemas/KitchenOrderTemplate/properties/order/properties/status'
-        
     CustomerOrderStatus:
       name: status
       in: query
       required: false
       schema:
         $ref: '#/components/schemas/CustomerOrderTemplate/properties/order/properties/status'
-    
     CustomerStatus:
       name: customerStatus
       in: query
@@ -911,7 +917,6 @@ components:
       required: false
       schema:
         type: boolean
-        
     CustomerDocument:
       name: customerDocument
       in: path
@@ -919,7 +924,6 @@ components:
       description: Identificador único do cliente
       schema:
         $ref: '#/components/schemas/CustomerTemplate/properties/documentNumber'
-        
     id:
       name: id
       in: path
@@ -927,7 +931,6 @@ components:
       description: Identificador único do Item de Alimentacao
       schema:
         $ref: '#/components/schemas/FoodItemTemplate/properties/id'
-      
     FoodStatus:
       name: foodStatus
       in: query
@@ -943,7 +946,6 @@ components:
       schema:
         allOf:
           - $ref: '#/components/schemas/FoodItemTemplate/properties/category'
-
     Limit:
       name: _limit
       in: query
@@ -959,6 +961,22 @@ components:
         type: string
         format: uri
   schemas:
+    CreatedCustomerOrderPaymentType:
+      description: Resposta para o recebimento do pagamento de um pedido do cliente
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/CustomerOrderPaymentTemplate'
+    CreateCustomerOrderPaymentType:
+      allOf:
+        - $ref: '#/components/schemas/CustomerOrderPaymentTemplate'
+        - required:
+            - action
+            - api_version
+            - data
+            - date_created
+            - live_mode
+            - type
+            - user_id
     CreateCustomerType:
       allOf:
         - $ref: '#/components/schemas/CustomerTemplate'
@@ -969,7 +987,6 @@ components:
     CreateCustomerOrderType:
       allOf:
         - $ref: '#/components/schemas/CustomerOrderTemplate'
-        
     CreateFoodItemType:
       allOf:
         - $ref: '#/components/schemas/FoodItemTemplate'
@@ -978,75 +995,58 @@ components:
             - description
             - category
             - price
-    
     CreateKitchenOrderType:
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/KitchenOrderTemplate'
-        
     CreatedCustomerType:
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/CustomerTemplate'
         - required:
             - customerId
-
     CreatedCustomerOrderType:
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/CustomerOrderTemplate'
-    
-    UpdatedCustomerOrderType:
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/CustomerOrderTemplate'
-    
     CreatedKitchenOrderType:
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/KitchenOrderTemplate'
-    
     CreatedFoodType:
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/FoodItemTemplate'
         - required:
             - id
-    
     PartialUpdateCustomerType:
       description: Atualiza informacoes parciais do Cliente
       allOf:
         - $ref: '#/components/schemas/CustomerTemplate'
-    
     PartialUpdateFoodItemType:
       description: Atualiza informacoes parciais do Item de Alimentacao
       allOf:
         - $ref: '#/components/schemas/FoodItemTemplate'
-    
     GetCustomerType:
       description: Informação de um cliente
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/CustomerTemplate'
-    
     GetFoodItemType:
       description: Informação de um cliente
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/FoodItemTemplate'
-    
     GetCustomerOrderType:
       description: Informação de um pedido de cliente
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/CustomerOrderTemplate'
-    
     GetKitchenOrderType:
       description: Informação de um pedido de cliente
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/KitchenOrderTemplate'
-    
     ListCustomersType:
       description: Lista de clientes
       allOf:
@@ -1076,10 +1076,8 @@ components:
               - $ref: '#/components/schemas/KitchenOrderTemplate'
               - type: object
                 required:
-                  - customer
-                      id
+                  - customer id
                   - foodItems
-    
     ListFoodItemsType:
       description: Lista de Items de Alimentacao
       allOf:
@@ -1098,7 +1096,6 @@ components:
                   - description
                   - category
                   - price
-    
     ListCustomerOrdersType:
       description: Tipo de lista de pedido de clientes
       allOf:
@@ -1112,10 +1109,8 @@ components:
               - $ref: '#/components/schemas/CustomerOrderTemplate'
               - type: object
                 required:
-                  - customer
-                    id
-                  - foodItems
-                  
+                  - order
+                  - payment
     LimitTemplate:
       description: Número de registros a serem retornados em uma consulta
       type: integer
@@ -1123,7 +1118,6 @@ components:
       exclusiveMinimum: false
       maximum: 50
       default: 10
-    
     CustomerOrderTemplate:
       description: Modelo de dados do Pedido do Cliente
       type: object
@@ -1137,20 +1131,60 @@ components:
           allOf:
             - $ref: '#/components/schemas/OrderTemplate'
           properties:
-            totalCost:
-              description: Valor total de custo do Pedido do Cliente
-              type: number
-              format: double
             status:
               type: string
               enum:
-                - Pending Payment
                 - Received
                 - Preparing
                 - Ready
                 - Finished
-          
-      
+        payment:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/CreateCustomerOrderPaymentType'
+    CustomerOrderPaymentTemplate:
+      description: Modelo de dados de pagamento do pedido de um cliente
+      type: object
+      properties:
+        action: # Objeto do Mercado Pago
+          type: string
+        api_version: # Objeto do Mercado Pago
+          type: string
+        date_created: # Objeto do Mercado Pago
+          type: string
+          format: date-time
+        id: # Reutilizado na integração com mercado pago
+          description: Id único da cobrança
+          type: number
+          format: int32
+          readOnly: true
+        live_mode: # Objeto do Mercado Pago
+          type: boolean
+        qr_data: # Objeto do Mercado Pago
+          description: Texto do QR Code de pagamento
+          type: string
+          readOnly: true
+        status:
+          description: Status do pagamento
+          type: string
+          enum:
+            - Pending
+            - Paied
+            - Canceled
+        total_amount:
+          description: Valor total de custo do Pedido do Cliente
+          type: number
+          format: double
+          readOnly: true
+        trackingid: # Objeto do Mercado Pago
+          description: Id de rastreio da cobrança
+          type: string
+          format: uuid
+          readOnly: true
+        type: # Objeto do Mercado Pago
+          type: string
+        user_id: # Objeto do Mercado Pago
+          type: integer
     KitchenOrderTemplate:
       description: Modelo de dados do Ordem de Preparo
       type: object
@@ -1161,19 +1195,14 @@ components:
             - $ref: '#/components/schemas/OrderTemplate/properties/id'
         order:
           allOf:
-          - $ref: '#/components/schemas/OrderTemplate'
-          
+            - $ref: '#/components/schemas/OrderTemplate'
           properties:
             status:
               type: string
               enum:
-              - Received
-              - Prepering
-              - Finished      
-         
-      
-      
-      
+                - Received
+                - Prepering
+                - Finished
     CustomerTemplate:
       description: Modelo de dados do cliente
       properties:
@@ -1200,7 +1229,6 @@ components:
           pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' # Regex para validação de e-mail
           minLength: 1
           maxLength: 255
-  
     ImageTemplate:
       description: Modelo de dados de imagem do Item de Alimentacao
       type: object
@@ -1211,11 +1239,10 @@ components:
           format: int32
           minimum: 1
           maximum: 99999
-        _content:
+        _data:
           description: Imagem do Item de Alimentacao em base64
           type: string
           format: base64
-    
     FoodItemTemplate:
       description: Modelo de dados do Item de Alimentacao
       properties:
@@ -1252,7 +1279,6 @@ components:
           items:
             allOf:
               - $ref: '#/components/schemas/ImageTemplate'
-    
     OrderTemplate:
       description: Modelo de Dados base de uma ordem genérica
       type: object
@@ -1279,7 +1305,6 @@ components:
                 description: Observações do Item de Alimentacao
                 type: string
                 maxLength: 256
-              
     ResponseTemplate:
       description: Modelo de dados para responses
       type: object
