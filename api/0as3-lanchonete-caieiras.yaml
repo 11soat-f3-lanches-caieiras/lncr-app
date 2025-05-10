@@ -100,7 +100,105 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /customerOrders:
+    post:
+      operationId: createCustomerOrder
+      description: Criar um novo pedido do Cliente
+      summary: Criar um novo pedido do Cliente
+      tags:
+        - CollectionOperations
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCustomerOrder'
+      responses:
+        '200':
+          $ref: '#/components/responses/CreatedCustomerOrder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      operationId: getListCustomerOrders
+      description: Buscar Lista de Pedidos de Clientes
+      summary: Buscar Lista de Pedidos de Clientes
+      tags:
+        - CollectionOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerOrderStatus'
+        - $ref: '#/components/parameters/CustomerDocumentNumber'
+      responses:
+        '200':
+          $ref: '#/components/responses/ListCustomerOrders'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/customerOrder/{id}':
+    get:
+      operationId: getCustomerOrder
+      description: Buscar Pedido do cliente por id
+      summary: Buscar Pedido do cliente por id
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerOrderId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetCustomerOrder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /customerOrder/payment:
+    post:
+      operationId: customerOrderPayments
+      description: Recebe informação que o pagamento do pedido do cliente foi realizado
+      summary: Recebe informação que o pagamento do pedido do cliente foi realizado
+      tags:
+        - CollectionOperations
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCustomerOrderPayments'
+      responses:
+        '200':
+          $ref: '#/components/responses/CreatedCustomerOrderPayments'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    parameters: []
+  '/customerOrder/{id}/{newStatus}':
+    patch:
+      operationId: customerOrderUpdateStatus
+      description: Atualizar status do pedido do cliente
+      summary: Atualizar status do pedido do cliente
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerOrderId'
+        - $ref: '#/components/parameters/CustomerOrderNewStatus'
+      responses:
+        '200':
+          $ref: '#/components/responses/PartialUpdateResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /foodItems:
+    get:
+      operationId: getListFoodItem
+      description: Buscar Lista de Items de Alimentacao
+      summary: Buscar Lista de Items de Alimentacao
+      tags:
+        - CollectionOperations
+      parameters:
+        - $ref: '#/components/parameters/FoodStatus'
+        - $ref: '#/components/parameters/FoodCategory'
+      responses:
+        '200':
+          $ref: '#/components/responses/ListFoodItems'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     post:
       operationId: createFoodItem
       description: Criar um novo item
@@ -114,22 +212,6 @@ paths:
       responses:
         '201':
           $ref: '#/components/responses/CreatedFoodItem'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-    get:
-      operationId: getListFoodItem
-      description: Buscar Lista de Items de Alimentacao
-      summary: Buscar Lista de Items de Alimentacao
-      tags:
-        - CollectionOperations
-      parameters:
-        - $ref: '#/components/parameters/FoodStatus'
-        - $ref: '#/components/parameters/FoodCategory'
-      responses:
-        '200':
-          $ref: '#/components/responses/ListFoodItems'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -182,71 +264,6 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/DeletedResponse'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  /customerOrders:
-    post:
-      operationId: createCustomerOrder
-      description: Criar um novo pedido do Cliente
-      summary: Criar um novo pedido do Cliente
-      tags:
-        - CollectionOperations
-      requestBody:
-        $ref: '#/components/requestBodies/CreateCustomerOrder'
-      responses:
-        '200':
-          $ref: '#/components/responses/CreatedCustomerOrder'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-    get:
-      operationId: getListCustomerOrders
-      description: Buscar Lista de Pedidos de Clientes
-      summary: Buscar Lista de Pedidos de Clientes
-      tags:
-        - CollectionOperations
-      parameters:
-        - $ref: '#/components/parameters/CustomerOrderStatus'
-        - $ref: '#/components/parameters/CustomerDocumentNumber'
-      responses:
-        '200':
-          $ref: '#/components/responses/ListCustomerOrders'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/customerOrder/{id}':
-    get:
-      operationId: getCustomerOrder
-      description: Buscar Pedido do cliente por id
-      summary: Buscar Pedido do cliente por id
-      tags:
-        - ManagedOperations
-      parameters:
-        - $ref: '#/components/parameters/CustomerOrderId'
-      responses:
-        '200':
-          $ref: '#/components/responses/GetCustomerOrder'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/customerOrder/{id}/{newStatus}':
-    patch:
-      operationId: customerOrderUpdateStatus
-      description: Atualizar status do pedido do cliente
-      summary: Atualizar status do pedido do cliente
-      tags:
-        - ManagedOperations
-      parameters:
-        - $ref: '#/components/parameters/CustomerOrderId'
-        - $ref: '#/components/parameters/CustomerOrderNewStatus'
-      responses:
-        '200':
-          $ref: '#/components/responses/PartialUpdateResponse'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -314,22 +331,6 @@ paths:
           $ref: '#/components/responses/PartialUpdateResponse'
         '404':
           $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  /customerOrderPayments:
-    post:
-      operationId: customerOrderPayments
-      description: Recebe informação que o pagamento do pedido do cliente foi realizado
-      summary: Recebe informação que o pagamento do pedido do cliente foi realizado
-      tags:
-        - CollectionOperations
-      requestBody:
-        $ref: '#/components/requestBodies/CreateCustomerOrderPayments'
-      responses:
-        '200':
-          $ref: '#/components/responses/CreatedCustomerOrderPayments'
-        '400':
-          $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
@@ -961,11 +962,6 @@ components:
         type: string
         format: uri
   schemas:
-    CreatedCustomerOrderPaymentType:
-      description: Resposta para o recebimento do pagamento de um pedido do cliente
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/CustomerOrderPaymentTemplate'
     CreateCustomerOrderPaymentType:
       allOf:
         - $ref: '#/components/schemas/CustomerOrderPaymentTemplate'
@@ -977,6 +973,11 @@ components:
             - live_mode
             - type
             - user_id
+    CreatedCustomerOrderPaymentType:
+      description: Resposta para o recebimento do pagamento de um pedido do cliente
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/CustomerOrderPaymentTemplate'
     CreateCustomerType:
       allOf:
         - $ref: '#/components/schemas/CustomerTemplate'
