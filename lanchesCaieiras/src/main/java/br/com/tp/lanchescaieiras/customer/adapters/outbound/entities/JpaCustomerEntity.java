@@ -1,14 +1,13 @@
 package br.com.tp.lanchescaieiras.customer.adapters.outbound.entities;
 
 import br.com.tp.lanchescaieiras.customer.domain.Customer;
-import jakarta.persistence.Table;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 
 
-@Table(name="customer")
+@Table(name="customer", uniqueConstraints = {
+                        @UniqueConstraint(columnNames = "documentNumber"),
+                        @UniqueConstraint(columnNames = "email")
+                        })
 @Entity
 public class JpaCustomerEntity {
     @Id

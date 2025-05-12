@@ -1,10 +1,12 @@
+server:
+  port: 8080
 spring:
   application:
     name: Lanches Caieiras
   datasource:
     url: jdbc:postgresql://localhost:5432/db-lanches-caieiras
     username: lncr-admin
-    password: Lncr$1234 
+    password: Lncr$1234
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

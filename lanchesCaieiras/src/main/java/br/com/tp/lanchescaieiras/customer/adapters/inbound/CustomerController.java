@@ -9,16 +9,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CustomerController {
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Integer id, @RequestBody Customer customer);
+    //public ResponseEntity<Customer> updateCustomer(@PathVariable Integer id, @RequestBody Customer customer);
 
-    public ResponseEntity<List<Customer>> getAllCustomers(
-            @RequestParam Optional<Integer> _limit);
+    //public ResponseEntity<List<Customer>> getAllCustomers(
+    //        @RequestParam Optional<Integer> _limit);
 
-    public ResponseEntity<Customer> getCustomerById(@PathVariable Integer id);
+    //public ResponseEntity<Customer> getCustomerById(@PathVariable Integer id);
 
-    public ResponseEntity<Customer> getCustomerByDocumentNumber(@PathVariable String documentNumber);
+    //public ResponseEntity<Customer> getCustomerByDocumentNumber(@PathVariable String documentNumber);
 
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer);
 
-    public ResponseEntity<Void> deleteCustomer(@PathVariable Integer id);
+    //public ResponseEntity<Void> deleteCustomer(@PathVariable Integer id);
 }

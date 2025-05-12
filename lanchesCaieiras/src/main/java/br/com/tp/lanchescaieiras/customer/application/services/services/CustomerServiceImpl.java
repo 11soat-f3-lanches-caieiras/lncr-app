@@ -1,8 +1,10 @@
 package br.com.tp.lanchescaieiras.customer.application.services.services;
 
+import br.com.tp.lanchescaieiras.customer.adapters.outbound.entities.JpaCustomerEntity;
 import br.com.tp.lanchescaieiras.customer.adapters.outbound.repositories.JpaCustomerReposityImpl;
 import br.com.tp.lanchescaieiras.customer.application.services.usecases.CustomerUseCases;
 import br.com.tp.lanchescaieiras.customer.domain.Customer;
+import br.com.tp.lanchescaieiras.customer.mappers.CustomerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +16,14 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerUseCases {
 
     private final JpaCustomerReposityImpl customerRepository;
-
-    public CustomerServiceImpl(JpaCustomerReposityImpl customerRepository) {
+    private final CustomerMapper customerMapper;
+    public CustomerServiceImpl(JpaCustomerReposityImpl customerRepository, CustomerMapper customerMapper) {
         this.customerRepository = customerRepository;
+        this.customerMapper = customerMapper;
     }
     @Override
     public Customer createCustomer(Customer customer) {
-        return customerRepository.save(customer);
+       return customerRepository.save(customer);
     }
 
     @Override

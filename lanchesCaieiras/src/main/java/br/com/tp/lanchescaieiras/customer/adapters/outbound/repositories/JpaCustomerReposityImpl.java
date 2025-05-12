@@ -4,9 +4,6 @@ import br.com.tp.lanchescaieiras.customer.adapters.outbound.entities.JpaCustomer
 import br.com.tp.lanchescaieiras.customer.mappers.CustomerMapper;
 import br.com.tp.lanchescaieiras.customer.domain.Customer;
 import br.com.tp.lanchescaieiras.customer.domain.CustomerRepository;
-
-import org.mapstruct.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -24,9 +21,9 @@ public class JpaCustomerReposityImpl implements CustomerRepository {
 
     @Override
     public Customer save(Customer customer) {
-        JpaCustomerEntity jpaCustomerEntity = new JpaCustomerEntity(customer);
+        JpaCustomerEntity jpaCustomerEntity = customerMapper.domainToJpa(customer);
         this.jpaCustomerRepository.save(jpaCustomerEntity);
-        return customer;
+        return customerMapper.jpaToDomain(jpaCustomerEntity);
     }
 
     @Override
