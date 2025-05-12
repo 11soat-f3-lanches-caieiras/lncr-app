@@ -4,6 +4,9 @@ import br.com.tp.lanchescaieiras.customer.adapters.outbound.entities.JpaCustomer
 import br.com.tp.lanchescaieiras.customer.mappers.CustomerMapper;
 import br.com.tp.lanchescaieiras.customer.domain.Customer;
 import br.com.tp.lanchescaieiras.customer.domain.CustomerRepository;
+
+import org.mapstruct.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -11,9 +14,12 @@ import java.util.Optional;
 public class JpaCustomerReposityImpl implements CustomerRepository {
 
     public final JpaCustomerRepository jpaCustomerRepository;
+    public final CustomerMapper customerMapper;
 
-    public JpaCustomerReposityImpl(JpaCustomerRepository jpaCustomerRepository) {
+    public JpaCustomerReposityImpl(JpaCustomerRepository jpaCustomerRepository, CustomerMapper customerMapper) {
         this.jpaCustomerRepository = jpaCustomerRepository;
+        this.customerMapper = customerMapper;
+
     }
 
     @Override
@@ -32,7 +38,7 @@ public class JpaCustomerReposityImpl implements CustomerRepository {
     public Optional<Customer> findById(Integer id) {
         Optional<JpaCustomerEntity> jpaCustomer = this.jpaCustomerRepository.findById(id);
         if (jpaCustomer.isPresent()) {
-             Customer customer = CustomerMapper.toDomain(jpaCustomer.get());
+             Customer customer = jpaCustomer.map(customerMapper::jpaToDomain).orElse(null);
             return Optional.of(customer);
         } else {
             return Optional.empty();
