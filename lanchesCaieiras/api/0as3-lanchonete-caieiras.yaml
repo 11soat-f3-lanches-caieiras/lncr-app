@@ -1,0 +1,1386 @@
+openapi: 3.0.1
+info:
+  title: Lanchonete Caieiras
+  description: 'Gerenciador de Pedidos, Ordem de Preparo, Produtos e Pagamento'
+  contact:
+    email: titoparizotto@gmail.com
+    name: Tito de Morais Parizotto
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8080/lanchoneteCaieiras/v1'
+tags:
+  - name: CollectionOperations
+    description: Operações que utilizam arquetipo Colecoes
+  - name: ManagedOperations
+    description: Operações que utilizam arquetipo Gerenciavel
+paths:
+  /customers:
+    post:
+      operationId: createCustomer
+      description: Criar um novo cliente
+      summary: Criar um novo cliente
+      tags:
+        - CollectionOperations
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCustomer'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedCustomer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/ConflictCustomer'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      operationId: listCustomers
+      description: Lista de clientes
+      summary: Listar clientes com de filtros
+      tags:
+        - CollectionOperations
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          $ref: '#/components/responses/ListCustomers'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/customer/{customerDocument}':
+    get:
+      operationId: getCustomer
+      description: Obter um cliente pelo documento
+      summary: Obter informacoes de um cliente pelo documento
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerDocument'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetCustomer'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      operationId: partialUpdateCustomer
+      description: Atualizar parcialmente os dados de um cliente
+      summary: Atualizar parcialmente os dados de um cliente
+      security:
+        - basicAuth: []
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerDocument'
+      requestBody:
+        $ref: '#/components/requestBodies/PartialUpdateCustomer'
+      responses:
+        '200':
+          $ref: '#/components/responses/PartialUpdateResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      operationId: deleteCustomer
+      description: Deletar dados de um cliente
+      summary: Deletar dados de um cliente
+      security:
+        - basicAuth: []
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerDocument'
+      responses:
+        '200':
+          $ref: '#/components/responses/DeletedResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/customer/{id}':
+    get:
+      operationId: getCustomerById
+      description: Obter um cliente pelo Id
+      summary: Obter informacoes de um cliente id
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetCustomer'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      operationId: partialUpdateCustomerId
+      description: Atualizar parcialmente os dados de um cliente
+      summary: Atualizar parcialmente os dados de um cliente
+      security:
+        - basicAuth: []
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      requestBody:
+        $ref: '#/components/requestBodies/PartialUpdateCustomer'
+      responses:
+        '200':
+          $ref: '#/components/responses/PartialUpdateResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      operationId: deleteCustomerId
+      description: Deletar dados de um cliente por Id
+      summary: Deletar dados de um cliente por Id
+      security:
+        - basicAuth: []
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerId'
+      responses:
+        '200':
+          $ref: '#/components/responses/DeletedResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /customerOrders:
+    post:
+      operationId: createCustomerOrder
+      description: Criar um novo pedido do Cliente
+      summary: Criar um novo pedido do Cliente
+      tags:
+        - CollectionOperations
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCustomerOrder'
+      responses:
+        '200':
+          $ref: '#/components/responses/CreatedCustomerOrder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      operationId: getListCustomerOrders
+      description: Buscar Lista de Pedidos de Clientes
+      summary: Buscar Lista de Pedidos de Clientes
+      tags:
+        - CollectionOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerOrderStatus'
+        - $ref: '#/components/parameters/CustomerDocumentNumber'
+      responses:
+        '200':
+          $ref: '#/components/responses/ListCustomerOrders'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/customerOrder/{id}':
+    get:
+      operationId: getCustomerOrder
+      description: Buscar Pedido do cliente por id
+      summary: Buscar Pedido do cliente por id
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerOrderId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetCustomerOrder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /customerOrder/payment:
+    post:
+      operationId: customerOrderPayments
+      description: Recebe informação que o pagamento do pedido do cliente foi realizado
+      summary: Recebe informação que o pagamento do pedido do cliente foi realizado
+      tags:
+        - CollectionOperations
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCustomerOrderPayments'
+      responses:
+        '200':
+          $ref: '#/components/responses/CreatedCustomerOrderPayments'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    parameters: []
+  '/customerOrder/{id}/{newStatus}':
+    patch:
+      operationId: customerOrderUpdateStatus
+      description: Atualizar status do pedido do cliente
+      summary: Atualizar status do pedido do cliente
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerOrderId'
+        - $ref: '#/components/parameters/CustomerOrderNewStatus'
+      responses:
+        '200':
+          $ref: '#/components/responses/PartialUpdateResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /foodItems:
+    get:
+      operationId: getListFoodItem
+      description: Buscar Lista de Items de Alimentacao
+      summary: Buscar Lista de Items de Alimentacao
+      tags:
+        - CollectionOperations
+      parameters:
+        - $ref: '#/components/parameters/FoodStatus'
+        - $ref: '#/components/parameters/FoodCategory'
+      responses:
+        '200':
+          $ref: '#/components/responses/ListFoodItems'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      operationId: createFoodItem
+      description: Criar um novo item
+      summary: Criar um novo Item de Alimentacao
+      security:
+        - basicAuth: []
+      tags:
+        - CollectionOperations
+      requestBody:
+        $ref: '#/components/requestBodies/CreateFoodItem'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedFoodItem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/foodItems/{id}':
+    get:
+      operationId: getFoodItem
+      description: Buscar Item de Alimentacao por Id
+      summary: Buscar Item de Alimentacao por Id
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetFoodItem'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      operationId: partialUpdateFoodItem
+      description: Atualizar parcialmente informacoes de um item de Alimentacao
+      summary: Atualizar parcialmente informacoes de um item de Alimentacao
+      security:
+        - basicAuth: []
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        $ref: '#/components/requestBodies/PartialUpdateFoodItem'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetFoodItem'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      operationId: deleteFoodItem
+      description: Deletar dados de um item de alimentacao
+      summary: Deletar dados de um item de alimentacao
+      security:
+        - basicAuth: []
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          $ref: '#/components/responses/DeletedResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /kitchenOrders:
+    post:
+      operationId: createKitchenOrder
+      description: Criar uma nova ordem de preparo
+      summary: Criar uma nova ordem de preparo
+      tags:
+        - CollectionOperations
+      requestBody:
+        $ref: '#/components/requestBodies/CreateKitchenOrder'
+      responses:
+        '200':
+          $ref: '#/components/responses/CreatedKitchenOrder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      operationId: getKitchenOrders
+      description: Buscar lista de ordens de preparo
+      summary: Buscar lista de ordens de preparo
+      tags:
+        - CollectionOperations
+      parameters:
+        - $ref: '#/components/parameters/KitchenCustomerOrderId'
+        - $ref: '#/components/parameters/KitchenOrderStatus'
+      responses:
+        '200':
+          $ref: '#/components/responses/ListKitchenOrders'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/kitchenOrders/{id}':
+    get:
+      operationId: getKitchenOrder
+      description: Buscar uma ordem de prepraro por id
+      summary: Buscar uma ordem de preparo por id
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/KitchenOrderId'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetKitchenOrder'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/kitchenOrders/{id}/{newStatus}':
+    patch:
+      operationId: kitchenOrderUpdateStatus
+      description: Atualizar status de uma ordem de preparo
+      summary: Atualizar status de uma ordem de preparo
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerOrderId'
+        - $ref: '#/components/parameters/KitchenOrderNewStatus'
+      responses:
+        '200':
+          $ref: '#/components/responses/PartialUpdateResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  requestBodies:
+    CreateCustomerOrderPayments:
+      description: Recebimento do pagamento de um pedido do cliente
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateCustomerOrderPaymentType'
+          examples:
+            CreateCustomerOrderPayment:
+              summary: Pagamento do pedido do cliente recebido com sucesso
+              value:
+                action: null
+                api_version: payment.updated
+                data:
+                  id: 1
+                date_created: '2021-11-01T02:02:02Z'
+                id: 1
+                live_mode: false
+                type: payment
+                user_id: 2425846779
+            BadRequestWithoutFields:
+              summary: Campos faltantes
+              value:
+                name: José da Silva
+                e-mail: josedasilva@email.com
+    CreateCustomer:
+      description: Criar Cliente request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateCustomerType'
+          examples:
+            CreateCustomer:
+              summary: Criação de Cliente
+              value:
+                documentNumber: 1111111111
+                name: José da Silva
+                e-mail: josedasilva@email.com
+            BadRequestWithoutFields:
+              summary: Campos faltantes
+              value:
+                name: José da Silva
+                e-mail: josedasilva@email.com
+    CreateFoodItem:
+      description: Criar Item de Alimentacao request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateFoodItemType'
+          examples:
+            CreateFoodItem:
+              summary: Criar Item de Alimentacao - Lanche
+              value:
+                name: X-Salada
+                description: 'Pão de Hamburger, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup.'
+                category: Sandwich
+                price: 29.99
+                images:
+                  - _data: iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxEAAAsRAX9kX5EAAAGHaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49J++7vycgaWQ9J1c1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCc/Pg0KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLy
+                  - _data: iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxEAAAsRAX9kX5EAAAGHaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49J++7vycgaWQ9J1c1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCc/Pg0KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLy
+            BadRequestWithoutFields:
+              summary: Campos faltantes
+              value:
+                name: X-Salada
+                description: 'Pão de Hamburger, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup.'
+                category: Sandwich
+    CreateCustomerOrder:
+      description: Pedido do Cliente request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateCustomerOrderType'
+          examples:
+            CreateCustomerOrderWithIdentification:
+              summary: Novo pedido do Cliente que se identificou
+              value:
+                customer:
+                  customerId: 1
+                  documentNumber: 11111111111
+                  name: José da Silva
+                order:
+                  foodItems:
+                    - id: 1
+                      name: X-Salada
+                      category: Sandwich
+                      price: 29.9
+                      notes: 'Ponto da Carne: Ao ponto'
+                    - id: 2
+                      name: Coca-cola zero
+                      category: Drink
+                      price: 9.99
+                      notes: Sem gelo
+                    - id: 3
+                      name: Batata-frita
+                      category: Side
+                      price: 5.99
+                    - id: 4
+                      name: Sorvete de Chocolate
+                      category: Dessert
+                      price: 9.99
+                      notes: Trocar amendoin por flocos de arroz
+            CreateCustomerOrderWithoutIdentification:
+              summary: Novo pedido do Cliente que se não identificou
+              value:
+                order:
+                  foodItems:
+                    - id: 1
+                      name: X-Salada
+                      category: Sandwich
+                      price: 29.9
+                      notes: 'Ponto da Carne: Ao ponto'
+                    - id: 2
+                      name: Coca-cola zero
+                      category: Drink
+                      price: 9.99
+                      notes: Sem gelo
+                    - id: 3
+                      name: Batata-frita
+                      category: Side
+                      price: 5.99
+                    - id: 4
+                      name: Sorvete de Chocolate
+                      category: Dessert
+                      price: 9.99
+                      notes: Trocar amendoin por flocos de arroz
+    CreateKitchenOrder:
+      description: Ordem de preparo request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateKitchenOrderType'
+          examples:
+            CreateKitchenOrder:
+              summary: Nova Ordem de preparo
+              value:
+                customerOrder:
+                  id: 1
+                foodItems:
+                  - id: 1
+                    name: X-Salada
+                    category: Sandwich
+                    notes: 'Ponto da Carne: Ao ponto'
+                  - id: 2
+                    name: Coca-cola zero
+                    category: Drink
+                    notes: Sem gelo
+                  - id: 3
+                    name: Batata-frita
+                    category: Side
+                  - id: 4
+                    name: Sorvete de Chocolate
+                    category: Dessert
+                    notes: Trocar amendoin por flocos de arroz
+    PartialUpdateCustomer:
+      description: Atualizar informacoes parciais do cliente
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PartialUpdateCustomerType'
+          examples:
+            UpdateInfo:
+              summary: Atualizar cliente
+              value:
+                name: João da Silva
+                email: joaodasilve@gmail.com
+            UpdateName:
+              summary: Atualizar nome
+              value:
+                name: João da Silva
+            UpdateEmail:
+              summary: Atualizar e-mail
+              value:
+                email: joaodasilve@gmail.com
+    PartialUpdateFoodItem:
+      description: Atualizar informacoes parciais do Item de Alimentacao
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PartialUpdateFoodItemType'
+          examples:
+            UpdateInfo:
+              summary: Atualizar informacoes de um Item de Alimentacao
+              value:
+                name: X-Salada
+                description: 'Pão de Hamburger com gergelim, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup.'
+                category: Sandwich
+                price: 19.99
+            UpdateTwoOrMorFields:
+              summary: Atualizar um ou mais campos de um Item de Alimentacao
+              value:
+                description: 'Pão de Hamburger com gergelim, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup.'
+                price: 19.99
+  responses:
+    CreatedCustomerOrderPayments:
+      description: Resposta para pagamentos recebidos para o pedido do cleinte
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreatedCustomerOrderPaymentType'
+          examples:
+            CreatedCustomerOrderPayment:
+              summary: Pagamento de um pedido de um cliente recebido.
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                order:
+                  id: 1
+                payment:
+                  id: 1
+                  status: Paied
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseTemplate'
+          examples:
+            RegistrationNumberWrongFormat:
+              summary: Erro de formato inválido
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+    ConflictCustomer:
+      description: Conflict Customer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseTemplate'
+          examples:
+            RegistrationNumberWrongFormat:
+              summary: Documento já utilizado
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                  _message: Documento informado já foi utilizado.
+    CreatedCustomer:
+      description: Cliente criado com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreatedCustomerType'
+          examples:
+            CreatedCustomer:
+              summary: Cliente criado com sucesso
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                customerId: 1
+      headers:
+        Location:
+          $ref: '#/components/headers/Location'
+    CreatedCustomerOrder:
+      description: Pedido do cliente criado com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreatedCustomerOrderType'
+          examples:
+            CreateCustomerOrder:
+              summary: Novo pedido do Cliente que se identificou
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                order:
+                  id: 1
+                  status: Pending Payment
+                payment:
+                  id: c1a59e1b-68a9-402d-a8b5-9f091d720338
+                  qr_data: 00020101021243650016COM.MERCADOLIBRE020130636c1a59e1b-68a9-402d-a8b5-9f091d7203385204000053039865802BR5909Test Test6009SAO PAULO62070503***6304A003
+                  total_amount: 29.9
+                  status: Pending
+      headers:
+        Location:
+          $ref: '#/components/headers/Location'
+    CreatedKitchenOrder:
+      description: Ordem de preparo criada com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreatedKitchenOrderType'
+          examples:
+            CreateCustomerOrder:
+              summary: Nova Ordem de preparo recebida
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                order:
+                  id: 1
+                  status: Recived
+      headers:
+        Location:
+          $ref: '#/components/headers/Location'
+    CreatedFoodItem:
+      description: Item de Alimentacao criado com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreatedFoodType'
+          examples:
+            CreatedFoodItem:
+              summary: Item de Alimentacao criado com sucesso
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                foodId: 1
+                images:
+                  items:
+                    - imageId: 1
+                      _data: XXXXX1 #base64
+                    - imageId: 2
+                      _data: XXXXX1
+                    - imageId: 3
+                      _data: XXXXX1
+                    - imageId: 4
+                      _data: XXXXX1
+                    - imageId: 5
+      headers:
+        Location:
+          $ref: '#/components/headers/Location'
+    DeletedResponse:
+      description: Response padrão de Exclusão
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseTemplate'
+          examples:
+            Deleted:
+              summary: Registro deletado com sucesso.
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+    PartialUpdateResponse:
+      description: Response padrão de atualização parcial
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseTemplate'
+          examples:
+            PartialUpdated:
+              summary: Registro atualizado com sucesso.
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+    GetCustomer:
+      description: Informação de cliente por documento (CPF)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetCustomerType'
+          examples:
+            GetCustomer:
+              summary: Cliente localizado com sucesso
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2021-02-11T21:41:43.286Z'
+                customerId: 1
+                documentNumber: '11111111111'
+                name: José da Silva
+                email: josedasilve@gmail.com
+    GetCustomerOrder:
+      description: Informação de um pedido de um cliente
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetCustomerOrderType'
+          examples:
+            GetCustomerOrderWithIdentification:
+              summary: Pedido de cliente com identificação
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2021-02-11T21:41:43.286Z'
+                customer:
+                  id: 1
+                  documentNumber: '11111111111'
+                  name: José da Silva
+                  email: josedasilva@email.com.br
+                order:
+                  id: 1
+                  foodItems:
+                    - id: 1
+                      name: X-Salada
+                      notes: 'Ponto da Carne: Ao ponto'
+                      price: 29.9
+                    - id: 2
+                      name: Coca Zero
+                      notes: Sem Gelo
+                      price: 9.9
+                  totalCost: 39.8
+                  status: Preparing
+            GetCustomerOrderWithoutIdentification:
+              summary: Pedido de cliente sem identificação
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2021-02-11T21:41:43.286Z'
+                customer: null
+                order:
+                  id: 1
+                  foodItems:
+                    - id: 1
+                      name: X-Salada
+                      notes: 'Ponto da Carne: Ao ponto'
+                      price: 29.9
+                    - id: 2
+                      name: Coca Zero
+                      notes: Sem Gelo
+                      price: 9.9
+                  totalCost: 39.8
+                  status: Preparing
+    GetKitchenOrder:
+      description: Informação de uma ordem de pedido
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetKitchenOrderType'
+          examples:
+            GetKitchenOrder:
+              summary: Ordem de Preparo
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2021-02-11T21:41:43.286Z'
+                customerOrder:
+                  id: 1
+                order:
+                  id: 1
+                  foodItems:
+                    - id: 1
+                      name: X-Salada
+                      category: Sandwich
+                      notes: 'Ponto da Carne: Ao ponto'
+                    - id: 2
+                      name: Coca Zero
+                      categoty: Drink
+                      notes: Sem Gelo
+                  status: Preparing
+    GetFoodItem:
+      description: Informação do Item de Alimentacao
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetFoodItemType'
+          examples:
+            GetFoodItem:
+              summary: Item de Alimentacao encontrado com sucesso
+              value:
+                response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2021-02-11T21:41:43.286Z'
+                id: 1
+                name: X-Salada
+                description: 'Pão de Hamburger, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup.'
+                category: Sandwich
+                price: 29.99
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseTemplate'
+          examples:
+            InternalError:
+              summary: Erro Interno
+              value:
+                response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+    ListCustomers:
+      description: Lista de clientes retornadas com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListCustomersType'
+    ListCustomerOrders:
+      description: Lista de pedido de clientes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListCustomerOrdersType'
+    ListFoodItems:
+      description: Lista de Items de Alimentacao retornados com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListFoodItemsType'
+    ListKitchenOrders:
+      description: Lista de ordens de preparo
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListKitchenOrdersType'
+    NoContent:
+      description: No Content
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseTemplate'
+          examples:
+            RegistrationNumberWrongFormat:
+              summary: Recurso não encontrado
+              value:
+                response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+      headers:
+        Location:
+          $ref: '#/components/headers/Location'
+  parameters:
+    CustomerDocumentNumber:
+      name: customerDocumentNumber
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/CustomerTemplate/properties/documentNumber'
+    CustomerId:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/CustomerTemplate/properties/customerId'
+    CustomerOrderId:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/OrderTemplate/properties/id'
+    CustomerOrderNewStatus:
+      description: Parâmetro para atualizar status do pedido do cliente
+      name: newStatus
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/CustomerOrderTemplate/properties/order/properties/status'
+    KitchenOrderNewStatus:
+      description: Parâmetro para atualizar status de uma odem de pedido
+      name: newStatus
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/KitchenOrderTemplate/properties/order/properties/status'
+    KitchenCustomerOrderId:
+      name: customerOrderId
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/OrderTemplate/properties/id'
+    KitchenOrderId:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/OrderTemplate/properties/id'
+    KitchenOrderStatus:
+      name: status
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/KitchenOrderTemplate/properties/order/properties/status'
+    CustomerOrderStatus:
+      name: status
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/CustomerOrderTemplate/properties/order/properties/status'
+    CustomerStatus:
+      name: customerStatus
+      in: query
+      description: Parâmetro para filtrar clientes ativos ou inativos
+      required: false
+      schema:
+        type: boolean
+    CustomerDocument:
+      name: customerDocument
+      in: path
+      required: true
+      description: Identificador único do cliente
+      schema:
+        $ref: '#/components/schemas/CustomerTemplate/properties/documentNumber'
+    id:
+      name: id
+      in: path
+      required: true
+      description: Identificador único do Item de Alimentacao
+      schema:
+        $ref: '#/components/schemas/FoodItemTemplate/properties/id'
+    FoodStatus:
+      name: foodStatus
+      in: query
+      description: Parâmetro para filtrar Items de Alimentacao ativos ou inativos
+      required: false
+      schema:
+        type: boolean
+    FoodCategory:
+      name: foodCategory
+      in: query
+      description: Parâmetro para filtrar Items de Alimentacao ativos ou inativos
+      required: false
+      schema:
+        allOf:
+          - $ref: '#/components/schemas/FoodItemTemplate/properties/category'
+    Limit:
+      name: _limit
+      in: query
+      description: Quantidade limite de registros retornados
+      required: false
+      schema:
+        $ref: '#/components/schemas/LimitTemplate'
+  headers:
+    Location:
+      description: URI do recuros
+      required: true
+      schema:
+        type: string
+        format: uri
+  schemas:
+    CreateCustomerOrderPaymentType:
+      allOf:
+        - $ref: '#/components/schemas/CustomerOrderPaymentTemplate'
+        - required:
+            - action
+            - api_version
+            - data
+            - date_created
+            - live_mode
+            - type
+            - user_id
+    CreatedCustomerOrderPaymentType:
+      description: Resposta para o recebimento do pagamento de um pedido do cliente
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/CustomerOrderPaymentTemplate'
+    CreateCustomerType:
+      allOf:
+        - $ref: '#/components/schemas/CustomerTemplate'
+        - required:
+            - documentNumber
+            - name
+            - email
+    CreateCustomerOrderType:
+      allOf:
+        - $ref: '#/components/schemas/CustomerOrderTemplate'
+    CreateFoodItemType:
+      allOf:
+        - $ref: '#/components/schemas/FoodItemTemplate'
+        - required:
+            - name
+            - description
+            - category
+            - price
+    CreateKitchenOrderType:
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/KitchenOrderTemplate'
+    CreatedCustomerType:
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/CustomerTemplate'
+        - required:
+            - customerId
+    CreatedCustomerOrderType:
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/CustomerOrderTemplate'
+    CreatedKitchenOrderType:
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/KitchenOrderTemplate'
+    CreatedFoodType:
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/FoodItemTemplate'
+        - required:
+            - id
+    PartialUpdateCustomerType:
+      description: Atualiza informacoes parciais do Cliente
+      allOf:
+        - $ref: '#/components/schemas/CustomerTemplate'
+    PartialUpdateFoodItemType:
+      description: Atualiza informacoes parciais do Item de Alimentacao
+      allOf:
+        - $ref: '#/components/schemas/FoodItemTemplate'
+    GetCustomerType:
+      description: Informação de um cliente
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/CustomerTemplate'
+    GetFoodItemType:
+      description: Informação de um cliente
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/FoodItemTemplate'
+    GetCustomerOrderType:
+      description: Informação de um pedido de cliente
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/CustomerOrderTemplate'
+    GetKitchenOrderType:
+      description: Informação de um pedido de cliente
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/KitchenOrderTemplate'
+    ListCustomersType:
+      description: Lista de clientes
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - type: object
+      properties:
+        _content:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/CustomerTemplate'
+              - type: object
+                required:
+                  - documentNumber
+                  - name
+                  - email
+    ListKitchenOrdersType:
+      description: Lista de ordens de preparo
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - type: object
+      properties:
+        _content:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/KitchenOrderTemplate'
+              - type: object
+                required:
+                  - customer id
+                  - foodItems
+    ListFoodItemsType:
+      description: Lista de Items de Alimentacao
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - type: object
+      properties:
+        _content:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/FoodItemTemplate'
+              - type: object
+                required:
+                  - id
+                  - name
+                  - description
+                  - category
+                  - price
+    ListCustomerOrdersType:
+      description: Tipo de lista de pedido de clientes
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - type: object
+      properties:
+        _content:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/CustomerOrderTemplate'
+              - type: object
+                required:
+                  - order
+                  - payment
+    LimitTemplate:
+      description: Número de registros a serem retornados em uma consulta
+      type: integer
+      minimum: 1
+      exclusiveMinimum: false
+      maximum: 50
+      default: 10
+    CustomerOrderTemplate:
+      description: Modelo de dados do Pedido do Cliente
+      type: object
+      properties:
+        customer:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/CustomerTemplate'
+        order:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/OrderTemplate'
+          properties:
+            status:
+              type: string
+              enum:
+                - Received
+                - Preparing
+                - Ready
+                - Finished
+        payment:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/CreateCustomerOrderPaymentType'
+    CustomerOrderPaymentTemplate:
+      description: Modelo de dados de pagamento do pedido de um cliente
+      type: object
+      properties:
+        action: # Objeto do Mercado Pago
+          type: string
+        api_version: # Objeto do Mercado Pago
+          type: string
+        date_created: # Objeto do Mercado Pago
+          type: string
+          format: date-time
+        id: # Reutilizado na integração com mercado pago
+          description: Id único da cobrança
+          type: number
+          format: int32
+          readOnly: true
+        live_mode: # Objeto do Mercado Pago
+          type: boolean
+        qr_data: # Objeto do Mercado Pago
+          description: Texto do QR Code de pagamento
+          type: string
+          readOnly: true
+        status:
+          description: Status do pagamento
+          type: string
+          enum:
+            - Pending
+            - Paied
+            - Canceled
+        total_amount:
+          description: Valor total de custo do Pedido do Cliente
+          type: number
+          format: double
+          readOnly: true
+        trackingid: # Objeto do Mercado Pago
+          description: Id de rastreio da cobrança
+          type: string
+          format: uuid
+          readOnly: true
+        type: # Objeto do Mercado Pago
+          type: string
+        user_id: # Objeto do Mercado Pago
+          type: integer
+    KitchenOrderTemplate:
+      description: Modelo de dados do Ordem de Preparo
+      type: object
+      properties:
+        customerOrder:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/OrderTemplate/properties/id'
+        order:
+          allOf:
+            - $ref: '#/components/schemas/OrderTemplate'
+          properties:
+            status:
+              type: string
+              enum:
+                - Received
+                - Prepering
+                - Finished
+    CustomerTemplate:
+      description: Modelo de dados do cliente
+      properties:
+        customerId:
+          description: Id único do cliente
+          type: integer
+          readOnly: true
+          minimum: 1
+          maximum: 9999
+          format: int32
+        documentNumber:
+          description: Numero do documento do CPF do Cliente
+          type: string
+          minLength: 11
+          maxLength: 11
+        name:
+          description: Nome do Cliente
+          type: string
+          minLength: 1
+          maxLength: 255
+        email:
+          description: E-mail do Cliente
+          type: string
+          pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' # Regex para validação de e-mail
+          minLength: 1
+          maxLength: 255
+    ImageTemplate:
+      description: Modelo de dados de imagem do Item de Alimentacao
+      type: object
+      properties:
+        imageId:
+          description: Id único da imagem
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 99999
+        _data:
+          description: Imagem do Item de Alimentacao em base64
+          type: string
+          format: base64
+    FoodItemTemplate:
+      description: Modelo de dados do Item de Alimentacao
+      properties:
+        id:
+          description: Id único do Item de Alimentacao
+          type: integer
+          readOnly: true
+          format: int32
+          minimum: 1
+          maximum: 9999
+        name:
+          description: Nome do Item de Alimentacao
+          type: string
+          maxLength: 256
+        category:
+          description: Categoria do Item de Alimentacao
+          type: string
+          enum:
+            - Sandwich
+            - Drink
+            - Extras
+            - Desserts
+        description:
+          description: Descrição do Item de Alimentacao
+          type: string
+          maxLength: 1024
+        price:
+          description: Preço do Item de Alimentacao
+          type: number
+          format: double
+        images:
+          type: array
+          maxItems: 5
+          items:
+            allOf:
+              - $ref: '#/components/schemas/ImageTemplate'
+    OrderTemplate:
+      description: Modelo de Dados base de uma ordem genérica
+      type: object
+      properties:
+        id:
+          description: Id de uma ordem
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 999999
+        createdOn:
+          type: string
+          description: Timestamp da transação
+          format: date-time
+          readOnly: true
+        foodItems:
+          type: array
+          minItems: 1
+          items:
+            allOf:
+              - $ref: '#/components/schemas/FoodItemTemplate'
+            properties:
+              notes:
+                description: Observações do Item de Alimentacao
+                type: string
+                maxLength: 256
+    ResponseTemplate:
+      description: Modelo de dados para responses
+      type: object
+      properties:
+        _response:
+          type: object
+          properties:
+            _traceId:
+              type: string
+              description: UUID gerado para rastreabilidade da transação
+              format: uuid
+            _timestamp:
+              type: string
+              description: Timestamp da transação
+              format: date-time
+            _message:
+              type: string
+              description: Menssagem de resposta
+              maxLength: 50
+            _code:
+              type: integer
+              description: Código específico de resposta
+              minimum: 0
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
