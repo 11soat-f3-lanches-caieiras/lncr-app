@@ -1,15 +1,27 @@
 package br.com.tp.lanchescaieiras.customer.domain;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CustomerRepository {
 
+    Customer save(Customer customer);
+
+    List<Customer> findAll(Integer limit);
+
     Optional<Customer> findById(Integer id);
 
-    /*Customer findByDocumentNumber(String documentNumber);
-    List<Customer> findAll();
-    Customer updateById(Integer id, Customer customer);
-    Customer updateByDocumentNumber(String documentNumber, Customer customer);*/Customer save(Customer customer);
+    Optional<Customer> findByDocumentNumber(String documentNumber);
 
-    void deletebyId(Integer id);
+    Optional<Customer> partialUpdateById(Customer customer, Integer id);
+
+    Boolean deleteById(Integer id);
+
+    Boolean  existsByDocumentNumber(String documentNumber);
+
+    Boolean  existsByEmail(String email);
+
+
+
+
 }

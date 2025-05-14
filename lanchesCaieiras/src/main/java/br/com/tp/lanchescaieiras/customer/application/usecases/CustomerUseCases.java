@@ -1,0 +1,20 @@
+package br.com.tp.lanchescaieiras.customer.application.usecases;
+
+import br.com.tp.lanchescaieiras.customer.domain.Customer;
+import br.com.tp.lanchescaieiras.customer.domain.CustomerResponse;
+import org.springframework.data.repository.query.Param;
+
+import java.awt.print.Pageable;
+import java.util.List;
+import java.util.Optional;
+
+public interface CustomerUseCases {
+
+    Customer createCustomer(Customer customer);
+    Optional<Customer> getCustomerById(Integer id);
+    List<Customer> getAllCustomers(Integer limit);
+    Optional<Customer> getCustomerByDocumentNumber(String documentNumber);
+    Customer partialUpdateCustomer(Customer customer, Integer id);
+    Boolean deleteCustomer(Integer id);
+
+}

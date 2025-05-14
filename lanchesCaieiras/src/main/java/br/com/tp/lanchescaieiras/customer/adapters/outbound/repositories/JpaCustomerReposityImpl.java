@@ -1,12 +1,17 @@
 package br.com.tp.lanchescaieiras.customer.adapters.outbound.repositories;
 
 import br.com.tp.lanchescaieiras.customer.adapters.outbound.entities.JpaCustomerEntity;
+import br.com.tp.lanchescaieiras.customer.domain.CustomerResponse;
+import br.com.tp.lanchescaieiras.customer.infraestructure.exceptions.CustomerException;
 import br.com.tp.lanchescaieiras.customer.mappers.CustomerMapper;
 import br.com.tp.lanchescaieiras.customer.domain.Customer;
 import br.com.tp.lanchescaieiras.customer.domain.CustomerRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+
 @Repository
 public class JpaCustomerReposityImpl implements CustomerRepository {
 
@@ -21,46 +26,75 @@ public class JpaCustomerReposityImpl implements CustomerRepository {
 
     @Override
     public Customer save(Customer customer) {
-        JpaCustomerEntity jpaCustomerEntity = customerMapper.domainToJpa(customer);
-        this.jpaCustomerRepository.save(jpaCustomerEntity);
+        JpaCustomerEntity jpaCustomerEntity = this.jpaCustomerRepository.save(customerMapper.domainToJpa(customer));
         return customerMapper.jpaToDomain(jpaCustomerEntity);
     }
 
     @Override
-    public void deletebyId(Integer id) {
-        this.jpaCustomerRepository.deleteById(id);
+    public Optional<Customer> findByDocumentNumber(String documentNumber) {
+        return this.jpaCustomerRepository.findByDocumentNumber(documentNumber)
+                .map(customerMapper::jpaToDomain)
+                .or(() -> {
+                    throw new CustomerException("Cliente não encontrado com o documento: " + documentNumber, 404);
+                });
     }
+
+    @Override
+    public Optional<Customer> partialUpdateById(Customer customer, Integer id) {
+
+
+        return this.jpaCustomerRepository.findById(id).map(
+                existingEntity ->
+                {
+                    if (customer.getName() != null) {
+                        existingEntity.setName(customer.getName());
+                    }
+                    if (customer.getEmail() != null) {
+
+                        existingEntity.setEmail(customer.getEmail());
+                    }
+                    if (customer.getDocumentNumber() != null) {
+                        existingEntity.setDocumentNumber(customer.getDocumentNumber());
+                    }
+                    JpaCustomerEntity updatedEntity = this.jpaCustomerRepository.save(existingEntity);
+                    return customerMapper.jpaToDomain(updatedEntity);
+                });
+    }
+
+    @Override
+    public Boolean deleteById(Integer id) {
+        Optional<JpaCustomerEntity> jpaCustomerEntity = this.jpaCustomerRepository.findById(id);
+        if (jpaCustomerEntity.isPresent()) {
+            try {
+                this.jpaCustomerRepository.delete(jpaCustomerEntity.get());
+                return true;
+            } catch (Exception e) {
+                throw new CustomerException("Erro ao deletar o cliente com ID: " + id, 500);
+            }
+        }
+        return false; // Cliente não encontrado
+    }
+
 
     @Override
     public Optional<Customer> findById(Integer id) {
-        Optional<JpaCustomerEntity> jpaCustomer = this.jpaCustomerRepository.findById(id);
-        if (jpaCustomer.isPresent()) {
-             Customer customer = jpaCustomer.map(customerMapper::jpaToDomain).orElse(null);
-            return Optional.of(customer);
-        } else {
-            return Optional.empty();
-        }
-    }
-    /*@Override
-    public Customer findByDocumentNumber(String documentNumber) {
-        this.jpaCustomerRepository.findByDocumentNumber(documentNumber);
-    }*/
-
-   /* @Override
-    public List<Customer> findAll() {
-        return List.of();
-    }*/
-
-    /*@Override
-    public Customer updateById(Integer id, Customer customer) {
-        JpaCustomerEntity jpaCustomerEntity = new JpaCustomerEntity(customer);
-        this.jpaCustomerRepository.updateById(id,jpaCustomerEntity);
+        return this.jpaCustomerRepository.findById  (id)
+                .map(customerMapper::jpaToDomain);
     }
 
     @Override
-    public Customer updateByDocumentNumber(String documentNumber, Customer customer) {
-        return null;
-    }*/
+    public List<Customer> findAll(Integer limit) {
+        return this.jpaCustomerRepository.findAll(Pageable.ofSize(limit))
+                .stream()
+                .map(customerMapper::jpaToDomain)
+                .toList();
+    }
 
+    public Boolean existsByDocumentNumber(String documentNumber) {
+        return this.jpaCustomerRepository.existsByDocumentNumber(documentNumber);
+    }
 
+    public Boolean existsByEmail(String email) {
+        return this.jpaCustomerRepository.existsByEmail(email);
+    }
 }

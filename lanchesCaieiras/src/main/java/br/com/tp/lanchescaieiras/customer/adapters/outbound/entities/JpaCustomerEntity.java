@@ -29,6 +29,7 @@ public class JpaCustomerEntity {
     public JpaCustomerEntity(Customer customer) {
         this.id = customer.getId();
         this.name = customer.getName();
+        this.documentNumber = customer.getDocumentNumber();
         this.email = customer.getEmail();
     }
 
