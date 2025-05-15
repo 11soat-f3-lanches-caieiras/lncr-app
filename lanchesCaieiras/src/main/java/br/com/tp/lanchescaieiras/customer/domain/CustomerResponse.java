@@ -1,5 +1,6 @@
 package br.com.tp.lanchescaieiras.customer.domain;
 
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

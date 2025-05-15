@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.customer.domain;
+package br.com.tp.lanchescaieiras.commons.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

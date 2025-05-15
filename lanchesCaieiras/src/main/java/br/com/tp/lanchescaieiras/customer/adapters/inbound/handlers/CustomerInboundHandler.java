@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras.customer.adapters.inbound.handlers;
 
 import br.com.tp.lanchescaieiras.customer.domain.CustomerResponse;
-import br.com.tp.lanchescaieiras.customer.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
 import br.com.tp.lanchescaieiras.customer.infraestructure.exceptions.CustomerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

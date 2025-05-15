@@ -15,4 +15,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        
+lncr:
+  image:
+    location-prefix: "https://localhost:8080/foodItems/images/"

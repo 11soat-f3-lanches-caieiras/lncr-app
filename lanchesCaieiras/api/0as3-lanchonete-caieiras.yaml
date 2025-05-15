@@ -699,15 +699,15 @@ components:
                 foodId: 1
                 images:
                   items:
-                    - imageId: 1
+                    - id: 1
                       _data: XXXXX1 #base64
-                    - imageId: 2
+                    - id: 2
                       _data: XXXXX1
-                    - imageId: 3
+                    - id: 3
                       _data: XXXXX1
-                    - imageId: 4
+                    - id: 4
                       _data: XXXXX1
-                    - imageId: 5
+                    - id: 5
       headers:
         Location:
           $ref: '#/components/headers/Location'
@@ -1285,7 +1285,7 @@ components:
       description: Modelo de dados de imagem do Item de Alimentacao
       type: object
       properties:
-        imageId:
+        id:
           description: Id único da imagem
           type: integer
           format: int32
@@ -1315,7 +1315,7 @@ components:
           enum:
             - Sandwich
             - Drink
-            - Extras
+            - Snack
             - Desserts
         description:
           description: Descrição do Item de Alimentacao

@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.customer;
+package br.com.tp.lanchescaieiras;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
