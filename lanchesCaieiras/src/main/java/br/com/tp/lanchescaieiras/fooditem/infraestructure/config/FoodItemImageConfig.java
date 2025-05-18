@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@ConfigurationProperties(prefix = "lncr.image")
+@ConfigurationProperties(prefix = "lncr.food-item-image")
 public class FoodItemImageConfig {
 
     private Integer maxSize;

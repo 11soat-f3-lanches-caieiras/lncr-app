@@ -3,7 +3,7 @@ package br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemCategory;
 import jakarta.persistence.*;
 
-@Table(name="food_item")
+@Table(name="food_item", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @Entity
 public class JpaFoodItemEntity {
     @Id

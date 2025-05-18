@@ -18,7 +18,7 @@ class CustomerListResponseTest {
         CustomerListResponse response = new CustomerListResponse(responseMetada, customers);
 
         Assertions.assertEquals(responseMetada, response.get_response());
-        Assertions.assertEquals(customers, response.getCustomers());
+        Assertions.assertEquals(customers, response.get_content());
     }
 
     @DisplayName("Should create CustomerListResponse with only customers and default response metadata")
@@ -28,7 +28,7 @@ class CustomerListResponseTest {
         CustomerListResponse response = new CustomerListResponse(customers);
 
         Assertions.assertNotNull(response.get_response());
-        Assertions.assertEquals(customers, response.getCustomers());
+        Assertions.assertEquals(customers, response.get_content());
     }
 
     @DisplayName("Should handle empty customer list")
@@ -38,7 +38,7 @@ class CustomerListResponseTest {
         CustomerListResponse response = new CustomerListResponse(customers);
 
         Assertions.assertNotNull(response.get_response());
-        Assertions.assertTrue(response.getCustomers().isEmpty());
+        Assertions.assertTrue(response.get_content().isEmpty());
     }
 
     @DisplayName("Should set and get response metadata")
@@ -56,8 +56,8 @@ class CustomerListResponseTest {
     void setAndGetCustomers() {
         List<Customer> customers = List.of(new Customer());
         CustomerListResponse response = new CustomerListResponse();
-        response.setCustomers(customers);
+        response.set_content(customers);
 
-        Assertions.assertEquals(customers, response.getCustomers());
+        Assertions.assertEquals(customers, response.get_content());
     }
 }

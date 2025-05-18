@@ -2,7 +2,6 @@ package br.com.tp.lanchescaieiras.customer.domain;
 
 import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CustomerResponseTest {
@@ -14,7 +13,7 @@ class CustomerResponseTest {
         CustomerResponse response = new CustomerResponse(responseMetada, customer);
 
         Assertions.assertEquals(responseMetada, response.get_response());
-        Assertions.assertEquals(customer, response.getCustomer());
+        Assertions.assertEquals(customer, response.get_content());
     }
 
     @Test
@@ -23,7 +22,7 @@ class CustomerResponseTest {
         CustomerResponse response = new CustomerResponse(customer);
 
         Assertions.assertNotNull(response.get_response());
-        Assertions.assertEquals(customer, response.getCustomer());
+        Assertions.assertEquals(customer, response.get_content());
     }
 
     @Test
@@ -31,7 +30,7 @@ class CustomerResponseTest {
         CustomerResponse response = new CustomerResponse(null);
 
         Assertions.assertNotNull(response.get_response());
-        Assertions.assertNull(response.getCustomer());
+        Assertions.assertNull(response.get_content());
     }
 
     @Test
@@ -47,8 +46,8 @@ class CustomerResponseTest {
     void setAndGetCustomer() {
         Customer customer = new Customer();
         CustomerResponse response = new CustomerResponse();
-        response.setCustomer(customer);
+        response.set_content(customer);
 
-        Assertions.assertEquals(customer, response.getCustomer());
+        Assertions.assertEquals(customer, response.get_content());
     }
 }

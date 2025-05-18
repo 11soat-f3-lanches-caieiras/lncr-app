@@ -6,6 +6,7 @@ import br.com.tp.lanchescaieiras.customer.domain.CustomerResponse;
 import br.com.tp.lanchescaieiras.customer.domain.Customer;
 
 import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.customer.infraestructure.config.CustomerConfig;
 import br.com.tp.lanchescaieiras.customer.infraestructure.exceptions.CustomerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +22,12 @@ import java.util.UUID;
 @RequestMapping("/customers")
 public class CustomerControllerImpl implements CustomerController {
 
+    public final CustomerConfig customerConfig;
     public final CustomerServiceImpl customerService;
 
-    public CustomerControllerImpl(CustomerServiceImpl customerService) {
+    public CustomerControllerImpl(CustomerServiceImpl customerService, CustomerConfig customerConfig) {
         this.customerService = customerService;
+        this.customerConfig = customerConfig;
     }
 
     @Override
@@ -33,7 +36,9 @@ public class CustomerControllerImpl implements CustomerController {
         customer = this.customerService.createCustomer(customer);
         Customer createdCustomer = new Customer();
         createdCustomer.setId(customer.getId());
-        return new ResponseEntity<>(new CustomerResponse(createdCustomer),HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header("Location", customerConfig.getLocationPrefix()+"/"+customer.getId())
+                .body(new CustomerResponse(createdCustomer));
     }
 
     @Override
@@ -72,6 +77,6 @@ public class CustomerControllerImpl implements CustomerController {
     @DeleteMapping("/{id}")
     public ResponseEntity<CustomerResponse> deleteCustomer(@PathVariable("id") Integer id) {
         this.customerService.deleteCustomer(id);
-        return new ResponseEntity<>(new CustomerResponse(new Customer()),HttpStatus.OK);
+        return new ResponseEntity<>(new CustomerResponse(null),HttpStatus.OK);
     }
 }

@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras.fooditem.adapters.inbound.controllers;
 
 import br.com.tp.lanchescaieiras.fooditem.domain.*;
 import br.com.tp.lanchescaieiras.fooditem.application.services.FoodItemServicesImpl;
+import br.com.tp.lanchescaieiras.fooditem.infraestructure.config.FoodItemConfig;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.config.FoodItemImageConfig;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
 import org.springframework.http.HttpStatus;
@@ -15,12 +16,15 @@ import java.util.Optional;
 @RequestMapping("/foodItems")
 public class FoodItemControllerImpl implements FoodItemController {
 
+
     public final FoodItemImageConfig imageConfig;
+    public final FoodItemConfig foodItemConfig;
     public final FoodItemServicesImpl foodItemServices;
 
-    public FoodItemControllerImpl(FoodItemServicesImpl foodItemServices, FoodItemImageConfig imageConfig) {
+    public FoodItemControllerImpl(FoodItemServicesImpl foodItemServices, FoodItemImageConfig imageConfig, FoodItemConfig foodItemConfig) {
         this.foodItemServices = foodItemServices;
         this.imageConfig = imageConfig;
+        this.foodItemConfig = foodItemConfig;
     }
 
     @Override
@@ -28,7 +32,11 @@ public class FoodItemControllerImpl implements FoodItemController {
     public ResponseEntity<FoodItemResponse> createFoodItem(@RequestBody FoodItem foodItem) {
         validateImages(foodItem); //Valida se as imagens estão com tamanho e extensão corretas
         invalidateImages(foodItem); //Remove as os dados das imagens são inválidas
-        return new ResponseEntity<>(new FoodItemResponse(this.foodItemServices.createFoodItem(foodItem)), HttpStatus.CREATED);
+        foodItem = this.foodItemServices.createFoodItem(foodItem);
+        FoodItem createdFoodItem = new FoodItem(foodItem.getId(), null,null,null,null,foodItem.getImages());
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header("Location", foodItemConfig.getLocationPrefix()+"/"+createdFoodItem.getId())
+                .body(new FoodItemResponse(createdFoodItem));
     }
 
     @Override
@@ -56,7 +64,7 @@ public class FoodItemControllerImpl implements FoodItemController {
     @DeleteMapping("/{id}")
     public ResponseEntity<FoodItemResponse> deleteFoodItemById(Integer id) {
         this.foodItemServices.deleteFoodItemById(id);
-        return new ResponseEntity<>(new FoodItemResponse(new FoodItem()),HttpStatus.OK);
+        return new ResponseEntity<>(new FoodItemResponse(null),HttpStatus.OK);
     }
 
     @Override

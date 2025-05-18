@@ -8,18 +8,18 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerListResponse {
     private ResponseMetada _response;
-    private List<Customer> customers;
+    private List<Customer> _content;
 
-    public CustomerListResponse(ResponseMetada _response, List<Customer> customers) {
+    public CustomerListResponse(ResponseMetada _response, List<Customer> _content) {
         this._response = _response;
-        this.customers = customers;
+        this._content = _content;
     }
 
     public CustomerListResponse() {
     }
 
-    public CustomerListResponse(List<Customer> customers) {
-        this.customers = customers;
+    public CustomerListResponse(List<Customer> _content) {
+        this._content = _content;
         this._response = new ResponseMetada();
     }
 
@@ -31,12 +31,12 @@ public class CustomerListResponse {
         this._response = _response;
     }
 
-    public List<Customer> getCustomers() {
-        return customers;
+    public List<Customer> get_content() {
+        return _content;
     }
 
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
+    public void set_content(List<Customer> _content) {
+        this._content = _content;
     }
 
 }

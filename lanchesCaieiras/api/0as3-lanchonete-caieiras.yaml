@@ -462,7 +462,6 @@ components:
               summary: Novo pedido do Cliente que se identificou
               value:
                 customer:
-                  customerId: 1
                   documentNumber: 11111111111
                   name: José da Silva
                 order:
@@ -636,7 +635,8 @@ components:
                 _response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2025-02-12T21:41:43.286Z'
-                customerId: 1
+                id: 1
+
       headers:
         Location:
           $ref: '#/components/headers/Location'
@@ -696,18 +696,19 @@ components:
                 _response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2025-02-12T21:41:43.286Z'
-                foodId: 1
+                id: 1
                 images:
-                  items:
                     - id: 1
-                      _data: XXXXX1 #base64
+                      locatiton: "https://localhost:8080/foodItems/1" #base64
                     - id: 2
-                      _data: XXXXX1
+                      locatiton: "https://localhost:8080/foodItems/2"
                     - id: 3
-                      _data: XXXXX1
+                      fileExtension: "Imagens inválidas. Extensões permitidas:jpg, png"
                     - id: 4
-                      _data: XXXXX1
+                      locatiton: "Tamanho da imagem excede o limite de 524288 bytes"
                     - id: 5
+                      locatiton: "https://localhost:8080/foodItems/1"
+
       headers:
         Location:
           $ref: '#/components/headers/Location'
@@ -729,14 +730,11 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ResponseTemplate'
-          examples:
-            PartialUpdated:
-              summary: Registro atualizado com sucesso.
-              value:
-                _response:
-                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                  _timestamp: '2025-02-12T21:41:43.286Z'
+            allOf:
+              - $ref: '#/components/schemas/ResponseTemplate'
+              - $ref: '#/components/schemas/CustomerTemplate'
+
+
     GetCustomer:
       description: Informação de cliente por documento (CPF)
       content:
@@ -750,7 +748,7 @@ components:
                 _response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2021-02-11T21:41:43.286Z'
-                customerId: 1
+                id: 1
                 documentNumber: '11111111111'
                 name: José da Silva
                 email: josedasilve@gmail.com
@@ -917,7 +915,7 @@ components:
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/CustomerTemplate/properties/customerId'
+        $ref: '#/components/schemas/CustomerTemplate/properties/id'
     CustomerOrderId:
       name: id
       in: path
@@ -1258,7 +1256,7 @@ components:
     CustomerTemplate:
       description: Modelo de dados do cliente
       properties:
-        customerId:
+        id:
           description: Id único do cliente
           type: integer
           readOnly: true
@@ -1280,7 +1278,7 @@ components:
           type: string
           pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' # Regex para validação de e-mail
           minLength: 1
-          maxLength: 255
+          maxLength: 100
     ImageTemplate:
       description: Modelo de dados de imagem do Item de Alimentacao
       type: object
@@ -1295,6 +1293,13 @@ components:
           description: Imagem do Item de Alimentacao em base64
           type: string
           format: base64
+        location:
+          description: URL da imagem do Item de Alimentacao
+          type: string
+          format: uri
+        fileExtension:
+            description: Mensagem de erro de extensão inválida
+            type: string
     FoodItemTemplate:
       description: Modelo de dados do Item de Alimentacao
       properties:

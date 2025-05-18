@@ -7,9 +7,12 @@ import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemRepository;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemMapper;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,11 +31,18 @@ public class JpaFoodItemRepositoryImpl implements FoodItemRepository {
 
     @Override
     public FoodItem save(FoodItem foodItem) {
-        JpaFoodItemEntity jpaFoodItemEntity = foodItemMapper.domainToJpa(foodItem);
-        JpaFoodItemEntity savedEntity = jpaFoodItemReposity.save(jpaFoodItemEntity);
-        FoodItem createdFoodItem = foodItemMapper.jpaToDomain(savedEntity);
-        createdFoodItem.setImages(foodItem.getImages());
-        return createdFoodItem;
+        try {
+            JpaFoodItemEntity jpaFoodItemEntity = foodItemMapper.domainToJpa(foodItem);
+            JpaFoodItemEntity savedEntity = jpaFoodItemReposity.save(jpaFoodItemEntity);
+            FoodItem createdFoodItem = foodItemMapper.jpaToDomain(savedEntity);
+            createdFoodItem.setImages(foodItem.getImages());
+            return createdFoodItem;
+        } catch (Exception e) {
+            if (e instanceof DataIntegrityViolationException) {
+                throw new FoodItemException("Nome do Item de Alimentação já está em uso", 409);
+            }
+            throw new FoodItemException("Erro ao criar o item de alimentação", 500);
+        }
     }
 
     @Override

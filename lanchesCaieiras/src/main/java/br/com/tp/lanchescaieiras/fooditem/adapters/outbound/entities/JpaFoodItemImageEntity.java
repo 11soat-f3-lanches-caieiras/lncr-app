@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Table(name = "food_item_image")
 @Entity
+
 public class JpaFoodItemImageEntity {
     @Id
     public Integer id;

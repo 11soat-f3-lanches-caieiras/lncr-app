@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras.fooditem.application.services;
 
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemCategory;
+import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemRepository;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -16,7 +16,11 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 lncr:
-  image:
+  customer:
+    location-prefix: "https://localhost:8080/customers"
+  food-item:
+    location-prefix: "https://localhost:8080/foodItems"
+  food-item-image:
     location-prefix: "https://localhost:8080/foodItems/image"
     directory: "../storage/images/"
     maxSize: 524288 # 512 KB

@@ -6,18 +6,18 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerResponse {
     private ResponseMetada _response;
-    private Customer customer;
+    private Customer _content;
 
     public CustomerResponse() {
     }
 
-    public CustomerResponse(ResponseMetada _response, Customer customer) {
+    public CustomerResponse(ResponseMetada _response, Customer _content) {
         this._response = _response;
-        this.customer = customer;
+        this._content = _content;
     }
 
-    public CustomerResponse(Customer customer) {
-        this.customer = customer;
+    public CustomerResponse(Customer _content) {
+        this._content = _content;
         this._response = new ResponseMetada();
     }
 
@@ -29,11 +29,11 @@ public class CustomerResponse {
         this._response = _response;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Customer get_content() {
+        return _content;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void set_content(Customer _content) {
+        this._content = _content;
     }
 }

@@ -1,14 +1,17 @@
 package br.com.tp.lanchescaieiras.fooditem.adapters.outbound.repositories;
 
+import br.com.tp.lanchescaieiras.fooditem.application.services.FoodItemServicesImpl;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItemImageEntity;
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.storage.FoodItemImageStorage;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImageRepository;
+import br.com.tp.lanchescaieiras.fooditem.infraestructure.config.FoodItemImageConfig;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemImageMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,19 +19,18 @@ import java.util.List;
 @Repository
 public class JpaFoodItemImageRepositoryImpl implements FoodItemImageRepository {
 
-    @Value("${lncr.image.location-prefix}")
-    private String locationPrefix;
-
     public final JpaFoodItemImageRepository jpaFoodItemImageRepository;
     public final FoodItemImageStorage foodItemImageStorage;
     public final FoodItemImageMapper foodItemImageMapper;
+    public final FoodItemImageConfig foodItemImageConfig;
 
 
     public JpaFoodItemImageRepositoryImpl(@Lazy JpaFoodItemImageRepository jpaFoodItemImageRepository, FoodItemImageMapper foodItemImageMapper,
-                                          FoodItemImageStorage foodItemImageStorage) {
+                                          FoodItemImageStorage foodItemImageStorage, FoodItemImageConfig foodItemImageConfig) {
         this.jpaFoodItemImageRepository = jpaFoodItemImageRepository;
         this.foodItemImageMapper = foodItemImageMapper;
         this.foodItemImageStorage = foodItemImageStorage;
+        this.foodItemImageConfig = foodItemImageConfig;
     }
 
     @Override
@@ -49,7 +51,7 @@ public class JpaFoodItemImageRepositoryImpl implements FoodItemImageRepository {
                 .stream()
                 .toList();
         for (JpaFoodItemImageEntity jpaFoodItemImageEntity : jpaFoodItemImageEntityList) {
-            jpaFoodItemImageEntity.setLocation(locationPrefix + "/" + jpaFoodItemImageEntity.getId());
+            jpaFoodItemImageEntity.setLocation(foodItemImageConfig.getLocationPrefix() + "/" + jpaFoodItemImageEntity.getId());
         }
         foodItem.setImages(jpaFoodItemImageEntityList.stream()
                 .map(foodItemImageMapper::jpaToDomain)
@@ -87,7 +89,7 @@ public class JpaFoodItemImageRepositoryImpl implements FoodItemImageRepository {
         }
 
         if (foodItemImage.get_data() != null) {
-            jpaFoodItemImageEntity.setLocation(locationPrefix + "/" + jpaFoodItemImageEntity.getId());
+            jpaFoodItemImageEntity.setLocation(foodItemImageConfig.getLocationPrefix() + "/" + jpaFoodItemImageEntity.getId());
             jpaFoodItemImageEntity.set_data(foodItemImage._data);
             foodItemImageStorage.saveImageFile(jpaFoodItemImageEntity);
         }
@@ -119,7 +121,7 @@ public class JpaFoodItemImageRepositoryImpl implements FoodItemImageRepository {
         JpaFoodItemImageEntity jpaFoodItemImageEntity = new JpaFoodItemImageEntity();
         jpaFoodItemImageEntity.setFoodItemId(foodItemId);
         jpaFoodItemImageEntity = foodItemImageMapper.domainToJpa(foodItemImage, foodItemId, index + 1);
-        jpaFoodItemImageEntity.setLocation(locationPrefix + "/" + jpaFoodItemImageEntity.getId());
+        jpaFoodItemImageEntity.setLocation(foodItemImageConfig.getLocationPrefix() + "/" + jpaFoodItemImageEntity.getId());
         return jpaFoodItemImageEntity;
     }
 

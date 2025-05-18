@@ -18,15 +18,15 @@ public class FoodItem {
 
     @Enumerated(EnumType.STRING)
     public FoodItemCategory category;
-    public List<FoodItemImage> foodItemImages;
+    public List<FoodItemImage> images;
 
-    public FoodItem(Integer id, String name, String description, Double price, FoodItemCategory category, List<FoodItemImage> foodItemImages) {
+    public FoodItem(Integer id, String name, String description, Double price, FoodItemCategory category, List<FoodItemImage> images) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
-        this.foodItemImages = foodItemImages;
+        this.images = images;
     }
 
     public FoodItem() {
@@ -82,11 +82,11 @@ public class FoodItem {
 
 
     public List<FoodItemImage> getImages() {
-        return foodItemImages;
+        return images;
     }
 
     public void setImages(List<FoodItemImage> foodItemImages) {
-        this.foodItemImages = foodItemImages;
+        this.images = foodItemImages;
     }
 
 

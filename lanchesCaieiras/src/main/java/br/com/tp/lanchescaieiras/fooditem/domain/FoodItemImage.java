@@ -9,8 +9,6 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FoodItemImage {
-
-
     public Integer id;
     public String _data;
     public String location;

@@ -5,6 +5,7 @@ import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.storage.FoodItemImag
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImageRepository;
+import br.com.tp.lanchescaieiras.fooditem.infraestructure.config.FoodItemImageConfig;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemImageMapper;
 import org.junit.jupiter.api.Assertions;
@@ -20,7 +21,8 @@ class JpaFoodItemImageRepositoryImplTest {
     private final JpaFoodItemImageRepository jpaRepository = Mockito.mock(JpaFoodItemImageRepository.class);
     private final FoodItemImageStorage storage = Mockito.mock(FoodItemImageStorage.class);
     private final FoodItemImageMapper mapper = Mockito.mock(FoodItemImageMapper.class);
-    private final JpaFoodItemImageRepositoryImpl repository = new JpaFoodItemImageRepositoryImpl(jpaRepository, mapper, storage);
+    private final FoodItemImageConfig foodItemImageConfig = new FoodItemImageConfig();
+    private final JpaFoodItemImageRepositoryImpl repository = new JpaFoodItemImageRepositoryImpl(jpaRepository, mapper, storage, foodItemImageConfig);
 
     @Test
     void deveSalvarImagensDeUmFoodItem() {
