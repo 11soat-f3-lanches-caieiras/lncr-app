@@ -16,6 +16,11 @@ public class CustomerResponse {
         this.customer = customer;
     }
 
+    public CustomerResponse(Customer customer) {
+        this.customer = customer;
+        this._response = new ResponseMetada();
+    }
+
     public ResponseMetada get_response() {
         return _response;
     }

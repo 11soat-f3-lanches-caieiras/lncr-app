@@ -17,4 +17,9 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 lncr:
   image:
-    location-prefix: "https://localhost:8080/foodItems/images/"
+    location-prefix: "https://localhost:8080/foodItems/image"
+    directory: "../storage/images/"
+    maxSize: 524288 # 512 KB
+    extensions:
+      ".jpg": "FFD8"
+      ".png": "89504E47"

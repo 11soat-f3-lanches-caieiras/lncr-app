@@ -30,14 +30,10 @@ public class CustomerControllerImpl implements CustomerController {
     @Override
     @PostMapping
     public ResponseEntity<CustomerResponse> createCustomer(@RequestBody Customer customer) {
-        Customer responseCustomer = this.customerService.createCustomer(customer);
-        responseCustomer.setName(null);
-        responseCustomer.setEmail(null);
-        responseCustomer.setDocumentNumber(null);
-        CustomerResponse createdCustomer = new CustomerResponse(
-                new ResponseMetada(UUID.randomUUID().toString(), OffsetDateTime.now().toString()),
-                responseCustomer);
-        return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
+        customer = this.customerService.createCustomer(customer);
+        Customer createdCustomer = new Customer();
+        createdCustomer.setId(customer.getId());
+        return new ResponseEntity<>(new CustomerResponse(createdCustomer),HttpStatus.CREATED);
     }
 
     @Override
@@ -47,24 +43,21 @@ public class CustomerControllerImpl implements CustomerController {
             throw new IllegalArgumentException("Limite deve ser maior que 0 e menor ou igual a 50");
         }
         List<Customer> customerList = this.customerService.getAllCustomers(_limit.orElse(10));
-        CustomerListResponse response = new CustomerListResponse(
-            new ResponseMetada(UUID.randomUUID().toString(), OffsetDateTime.now().toString()),
-            customerList);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(new CustomerListResponse(customerList), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable("id") Integer id) {
         Optional<Customer> customer = this.customerService.getCustomerById(id);
-        return getCustomerResponseEntity(customer);
+        return new ResponseEntity<>(new CustomerResponse(customer.get()),HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/documentNumber/{documentNumber}")
     public ResponseEntity<CustomerResponse> getCustomerByDocumentNumber(@PathVariable("documentNumber") String documentNumber) {
         Optional<Customer> customer = this.customerService.getCustomerByDocumentNumber(documentNumber);
-        return getCustomerResponseEntity(customer);
+        return new ResponseEntity<>(new CustomerResponse(customer.get()),HttpStatus.OK);
     }
 
 
@@ -72,36 +65,13 @@ public class CustomerControllerImpl implements CustomerController {
     @PatchMapping("/{id}")
     public ResponseEntity<CustomerResponse> partialUpdateCustomer(@RequestBody Customer customer, @PathVariable Integer id) {
         Customer updatedCustomer = this.customerService.partialUpdateCustomer(customer, id);
-        return getCustomerResponseEntity(updatedCustomer);
+        return new ResponseEntity<>(new CustomerResponse(updatedCustomer),HttpStatus.OK);
     }
 
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<CustomerResponse> deleteCustomer(@PathVariable("id") Integer id) {
-        Boolean deleted = this.customerService.deleteCustomer(id);
-        if (deleted) {
-            return new ResponseEntity<>(new CustomerResponse(new ResponseMetada(UUID.randomUUID().toString(), OffsetDateTime.now().toString()), null), HttpStatus.OK);
-        } else {
-            throw new CustomerException("Cliente não encontrado", 404);
-        }
+        this.customerService.deleteCustomer(id);
+        return new ResponseEntity<>(new CustomerResponse(new Customer()),HttpStatus.OK);
     }
-
-    private ResponseEntity<CustomerResponse> getCustomerResponseEntity(Customer customer){
-        return getCustomerResponseEntity(Optional.of(customer));
-    }
-
-    private ResponseEntity<CustomerResponse> getCustomerResponseEntity(Optional<Customer> customer) {
-        if (customer.isPresent()) {
-            CustomerResponse getCustomer = new CustomerResponse(new ResponseMetada(),customer.orElse(null));
-            getCustomer.get_response().set_traceId(UUID.randomUUID().toString());
-            getCustomer.get_response().set_timestamp(OffsetDateTime.now().toString());
-            return new ResponseEntity<>(getCustomer, HttpStatus.OK);
-        } else{
-            throw new CustomerException("Cliente não encontrado", 404);
-        }
-    }
-
-
-
-
 }

@@ -18,6 +18,11 @@ public class CustomerListResponse {
     public CustomerListResponse() {
     }
 
+    public CustomerListResponse(List<Customer> customers) {
+        this.customers = customers;
+        this._response = new ResponseMetada();
+    }
+
     public ResponseMetada get_response() {
         return _response;
     }

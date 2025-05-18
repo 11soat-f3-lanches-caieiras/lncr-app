@@ -1,50 +1,78 @@
 package br.com.tp.lanchescaieiras.customer.domain;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 class CustomerTest {
 
     @Test
-    void custructorNoArgs(){
+    void documentNumberIsValidWithValidCPF() {
         Customer customer = new Customer();
-        assertNotNull(customer);
-    }
-
-    @Test
-    void constructorWithArgs() {
-        Customer customer = new Customer(1, "15826123907", "Teste da Silva", "email@email.com.br");
-        assertNotNull(customer);
-    }
-
-    @Test
-    void documentNumberIsValid_Valid() {
-        Customer customer = new Customer();
-        customer.setDocumentNumber("15826123907");
+        customer.setDocumentNumber("12345678909");
         assertTrue(customer.documentNumberIsValid());
     }
 
     @Test
-    void documentNumberIsValid_Invalid() {
+    void documentNumberIsValidWithInvalidCPF() {
         Customer customer = new Customer();
-        customer.setDocumentNumber("111111111111");
+        customer.setDocumentNumber("12345678900");
         assertFalse(customer.documentNumberIsValid());
     }
 
     @Test
-    void emailIsValid_Valid() {
+    void documentNumberIsValidWithRepeatedDigits() {
         Customer customer = new Customer();
-        customer.setEmail("email@email.com.br");
-        assertTrue(customer.emailIsValid());
-        customer.setEmail("email@email.com");
+        customer.setDocumentNumber("11111111111");
+        assertFalse(customer.documentNumberIsValid());
+    }
+
+    @Test
+    void documentNumberIsValidWithNullDocumentNumber() {
+        Customer customer = new Customer();
+        customer.setDocumentNumber(null);
+        assertThrows(NullPointerException.class, customer::documentNumberIsValid);
+    }
+
+    @Test
+    void documentNumberIsValidWithNonNumericCharacters() {
+        Customer customer = new Customer();
+        customer.setDocumentNumber("12345abc909");
+        assertFalse(customer.documentNumberIsValid());
+    }
+
+    @Test
+    void emailIsValidWithValidEmail() {
+        Customer customer = new Customer();
+        customer.setEmail("example@test.com");
         assertTrue(customer.emailIsValid());
     }
-    @Test
-    void emailIsValid_Invalid() {
-        Customer customer = new Customer();
-        customer.setEmail("email.email.com.br");
-        assertFalse(customer.emailIsValid());
 
+    @Test
+    void emailIsValidWithInvalidEmail() {
+        Customer customer = new Customer();
+        customer.setEmail("example@test");
+        assertFalse(customer.emailIsValid());
+    }
+
+    @Test
+    void emailIsValidWithNullEmail() {
+        Customer customer = new Customer();
+        customer.setEmail(null);
+        assertFalse(customer.emailIsValid());
+    }
+
+    @Test
+    void emailIsValidWithEmptyEmail() {
+        Customer customer = new Customer();
+        customer.setEmail("");
+        assertFalse(customer.emailIsValid());
+    }
+
+    @Test
+    void emailIsValidWithSpecialCharacters() {
+        Customer customer = new Customer();
+        customer.setEmail("user+name@domain.co.uk");
+        assertTrue(customer.emailIsValid());
     }
 }

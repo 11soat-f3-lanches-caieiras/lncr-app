@@ -1,7 +1,6 @@
 package br.com.tp.lanchescaieiras.customer.adapters.outbound.repositories;
 
 import br.com.tp.lanchescaieiras.customer.adapters.outbound.entities.JpaCustomerEntity;
-import br.com.tp.lanchescaieiras.customer.domain.CustomerResponse;
 import br.com.tp.lanchescaieiras.customer.infraestructure.exceptions.CustomerException;
 import br.com.tp.lanchescaieiras.customer.mappers.CustomerMapper;
 import br.com.tp.lanchescaieiras.customer.domain.Customer;
@@ -41,8 +40,6 @@ public class JpaCustomerReposityImpl implements CustomerRepository {
 
     @Override
     public Optional<Customer> partialUpdateById(Customer customer, Integer id) {
-
-
         return this.jpaCustomerRepository.findById(id).map(
                 existingEntity ->
                 {
@@ -62,29 +59,30 @@ public class JpaCustomerReposityImpl implements CustomerRepository {
     }
 
     @Override
-    public Boolean deleteById(Integer id) {
+    public void deleteById(Integer id) {
         Optional<JpaCustomerEntity> jpaCustomerEntity = this.jpaCustomerRepository.findById(id);
         if (jpaCustomerEntity.isPresent()) {
             try {
                 this.jpaCustomerRepository.delete(jpaCustomerEntity.get());
-                return true;
             } catch (Exception e) {
                 throw new CustomerException("Erro ao deletar o cliente com ID: " + id, 500);
             }
         }
-        return false; // Cliente não encontrado
+        else{
+            throw new CustomerException("Cliente não encontrado com o ID: " + id, 404);
+        }
     }
 
 
     @Override
     public Optional<Customer> findById(Integer id) {
-        return this.jpaCustomerRepository.findById  (id)
+        return this.jpaCustomerRepository.findById (id)
                 .map(customerMapper::jpaToDomain);
     }
 
     @Override
-    public List<Customer> findAll(Integer limit) {
-        return this.jpaCustomerRepository.findAll(Pageable.ofSize(limit))
+    public List<Customer> findAll(Integer _limit) {
+        return this.jpaCustomerRepository.findAll(Pageable.ofSize(_limit))
                 .stream()
                 .map(customerMapper::jpaToDomain)
                 .toList();

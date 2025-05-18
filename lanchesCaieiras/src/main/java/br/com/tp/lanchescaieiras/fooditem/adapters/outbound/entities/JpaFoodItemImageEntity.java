@@ -9,25 +9,39 @@ import org.springframework.stereotype.Component;
 @Entity
 public class JpaFoodItemImageEntity {
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     public Integer id;
+
     public Integer foodItemId;
+
+    @Transient
+    public String _data;
+
+    @Transient
+    public String location;
+
     public String fileName;
 
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    @Value("${lncr.image.location-prefix}")
-    private String imagePath;
+    @Transient
+    public String fileExtension;
 
     public JpaFoodItemImageEntity() {
     }
 
-    public JpaFoodItemImageEntity(Integer id, Integer foodItemId, String fileName) {
+    public JpaFoodItemImageEntity(Integer id, Integer foodItemId, String _data, String location, String fileName, String fileExtension, String imagePath) {
         this.id = id;
         this.foodItemId = foodItemId;
+        this._data = _data;
+        this.location = location;
         this.fileName = fileName;
+        this.fileExtension = fileExtension;
+    }
+
+    public Integer setImageId(Integer i, Integer foodItemId) {
+        return Integer.parseInt(foodItemId.toString().concat(i.toString()));
+    }
+
+    public String setFileName(Integer imageId, String fileExtension) {
+        return imageId.toString() + "." + fileExtension;
     }
 
     public Integer getId() {
@@ -46,6 +60,18 @@ public class JpaFoodItemImageEntity {
         this.foodItemId = foodItemId;
     }
 
+    public void set_data(String _data) {
+        this._data = _data;
+    }
+
+    public String get_data() {
+        return _data;
+    }
+
+   public void setLocation(String location) {
+        this.location = location;
+    }
+
     public String getFileName() {
         return fileName;
     }
@@ -54,15 +80,13 @@ public class JpaFoodItemImageEntity {
         this.fileName = fileName;
     }
 
-    public Integer setImageId(Integer i, Integer foodItemId) {
-        return Integer.parseInt(foodItemId.toString().concat(i.toString()));
+    public String getFileExtension() {
+        return fileExtension;
     }
 
-    public String setFileName(Integer imageId, String fileExtension) {
-        return imageId.toString() + "." + fileExtension;
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
     }
 
-    public String setLocation(String imagePath, Integer id) {
-        return imagePath + "/" + id;
-    }
+
 }

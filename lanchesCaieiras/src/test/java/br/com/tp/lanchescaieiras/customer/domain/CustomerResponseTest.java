@@ -1,41 +1,54 @@
 package br.com.tp.lanchescaieiras.customer.domain;
 
 import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerResponseTest {
 
     @Test
-    void testNoArgsConstructor() {
-        CustomerResponse response = new CustomerResponse();
-        assertNotNull(response);
-        assertNull(response.get_response());
-        assertNull(response.getCustomer());
-    }
-
-    @Test
-    void testAllArgsConstructor() {
-        ResponseMetada responseMetada = new ResponseMetada("trace123", "2023-01-01T10:00:00Z", "Success");
+    void createWithResponseAndCustomer() {
+        ResponseMetada responseMetada = new ResponseMetada();
         Customer customer = new Customer();
         CustomerResponse response = new CustomerResponse(responseMetada, customer);
 
-        assertNotNull(response);
-        assertEquals(responseMetada, response.get_response());
-        assertEquals(customer, response.getCustomer());
+        Assertions.assertEquals(responseMetada, response.get_response());
+        Assertions.assertEquals(customer, response.getCustomer());
     }
 
     @Test
-    void testSettersAndGetters() {
-        ResponseMetada responseMetada = new ResponseMetada("trace123", "2023-01-01T10:00:00Z", "Success");
+    void createWithOnlyCustomer() {
+        Customer customer = new Customer();
+        CustomerResponse response = new CustomerResponse(customer);
+
+        Assertions.assertNotNull(response.get_response());
+        Assertions.assertEquals(customer, response.getCustomer());
+    }
+
+    @Test
+    void handleNullCustomer() {
+        CustomerResponse response = new CustomerResponse(null);
+
+        Assertions.assertNotNull(response.get_response());
+        Assertions.assertNull(response.getCustomer());
+    }
+
+    @Test
+    void setAndGetResponseMetadata() {
+        ResponseMetada responseMetada = new ResponseMetada();
+        CustomerResponse response = new CustomerResponse();
+        response.set_response(responseMetada);
+
+        Assertions.assertEquals(responseMetada, response.get_response());
+    }
+
+    @Test
+    void setAndGetCustomer() {
         Customer customer = new Customer();
         CustomerResponse response = new CustomerResponse();
-
-        response.set_response(responseMetada);
         response.setCustomer(customer);
 
-        assertEquals(responseMetada, response.get_response());
-        assertEquals(customer, response.getCustomer());
+        Assertions.assertEquals(customer, response.getCustomer());
     }
 }

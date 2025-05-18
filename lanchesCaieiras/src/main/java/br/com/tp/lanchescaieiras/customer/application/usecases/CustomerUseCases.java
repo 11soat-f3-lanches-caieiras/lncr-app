@@ -15,6 +15,6 @@ public interface CustomerUseCases {
     List<Customer> getAllCustomers(Integer limit);
     Optional<Customer> getCustomerByDocumentNumber(String documentNumber);
     Customer partialUpdateCustomer(Customer customer, Integer id);
-    Boolean deleteCustomer(Integer id);
+    void deleteCustomer(Integer id);
 
 }

@@ -2,6 +2,9 @@ package br.com.tp.lanchescaieiras.commons.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.time.Instant;
+import java.util.UUID;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseMetada {
     private String _traceId;
@@ -9,6 +12,9 @@ public class ResponseMetada {
     private String _message;
 
     public ResponseMetada() {
+        this._traceId = UUID.randomUUID().toString();
+        this._timestamp = Instant.now().toString();
+        this._message = null;
     }
     public ResponseMetada(String _traceId, String _timestamp, String _message) {
         this._traceId = _traceId;

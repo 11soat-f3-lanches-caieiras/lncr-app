@@ -61,17 +61,8 @@ public class CustomerServiceImpl implements CustomerUseCases {
     }
 
     @Override
-    public Boolean deleteCustomer(Integer id) {
-        try {
-            Boolean deleted = this.customerRepository.deleteById(id);
-            if (deleted) {
-                return true;
-            } else {
-                throw new CustomerException("Cliente não encontrado com o ID: " + id, 404);
-            }
-        } catch (Exception e) {
-            return false;
-        }
+    public void deleteCustomer(Integer id) {
+        this.customerRepository.deleteById(id);
     }
 
     public void validateDocumentNumber(Customer customer) {

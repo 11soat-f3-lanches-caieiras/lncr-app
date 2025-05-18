@@ -4,5 +4,5 @@ public enum FoodItemCategory {
     SANDWICH,
     DRINK,
     DESSERT,
-    SNACKS
+    SNACK
 }

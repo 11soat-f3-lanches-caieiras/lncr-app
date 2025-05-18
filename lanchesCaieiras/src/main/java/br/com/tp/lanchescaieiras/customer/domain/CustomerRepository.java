@@ -7,7 +7,7 @@ public interface CustomerRepository {
 
     Customer save(Customer customer);
 
-    List<Customer> findAll(Integer limit);
+    List<Customer> findAll(Integer _limit);
 
     Optional<Customer> findById(Integer id);
 
@@ -15,7 +15,7 @@ public interface CustomerRepository {
 
     Optional<Customer> partialUpdateById(Customer customer, Integer id);
 
-    Boolean deleteById(Integer id);
+    void deleteById(Integer id);
 
     Boolean  existsByDocumentNumber(String documentNumber);
 

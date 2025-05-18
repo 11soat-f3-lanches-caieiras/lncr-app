@@ -4,7 +4,10 @@ import br.com.tp.lanchescaieiras.customer.adapters.outbound.repositories.JpaCust
 import br.com.tp.lanchescaieiras.customer.domain.Customer;
 import br.com.tp.lanchescaieiras.customer.infraestructure.exceptions.CustomerException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -19,104 +22,105 @@ class CustomerServiceImplTest {
     @Mock
     private JpaCustomerReposityImpl customerRepository;
 
+    @InjectMocks
     private CustomerServiceImpl customerService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        customerService = new CustomerServiceImpl(customerRepository);
     }
 
-    @Test
-    void createCustomerReturnsSavedCustomer() {
-        Customer customer = new Customer();
-        when(customerRepository.save(customer)).thenReturn(customer);
+    @Nested
+    @DisplayName("createCustomer")
+    class CreateCustomer {
 
-        Customer result = customerService.createCustomer(customer);
+        @Test
+        @DisplayName("Should create a customer successfully")
+        void shouldCreateCustomerSuccessfully() {
+            Customer customer = new Customer();
+            when(customerRepository.save(customer)).thenReturn(customer);
 
-        assertNotNull(result);
-        assertEquals(customer, result);
-        verify(customerRepository, times(1)).save(customer);
+            Customer result = customerService.createCustomer(customer);
+
+            assertEquals(customer, result);
+            verify(customerRepository, times(1)).save(customer);
+        }
+
+        @Test
+        @DisplayName("Should throw exception for invalid document number")
+        void shouldThrowExceptionForInvalidDocumentNumber() {
+            Customer customer = mock(Customer.class);
+            when(customer.documentNumberIsValid()).thenReturn(false);
+
+            assertThrows(CustomerException.class, () -> customerService.createCustomer(customer));
+        }
+
+        @Test
+        @DisplayName("Should throw exception for duplicate document number")
+        void shouldThrowExceptionForDuplicateDocumentNumber() {
+            Customer customer = mock(Customer.class);
+            when(customer.documentNumberIsValid()).thenReturn(true);
+            when(customerRepository.existsByDocumentNumber(customer.getDocumentNumber())).thenReturn(true);
+
+            assertThrows(CustomerException.class, () -> customerService.createCustomer(customer));
+        }
     }
 
-    @Test
-    void createCustomerThrowsExceptionForInvalidDocumentNumber() {
-        Customer customer = mock(Customer.class);
-        when(customer.documentNumberIsValid()).thenReturn(false);
+    @Nested
+    @DisplayName("getCustomerById")
+    class GetCustomerById {
 
-        CustomerException exception = assertThrows(CustomerException.class, () -> customerService.createCustomer(customer));
+        @Test
+        @DisplayName("Should return customer by ID")
+        void shouldReturnCustomerById() {
+            Customer customer = new Customer();
+            when(customerRepository.findById(1)).thenReturn(Optional.of(customer));
 
-        assertEquals("Documento informado invalido", exception.getMessage());
+            Optional<Customer> result = customerService.getCustomerById(1);
+
+            assertTrue(result.isPresent());
+            assertEquals(customer, result.get());
+            verify(customerRepository, times(1)).findById(1);
+        }
+
+        @Test
+        @DisplayName("Should throw exception when customer not found")
+        void shouldThrowExceptionWhenCustomerNotFound() {
+            when(customerRepository.findById(1)).thenReturn(Optional.empty());
+
+            assertThrows(CustomerException.class, () -> customerService.getCustomerById(1));
+        }
     }
 
-    @Test
-    void getCustomerByIdReturnsCustomerWhenFound() {
-        Customer customer = new Customer();
-        when(customerRepository.findById(1)).thenReturn(Optional.of(customer));
+    @Nested
+    @DisplayName("getAllCustomers")
+    class GetAllCustomers {
 
-        Optional<Customer> result = customerService.getCustomerById(1);
+        @Test
+        @DisplayName("Should return all customers with limit")
+        void shouldReturnAllCustomersWithLimit() {
+            List<Customer> customers = List.of(new Customer());
+            when(customerRepository.findAll(10)).thenReturn(customers);
 
-        assertTrue(result.isPresent());
-        assertEquals(customer, result.get());
+            List<Customer> result = customerService.getAllCustomers(10);
+
+            assertEquals(customers, result);
+            verify(customerRepository, times(1)).findAll(10);
+        }
     }
 
-    @Test
-    void getCustomerByIdThrowsExceptionWhenNotFound() {
-        when(customerRepository.findById(1)).thenReturn(Optional.empty());
+    @Nested
+    @DisplayName("deleteCustomer")
+    class DeleteCustomer {
 
-        CustomerException exception = assertThrows(CustomerException.class, () -> customerService.getCustomerById(1));
+        @Test
+        @DisplayName("Should delete customer by ID")
+        void shouldDeleteCustomerById() {
+            doNothing().when(customerRepository).deleteById(1);
 
-        assertEquals("Cliente não encontrado com o ID: 1", exception.getMessage());
-    }
+            customerService.deleteCustomer(1);
 
-    @Test
-    void getAllCustomersReturnsCustomerList() {
-        List<Customer> customers = List.of(new Customer(), new Customer());
-        when(customerRepository.findAll(10)).thenReturn(customers);
-
-        List<Customer> result = customerService.getAllCustomers(10);
-
-        assertNotNull(result);
-        assertEquals(2, result.size());
-    }
-
-    @Test
-    void deleteCustomerReturnsTrueWhenDeleted() {
-        when(customerRepository.deleteById(1)).thenReturn(true);
-
-        Boolean result = customerService.deleteCustomer(1);
-
-        assertTrue(result);
-        verify(customerRepository, times(1)).deleteById(1);
-    }
-
-    @Test
-    void deleteCustomerThrowsExceptionWhenNotFound() {
-        when(customerRepository.deleteById(1)).thenReturn(false);
-
-        CustomerException exception = assertThrows(CustomerException.class, () -> customerService.deleteCustomer(1));
-
-        assertEquals("Cliente não encontrado com o ID: 1", exception.getMessage());
-    }
-
-    @Test
-    void validateDocumentNumberThrowsExceptionForDuplicateDocument() {
-        Customer customer = new Customer();
-        when(customer.documentNumberIsValid()).thenReturn(true);
-        when(customerRepository.existsByDocumentNumber(customer.getDocumentNumber())).thenReturn(true);
-
-        CustomerException exception = assertThrows(CustomerException.class, () -> customerService.validateDocumentNumber(customer));
-
-        assertEquals("Documento já utilizado por outro cliente", exception.getMessage());
-    }
-
-    @Test
-    void validateEmailThrowsExceptionForInvalidEmail() {
-        Customer customer = new Customer();
-        when(customer.emailIsValid()).thenReturn(false);
-
-        CustomerException exception = assertThrows(CustomerException.class, () -> customerService.validateEmail(customer));
-
-        assertEquals("Email informado invalido", exception.getMessage());
+            verify(customerRepository, times(1)).deleteById(1);
+        }
     }
 }

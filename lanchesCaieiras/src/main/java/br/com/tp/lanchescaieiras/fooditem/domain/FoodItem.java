@@ -1,12 +1,15 @@
 package br.com.tp.lanchescaieiras.fooditem.domain;
 
-import br.com.tp.lanchescaieiras.commons.domain.Image;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
 import java.util.List;
 
+@JsonPropertyOrder({"id", "name", "description", "price", "category", "images"})
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FoodItem {
     public Integer id;
     public String name;
@@ -15,15 +18,15 @@ public class FoodItem {
 
     @Enumerated(EnumType.STRING)
     public FoodItemCategory category;
-    public List<Image> images;
+    public List<FoodItemImage> foodItemImages;
 
-    public FoodItem(Integer id, String name, String description, Double price, FoodItemCategory category, List<Image> images) {
+    public FoodItem(Integer id, String name, String description, Double price, FoodItemCategory category, List<FoodItemImage> foodItemImages) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
-        this.images = images;
+        this.foodItemImages = foodItemImages;
     }
 
     public FoodItem() {
@@ -78,12 +81,14 @@ public class FoodItem {
 
 
 
-    public List<Image> getImages() {
-        return images;
+    public List<FoodItemImage> getImages() {
+        return foodItemImages;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public void setImages(List<FoodItemImage> foodItemImages) {
+        this.foodItemImages = foodItemImages;
     }
+
+
 
 }
