@@ -1,18 +1,15 @@
 package br.com.tp.lanchescaieiras.fooditem.adapters.outbound.repositories;
 
-import br.com.tp.lanchescaieiras.customer.adapters.outbound.entities.JpaCustomerEntity;
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItemEntity;
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItemImageEntity;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemRepository;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
-import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemMapper;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
+import br.com.tp.lanchescaieiras.fooditem.application.mappers.FoodItemMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 

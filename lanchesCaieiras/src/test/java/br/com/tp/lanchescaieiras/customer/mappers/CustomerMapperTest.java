@@ -1,6 +1,7 @@
 package br.com.tp.lanchescaieiras.customer.mappers;
 
 import br.com.tp.lanchescaieiras.customer.adapters.outbound.entities.JpaCustomerEntity;
+import br.com.tp.lanchescaieiras.customer.application.mappers.CustomerMapper;
 import br.com.tp.lanchescaieiras.customer.domain.Customer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

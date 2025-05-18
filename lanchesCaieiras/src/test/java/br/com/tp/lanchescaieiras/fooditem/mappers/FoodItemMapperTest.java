@@ -1,6 +1,7 @@
 package br.com.tp.lanchescaieiras.fooditem.mappers;
 
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItemEntity;
+import br.com.tp.lanchescaieiras.fooditem.application.mappers.FoodItemMapper;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemCategory;
 import org.junit.jupiter.api.Assertions;

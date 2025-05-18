@@ -4,10 +4,9 @@ import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItem
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.storage.FoodItemImageStorage;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
-import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImageRepository;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.config.FoodItemImageConfig;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
-import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemImageMapper;
+import br.com.tp.lanchescaieiras.fooditem.application.mappers.FoodItemImageMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

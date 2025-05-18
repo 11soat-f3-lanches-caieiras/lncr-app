@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.customer.mappers;
+package br.com.tp.lanchescaieiras.customer.application.mappers;
 
 import br.com.tp.lanchescaieiras.customer.adapters.outbound.entities.JpaCustomerEntity;
 import br.com.tp.lanchescaieiras.customer.domain.Customer;

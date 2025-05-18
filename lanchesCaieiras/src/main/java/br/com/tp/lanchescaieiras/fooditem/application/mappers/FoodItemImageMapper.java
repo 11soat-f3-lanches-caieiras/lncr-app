@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.fooditem.mappers;
+package br.com.tp.lanchescaieiras.fooditem.application.mappers;
 
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItemImageEntity;

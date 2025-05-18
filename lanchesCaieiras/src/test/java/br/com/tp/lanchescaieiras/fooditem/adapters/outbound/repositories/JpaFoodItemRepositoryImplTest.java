@@ -4,7 +4,7 @@ import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItem
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemCategory;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
-import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemMapper;
+import br.com.tp.lanchescaieiras.fooditem.application.mappers.FoodItemMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
