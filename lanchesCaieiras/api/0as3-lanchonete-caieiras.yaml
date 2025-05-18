@@ -7,7 +7,7 @@ info:
     name: Tito de Morais Parizotto
   version: 1.0.0
 servers:
-  - url: 'https://localhost:8080/lanchoneteCaieiras/v1'
+  - url: 'http://localhost:8080/'
 tags:
   - name: CollectionOperations
     description: Operações que utilizam arquetipo Colecoes
@@ -319,6 +319,56 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /foodItems/image/{id}:
+    get:
+      operationId: getFoodItemImage
+      description: Buscar imagem de um item de alimentacao por Id
+      summary: Buscar imagem de um item de alimentacao por Id
+      tags:
+          - ManagedOperations
+      parameters:
+          - $ref: '#/components/parameters/ImageId'
+      responses:
+          '200':
+            $ref: '#/components/responses/GetImage'
+          '404':
+            $ref: '#/components/responses/NotFound'
+          '500':
+            $ref: '#/components/responses/InternalServerError'
+    put:
+      operationId: updateImage
+      description: Atualizar imagem de um item de alimentação
+      summary: Atualizar imagem de um item de alimentação
+      security:
+        - basicAuth: []
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: "#/components/parameters/ImageId"
+      responses:
+        '200':
+          $ref: "#/components/responses/UpdatedFoodItemImage"
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: "#/components/responses/InternalServerError"
+    delete:
+        operationId: deleteImage
+        description: Deletar imagem de um item de alimentação
+        summary: Deletar imagem de um item de alimentação
+        security:
+            - basicAuth: []
+        tags:
+            - ManagedOperations
+        parameters:
+            - $ref: "#/components/parameters/ImageId"
+        responses:
+            '200':
+              $ref: "#/components/responses/DeletedResponse"
+            '404':
+              $ref: '#/components/responses/NotFound'
+            '500':
+              $ref: "#/components/responses/InternalServerError"
   /kitchenOrders:
     post:
       operationId: createKitchenOrder
@@ -564,13 +614,6 @@ components:
           schema:
             $ref: '#/components/schemas/PartialUpdateFoodItemType'
           examples:
-            UpdateInfo:
-              summary: Atualizar informacoes de um Item de Alimentacao
-              value:
-                name: X-Salada
-                description: 'Pão de Hamburger com gergelim, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup.'
-                category: Sandwich
-                price: 19.99
             UpdateTwoOrMorFields:
               summary: Atualizar um ou mais campos de um Item de Alimentacao
               value:
@@ -636,7 +679,6 @@ components:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2025-02-12T21:41:43.286Z'
                 id: 1
-
       headers:
         Location:
           $ref: '#/components/headers/Location'
@@ -752,6 +794,7 @@ components:
                 documentNumber: '11111111111'
                 name: José da Silva
                 email: josedasilve@gmail.com
+
     GetCustomerOrder:
       description: Informação de um pedido de um cliente
       content:
@@ -803,6 +846,21 @@ components:
                       price: 9.9
                   totalCost: 39.8
                   status: Preparing
+    GetImage:
+      description: Obter dados de uma imagem
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GetImageType'
+          examples:
+            GetImage:
+              summary: Imagem encontrada com sucesso
+              value:
+                response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2021-02-11T21:41:43.286Z'
+                _data: "iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0I" #base64
+                fileName: "11.png"
     GetKitchenOrder:
       description: Informação de uma ordem de pedido
       content:
@@ -848,6 +906,27 @@ components:
                 description: 'Pão de Hamburger, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup.'
                 category: Sandwich
                 price: 29.99
+                images:
+                  - id: 1
+                    location: "https://localhost:8080/foodItems/1" #base64
+                  - id: 2
+                    location: "https://localhost:8080/foodItems/2"
+    UpdatedFoodItemImage:
+      description: Imagem atualizada.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateFoodItemImageType'
+          exemples:
+            UpdatedImage:
+              summary: Imagem atualizada com sucesso
+              value:
+                response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+        headers:
+          Location:
+            $ref: '#/components/headers/Location'
     InternalServerError:
       description: Internal Server Error
       content:
@@ -922,6 +1001,12 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/OrderTemplate/properties/id'
+    ImageId:
+      name: id
+      in: path
+      requered: true
+      schema:
+        $ref: '#/components/schemas/ImageTemplate/properties/id'
     CustomerOrderNewStatus:
       description: Parâmetro para atualizar status do pedido do cliente
       name: newStatus
@@ -1097,6 +1182,13 @@ components:
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/KitchenOrderTemplate'
+
+    GetImageType:
+      description:
+        allOf:
+          - $ref: '#/components/schemas/ResponseTemplate'
+          - $ref: '#/components/schemas/ImageTemplate/properties/_data'
+          - $ref: '#/components/schemas/ImageTemplate/properties/_data'
     ListCustomersType:
       description: Lista de clientes
       allOf:
@@ -1161,6 +1253,11 @@ components:
                 required:
                   - order
                   - payment
+    UpdateFoodItemImageType:
+      description: Retorno para Atualização de imagem.
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+
     LimitTemplate:
       description: Número de registros a serem retornados em uma consulta
       type: integer

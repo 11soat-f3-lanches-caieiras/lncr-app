@@ -69,15 +69,21 @@ public class FoodItemControllerImpl implements FoodItemController {
 
     @Override
     @GetMapping("/image/{id}")
-    public ResponseEntity<FoodItemImageResponse> getImageData(Integer id) {
-        return new ResponseEntity<>(new FoodItemImageResponse(this.foodItemServices.getImageData(id)), HttpStatus.OK);
+    public ResponseEntity<FoodItemImageDataResponse> getImageData(Integer id) {
+        FoodItemImage foodItemImage = this.foodItemServices.getImageData(id);
+        return new ResponseEntity<>(new FoodItemImageDataResponse(
+                foodItemImage.get_data(), foodItemImage.getFileName()),
+                HttpStatus.OK);
     }
 
     @Override
     @PutMapping("/image/{id}")
-    public ResponseEntity<FoodItemImageResponse> updateImageById(Integer id, FoodItemImage foodItemImage) {
+    public ResponseEntity<FoodItemImageDataResponse> updateImageById(Integer id, FoodItemImage foodItemImage) {
         validateImage(foodItemImage);
-        return new ResponseEntity<>(new FoodItemImageResponse(this.foodItemServices.updateImageById(id, foodItemImage)), HttpStatus.OK);
+        foodItemImage = this.foodItemServices.updateImageById(id, foodItemImage);
+        return ResponseEntity.status(HttpStatus.OK)
+                .header("Location",    imageConfig.getLocationPrefix()+"/"+ id)
+                .body(new FoodItemImageDataResponse());
     }
 
 

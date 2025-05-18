@@ -19,7 +19,7 @@ public interface FoodItemController {
 
     ResponseEntity<FoodItemResponse> deleteFoodItemById(@PathVariable Integer id);
 
-    ResponseEntity<FoodItemImageResponse> getImageData(@PathVariable Integer id);
+    ResponseEntity<FoodItemImageDataResponse> getImageData(@PathVariable Integer id);
 
-    ResponseEntity<FoodItemImageResponse> updateImageById(@PathVariable Integer id, @RequestBody FoodItemImage foodItemImage);
+    ResponseEntity<FoodItemImageDataResponse> updateImageById(@PathVariable Integer id, @RequestBody FoodItemImage foodItemImage);
 }

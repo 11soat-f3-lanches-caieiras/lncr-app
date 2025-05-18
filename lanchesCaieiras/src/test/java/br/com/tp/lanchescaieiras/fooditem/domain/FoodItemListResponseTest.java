@@ -15,10 +15,10 @@ class FoodItemListResponseTest {
         FoodItemListResponse response = new FoodItemListResponse(responseMetada, List.of(foodItem));
 
         Assertions.assertNotNull(response.getResponseMetada());
-        Assertions.assertNotNull(response.getFoodItems());
+        Assertions.assertNotNull(response.get_content());
         Assertions.assertEquals("200", response.getResponseMetada().getCode());
-        Assertions.assertEquals(1, response.getFoodItems().size());
-        Assertions.assertEquals("Sanduíche Natural", response.getFoodItems().get(0).getName());
+        Assertions.assertEquals(1, response.get_content().size());
+        Assertions.assertEquals("Sanduíche Natural", response.get_content().get(0).getName());
     }
 
     @Test
@@ -27,9 +27,9 @@ class FoodItemListResponseTest {
         FoodItemListResponse response = new FoodItemListResponse(List.of(foodItem));
 
         Assertions.assertNotNull(response.getResponseMetada());
-        Assertions.assertNotNull(response.getFoodItems());
-        Assertions.assertEquals(1, response.getFoodItems().size());
-        Assertions.assertEquals("Suco de Laranja", response.getFoodItems().get(0).getName());
+        Assertions.assertNotNull(response.get_content());
+        Assertions.assertEquals(1, response.get_content().size());
+        Assertions.assertEquals("Suco de Laranja", response.get_content().get(0).getName());
     }
 
     @Test
@@ -37,7 +37,7 @@ class FoodItemListResponseTest {
         FoodItemListResponse response = new FoodItemListResponse();
 
         Assertions.assertNull(response.getResponseMetada());
-        Assertions.assertNull(response.getFoodItems());
+        Assertions.assertNull(response.get_content());
     }
 
     @Test
@@ -54,10 +54,10 @@ class FoodItemListResponseTest {
     void deveAtualizarListaDeItensNaResposta() {
         FoodItemListResponse response = new FoodItemListResponse();
         FoodItem foodItem = new FoodItem(3, "Pudim", "Pudim de leite condensado", 10.0, FoodItemCategory.DESSERT, null);
-        response.setFoodItems(List.of(foodItem));
+        response.set_content(List.of(foodItem));
 
-        Assertions.assertNotNull(response.getFoodItems());
-        Assertions.assertEquals(1, response.getFoodItems().size());
-        Assertions.assertEquals("Pudim", response.getFoodItems().get(0).getName());
+        Assertions.assertNotNull(response.get_content());
+        Assertions.assertEquals(1, response.get_content().size());
+        Assertions.assertEquals("Pudim", response.get_content().get(0).getName());
     }
 }

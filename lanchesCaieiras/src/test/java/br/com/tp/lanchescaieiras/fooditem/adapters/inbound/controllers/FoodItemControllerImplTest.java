@@ -5,7 +5,6 @@ import br.com.tp.lanchescaieiras.fooditem.domain.*;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.config.FoodItemImageConfig;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -150,11 +149,11 @@ class FoodItemControllerImplTest {
         @Test
         void shouldReturnImageDataSuccessfully() {
             FoodItemImage image = new FoodItemImage();
-            FoodItemImageResponse expectedResponse = new FoodItemImageResponse(image);
+            FoodItemImageDataResponse expectedResponse = new FoodItemImageDataResponse(image);
 
             when(foodItemServices.getImageData(1)).thenReturn(image);
 
-            ResponseEntity<FoodItemImageResponse> response = foodItemController.getImageData(1);
+            ResponseEntity<FoodItemImageDataResponse> response = foodItemController.getImageData(1);
 
             assertEquals(200, response.getStatusCodeValue());
             assertEquals(expectedResponse, response.getBody());
@@ -168,11 +167,11 @@ class FoodItemControllerImplTest {
         @Test
         void shouldUpdateImageByIdSuccessfully() {
             FoodItemImage image = new FoodItemImage();
-            FoodItemImageResponse expectedResponse = new FoodItemImageResponse(image);
+            FoodItemImageDataResponse expectedResponse = new FoodItemImageDataResponse(image);
 
             when(foodItemServices.updateImageById(1, image)).thenReturn(image);
 
-            ResponseEntity<FoodItemImageResponse> response = foodItemController.updateImageById(1, image);
+            ResponseEntity<FoodItemImageDataResponse> response = foodItemController.updateImageById(1, image);
 
             assertEquals(200, response.getStatusCodeValue());
             assertEquals(expectedResponse, response.getBody());

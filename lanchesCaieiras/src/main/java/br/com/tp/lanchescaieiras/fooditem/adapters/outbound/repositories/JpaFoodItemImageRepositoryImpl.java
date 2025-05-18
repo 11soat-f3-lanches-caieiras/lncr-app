@@ -89,8 +89,11 @@ public class JpaFoodItemImageRepositoryImpl implements FoodItemImageRepository {
         }
 
         if (foodItemImage.get_data() != null) {
+            foodItemImageStorage.deleteImageFile(jpaFoodItemImageEntity.getFileName());
+            jpaFoodItemImageEntity.setFileName(id + "." + foodItemImage.getFileExtension());
             jpaFoodItemImageEntity.setLocation(foodItemImageConfig.getLocationPrefix() + "/" + jpaFoodItemImageEntity.getId());
             jpaFoodItemImageEntity.set_data(foodItemImage._data);
+            jpaFoodItemImageRepository.save(jpaFoodItemImageEntity);
             foodItemImageStorage.saveImageFile(jpaFoodItemImageEntity);
         }
 
