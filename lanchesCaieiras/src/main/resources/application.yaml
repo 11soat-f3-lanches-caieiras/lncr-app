@@ -5,8 +5,8 @@ spring:
     name: Lanches Caieiras
   datasource:
     url: jdbc:postgresql://localhost:5432/db-lanches-caieiras
-    username: lncr-admin
-    password: Lncr$1234
+    username: lncr-admin #.env
+    password: Lncr$1234 #.env
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -16,12 +16,25 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 lncr:
+  base-url: "http://localhost:8080"
+  integration:
+    food-items-url: "${lncr.base-url}/foodItems"
+    customers-url: "${lncr.base-url}/customers"
+    payments:
+      mercado-pago:
+        url: "https://api.mercadopago.com/instore/orders/qr/seller/collectors/${lncr.integration.payments.mercado-pago.user-id}/pos/${lncr.integration.payments.mercado-pago.pos-id}/qrs"
+        access-token: "APP_USR-4844709428317965-050720-a1e0405e0cbddf8c771622cfdbf2ebc0-2425846779" #.env
+        user-id: "2425846779" #.env
+        pos-id: "SUC001POS001" #.env
+
   customer:
-    location-prefix: "https://localhost:8080/customers"
+    location-prefix: "${lncr.base-url}/customers"
+  customer-order:
+    location-prefix: "${lncr.base-url}/customersOrders"
   food-item:
-    location-prefix: "https://localhost:8080/foodItems"
+    location-prefix: "${lncr.base-url}/foodItems"
   food-item-image:
-    location-prefix: "https://localhost:8080/foodItems/image"
+    location-prefix: "${lncr.base-url}/foodItems/image"
     directory: "../storage/images/"
     maxSize: 524288 # 512 KB
     extensions:

@@ -1281,6 +1281,7 @@ components:
             status:
               type: string
               enum:
+                - Pending Payment
                 - Received
                 - Preparing
                 - Ready

@@ -18,12 +18,10 @@ public class JpaFoodItemRepositoryImpl implements FoodItemRepository {
 
     public final JpaFoodItemReposity jpaFoodItemReposity;
     public final FoodItemMapper foodItemMapper;
-    private final JpaFoodItemImageEntity jpaFoodItemImageEntity;
 
     public JpaFoodItemRepositoryImpl(JpaFoodItemReposity jpaFoodItemReposity, FoodItemMapper foodItemMapper, JpaFoodItemImageEntity jpaFoodItemImageEntity) {
         this.jpaFoodItemReposity = jpaFoodItemReposity;
         this.foodItemMapper = foodItemMapper;
-        this.jpaFoodItemImageEntity = jpaFoodItemImageEntity;
     }
 
     @Override

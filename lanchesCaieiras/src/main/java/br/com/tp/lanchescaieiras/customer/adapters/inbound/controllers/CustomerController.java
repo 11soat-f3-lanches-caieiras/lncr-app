@@ -1,10 +1,9 @@
-package br.com.tp.lanchescaieiras.customer.adapters.inbound;
+package br.com.tp.lanchescaieiras.customer.adapters.inbound.controllers;
 
 import br.com.tp.lanchescaieiras.customer.domain.CustomerListResponse;
 import br.com.tp.lanchescaieiras.customer.domain.CustomerResponse;
 import br.com.tp.lanchescaieiras.customer.domain.Customer;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
