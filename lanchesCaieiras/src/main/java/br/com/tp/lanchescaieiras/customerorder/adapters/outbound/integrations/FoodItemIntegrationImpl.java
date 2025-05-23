@@ -1,13 +1,12 @@
 package br.com.tp.lanchescaieiras.customerorder.adapters.outbound.integrations;
 
+import br.com.tp.lanchescaieiras.commons.infraestructure.config.IntegrationConfig;
 import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderFoodItem;
-import br.com.tp.lanchescaieiras.customerorder.infraestructure.CustomerOrderException;
-import br.com.tp.lanchescaieiras.customerorder.infraestructure.config.IntegrationConfig;
+import br.com.tp.lanchescaieiras.customerorder.infraestructure.exceptions.CustomerOrderException;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;

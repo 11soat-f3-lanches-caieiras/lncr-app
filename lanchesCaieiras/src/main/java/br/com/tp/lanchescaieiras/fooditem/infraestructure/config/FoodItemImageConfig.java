@@ -1,10 +1,8 @@
 package br.com.tp.lanchescaieiras.fooditem.infraestructure.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Component

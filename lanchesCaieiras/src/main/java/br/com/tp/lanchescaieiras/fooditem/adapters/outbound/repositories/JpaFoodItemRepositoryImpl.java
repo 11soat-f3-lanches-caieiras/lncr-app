@@ -2,10 +2,10 @@ package br.com.tp.lanchescaieiras.fooditem.adapters.outbound.repositories;
 
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItemEntity;
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItemImageEntity;
+import br.com.tp.lanchescaieiras.fooditem.application.mappers.FoodItemMapper;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemRepository;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
-import br.com.tp.lanchescaieiras.fooditem.application.mappers.FoodItemMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;

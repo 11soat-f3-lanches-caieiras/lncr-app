@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.customerorder.infraestructure.config;
+package br.com.tp.lanchescaieiras.commons.infraestructure.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class IntegrationConfig {
     private String foodItemsUrl;
     private String customersUrl;
+    private String customerOrdersUrl;
 
     public String getFoodItemsUrl() {
         return foodItemsUrl;
@@ -23,5 +24,13 @@ public class IntegrationConfig {
 
     public void setCustomersUrl(String customersUrl) {
         this.customersUrl = customersUrl;
+    }
+
+    public String getCustomerOrdersUrl() {
+        return customerOrdersUrl;
+    }
+
+    public void setCustomerOrdersUrl(String customerOrdersUrl) {
+        this.customerOrdersUrl = customerOrdersUrl;
     }
 }

@@ -1,10 +1,9 @@
 package br.com.tp.lanchescaieiras.customer.adapters.inbound.controllers;
 
 import br.com.tp.lanchescaieiras.customer.application.services.CustomerServiceImpl;
+import br.com.tp.lanchescaieiras.customer.domain.Customer;
 import br.com.tp.lanchescaieiras.customer.domain.CustomerListResponse;
 import br.com.tp.lanchescaieiras.customer.domain.CustomerResponse;
-import br.com.tp.lanchescaieiras.customer.domain.Customer;
-
 import br.com.tp.lanchescaieiras.customer.infraestructure.config.CustomerConfig;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

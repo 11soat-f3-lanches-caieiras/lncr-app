@@ -1,9 +1,8 @@
 package br.com.tp.lanchescaieiras.customerorder.adapters.outbound.integrations;
 
+import br.com.tp.lanchescaieiras.commons.infraestructure.config.IntegrationConfig;
 import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderCustomer;
-import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderFoodItem;
-import br.com.tp.lanchescaieiras.customerorder.infraestructure.CustomerOrderException;
-import br.com.tp.lanchescaieiras.customerorder.infraestructure.config.IntegrationConfig;
+import br.com.tp.lanchescaieiras.customerorder.infraestructure.exceptions.CustomerOrderException;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

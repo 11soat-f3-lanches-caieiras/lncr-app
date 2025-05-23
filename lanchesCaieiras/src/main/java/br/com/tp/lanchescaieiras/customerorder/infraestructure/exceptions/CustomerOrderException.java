@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.customerorder.infraestructure;
+package br.com.tp.lanchescaieiras.customerorder.infraestructure.exceptions;
 
 public class CustomerOrderException extends RuntimeException {
     private Integer code;

@@ -3,7 +3,6 @@ package br.com.tp.lanchescaieiras.customerorder.domain;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.annotation.PostConstruct;
 
-
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

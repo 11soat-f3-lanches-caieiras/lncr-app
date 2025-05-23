@@ -7,7 +7,6 @@ import br.com.tp.lanchescaieiras.fooditem.application.usecases.FoodItemUseCases;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

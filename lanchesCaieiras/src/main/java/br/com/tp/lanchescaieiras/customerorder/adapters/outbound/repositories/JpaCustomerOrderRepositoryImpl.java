@@ -5,7 +5,6 @@ import br.com.tp.lanchescaieiras.customerorder.adapters.outbound.entities.JpaCus
 import br.com.tp.lanchescaieiras.customerorder.application.mappers.CustomerOrderMapper;
 import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrder;
 import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderRepositoy;
-import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderStatus;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
@@ -47,8 +46,12 @@ public class JpaCustomerOrderRepositoryImpl implements CustomerOrderRepositoy {
 
     @Override
     public CustomerOrder updateStatusById(Integer id, Integer statusId) {
+        JpaCustomerOrderEntity jpaCustomerOrderEntity = this.jpaCustomerOrderRepository.findById(id).orElse(null);
+        if (jpaCustomerOrderEntity != null) {
+            jpaCustomerOrderEntity.setStatusId(statusId);
+            jpaCustomerOrderEntity = this.jpaCustomerOrderRepository.save(jpaCustomerOrderEntity);
+            return customerOrderMapper.jpatoDomain(jpaCustomerOrderEntity);
+        }
         return null;
     }
-
-
 }

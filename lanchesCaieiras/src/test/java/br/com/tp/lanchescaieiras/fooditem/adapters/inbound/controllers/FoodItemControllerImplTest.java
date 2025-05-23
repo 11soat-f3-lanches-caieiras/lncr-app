@@ -15,7 +15,8 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class FoodItemControllerImplTest {
@@ -149,7 +150,7 @@ class FoodItemControllerImplTest {
         @Test
         void shouldReturnImageDataSuccessfully() {
             FoodItemImage image = new FoodItemImage();
-            FoodItemImageDataResponse expectedResponse = new FoodItemImageDataResponse(image);
+            FoodItemImageDataResponse expectedResponse = new FoodItemImageDataResponse();
 
             when(foodItemServices.getImageData(1)).thenReturn(image);
 
@@ -167,7 +168,7 @@ class FoodItemControllerImplTest {
         @Test
         void shouldUpdateImageByIdSuccessfully() {
             FoodItemImage image = new FoodItemImage();
-            FoodItemImageDataResponse expectedResponse = new FoodItemImageDataResponse(image);
+            FoodItemImageDataResponse expectedResponse = new FoodItemImageDataResponse();
 
             when(foodItemServices.updateImageById(1, image)).thenReturn(image);
 

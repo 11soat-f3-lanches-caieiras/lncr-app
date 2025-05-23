@@ -3,8 +3,8 @@ package br.com.tp.lanchescaieiras.customer.application.mappers;
 import br.com.tp.lanchescaieiras.customer.adapters.outbound.entities.JpaCustomerEntity;
 import br.com.tp.lanchescaieiras.customer.domain.Customer;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mappings;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface CustomerMapper {

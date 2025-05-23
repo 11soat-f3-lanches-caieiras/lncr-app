@@ -1,10 +1,7 @@
 package br.com.tp.lanchescaieiras.customer.application.usecases;
 
 import br.com.tp.lanchescaieiras.customer.domain.Customer;
-import br.com.tp.lanchescaieiras.customer.domain.CustomerResponse;
-import org.springframework.data.repository.query.Param;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 

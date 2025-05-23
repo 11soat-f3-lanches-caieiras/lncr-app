@@ -1,5 +1,6 @@
 package br.com.tp.lanchescaieiras.customerorder.domain;
 
+import br.com.tp.lanchescaieiras.customerorder.infraestructure.exceptions.CustomerOrderException;
 import jakarta.persistence.Id;
 
 public enum CustomerOrderStatus {
@@ -25,13 +26,14 @@ public enum CustomerOrderStatus {
     public String getDescription() {
         return description;
     }
+
     public static CustomerOrderStatus fromId(int id) {
         for (CustomerOrderStatus status : values()) {
             if (status.id == id) {
                 return status;
             }
         }
-        throw new IllegalArgumentException("Invalid CustomerOrderStatus id: " + id);
+        throw new CustomerOrderException("Id do status inválido: " + id + ". Os ids de status válidos são: " + CustomerOrderStatus.listOfAllowIds(),400);
     }
 
     public static CustomerOrderStatus fromDescription(String description) {
@@ -40,7 +42,30 @@ public enum CustomerOrderStatus {
                 return status;
             }
         }
-        throw new IllegalArgumentException("Invalid CustomerOrderStatus description: " + description);
+        throw new CustomerOrderException("Status inválidos: " + description + ". Os status válidos são: " + CustomerOrderStatus.listOfAllowDescriptions(),400);
+    }
+
+    public static String listOfAllowDescriptions(){
+        String listOfAllowDescriptions = new String();
+        for (CustomerOrderStatus status : values()) {
+            if (listOfAllowDescriptions.length() > 0) {
+                listOfAllowDescriptions = listOfAllowDescriptions + ", ";
+            }
+            listOfAllowDescriptions = listOfAllowDescriptions + status.getDescription();
+        }
+        return listOfAllowDescriptions;
+    }
+
+    public static String listOfAllowIds(){
+        String listOfAllowIds = new String();
+
+        for (CustomerOrderStatus status : values()) {
+            if (listOfAllowIds.length() > 0) {
+                listOfAllowIds = listOfAllowIds + ",";
+            }
+            listOfAllowIds = listOfAllowIds + status.getId();
+        }
+        return listOfAllowIds;
     }
 
 

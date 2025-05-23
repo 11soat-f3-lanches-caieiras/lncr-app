@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras.fooditem.application.mappers;
 
-import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItemImageEntity;
+import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

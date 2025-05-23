@@ -8,6 +8,7 @@ import br.com.tp.lanchescaieiras.customerorder.application.usecases.CustomerOrde
 import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrder;
 import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderFoodItem;
 import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderStatus;
+import br.com.tp.lanchescaieiras.customerorder.infraestructure.exceptions.CustomerOrderException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -72,7 +73,27 @@ public class CustomerOrderServicesImpl implements CustomerOrderUseCases {
         return customerOrders;
     }
 
+    @Override
+    public CustomerOrder updateStatusById(Integer customerOrderId, String newStatus, Boolean forceUpdate) {
+        CustomerOrder customerOrder = jpaCustomerOrderRepositoryImpl.findById(customerOrderId);
+        if (customerOrder == null) {
+            throw new CustomerOrderException("Não encontrado pedido com id: " + customerOrderId,404);
+        }
+        if (forceUpdate = false) {
+            validateNewStatus(customerOrder.getStatus(), newStatus);
+        }
+        customerOrder.setStatus(CustomerOrderStatus.fromDescription(newStatus).getDescription());
+        customerOrder = jpaCustomerOrderRepositoryImpl.save(customerOrder);
+        return customerOrder;
+    }
 
+    public void validateNewStatus(String actualStatus, String newStatus) {
+        Integer actualStatusId = CustomerOrderStatus.fromDescription(actualStatus).getId();
+        Integer newStatusId = CustomerOrderStatus.fromDescription(newStatus).getId();
+        if (actualStatusId + 1 != newStatusId) {
+            throw new CustomerOrderException("Erro na atualização no status do pedido. Não é permitido atualizar o status de: " + actualStatus + " para: " + newStatus,400);
+        }
+    }
     private CustomerOrder validateCustomer(CustomerOrder customerOrder) {
         if (customerOrder.getCustomer() != null && customerOrder.getCustomer().getId() != null) {
             customerOrder.setCustomer(customerIntegration.getCustomerOrderCustomerDetails(customerOrder.getCustomer().getId()));

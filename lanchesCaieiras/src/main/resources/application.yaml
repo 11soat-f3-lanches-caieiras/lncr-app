@@ -15,18 +15,20 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  web:
+    cors:
+      mapping:
+        "/**":
+          allowed-origins: "https://webhook.site"
+          allowed-methods: "POST"
+          allowed-headers: "*"
+          allow-credentials: true
 lncr:
   base-url: "http://localhost:8080"
   integration:
     food-items-url: "${lncr.base-url}/foodItems"
     customers-url: "${lncr.base-url}/customers"
-    payments:
-      mercado-pago:
-        url: "https://api.mercadopago.com/instore/orders/qr/seller/collectors/${lncr.integration.payments.mercado-pago.user-id}/pos/${lncr.integration.payments.mercado-pago.pos-id}/qrs"
-        access-token: "APP_USR-4844709428317965-050720-a1e0405e0cbddf8c771622cfdbf2ebc0-2425846779" #.env
-        user-id: "2425846779" #.env
-        pos-id: "SUC001POS001" #.env
-
+    customers-order-url: "${lncr.base-url}/customers"
   customer:
     location-prefix: "${lncr.base-url}/customers"
   customer-order:
@@ -40,3 +42,11 @@ lncr:
     extensions:
       ".jpg": "FFD8"
       ".png": "89504E47"
+  mercadopago:
+    location-prefix: "${lncr.base-url}/payments/mercadoPago"
+    callbackUrl: "https://webhook.site/a208949d-4727-4147-9d37-1f34f8615fe8" #Webhook para notificação de pagamento
+    chargeUrl: "https://api.mercadopago.com/instore/orders/qr/seller/collectors/${lncr.mercadopago.userId}/pos/${lncr.mercadopago.posId}/qrs"
+    paymentUrl: "https://api.mercadopago.com/v1/payments"
+    accessToken: "APP_USR-4844709428317965-050720-a1e0405e0cbddf8c771622cfdbf2ebc0-2425846779" #.env
+    userId: "2425846779" #.env
+    posId: "SUC001POS001" #.env

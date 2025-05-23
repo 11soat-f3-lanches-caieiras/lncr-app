@@ -1,10 +1,8 @@
 package br.com.tp.lanchescaieiras.fooditem.adapters.outbound.storage;
 
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItemImageEntity;
-import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImageRepository;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.config.FoodItemImageConfig;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.File;

@@ -1,13 +1,13 @@
 package br.com.tp.lanchescaieiras.fooditem.adapters.outbound.repositories;
 
-import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItemImageEntity;
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.storage.FoodItemImageStorage;
+import br.com.tp.lanchescaieiras.fooditem.application.mappers.FoodItemImageMapper;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
+import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImageRepository;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.config.FoodItemImageConfig;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
-import br.com.tp.lanchescaieiras.fooditem.application.mappers.FoodItemImageMapper;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 

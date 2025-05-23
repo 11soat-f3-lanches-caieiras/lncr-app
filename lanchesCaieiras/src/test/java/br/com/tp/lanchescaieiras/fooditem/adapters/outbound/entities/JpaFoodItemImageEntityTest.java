@@ -1,6 +1,5 @@
 package br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities;
 
-import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemCategory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

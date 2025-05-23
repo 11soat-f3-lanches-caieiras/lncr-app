@@ -2,7 +2,6 @@ package br.com.tp.lanchescaieiras.customerorder.adapters.outbound.repositories;
 
 
 import br.com.tp.lanchescaieiras.customerorder.adapters.outbound.entities.JpaCustomerOrderEntity;
-import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -15,4 +14,6 @@ public interface JpaCustomerOrderRepository extends JpaRepository<JpaCustomerOrd
 
     @Query(value = "select * from customer_order where status_id = :statusId", nativeQuery = true)
     List<JpaCustomerOrderEntity> findByStatusId(@Param("statusId") Integer statusId);
+
+
 }

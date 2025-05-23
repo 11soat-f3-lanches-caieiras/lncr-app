@@ -1,7 +1,9 @@
 package br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities;
 
-import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Value;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import org.springframework.stereotype.Component;
 
 @Component

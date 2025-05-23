@@ -5,13 +5,11 @@ import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrder;
 import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderListResponse;
 import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderResponse;
 import br.com.tp.lanchescaieiras.customerorder.infraestructure.config.CustomerOrderConfig;
-import br.com.tp.lanchescaieiras.customerorder.infraestructure.config.IntegrationConfig;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/customerOrders")
@@ -47,6 +45,20 @@ public class CustomerOrderControllerImpl implements CustomerOrderController {
     public ResponseEntity<CustomerOrderListResponse>
             getCustomerOrderByStatus(@PathVariable(name = "status") String status,
                                      @RequestParam(name="includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems) {
-        return new ResponseEntity<CustomerOrderListResponse>(new CustomerOrderListResponse(customerOrderServices.findByStatus(status, includeFoodItems)), HttpStatus.OK);
+        List<CustomerOrder> customerOrders= customerOrderServices.findByStatus(status, includeFoodItems);
+        if (customerOrders == null) {
+            return new ResponseEntity<CustomerOrderListResponse>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<CustomerOrderListResponse>(new CustomerOrderListResponse(customerOrders), HttpStatus.OK);
+    }
+
+    @Override
+    @PatchMapping("/{id}/updateStatus/{newStatus}")
+    public ResponseEntity<CustomerOrderResponse> updateOrderStatusById(@PathVariable(name="id", required = true) Integer id,
+                                                                       @PathVariable(name="newStatus", required = true) String newStatus,
+                                                                       @RequestParam(name="forceUpdate", required = false, defaultValue = "false") Boolean forceUpdate) {
+        CustomerOrder customerOrder = customerOrderServices.updateStatusById(id, newStatus, forceUpdate);
+        return new ResponseEntity<CustomerOrderResponse>(new CustomerOrderResponse(customerOrder), HttpStatus.OK);
+
     }
 }

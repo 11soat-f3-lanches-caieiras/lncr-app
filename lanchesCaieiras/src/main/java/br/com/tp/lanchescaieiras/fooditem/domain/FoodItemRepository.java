@@ -1,8 +1,5 @@
 package br.com.tp.lanchescaieiras.fooditem.domain;
 
-import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItemEntity;
-import org.springframework.data.repository.query.Param;
-
 import java.util.List;
 import java.util.Optional;
 

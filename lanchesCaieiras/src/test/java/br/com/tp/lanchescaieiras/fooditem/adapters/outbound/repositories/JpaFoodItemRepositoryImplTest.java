@@ -1,10 +1,10 @@
 package br.com.tp.lanchescaieiras.fooditem.adapters.outbound.repositories;
 
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities.JpaFoodItemEntity;
+import br.com.tp.lanchescaieiras.fooditem.application.mappers.FoodItemMapper;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemCategory;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
-import br.com.tp.lanchescaieiras.fooditem.application.mappers.FoodItemMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
