@@ -11,6 +11,6 @@ import java.util.List;
 @EnableJpaRepositories
 public interface JpaKitchenOrderFoodItemRepository extends JpaRepository<JpaKitchenOrderFoodItemEntity, Integer> {
 
-    @Query(value="select * from customer_order_food_item where order_id = :orderId", nativeQuery = true)
+    @Query(value="select * from kitchen_order_food_item where kitchen_order_id = :orderId", nativeQuery = true)
     List<JpaKitchenOrderFoodItemEntity> findByKitchenOrderId(@Param("orderId") Integer orderId);
 }

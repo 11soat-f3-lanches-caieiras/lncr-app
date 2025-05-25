@@ -11,6 +11,6 @@ public class CustomerInboundHandler {
 
     @ExceptionHandler(CustomerException.class)
     public ResponseEntity<Object> handleKCustomerException(CustomerException ex) {
-        return ExceptionHandlerUtil.handleException(ex.getMessage(), ex.getCode());
+        return ExceptionHandlerUtil.handleException(ex.getMessage(), ex.getCode(), ex);
     }
 }

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 public class IntegrationConfig {
     private String foodItemsUrl;
     private String customersUrl;
-    private String customerOrdersUrl;
+    private String customerOrderUrl;
+    private String kitchenOrderUrl;
+    private String paymentUrl;
 
     public String getFoodItemsUrl() {
         return foodItemsUrl;
@@ -26,11 +28,27 @@ public class IntegrationConfig {
         this.customersUrl = customersUrl;
     }
 
-    public String getCustomerOrdersUrl() {
-        return customerOrdersUrl;
+    public String getCustomerOrderUrl() {
+        return customerOrderUrl;
     }
 
-    public void setCustomerOrdersUrl(String customerOrdersUrl) {
-        this.customerOrdersUrl = customerOrdersUrl;
+    public void setCustomerOrderUrl(String customerOrderUrl) {
+        this.customerOrderUrl = customerOrderUrl;
+    }
+
+    public String getKitchenOrderUrl() {
+        return kitchenOrderUrl;
+    }
+
+    public void setKitchenOrderUrl(String kitchenOrderUrl) {
+        this.kitchenOrderUrl = kitchenOrderUrl;
+    }
+
+    public String getPaymentUrl() {
+        return paymentUrl;
+    }
+
+    public void setPaymentUrl(String paymentUrl) {
+        this.paymentUrl = paymentUrl;
     }
 }

@@ -3,21 +3,21 @@ package br.com.tp.lanchescaieiras.kitchenorder.adapters.outbound.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "customer_order_food_item")
+@Table(name = "kitchen_order_food_item")
 public class JpaKitchenOrderFoodItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer orderId;
-    private Integer foodItemId;
-    private Double price;
+    private Integer kitchenOrderId;
+    private String name;
+    private String description;
     private String notes;
 
-    public JpaKitchenOrderFoodItemEntity(Integer id, Integer orderId, Integer foodItemId, Double price, String notes) {
+    public JpaKitchenOrderFoodItemEntity(Integer id, Integer kitchenOrderId, String name, String description, String notes) {
         this.id = id;
-        this.orderId = orderId;
-        this.foodItemId = foodItemId;
-        this.price = price;
+        this.kitchenOrderId = kitchenOrderId;
+        this.name = name;
+        this.description = description;
         this.notes = notes;
     }
 
@@ -32,28 +32,28 @@ public class JpaKitchenOrderFoodItemEntity {
         this.id = id;
     }
 
-    public Integer getOrderId() {
-        return orderId;
+    public Integer getKitchenOrderId() {
+        return kitchenOrderId;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+    public void setKitchenOrderId(Integer kitchenOrderId) {
+        this.kitchenOrderId = kitchenOrderId;
     }
 
-    public Integer getFoodItemId() {
-        return foodItemId;
+    public String getName() {
+        return name;
     }
 
-    public void setFoodItemId(Integer foodItemId) {
-        this.foodItemId = foodItemId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Double getPrice() {
-        return price;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getNotes() {

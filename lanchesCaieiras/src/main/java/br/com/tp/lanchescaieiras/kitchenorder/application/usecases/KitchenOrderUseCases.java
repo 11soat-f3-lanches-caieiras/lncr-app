@@ -9,7 +9,9 @@ public interface KitchenOrderUseCases {
 
     public KitchenOrder findById(Integer id, Boolean includeFoodItems) ;
 
+    KitchenOrder getKitchenOrderByCustomerOrderById(Integer customerOrderId, Boolean includeFoodItems);
+
     public List<KitchenOrder> findByStatus(String status, Boolean includeFoodItems);
 
-    KitchenOrder updateStatusById(Integer kitchenOrderId, String newStatus, Boolean forceUpdate);
+    KitchenOrder updateStatusById(Integer kitchenOrderId, String newStatus, Boolean forceUpdate, Boolean updateCustomerOrder);
 }

@@ -53,7 +53,7 @@ public class CustomerOrderControllerImpl implements CustomerOrderController {
     }
 
     @Override
-    @PatchMapping("/{id}/updateStatus/{newStatus}")
+    @PutMapping("/{id}/updateStatus/{newStatus}")
     public ResponseEntity<CustomerOrderResponse> updateOrderStatusById(@PathVariable(name="id", required = true) Integer id,
                                                                        @PathVariable(name="newStatus", required = true) String newStatus,
                                                                        @RequestParam(name="forceUpdate", required = false, defaultValue = "false") Boolean forceUpdate) {

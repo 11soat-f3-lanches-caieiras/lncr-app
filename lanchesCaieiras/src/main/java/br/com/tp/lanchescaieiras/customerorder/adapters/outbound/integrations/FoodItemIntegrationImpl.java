@@ -1,5 +1,6 @@
 package br.com.tp.lanchescaieiras.customerorder.adapters.outbound.integrations;
 
+import br.com.tp.lanchescaieiras.customerorder.application.mappers.IntegrationMapper;
 import br.com.tp.lanchescaieiras.commons.infraestructure.config.IntegrationConfig;
 import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderFoodItem;
 import br.com.tp.lanchescaieiras.customerorder.infraestructure.exceptions.CustomerOrderException;
@@ -15,11 +16,12 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class FoodItemIntegrationImpl implements  FoodItemIntegration {
 
-
     public final IntegrationConfig integrationConfig;
+    public final IntegrationMapper integrationMapper;
 
-    public FoodItemIntegrationImpl(IntegrationConfig integrationConfig) {
+    public FoodItemIntegrationImpl(IntegrationConfig integrationConfig, IntegrationMapper integrationMapper) {
         this.integrationConfig = integrationConfig;
+        this.integrationMapper = integrationMapper;
     }
 
     @Override
@@ -36,6 +38,12 @@ public class FoodItemIntegrationImpl implements  FoodItemIntegration {
         }
         return jsonToCustomerOrderFoodItem(getFoodItemDetails.getBody());
     }
+
+    /*@Override
+    public KitchenOrderFoodItem getCustomerOrderFoodItemsDetails(Integer kitchenItemId) {
+        return integrationMapper.orderToKichen(getFoodItemsDetails(kitchenItemId));
+    }*/
+
 
     public CustomerOrderFoodItem jsonToCustomerOrderFoodItem(String json) {
         try {

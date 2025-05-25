@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.payments.mercadopago.adapter.outbound.integration;
+package br.com.tp.lanchescaieiras.commons.adapters.outbounds.integrations;
 
 public interface CustomerOrderIntegration {
 

@@ -11,7 +11,7 @@ public class FoodItemInboundHandler {
 
     @ExceptionHandler(FoodItemException.class)
     public ResponseEntity<Object> handleFoodItemExceptionException(FoodItemException ex) {
-        return ExceptionHandlerUtil.handleException(ex.getMessage(), ex.getCode());
+        return ExceptionHandlerUtil.handleException(ex.getMessage(), ex.getCode(),ex);
     }
 
 }

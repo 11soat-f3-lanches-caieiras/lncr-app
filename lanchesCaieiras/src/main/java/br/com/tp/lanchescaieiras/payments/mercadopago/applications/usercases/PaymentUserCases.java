@@ -6,6 +6,8 @@ public interface PaymentUserCases {
 
     public Payment createCharge(Payment payment);
 
-    public Payment getExternalReferenceInPayment(String paymentId);
+    public Payment updatePaymentByPaymentId(String paymentId);
+
+    public Payment findByCustomerOrderId(Integer customerOrderId);
 
 }

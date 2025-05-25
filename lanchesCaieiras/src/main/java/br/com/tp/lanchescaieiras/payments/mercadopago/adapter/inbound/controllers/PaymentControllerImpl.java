@@ -34,6 +34,12 @@ public class PaymentControllerImpl implements PaymentController{
     @PostMapping("/callback")
     public ResponseEntity<PaymentResponse> paymentRecived(@RequestParam(name = "data.id", required = true) String dataId,
                                                           @RequestParam(name = "type", required = true) String type) {
-        return new ResponseEntity<PaymentResponse>(new PaymentResponse(paymentService.getExternalReferenceInPayment(dataId)),HttpStatus.OK);
+        return new ResponseEntity<PaymentResponse>(new PaymentResponse(paymentService.updatePaymentByPaymentId(dataId)),HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/customerOrder/{id}")
+    public ResponseEntity<PaymentResponse> getPaymentByCustomerOrderId(@PathVariable(name = "id") Integer customerOrderId) {
+        return new ResponseEntity<PaymentResponse>(new PaymentResponse(paymentService.findByCustomerOrderId(customerOrderId)),HttpStatus.OK);
     }
 }

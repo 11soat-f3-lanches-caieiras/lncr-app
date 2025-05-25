@@ -11,4 +11,7 @@ public interface KitchenOrderRepositoy {
     List<KitchenOrder> findByStatusId(Integer statusId);
 
     KitchenOrder updateStatusById(Integer id, Integer statusId);
+
+
+    KitchenOrder findByCustomerOrderId(Integer customerOrderId);
 }

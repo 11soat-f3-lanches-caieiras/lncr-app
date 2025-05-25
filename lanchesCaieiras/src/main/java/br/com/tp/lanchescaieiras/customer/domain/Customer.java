@@ -83,7 +83,15 @@ public class Customer {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", documentNumber='" + documentNumber + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
 
 

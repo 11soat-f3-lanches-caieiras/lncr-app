@@ -10,36 +10,35 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class PaymentIntegrationImpl implements PaymentIntegration {
+public class KitchenOrderIntegrationImpl implements  KitchenOrderIntegration {
 
-    private static final Logger log = LoggerFactory.getLogger(PaymentIntegrationImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(KitchenOrderIntegrationImpl.class);
     private final IntegrationConfig integrationConfig;
 
-    public PaymentIntegrationImpl(IntegrationConfig integrationConfig) {
+    public KitchenOrderIntegrationImpl(IntegrationConfig integrationConfig) {
         this.integrationConfig = integrationConfig;
     }
 
     @Override
-    public void createPayment(String payment) {
-        String url = integrationConfig.getPaymentUrl() + "/charge";
-        log.info("Enviando pedido de preparo para cozinha. {}\n{}", payment);
+    public void sendKitchenOrder(String kitchenOrder) {
+
+        String url = integrationConfig.getKitchenOrderUrl();
+        log.info("Enviando pedido de preparo para cozinha. {}\n{}", kitchenOrder);
         RestTemplate restTemplate = new RestTemplate();
         CompletableFuture.runAsync(() -> {
             try {
                 log.info("Iniciando envio assíncrono para {}", url);
                 HttpHeaders headers = new HttpHeaders();
                 headers.set("Content-Type", "application/json");
-                HttpEntity<String> request = new HttpEntity<>(payment, headers);
-                restTemplate.postForObject(url, request, Void.class);
+                HttpEntity<String> request = new HttpEntity<>(kitchenOrder, headers);
+                restTemplate.postForObject(url, request, KitchenOrderResponse.class);
             } catch (Exception e) {
-                throw new CustomerOrderException("Erro ao criar cobrança para o pedido", 500);
+                throw new CustomerOrderException("Erro ao enviar pedido para a cozinha", 500);
             }
         });
-
-
-
     }
 }

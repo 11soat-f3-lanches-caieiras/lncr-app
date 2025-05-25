@@ -11,17 +11,14 @@ import org.mapstruct.Mappings;
 public interface KitchenOrderMapper {
     @Mappings({
         @Mapping(target = "id", source = "jpaKitchenOrderEntity.id"),
-        @Mapping(target = "customer.id", source = "jpaKitchenOrderEntity.customerId"),
+        @Mapping(target = "customerOrderId", source = "jpaKitchenOrderEntity.customerOrderId"),
         @Mapping(target = "status", expression = "java(KitchenOrderStatus.fromId(jpaKitchenOrderEntity.getStatusId()).getDescription())"),
-        @Mapping(target = "totalCost", source = "jpaKitchenOrderEntity.totalCost"),
-        @Mapping(target = "customer", ignore = true),
         @Mapping(target = "foodItems", ignore = true)})
     KitchenOrder jpatoDomain(JpaKitchenOrderEntity jpaKitchenOrderEntity);
 
     @Mappings({
         @Mapping(target = "id", source = "kitchenOrder.id"),
-        @Mapping(target = "totalCost", source = "kitchenOrder.totalCost"),
-        @Mapping(target = "customerId", source = "kitchenOrder.customer.id"),
+        @Mapping(target = "customerOrderId", source = "kitchenOrder.customerOrderId"),
         @Mapping(target = "statusId", expression = "java(KitchenOrderStatus.fromDescription(kitchenOrder.getStatus()).getId())"),})
     JpaKitchenOrderEntity domainToJpa(KitchenOrder kitchenOrder);
 

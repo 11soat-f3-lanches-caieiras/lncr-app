@@ -12,14 +12,16 @@ public class Payment {
     private UUID storeOrderId;
     private String qrData;
     private String status;
+    private String paymentId;
 
-    public Payment(String id, Integer orderId, Double amount, UUID storeOrderId, String qrData, String status) {
+    public Payment(String id, Integer orderId, Double amount, UUID storeOrderId, String qrData, String status, String paymentId) {
         this.id = id;
         this.orderId = orderId;
         this.amount = amount;
         this.storeOrderId = storeOrderId;
         this.qrData = qrData;
         this.status = status;
+        this.paymentId = paymentId;
     }
 
     public String getId() {
@@ -68,5 +70,13 @@ public class Payment {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
     }
 }

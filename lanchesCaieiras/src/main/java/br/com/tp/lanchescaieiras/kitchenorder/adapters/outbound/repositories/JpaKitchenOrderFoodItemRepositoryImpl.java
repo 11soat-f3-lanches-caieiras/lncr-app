@@ -21,10 +21,9 @@ public class JpaKitchenOrderFoodItemRepositoryImpl implements KitchenOrderFoodIt
     }
 
     @Override
-    public KitchenOrderFoodItem save(KitchenOrderFoodItem foodItem, Integer foodItemId) {
-        JpaKitchenOrderFoodItemEntity jpaKitchenOrderFoodItemEntity = kitchenOrderFoodItemMapper.domainToJpa(foodItem, foodItemId);
+    public KitchenOrderFoodItem save(KitchenOrderFoodItem foodItem, Integer kitchenOrderId) {
+        JpaKitchenOrderFoodItemEntity jpaKitchenOrderFoodItemEntity = kitchenOrderFoodItemMapper.domainToJpa(foodItem, kitchenOrderId);
         return kitchenOrderFoodItemMapper.jpaToDomain(this.jpaKitchenOrderFoodItemRepository.save(jpaKitchenOrderFoodItemEntity));
-
     }
 
     @Override

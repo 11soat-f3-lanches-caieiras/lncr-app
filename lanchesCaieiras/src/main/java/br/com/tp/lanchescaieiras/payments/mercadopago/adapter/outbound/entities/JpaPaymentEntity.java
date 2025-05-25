@@ -15,14 +15,16 @@ public class JpaPaymentEntity {
     private UUID storeOrderId;
     private String qrData;
     private Integer statusId;
+    private String paymentId;
 
-    public JpaPaymentEntity(Integer id, Integer orderId, Double amount, UUID storeOrderId, String qrData, Integer statusId) {
+    public JpaPaymentEntity(Integer id, Integer orderId, Double amount, UUID storeOrderId, String qrData, Integer statusId, String paymentId) {
         this.id = id;
         this.orderId = orderId;
         this.amount = amount;
         this.storeOrderId = storeOrderId;
         this.qrData = qrData;
         this.statusId = statusId;
+        this.paymentId = paymentId;
     }
 
     public JpaPaymentEntity() {
@@ -74,5 +76,13 @@ public class JpaPaymentEntity {
 
     public void setStatusId(Integer statusId) {
         this.statusId = statusId;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
     }
 }

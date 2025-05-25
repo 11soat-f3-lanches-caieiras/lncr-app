@@ -11,7 +11,7 @@ public class KitchenOrderInboundHandler {
 
     @ExceptionHandler(KitchenOrderException.class)
     public ResponseEntity<Object> handleKitchenOrderException(KitchenOrderException ex) {
-        return ExceptionHandlerUtil.handleException(ex.getMessage(), ex.getCode());
+        return ExceptionHandlerUtil.handleException(ex.getMessage(), ex.getCode(),ex);
     }
 
 }

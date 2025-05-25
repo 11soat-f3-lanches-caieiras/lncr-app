@@ -30,8 +30,16 @@ public class JpaPaymentsRepositoryImpl implements PaymentRepository {
     }
 
     @Override
+    public Payment findByCustomerOrderId(Integer customerOrderId) {
+        JpaPaymentEntity jpaPaymentEntity = jpaPaymentRepository.findByCustomerOrOrderId(customerOrderId).orElse(null);
+        return paymentMapper.jpaToDomain(jpaPaymentEntity);
+    }
+
+    @Override
     public Payment update(Payment payment) {
         JpaPaymentEntity jpaPaymentEntity = paymentMapper.domainToJpa(payment);
         return paymentMapper.jpaToDomain(jpaPaymentRepository.save(jpaPaymentEntity));
     }
+
+
 }

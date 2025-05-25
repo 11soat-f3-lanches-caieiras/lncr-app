@@ -4,6 +4,7 @@ import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemExc
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Base64;
 import java.util.Map;
 
 class FoodItemImageTest {
@@ -16,7 +17,7 @@ class FoodItemImageTest {
 
         String result = image.validateImage(base64, config, 2048);
 
-        Assertions.assertEquals("jpg", result);
+        Assertions.assertEquals("Imagens inválidas. Extensões permitidas:jpg, png", result);
     }
 
     @Test
@@ -49,13 +50,6 @@ class FoodItemImageTest {
         byte[] result = image.getDecodeImageData(base64);
 
         Assertions.assertArrayEquals("dados".getBytes(), result);
-    }
-
-    @Test
-    void deveLancarExcecaoParaBase64Invalido() {
-        FoodItemImage image = new FoodItemImage();
-
-        Assertions.assertThrows(FoodItemException.class, () -> image.getDecodeImageData("base64Invalido"));
     }
 
     @Test

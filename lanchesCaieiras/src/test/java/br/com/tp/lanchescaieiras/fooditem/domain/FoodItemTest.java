@@ -18,7 +18,7 @@ class FoodItemTest {
 
     @Test
     void deveCriarFoodItemComCategoriaBebida() {
-        FoodItem foodItem = new FoodItem(2, "Suco de Laranja", "Suco natural de laranja", 8.0, FoodItemCategory.BEVERAGE, null);
+        FoodItem foodItem = new FoodItem(2, "Suco de Laranja", "Suco natural de laranja", 8.0, FoodItemCategory.DRINK, null);
 
         Assertions.assertEquals(2, foodItem.getId());
         Assertions.assertEquals("Suco de Laranja", foodItem.getName());

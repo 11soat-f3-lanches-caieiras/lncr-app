@@ -6,5 +6,7 @@ public interface PaymentRepository {
 
     Payment findById(Integer externalReferenceId);
 
+    Payment findByCustomerOrderId(Integer customerOrderId);
+
     Payment update(Payment payment);
 }

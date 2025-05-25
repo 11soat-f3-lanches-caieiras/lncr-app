@@ -2,6 +2,8 @@ package br.com.tp.lanchescaieiras.fooditem.domain;
 
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Base64;
 import java.util.Map;
@@ -9,6 +11,7 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FoodItemImage {
+    private static final Logger log = LoggerFactory.getLogger(FoodItemImage.class);
     public Integer id;
     public String _data;
     public String location;
@@ -82,8 +85,10 @@ public class FoodItemImage {
                 }
             }
             String allowedExtensions = String.join(", ", imageConfig.keySet());
+            log.info("Imagens inválidas. Extensões permitidas: {}", allowedExtensions);
             return  "Imagens inválidas. Extensões permitidas:" + allowedExtensions; //Adiciona mensagem de erro de extensão não permitida
         };
+        log.info("Tamanho da imagem excede o limite de {} bytes", maxSizeInBytes);
         return "Tamanho da imagem excede o limite de " + maxSizeInBytes + " bytes"; //Adiciona mensagem de erro de tamanho inválid para o suário
     }
 

@@ -12,17 +12,16 @@ public interface KitchenOrderFoodItemMapper {
 
     @Mappings({
         @Mapping(target = "id", ignore = true),
-        @Mapping(target = "orderId", source = "kitchenOrderId"),
-        @Mapping(target = "foodItemId", source = "kitchenOrderFoodItem.id"),
-        @Mapping(target = "price", source = "kitchenOrderFoodItem.price"),
+        @Mapping(target = "kitchenOrderId", source = "kitchenOrderId"),
+        @Mapping(target = "name", source = "kitchenOrderFoodItem.name"),
+        @Mapping(target = "description", source = "kitchenOrderFoodItem.description"),
         @Mapping(target = "notes", source = "kitchenOrderFoodItem.notes")})
     JpaKitchenOrderFoodItemEntity domainToJpa(KitchenOrderFoodItem kitchenOrderFoodItem, Integer kitchenOrderId);
 
     @Mappings({
-            @Mapping(target = "id", source = "jpaKitchenOrderFoodItemEntity.foodItemId"),
-            @Mapping(target = "description", ignore = true),
-            @Mapping(target = "name", ignore = true),
-            @Mapping(target = "price", source = "jpaKitchenOrderFoodItemEntity.price"),
+            @Mapping(target = "id", source = "jpaKitchenOrderFoodItemEntity.id"),
+            @Mapping(target = "description", source = "jpaKitchenOrderFoodItemEntity.description"),
+            @Mapping(target = "name", source = "jpaKitchenOrderFoodItemEntity.name"),
             @Mapping(target = "notes", source = "jpaKitchenOrderFoodItemEntity.notes")
     })
     KitchenOrderFoodItem jpaToDomain(JpaKitchenOrderFoodItemEntity jpaKitchenOrderFoodItemEntity);

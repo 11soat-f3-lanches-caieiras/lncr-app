@@ -7,6 +7,8 @@ import br.com.tp.lanchescaieiras.fooditem.application.usecases.FoodItemUseCases;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
 import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.Optional;
 @Service
 public class FoodItemServicesImpl implements FoodItemUseCases {
 
+    private static final Logger log = LoggerFactory.getLogger(FoodItemServicesImpl.class);
     public final JpaFoodItemRepositoryImpl jpaFoodItemRepository;
     public final JpaFoodItemImageRepositoryImpl jpaFoodItemImageRepository;
 
@@ -25,14 +28,18 @@ public class FoodItemServicesImpl implements FoodItemUseCases {
 
     @Override
     public FoodItem createFoodItem(FoodItem foodItem) {
+        log.info("Criando novo item de alimentação");
         foodItem = this.jpaFoodItemRepository.save(foodItem);
         return jpaFoodItemImageRepository.saveImages(foodItem);
     }
 
     @Override
     public List<FoodItem> getAllFoodItems(Integer _limit, String category) {
+        log.info("Buscando lista de items de alimentação por categoria");
         List<FoodItem> foodItemList = jpaFoodItemRepository.findAllByCategory(_limit,category);
+        log.info("Buscando localização das imagens");
         for (FoodItem foodItem : foodItemList) {
+
             foodItem = jpaFoodItemImageRepository.findAllImagesByFoodItemId(foodItem);
         }
         return foodItemList;

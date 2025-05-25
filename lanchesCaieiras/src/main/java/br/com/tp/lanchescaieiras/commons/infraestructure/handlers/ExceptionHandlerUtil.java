@@ -1,6 +1,8 @@
 package br.com.tp.lanchescaieiras.commons.infraestructure.handlers;
 
 import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -9,7 +11,16 @@ import java.util.UUID;
 
 public class ExceptionHandlerUtil {
 
-    public static ResponseEntity<Object> handleException(String message, int code) {
+    private static final Logger log = LoggerFactory.getLogger(ExceptionHandlerUtil.class);
+
+    public static ResponseEntity<Object> handleException(String message, int code, Throwable throwable) {
+        if (throwable != null) {
+            log.error("Exceção lançada por: {}.{} - Mensagem: {}",
+                    throwable.getStackTrace()[0].getClassName(),
+                    throwable.getStackTrace()[0].getMethodName(),
+                    message,
+                    throwable);
+        }
         return new ResponseEntity<>(createResponse(message), getHttpStatusByCode(code));
     }
 

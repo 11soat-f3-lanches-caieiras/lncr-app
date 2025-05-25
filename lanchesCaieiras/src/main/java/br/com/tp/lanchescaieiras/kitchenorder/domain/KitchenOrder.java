@@ -8,11 +8,13 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class KitchenOrder {
     private Integer id;
+    private Integer customerOrderId;
     private String status;
     private List<KitchenOrderFoodItem> foodItems;
 
-    public KitchenOrder(Integer id, KitchenOrderStatus status, List<KitchenOrderFoodItem> foodItems) {
+    public KitchenOrder(Integer id, Integer customerOrderId, KitchenOrderStatus status, List<KitchenOrderFoodItem> foodItems) {
         this.id = id;
+        this.customerOrderId = customerOrderId;
         this.status = fromKitchenOrderStatus(status);
         this.foodItems = foodItems;
     }
@@ -26,6 +28,14 @@ public class KitchenOrder {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getCustomerOrderId() {
+        return customerOrderId;
+    }
+
+    public void setCustomerOrderId(Integer customerOrderId) {
+        this.customerOrderId = customerOrderId;
     }
 
     public String getStatus() {
@@ -51,5 +61,6 @@ public class KitchenOrder {
     public String fromKitchenOrderStatus(KitchenOrderStatus status) {
         return status.getDescription();
     }
+
 
 }

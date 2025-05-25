@@ -13,6 +13,8 @@ public class MercadoPagoConfig {
     public String accessToken;
     public String userId;
     public String posId;
+    public Boolean mercadoPagoMock;
+    public Integer mercadoPagoMockCustomerOrderId;
 
     public String getLocationPrefix() {
         return locationPrefix;
@@ -68,5 +70,21 @@ public class MercadoPagoConfig {
 
     public void setPaymentUrl(String paymentUrl) {
         this.paymentUrl = paymentUrl;
+    }
+
+    public Boolean getMercadoPagoMock() {
+        return mercadoPagoMock;
+    }
+
+    public void setMercadoPagoMock(Boolean mercadoPagoMock) {
+        this.mercadoPagoMock = mercadoPagoMock;
+    }
+
+    public Integer getMercadoPagoMockCustomerOrderId() {
+        return mercadoPagoMockCustomerOrderId;
+    }
+
+    public void setMercadoPagoMockCustomerOrderId(Integer mercadoPagoMockCustomerOrderId) {
+        this.mercadoPagoMockCustomerOrderId = mercadoPagoMockCustomerOrderId;
     }
 }

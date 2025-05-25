@@ -4,24 +4,22 @@ import jakarta.persistence.*;
 
 import java.util.List;
 @Entity
-@Table(name = "customer_order")
+@Table(name = "kitchen_order")
 public class JpaKitchenOrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Double totalCost = 0.0;
+    private Integer customerOrderId;
     private Integer statusId;
-    private Integer customerId;
 
     @Transient
     private List<JpaKitchenOrderFoodItemEntity> foodItems;
 
-    public JpaKitchenOrderEntity(Integer id, Double totalCost, Integer statusId, Integer customerId, List<JpaKitchenOrderFoodItemEntity> foodItems) {
+    public JpaKitchenOrderEntity(Integer id, Integer customerOrderId, Integer statusId, List<JpaKitchenOrderFoodItemEntity> foodItems) {
         this.id = id;
-        this.totalCost = totalCost;
+        this.customerOrderId = customerOrderId;
         this.statusId = statusId;
-        this.customerId = customerId;
         this.foodItems = foodItems;
     }
 
@@ -36,28 +34,20 @@ public class JpaKitchenOrderEntity {
         this.id = id;
     }
 
-    public Double getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(Double totalCost) {
-        this.totalCost = totalCost;
-    }
-
     public Integer getStatusId() {
         return statusId;
     }
 
+    public Integer getCustomerOrderId() {
+        return customerOrderId;
+    }
+
+    public void setCustomerOrderId(Integer customerOrderId) {
+        this.customerOrderId = customerOrderId;
+    }
+
     public void setStatusId(Integer statusId) {
         this.statusId = statusId;
-    }
-
-    public Integer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
     }
 
     public List<JpaKitchenOrderFoodItemEntity> getFoodItems() {

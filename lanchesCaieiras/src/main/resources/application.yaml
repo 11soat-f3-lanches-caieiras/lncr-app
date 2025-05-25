@@ -1,12 +1,13 @@
 server:
   port: 8080
+
 spring:
   application:
     name: Lanches Caieiras
   datasource:
-    url: jdbc:postgresql://localhost:5432/db-lanches-caieiras
-    username: lncr-admin #.env
-    password: Lncr$1234 #.env
+    url: "${POSTGRES_JDBC}"
+    username: "${POSTGRES_USER}"
+    password: "${POSTGRES_PASSWORD}"
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -15,26 +16,27 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-  web:
-    cors:
-      mapping:
-        "/**":
-          allowed-origins: "https://webhook.site"
-          allowed-methods: "POST"
-          allowed-headers: "*"
-          allow-credentials: true
+
 lncr:
-  base-url: "http://localhost:8080"
+  base-url: "${LNCR_BASE_URL}"
+
   integration:
     food-items-url: "${lncr.base-url}/foodItems"
     customers-url: "${lncr.base-url}/customers"
-    customers-order-url: "${lncr.base-url}/customers"
+    customer-order-url: "${lncr.base-url}/customerOrders"
+    kitchen-order-url: "${lncr.base-url}/kitchenOrders"
+    payment-url: "${lncr.base-url}/payments/mercadoPago"
+
+
   customer:
     location-prefix: "${lncr.base-url}/customers"
+
   customer-order:
-    location-prefix: "${lncr.base-url}/customersOrders"
+    location-prefix: "${lncr.base-url}/customerOrders"
+
   food-item:
     location-prefix: "${lncr.base-url}/foodItems"
+
   food-item-image:
     location-prefix: "${lncr.base-url}/foodItems/image"
     directory: "../storage/images/"
@@ -42,11 +44,17 @@ lncr:
     extensions:
       ".jpg": "FFD8"
       ".png": "89504E47"
+
+  kitchen-order:
+    location-prefix: "${lncr.base-url}/kitchenOrders"
+
   mercadopago:
     location-prefix: "${lncr.base-url}/payments/mercadoPago"
-    callbackUrl: "https://webhook.site/a208949d-4727-4147-9d37-1f34f8615fe8" #Webhook para notificação de pagamento
-    chargeUrl: "https://api.mercadopago.com/instore/orders/qr/seller/collectors/${lncr.mercadopago.userId}/pos/${lncr.mercadopago.posId}/qrs"
-    paymentUrl: "https://api.mercadopago.com/v1/payments"
-    accessToken: "APP_USR-4844709428317965-050720-a1e0405e0cbddf8c771622cfdbf2ebc0-2425846779" #.env
-    userId: "2425846779" #.env
-    posId: "SUC001POS001" #.env
+    callbackUrl: "${MERCADOPAGO_CALLBACK_URL}" #Webhook para notificação de pagamento
+    chargeUrl: "${MERCADOPAGO_QRCODE_URL}"
+    paymentUrl: "${MERCADOPAGO_PAYMENTS_URL}"
+    accessToken: "${MERCADOPAGO_ACCESS_TOKEN}" #.env
+    userId: "${MERCADOPAGO_USER_ID}" #.env
+    posId: "${MERCADOPAGO_POS_ID}" #.env
+    mercado-pago-mock: false
+    mercado-pago-mock-customer-order-id: 1
