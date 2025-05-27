@@ -76,8 +76,8 @@ public class FoodItemImage {
     }
 
     //Método para validar imagens enviadas
-    public String validateImage(String _base64, Map<String,String> imageConfig, Integer maxSizeInBytes) {
-        if (validateImageSize(_base64, maxSizeInBytes)){ // Valida tamanho
+    public String validateImage(String _base64, Map<String, String> imageConfig, Integer maxSizeInBytes) {
+        if (validateImageSize(_base64, maxSizeInBytes)) { // Valida tamanho
             for (Map.Entry<String, String> entry : imageConfig.entrySet()) { // Lista de extensões permitidas
                 String headerExtensions = entry.getValue();
                 if (validateImageExtention(_base64, headerExtensions)) { // Valida se extensão é permitida
@@ -86,8 +86,9 @@ public class FoodItemImage {
             }
             String allowedExtensions = String.join(", ", imageConfig.keySet());
             log.info("Imagens inválidas. Extensões permitidas: {}", allowedExtensions);
-            return  "Imagens inválidas. Extensões permitidas:" + allowedExtensions; //Adiciona mensagem de erro de extensão não permitida
-        };
+            return "Imagens inválidas. Extensões permitidas:" + allowedExtensions; //Adiciona mensagem de erro de extensão não permitida
+        }
+        ;
         log.info("Tamanho da imagem excede o limite de {} bytes", maxSizeInBytes);
         return "Tamanho da imagem excede o limite de " + maxSizeInBytes + " bytes"; //Adiciona mensagem de erro de tamanho inválid para o suário
     }
@@ -100,14 +101,16 @@ public class FoodItemImage {
     public byte[] getDecodeImageData(String _base64) {
         try {
             return Base64.getDecoder().decode(_base64);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             throw new FoodItemException("Erro ao decodificar a imagem. Informar um base64 válido .", 404);
         }
     }
+
     public boolean validateImageExtention(String _base64, String headerExtensions) {
         String header = bytesToHex(getDecodeImageData(_base64));
         return header.startsWith(headerExtensions);
     }
+
     private static String bytesToHex(byte[] bytes) {
         StringBuilder hexString = new StringBuilder();
         for (byte b : bytes) {

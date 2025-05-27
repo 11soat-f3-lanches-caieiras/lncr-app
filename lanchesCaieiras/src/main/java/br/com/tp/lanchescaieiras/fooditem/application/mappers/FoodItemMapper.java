@@ -28,7 +28,4 @@ public interface FoodItemMapper {
     FoodItem jpaToDomain(JpaFoodItemEntity jpaFoodItemEntity);
 
 
-
-
-
 }

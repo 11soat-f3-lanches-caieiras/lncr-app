@@ -10,11 +10,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class KitchenOrderIntegrationImpl implements  KitchenOrderIntegration {
+public class KitchenOrderIntegrationImpl implements KitchenOrderIntegration {
 
     private static final Logger log = LoggerFactory.getLogger(KitchenOrderIntegrationImpl.class);
     private final IntegrationConfig integrationConfig;

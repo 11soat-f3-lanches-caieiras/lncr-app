@@ -14,7 +14,7 @@ public interface CustomerMapper {
             @Mapping(target = "documentNumber", source = "jpaCustomerEntity.documentNumber"),
             @Mapping(target = "name", source = "jpaCustomerEntity.name"),
             @Mapping(target = "email", source = "jpaCustomerEntity.email")
-            })
+    })
     Customer jpaToDomain(JpaCustomerEntity jpaCustomerEntity);
 
     @Mappings({
@@ -22,7 +22,7 @@ public interface CustomerMapper {
             @Mapping(target = "documentNumber", source = "customer.documentNumber"),
             @Mapping(target = "name", source = "customer.name"),
             @Mapping(target = "email", source = "customer.email")
-            })
+    })
     JpaCustomerEntity domainToJpa(Customer customer);
 }
 

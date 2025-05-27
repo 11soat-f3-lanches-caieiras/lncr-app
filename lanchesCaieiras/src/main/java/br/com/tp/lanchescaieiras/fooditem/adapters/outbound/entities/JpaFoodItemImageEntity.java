@@ -71,7 +71,7 @@ public class JpaFoodItemImageEntity {
         return _data;
     }
 
-   public void setLocation(String location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 

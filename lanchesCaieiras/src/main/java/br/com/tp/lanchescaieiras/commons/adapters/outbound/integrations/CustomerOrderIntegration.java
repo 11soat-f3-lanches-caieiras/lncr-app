@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.commons.adapters.outbounds.integrations;
+package br.com.tp.lanchescaieiras.commons.adapters.outbound.integrations;
 
 public interface CustomerOrderIntegration {
 

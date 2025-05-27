@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com.tp.lanchescaieiras</groupId>
-    <artifactId>lncr</artifactId>
+    <artifactId>lanches-caieiras</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Lanches Caieiras</name>
     <description>Projeto 11SOAT</description>
@@ -51,7 +51,7 @@
             <version>3.0.0</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>6.6.13.Final</version>
         </dependency>
@@ -81,8 +81,13 @@
             <version>1.5.5.Final</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.14</version>
+        </dependency>
+        <dependency>
             <groupId>br.com.tp.lanchescaieiras</groupId>
-            <artifactId>customer</artifactId>
+            <artifactId>lncr</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

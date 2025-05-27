@@ -56,7 +56,7 @@ public class JpaKitchenOrderRepositoryImpl implements KitchenOrderRepositoy {
     }
 
     @Override
-    public KitchenOrder findByCustomerOrderId(Integer customerOrderId){
+    public KitchenOrder findByCustomerOrderId(Integer customerOrderId) {
         JpaKitchenOrderEntity jpaKitchenOrderEntity = this.jpaKitchenOrderRepository.findByCustomerOrderId(customerOrderId);
         return kitchenOrderMapper.jpatoDomain(jpaKitchenOrderEntity);
     }

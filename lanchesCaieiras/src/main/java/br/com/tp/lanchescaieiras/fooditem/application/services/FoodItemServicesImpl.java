@@ -36,7 +36,7 @@ public class FoodItemServicesImpl implements FoodItemUseCases {
     @Override
     public List<FoodItem> getAllFoodItems(Integer _limit, String category) {
         log.info("Buscando lista de items de alimentação por categoria");
-        List<FoodItem> foodItemList = jpaFoodItemRepository.findAllByCategory(_limit,category);
+        List<FoodItem> foodItemList = jpaFoodItemRepository.findAllByCategory(_limit, category);
         log.info("Buscando localização das imagens");
         for (FoodItem foodItem : foodItemList) {
 
@@ -50,8 +50,7 @@ public class FoodItemServicesImpl implements FoodItemUseCases {
         Optional<FoodItem> foodItem = jpaFoodItemRepository.findById(id);
         if (foodItem.isPresent()) {
             foodItem = Optional.of(jpaFoodItemImageRepository.findAllImagesByFoodItemId(foodItem.get()));
-        }
-        else {
+        } else {
             throw new FoodItemException("Item de alimentação não encontrado com o ID: " + id, 404);
         }
         return foodItem;
@@ -59,7 +58,7 @@ public class FoodItemServicesImpl implements FoodItemUseCases {
 
     @Override
     public FoodItem partialUpdateFoodItemById(Integer id, FoodItem foodItem) {
-        return this.jpaFoodItemRepository.partialUpdateFoodItemById(id,foodItem)
+        return this.jpaFoodItemRepository.partialUpdateFoodItemById(id, foodItem)
                 .orElseThrow(() -> new CustomerException("Item de Alimentação não encontrado com o ID: " + id, 404));
     }
 
@@ -67,7 +66,7 @@ public class FoodItemServicesImpl implements FoodItemUseCases {
     public void deleteFoodItemById(Integer id) {
         try {
             this.jpaFoodItemRepository.deleteFoodItemById(id);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             throw new FoodItemException("Item de alimentação não encontrado com o ID: " + id, 404);
         }
     }

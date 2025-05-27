@@ -81,12 +81,12 @@ public class JpaFoodItemRepositoryImpl implements FoodItemRepository {
 
     @Override
     public void deleteFoodItemById(Integer id) {
-            try {
-                jpaFoodItemReposity.delete(this.jpaFoodItemReposity.findById(id).get());
-            } catch (Exception e) {
-                throw new FoodItemException("Erro ao deletar o item de alimentação com ID: " + id, 500);
-            }
+        try {
+            jpaFoodItemReposity.delete(this.jpaFoodItemReposity.findById(id).get());
+        } catch (Exception e) {
+            throw new FoodItemException("Erro ao deletar o item de alimentação com ID: " + id, 500);
         }
+    }
 
 
 }

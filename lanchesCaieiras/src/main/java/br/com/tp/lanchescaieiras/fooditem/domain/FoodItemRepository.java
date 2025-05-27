@@ -11,12 +11,11 @@ public interface FoodItemRepository {
 
     List<FoodItem> findAllByCategory(Integer _limit, String category);
 
-    Optional <FoodItem> findById(Integer id);
+    Optional<FoodItem> findById(Integer id);
 
-    Optional <FoodItem> partialUpdateFoodItemById(Integer id, FoodItem foodItem);
+    Optional<FoodItem> partialUpdateFoodItemById(Integer id, FoodItem foodItem);
 
     void deleteFoodItemById(Integer id);
-
 
 
 }

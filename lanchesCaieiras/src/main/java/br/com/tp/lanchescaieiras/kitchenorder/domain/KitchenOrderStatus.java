@@ -32,7 +32,7 @@ public enum KitchenOrderStatus {
                 return status;
             }
         }
-        throw new KitchenOrderException("Id do status inválido: " + id + ". Os ids de status válidos são: " + KitchenOrderStatus.listOfAllowIds(),400);
+        throw new KitchenOrderException("Id do status inválido: " + id + ". Os ids de status válidos são: " + KitchenOrderStatus.listOfAllowIds(), 400);
     }
 
     public static KitchenOrderStatus fromDescription(String description) {
@@ -41,10 +41,10 @@ public enum KitchenOrderStatus {
                 return status;
             }
         }
-        throw new KitchenOrderException("Status inválidos: " + description + ". Os status válidos são: " + KitchenOrderStatus.listOfAllowDescriptions(),400);
+        throw new KitchenOrderException("Status inválidos: " + description + ". Os status válidos são: " + KitchenOrderStatus.listOfAllowDescriptions(), 400);
     }
 
-    public static String listOfAllowDescriptions(){
+    public static String listOfAllowDescriptions() {
         String listOfAllowDescriptions = new String();
         for (KitchenOrderStatus status : values()) {
             if (!listOfAllowDescriptions.isEmpty()) {
@@ -55,7 +55,7 @@ public enum KitchenOrderStatus {
         return listOfAllowDescriptions;
     }
 
-    public static String listOfAllowIds(){
+    public static String listOfAllowIds() {
         String listOfAllowIds = new String();
 
         for (KitchenOrderStatus status : values()) {
@@ -66,7 +66,6 @@ public enum KitchenOrderStatus {
         }
         return listOfAllowIds;
     }
-
 
 
 }

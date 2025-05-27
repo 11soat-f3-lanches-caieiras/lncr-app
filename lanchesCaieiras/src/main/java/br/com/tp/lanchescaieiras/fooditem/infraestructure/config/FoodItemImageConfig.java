@@ -20,7 +20,7 @@ public class FoodItemImageConfig {
 
     private Map<String, String> extensions;
 
-   public Map<String, String> getExtensions() {
+    public Map<String, String> getExtensions() {
         return extensions;
     }
 

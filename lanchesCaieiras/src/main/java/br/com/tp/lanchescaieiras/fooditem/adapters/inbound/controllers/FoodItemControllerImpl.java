@@ -33,9 +33,9 @@ public class FoodItemControllerImpl implements FoodItemController {
         validateImages(foodItem); //Valida se as imagens estão com tamanho e extensão corretas
         invalidateImages(foodItem); //Remove as os dados das imagens são inválidas
         foodItem = this.foodItemServices.createFoodItem(foodItem);
-        FoodItem createdFoodItem = new FoodItem(foodItem.getId(), null,null,null,null,foodItem.getImages());
+        FoodItem createdFoodItem = new FoodItem(foodItem.getId(), null, null, null, null, foodItem.getImages());
         return ResponseEntity.status(HttpStatus.CREATED)
-                .header("Location", foodItemConfig.getLocationPrefix()+"/"+createdFoodItem.getId())
+                .header("Location", foodItemConfig.getLocationPrefix() + "/" + createdFoodItem.getId())
                 .body(new FoodItemResponse(createdFoodItem));
     }
 
@@ -55,8 +55,8 @@ public class FoodItemControllerImpl implements FoodItemController {
 
     @Override
     @PatchMapping("/{id}")
-    public ResponseEntity<FoodItemResponse> partialUpdateFoodItemById(@PathVariable Integer id, @RequestBody FoodItem foodItem){
-        FoodItem  updatedFoodItem = this.foodItemServices.partialUpdateFoodItemById(id, foodItem);
+    public ResponseEntity<FoodItemResponse> partialUpdateFoodItemById(@PathVariable Integer id, @RequestBody FoodItem foodItem) {
+        FoodItem updatedFoodItem = this.foodItemServices.partialUpdateFoodItemById(id, foodItem);
         return new ResponseEntity<>(new FoodItemResponse(updatedFoodItem), HttpStatus.OK);
     }
 
@@ -64,7 +64,7 @@ public class FoodItemControllerImpl implements FoodItemController {
     @DeleteMapping("/{id}")
     public ResponseEntity<FoodItemResponse> deleteFoodItemById(Integer id) {
         this.foodItemServices.deleteFoodItemById(id);
-        return new ResponseEntity<>(new FoodItemResponse(null),HttpStatus.OK);
+        return new ResponseEntity<>(new FoodItemResponse(null), HttpStatus.OK);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class FoodItemControllerImpl implements FoodItemController {
         validateImage(foodItemImage);
         foodItemImage = this.foodItemServices.updateImageById(id, foodItemImage);
         return ResponseEntity.status(HttpStatus.OK)
-                .header("Location",    imageConfig.getLocationPrefix()+"/"+ id)
+                .header("Location", imageConfig.getLocationPrefix() + "/" + id)
                 .body(new FoodItemImageDataResponse());
     }
 
@@ -94,7 +94,7 @@ public class FoodItemControllerImpl implements FoodItemController {
         }
     }
 
-    private void validateImage(FoodItemImage foodItemImage){
+    private void validateImage(FoodItemImage foodItemImage) {
         FoodItem foodItem = new FoodItem();
         foodItem.setImages(List.of(foodItemImage));
         validateImages(foodItem);
@@ -111,9 +111,11 @@ public class FoodItemControllerImpl implements FoodItemController {
             }
         }
     }
+
     private void validadeAllFoodItemCategoryFilter(Optional<Integer> _limit, Optional<String> category) {
         validateLimitFilter(_limit);
-        validadeCategoryFilter(category);;
+        validadeCategoryFilter(category);
+        ;
     }
 
     private boolean validateLimitFilter(Optional<Integer> _limit) {
@@ -131,8 +133,7 @@ public class FoodItemControllerImpl implements FoodItemController {
             } catch (IllegalArgumentException e) {
                 throw new FoodItemException("Categoria " + category.get() + " inválida", 404);
             }
-        }
-        else{
+        } else {
             return true;
         }
     }

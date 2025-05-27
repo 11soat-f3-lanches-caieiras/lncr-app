@@ -11,6 +11,6 @@ public class PaymentInboundHandler {
 
     @ExceptionHandler(PaymentException.class)
     public ResponseEntity<Object> handleKitchenOrderException(PaymentException ex) {
-        return ExceptionHandlerUtil.handleException(ex.getMessage(), ex.getCode(),ex);
+        return ExceptionHandlerUtil.handleException(ex.getMessage(), ex.getCode(), ex);
     }
 }

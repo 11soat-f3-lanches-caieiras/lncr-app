@@ -2,11 +2,11 @@ package br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions;
 
 public class FoodItemException extends RuntimeException {
 
-  private final int code;
+    private final int code;
 
-  public FoodItemException(String message, int code) {
-      super(message);
-      this.code = code;
+    public FoodItemException(String message, int code) {
+        super(message);
+        this.code = code;
     }
 
     public int getCode() {

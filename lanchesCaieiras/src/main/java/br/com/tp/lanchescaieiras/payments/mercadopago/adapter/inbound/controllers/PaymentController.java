@@ -14,6 +14,6 @@ public interface PaymentController {
     ResponseEntity<PaymentResponse> paymentRecived(@RequestParam(name = "data.id", required = true) String dataId,
                                                    @RequestParam(name = "type", required = true) String type);
 
-    public ResponseEntity<PaymentResponse> getPaymentByCustomerOrderId(@PathVariable(name="customerOrderId") Integer customerOrderId);
+    public ResponseEntity<PaymentResponse> getPaymentByCustomerOrderId(@PathVariable(name = "customerOrderId") Integer customerOrderId);
 
 }

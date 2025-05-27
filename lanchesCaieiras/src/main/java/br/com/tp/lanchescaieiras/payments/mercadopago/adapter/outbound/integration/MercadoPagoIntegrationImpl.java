@@ -39,11 +39,11 @@ public class MercadoPagoIntegrationImpl implements MercadoPagoIntegration {
     private Integer callMercadoPagoGetPaymentId(String paymentId) {
         String url = mercadoPagoConfig.getPaymentUrl() + "/" + paymentId;
         HttpHeaders headers = setAuthorizationBearer(mercadoPagoConfig.getAccessToken());
-        log.info("Buscando informações do pagamento no mercado pago.\n{}",url);
+        log.info("Buscando informações do pagamento no mercado pago.\n{}", url);
         if (mercadoPagoConfig.getMercadoPagoMock() == true) {
             return mercadoPagoConfig.mercadoPagoMockCustomerOrderId;
 
-        }else {
+        } else {
             try {
                 ResponseEntity<String> paymentResponse = new RestTemplate().exchange(url, HttpMethod.GET, createHttpEntity("", headers), String.class);
                 return parsePaymentId(paymentResponse.getBody());
@@ -58,12 +58,12 @@ public class MercadoPagoIntegrationImpl implements MercadoPagoIntegration {
         try {
             JsonNode jsonNode = new ObjectMapper().readTree(paymentResponse);
             if (jsonNode.has("status") && jsonNode.get("status").asText().equals("approved") &&
-                jsonNode.has("status_detail") && jsonNode.get("status_detail").asText().equals("accredited")){
+                    jsonNode.has("status_detail") && jsonNode.get("status_detail").asText().equals("accredited")) {
                 if (jsonNode.has("external_reference")) {
                     return jsonNode.get("external_reference").asInt();
                 }
             }
-                return null;
+            return null;
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error parsing Mercado Pago response", e);
         }
@@ -72,7 +72,7 @@ public class MercadoPagoIntegrationImpl implements MercadoPagoIntegration {
     private ResponseEntity<String> callMercadoPagoQrCode(Payment payment) {
         HttpHeaders headers = setAuthorizationBearer(mercadoPagoConfig.getAccessToken());
         String request = createQrCodeRequestBody(payment);
-        log.info("Solicitando via MercadoPago nova cobrança de {} do pedido {}\n{}",payment.getAmount(), payment.getOrderId(), request);
+        log.info("Solicitando via MercadoPago nova cobrança de {} do pedido {}\n{}", payment.getAmount(), payment.getOrderId(), request);
         return new RestTemplate().exchange(mercadoPagoConfig.chargeUrl, HttpMethod.POST, new HttpEntity<>(request, headers), String.class);
     }
 

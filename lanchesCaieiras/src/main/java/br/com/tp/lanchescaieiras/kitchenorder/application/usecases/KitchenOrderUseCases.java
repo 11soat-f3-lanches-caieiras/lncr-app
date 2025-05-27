@@ -7,7 +7,7 @@ import java.util.List;
 public interface KitchenOrderUseCases {
     public KitchenOrder createKitchenOrder(KitchenOrder kitchenOrder);
 
-    public KitchenOrder findById(Integer id, Boolean includeFoodItems) ;
+    public KitchenOrder findById(Integer id, Boolean includeFoodItems);
 
     KitchenOrder getKitchenOrderByCustomerOrderById(Integer customerOrderId, Boolean includeFoodItems);
 

@@ -34,11 +34,11 @@ public class CustomerServiceImpl implements CustomerUseCases {
 
     @Override
     public Optional<Customer> getCustomerById(Integer id) {
-        log.info("Buscando cliente com id: " +id);
+        log.info("Buscando cliente com id: " + id);
         Optional<Customer> customer = this.customerRepository.findById(id);
 
         if (customer.isPresent()) {
-            log.info("Cliente encontrado: " +customer.get());
+            log.info("Cliente encontrado: " + customer.get());
             return customer;
         } else {
             throw new CustomerException("Cliente não encontrado com o ID: " + id, 404);
@@ -73,7 +73,7 @@ public class CustomerServiceImpl implements CustomerUseCases {
 
     @Override
     public void deleteCustomer(Integer id) {
-        log.warn("Deletando cliente com id: " +id);
+        log.warn("Deletando cliente com id: " + id);
         this.customerRepository.deleteById(id);
     }
 

@@ -17,11 +17,9 @@ public interface CustomerRepository {
 
     void deleteById(Integer id);
 
-    Boolean  existsByDocumentNumber(String documentNumber);
+    Boolean existsByDocumentNumber(String documentNumber);
 
-    Boolean  existsByEmail(String email);
-
-
+    Boolean existsByEmail(String email);
 
 
 }

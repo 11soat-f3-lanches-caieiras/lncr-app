@@ -3,11 +3,11 @@ package br.com.tp.lanchescaieiras.fooditem.adapters.outbound.entities;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemCategory;
 import jakarta.persistence.*;
 
-@Table(name="food_item", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(name = "food_item", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @Entity
 public class JpaFoodItemEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
     public String name;
     public String description;

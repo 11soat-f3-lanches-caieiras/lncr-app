@@ -16,6 +16,7 @@ public class ResponseMetada {
         this._timestamp = Instant.now().toString();
         this._message = null;
     }
+
     public ResponseMetada(String _traceId, String _timestamp, String _message) {
         this._traceId = _traceId;
         this._timestamp = _timestamp;

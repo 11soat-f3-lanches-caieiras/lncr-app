@@ -68,7 +68,7 @@ paths:
       description: Atualizar parcialmente os dados de um cliente
       summary: Atualizar parcialmente os dados de um cliente
       security:
-        - basicAuth: []
+        - basicAuth: [ ]
       tags:
         - ManagedOperations
       parameters:
@@ -87,7 +87,7 @@ paths:
       description: Deletar dados de um cliente
       summary: Deletar dados de um cliente
       security:
-        - basicAuth: []
+        - basicAuth: [ ]
       tags:
         - ManagedOperations
       parameters:
@@ -120,7 +120,7 @@ paths:
       description: Atualizar parcialmente os dados de um cliente
       summary: Atualizar parcialmente os dados de um cliente
       security:
-        - basicAuth: []
+        - basicAuth: [ ]
       tags:
         - ManagedOperations
       parameters:
@@ -139,7 +139,7 @@ paths:
       description: Deletar dados de um cliente por Id
       summary: Deletar dados de um cliente por Id
       security:
-        - basicAuth: []
+        - basicAuth: [ ]
       tags:
         - ManagedOperations
       parameters:
@@ -215,7 +215,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-    parameters: []
+    parameters: [ ]
   '/customerOrder/{id}/{newStatus}':
     patch:
       operationId: customerOrderUpdateStatus
@@ -255,7 +255,7 @@ paths:
       description: Criar um novo item
       summary: Criar um novo Item de Alimentacao
       security:
-        - basicAuth: []
+        - basicAuth: [ ]
       tags:
         - CollectionOperations
       requestBody:
@@ -288,7 +288,7 @@ paths:
       description: Atualizar parcialmente informacoes de um item de Alimentacao
       summary: Atualizar parcialmente informacoes de um item de Alimentacao
       security:
-        - basicAuth: []
+        - basicAuth: [ ]
       tags:
         - ManagedOperations
       parameters:
@@ -307,7 +307,7 @@ paths:
       description: Deletar dados de um item de alimentacao
       summary: Deletar dados de um item de alimentacao
       security:
-        - basicAuth: []
+        - basicAuth: [ ]
       tags:
         - ManagedOperations
       parameters:
@@ -325,22 +325,22 @@ paths:
       description: Buscar imagem de um item de alimentacao por Id
       summary: Buscar imagem de um item de alimentacao por Id
       tags:
-          - ManagedOperations
+        - ManagedOperations
       parameters:
-          - $ref: '#/components/parameters/ImageId'
+        - $ref: '#/components/parameters/ImageId'
       responses:
-          '200':
-            $ref: '#/components/responses/GetImage'
-          '404':
-            $ref: '#/components/responses/NotFound'
-          '500':
-            $ref: '#/components/responses/InternalServerError'
+        '200':
+          $ref: '#/components/responses/GetImage'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     put:
       operationId: updateImage
       description: Atualizar imagem de um item de alimentação
       summary: Atualizar imagem de um item de alimentação
       security:
-        - basicAuth: []
+        - basicAuth: [ ]
       tags:
         - ManagedOperations
       parameters:
@@ -353,22 +353,22 @@ paths:
         '500':
           $ref: "#/components/responses/InternalServerError"
     delete:
-        operationId: deleteImage
-        description: Deletar imagem de um item de alimentação
-        summary: Deletar imagem de um item de alimentação
-        security:
-            - basicAuth: []
-        tags:
-            - ManagedOperations
-        parameters:
-            - $ref: "#/components/parameters/ImageId"
-        responses:
-            '200':
-              $ref: "#/components/responses/DeletedResponse"
-            '404':
-              $ref: '#/components/responses/NotFound'
-            '500':
-              $ref: "#/components/responses/InternalServerError"
+      operationId: deleteImage
+      description: Deletar imagem de um item de alimentação
+      summary: Deletar imagem de um item de alimentação
+      security:
+        - basicAuth: [ ]
+      tags:
+        - ManagedOperations
+      parameters:
+        - $ref: "#/components/parameters/ImageId"
+      responses:
+        '200':
+          $ref: "#/components/responses/DeletedResponse"
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: "#/components/responses/InternalServerError"
   /kitchenOrders:
     post:
       operationId: createKitchenOrder
@@ -740,16 +740,16 @@ components:
                   _timestamp: '2025-02-12T21:41:43.286Z'
                 id: 1
                 images:
-                    - id: 1
-                      locatiton: "https://localhost:8080/foodItems/1" #base64
-                    - id: 2
-                      locatiton: "https://localhost:8080/foodItems/2"
-                    - id: 3
-                      fileExtension: "Imagens inválidas. Extensões permitidas:jpg, png"
-                    - id: 4
-                      locatiton: "Tamanho da imagem excede o limite de 524288 bytes"
-                    - id: 5
-                      locatiton: "https://localhost:8080/foodItems/1"
+                  - id: 1
+                    locatiton: "https://localhost:8080/foodItems/1" #base64
+                  - id: 2
+                    locatiton: "https://localhost:8080/foodItems/2"
+                  - id: 3
+                    fileExtension: "Imagens inválidas. Extensões permitidas:jpg, png"
+                  - id: 4
+                    locatiton: "Tamanho da imagem excede o limite de 524288 bytes"
+                  - id: 5
+                    locatiton: "https://localhost:8080/foodItems/1"
 
       headers:
         Location:
@@ -1396,8 +1396,8 @@ components:
           type: string
           format: uri
         fileExtension:
-            description: Mensagem de erro de extensão inválida
-            type: string
+          description: Mensagem de erro de extensão inválida
+          type: string
     FoodItemTemplate:
       description: Modelo de dados do Item de Alimentacao
       properties:

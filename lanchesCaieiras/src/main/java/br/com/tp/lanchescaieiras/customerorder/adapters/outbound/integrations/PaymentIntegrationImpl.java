@@ -2,7 +2,6 @@ package br.com.tp.lanchescaieiras.customerorder.adapters.outbound.integrations;
 
 import br.com.tp.lanchescaieiras.commons.infraestructure.config.IntegrationConfig;
 import br.com.tp.lanchescaieiras.customerorder.infraestructure.exceptions.CustomerOrderException;
-import br.com.tp.lanchescaieiras.kitchenorder.domain.KitchenOrderResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -38,7 +37,6 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
                 throw new CustomerOrderException("Erro ao criar cobrança para o pedido", 500);
             }
         });
-
 
 
     }

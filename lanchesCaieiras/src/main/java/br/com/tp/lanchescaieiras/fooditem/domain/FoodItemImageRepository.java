@@ -12,4 +12,4 @@ public interface FoodItemImageRepository {
 
     FoodItemImage updateImageById(Integer id, FoodItemImage foodItemImage);
 
- }
+}

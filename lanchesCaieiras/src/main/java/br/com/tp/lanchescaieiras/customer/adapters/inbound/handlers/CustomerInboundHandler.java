@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class CustomerInboundHandler {
 
     @ExceptionHandler(CustomerException.class)
-    public ResponseEntity<Object> handleKCustomerException(CustomerException ex) {
+    public ResponseEntity<Object> handlerCustomerException(CustomerException ex) {
         return ExceptionHandlerUtil.handleException(ex.getMessage(), ex.getCode(), ex);
     }
 }

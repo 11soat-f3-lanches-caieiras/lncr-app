@@ -4,20 +4,21 @@ import br.com.tp.lanchescaieiras.customer.domain.Customer;
 import jakarta.persistence.*;
 
 
-@Table(name="customer", uniqueConstraints = {
-                        @UniqueConstraint(columnNames = "documentNumber"),
-                        @UniqueConstraint(columnNames = "email")
-                        })
+@Table(name = "customer", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "documentNumber"),
+        @UniqueConstraint(columnNames = "email")
+})
 @Entity
 public class JpaCustomerEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String documentNumber;
     String name;
     String email;
 
-    public  JpaCustomerEntity() {}
+    public JpaCustomerEntity() {
+    }
 
     public JpaCustomerEntity(Integer id, String documentNumber, String name, String email) {
         this.id = id;

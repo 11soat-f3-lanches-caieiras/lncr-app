@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/payments/mercadoPago")
-public class PaymentControllerImpl implements PaymentController{
+public class PaymentControllerImpl implements PaymentController {
 
     public final PaymentServiceImpl paymentService;
     public final MercadoPagoConfig mercadoPagoConfig;
@@ -24,22 +24,22 @@ public class PaymentControllerImpl implements PaymentController{
     @Override
     @PostMapping("/charge")
     public ResponseEntity<PaymentResponse> createCharge(@RequestBody Payment payment) {
-            payment = paymentService.createCharge(payment);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .header("Location", mercadoPagoConfig.getLocationPrefix() + "/" + payment.getId())
-                    .body(new PaymentResponse(payment));
+        payment = paymentService.createCharge(payment);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header("Location", mercadoPagoConfig.getLocationPrefix() + "/" + payment.getId())
+                .body(new PaymentResponse(payment));
     }
 
     @Override
     @PostMapping("/callback")
     public ResponseEntity<PaymentResponse> paymentRecived(@RequestParam(name = "data.id", required = true) String dataId,
                                                           @RequestParam(name = "type", required = true) String type) {
-        return new ResponseEntity<PaymentResponse>(new PaymentResponse(paymentService.updatePaymentByPaymentId(dataId)),HttpStatus.OK);
+        return new ResponseEntity<PaymentResponse>(new PaymentResponse(paymentService.updatePaymentByPaymentId(dataId)), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/customerOrder/{id}")
     public ResponseEntity<PaymentResponse> getPaymentByCustomerOrderId(@PathVariable(name = "id") Integer customerOrderId) {
-        return new ResponseEntity<PaymentResponse>(new PaymentResponse(paymentService.findByCustomerOrderId(customerOrderId)),HttpStatus.OK);
+        return new ResponseEntity<PaymentResponse>(new PaymentResponse(paymentService.findByCustomerOrderId(customerOrderId)), HttpStatus.OK);
     }
 }

@@ -33,7 +33,7 @@ public enum CustomerOrderStatus {
                 return status;
             }
         }
-        throw new CustomerOrderException("Id do status inválido: " + id + ". Os ids de status válidos são: " + CustomerOrderStatus.listOfAllowIds(),400);
+        throw new CustomerOrderException("Id do status inválido: " + id + ". Os ids de status válidos são: " + CustomerOrderStatus.listOfAllowIds(), 400);
     }
 
     public static CustomerOrderStatus fromDescription(String description) {
@@ -42,10 +42,10 @@ public enum CustomerOrderStatus {
                 return status;
             }
         }
-        throw new CustomerOrderException("Status inválidos: " + description + ". Os status válidos são: " + CustomerOrderStatus.listOfAllowDescriptions(),400);
+        throw new CustomerOrderException("Status inválidos: " + description + ". Os status válidos são: " + CustomerOrderStatus.listOfAllowDescriptions(), 400);
     }
 
-    public static String listOfAllowDescriptions(){
+    public static String listOfAllowDescriptions() {
         String listOfAllowDescriptions = new String();
         for (CustomerOrderStatus status : values()) {
             if (listOfAllowDescriptions.length() > 0) {
@@ -56,7 +56,7 @@ public enum CustomerOrderStatus {
         return listOfAllowDescriptions;
     }
 
-    public static String listOfAllowIds(){
+    public static String listOfAllowIds() {
         String listOfAllowIds = new String();
 
         for (CustomerOrderStatus status : values()) {
@@ -67,7 +67,6 @@ public enum CustomerOrderStatus {
         }
         return listOfAllowIds;
     }
-
 
 
 }

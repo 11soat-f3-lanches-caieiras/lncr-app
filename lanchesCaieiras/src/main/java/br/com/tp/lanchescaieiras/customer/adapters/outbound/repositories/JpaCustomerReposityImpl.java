@@ -67,8 +67,7 @@ public class JpaCustomerReposityImpl implements CustomerRepository {
             } catch (Exception e) {
                 throw new CustomerException("Erro ao deletar o cliente com ID: " + id, 500);
             }
-        }
-        else{
+        } else {
             throw new CustomerException("Cliente não encontrado com o ID: " + id, 404);
         }
     }
@@ -76,7 +75,7 @@ public class JpaCustomerReposityImpl implements CustomerRepository {
 
     @Override
     public Optional<Customer> findById(Integer id) {
-        return this.jpaCustomerRepository.findById (id)
+        return this.jpaCustomerRepository.findById(id)
                 .map(customerMapper::jpaToDomain);
     }
 

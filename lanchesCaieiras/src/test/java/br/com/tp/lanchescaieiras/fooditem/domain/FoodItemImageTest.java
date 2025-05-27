@@ -1,6 +1,5 @@
 package br.com.tp.lanchescaieiras.fooditem.domain;
 
-import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -10,7 +10,7 @@ public class KitchenOrderFoodItem {
     public String description;
     public String notes;
 
-    public KitchenOrderFoodItem(Integer id,Integer kitchenOrderId  , String name, String description, String notes) {
+    public KitchenOrderFoodItem(Integer id, Integer kitchenOrderId, String name, String description, String notes) {
         this.id = id;
         this.kitchenOrderId = kitchenOrderId;
         this.name = name;

@@ -11,11 +11,11 @@ import org.mapstruct.Mappings;
 public interface KitchenOrderFoodItemMapper {
 
     @Mappings({
-        @Mapping(target = "id", ignore = true),
-        @Mapping(target = "kitchenOrderId", source = "kitchenOrderId"),
-        @Mapping(target = "name", source = "kitchenOrderFoodItem.name"),
-        @Mapping(target = "description", source = "kitchenOrderFoodItem.description"),
-        @Mapping(target = "notes", source = "kitchenOrderFoodItem.notes")})
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "kitchenOrderId", source = "kitchenOrderId"),
+            @Mapping(target = "name", source = "kitchenOrderFoodItem.name"),
+            @Mapping(target = "description", source = "kitchenOrderFoodItem.description"),
+            @Mapping(target = "notes", source = "kitchenOrderFoodItem.notes")})
     JpaKitchenOrderFoodItemEntity domainToJpa(KitchenOrderFoodItem kitchenOrderFoodItem, Integer kitchenOrderId);
 
     @Mappings({

@@ -13,11 +13,11 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class CustomerIntegrationImpl implements CustomerIntegration{
+public class CustomerIntegrationImpl implements CustomerIntegration {
 
     private final IntegrationConfig integrationConfig;
 
-    public  CustomerIntegrationImpl(IntegrationConfig integrationConfig) {
+    public CustomerIntegrationImpl(IntegrationConfig integrationConfig) {
         this.integrationConfig = integrationConfig;
     }
 
@@ -45,7 +45,7 @@ public class CustomerIntegrationImpl implements CustomerIntegration{
             return new CustomerOrderCustomer(
                     _content.get("id").asInt(),
                     _content.get("name").asText());
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new CustomerOrderException("Error converting JSON to CustomerOrderCustomer", 500);
         }
     }

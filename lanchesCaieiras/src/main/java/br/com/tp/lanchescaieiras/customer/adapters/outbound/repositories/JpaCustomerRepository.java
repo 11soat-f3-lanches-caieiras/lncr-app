@@ -15,12 +15,12 @@ public interface JpaCustomerRepository extends JpaRepository<JpaCustomerEntity, 
     Customer save(Customer customer);
 
     @Query(value = "SELECT * FROM customer WHERE document_number = :documentNumber", nativeQuery = true)
-    Optional<JpaCustomerEntity>  findByDocumentNumber(@Param("documentNumber") String documentNumber);
+    Optional<JpaCustomerEntity> findByDocumentNumber(@Param("documentNumber") String documentNumber);
 
     @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM customer WHERE document_number = :documentNumber", nativeQuery = true)
-    Boolean  existsByDocumentNumber(@Param("documentNumber") String documentNumber);
+    Boolean existsByDocumentNumber(@Param("documentNumber") String documentNumber);
 
     @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM customer WHERE email = :email", nativeQuery = true)
-    Boolean  existsByEmail(@Param("email") String documentNumber);
+    Boolean existsByEmail(@Param("email") String documentNumber);
 
 }

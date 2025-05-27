@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix="lncr.food-item")
+@ConfigurationProperties(prefix = "lncr.food-item")
 public class FoodItemConfig {
 
     private String locationPrefix;

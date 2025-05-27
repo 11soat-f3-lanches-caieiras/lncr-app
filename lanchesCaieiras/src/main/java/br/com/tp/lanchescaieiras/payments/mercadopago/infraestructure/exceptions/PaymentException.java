@@ -2,11 +2,11 @@ package br.com.tp.lanchescaieiras.payments.mercadopago.infraestructure.exception
 
 public class PaymentException extends RuntimeException {
 
-  private final int code;
+    private final int code;
 
-  public PaymentException(String message, int code) {
-      super(message);
-      this.code = code;
+    public PaymentException(String message, int code) {
+        super(message);
+        this.code = code;
     }
 
     public int getCode() {

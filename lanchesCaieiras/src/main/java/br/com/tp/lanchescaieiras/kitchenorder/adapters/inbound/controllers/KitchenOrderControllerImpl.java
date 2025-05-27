@@ -36,27 +36,26 @@ public class KitchenOrderControllerImpl implements KitchenOrderController {
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<KitchenOrderResponse> getKitchenOrderById(@PathVariable Integer id,
-                                                                      @RequestParam(name="includeFoodItems", required = false, defaultValue = "true") Boolean includeFoodItems) {
-        KitchenOrder kitchenOrder = kitchenOrderServices.findById(id,includeFoodItems);
-        return new ResponseEntity<KitchenOrderResponse> (new KitchenOrderResponse(kitchenOrder), HttpStatus.OK);
+                                                                    @RequestParam(name = "includeFoodItems", required = false, defaultValue = "true") Boolean includeFoodItems) {
+        KitchenOrder kitchenOrder = kitchenOrderServices.findById(id, includeFoodItems);
+        return new ResponseEntity<KitchenOrderResponse>(new KitchenOrderResponse(kitchenOrder), HttpStatus.OK);
     }
-
 
 
     @Override
     @GetMapping("/customerOrder/{customerOrderId}")
     public ResponseEntity<KitchenOrderResponse> getKitchenOrderByCustomerOrderId(@PathVariable(name = "customerOrderId") Integer customerOrderId,
                                                                                  @RequestParam(name = "includeFoodItems", required = false, defaultValue = "true") Boolean includeFoodItems) {
-        return new ResponseEntity<KitchenOrderResponse> (new KitchenOrderResponse(kitchenOrderServices.getKitchenOrderByCustomerOrderById(customerOrderId,includeFoodItems)), HttpStatus.OK);
+        return new ResponseEntity<KitchenOrderResponse>(new KitchenOrderResponse(kitchenOrderServices.getKitchenOrderByCustomerOrderById(customerOrderId, includeFoodItems)), HttpStatus.OK);
 
     }
 
     @Override
     @GetMapping("/status/{status}")
     public ResponseEntity<KitchenOrderListResponse>
-            getKitchenOrderByStatus(@PathVariable(name = "status") String status,
-                                     @RequestParam(name="includeFoodItems", required = false, defaultValue = "true") Boolean includeFoodItems) {
-        List<KitchenOrder> kitchenOrders= kitchenOrderServices.findByStatus(status, includeFoodItems);
+    getKitchenOrderByStatus(@PathVariable(name = "status") String status,
+                            @RequestParam(name = "includeFoodItems", required = false, defaultValue = "true") Boolean includeFoodItems) {
+        List<KitchenOrder> kitchenOrders = kitchenOrderServices.findByStatus(status, includeFoodItems);
         if (kitchenOrders == null) {
             return new ResponseEntity<KitchenOrderListResponse>(HttpStatus.NOT_FOUND);
         }
@@ -65,10 +64,10 @@ public class KitchenOrderControllerImpl implements KitchenOrderController {
 
     @Override
     @PatchMapping("/{id}/updateStatus/{newStatus}")
-    public ResponseEntity<KitchenOrderResponse> updateOrderStatusById(@PathVariable(name="id", required = true) Integer id,
-                                                                      @PathVariable(name="newStatus", required = true) String newStatus,
-                                                                      @RequestParam(name="forceUpdate", required = false, defaultValue = "false") Boolean forceUpdate,
-                                                                      @RequestParam(name="updateCustomerOrder", required = false, defaultValue = "true") Boolean updateCustomerOrder){
+    public ResponseEntity<KitchenOrderResponse> updateOrderStatusById(@PathVariable(name = "id", required = true) Integer id,
+                                                                      @PathVariable(name = "newStatus", required = true) String newStatus,
+                                                                      @RequestParam(name = "forceUpdate", required = false, defaultValue = "false") Boolean forceUpdate,
+                                                                      @RequestParam(name = "updateCustomerOrder", required = false, defaultValue = "true") Boolean updateCustomerOrder) {
         KitchenOrder kitchenOrder = kitchenOrderServices.updateStatusById(id, newStatus, forceUpdate, updateCustomerOrder);
 
         return new ResponseEntity<KitchenOrderResponse>(new KitchenOrderResponse(kitchenOrder), HttpStatus.OK);

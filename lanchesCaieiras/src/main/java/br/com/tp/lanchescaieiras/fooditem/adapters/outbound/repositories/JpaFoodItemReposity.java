@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 
-public interface JpaFoodItemReposity extends JpaRepository<JpaFoodItemEntity,Integer> {
+public interface JpaFoodItemReposity extends JpaRepository<JpaFoodItemEntity, Integer> {
 
     JpaFoodItemEntity save(JpaFoodItemEntity jpaFoodItemEntity);
 

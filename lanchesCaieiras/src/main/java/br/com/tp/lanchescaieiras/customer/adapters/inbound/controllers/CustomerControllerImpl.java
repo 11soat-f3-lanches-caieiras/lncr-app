@@ -32,7 +32,7 @@ public class CustomerControllerImpl implements CustomerController {
         Customer createdCustomer = new Customer();
         createdCustomer.setId(customer.getId());
         return ResponseEntity.status(HttpStatus.CREATED)
-                .header("Location", customerConfig.getLocationPrefix()+"/"+customer.getId())
+                .header("Location", customerConfig.getLocationPrefix() + "/" + customer.getId())
                 .body(new CustomerResponse(createdCustomer));
     }
 
@@ -50,14 +50,14 @@ public class CustomerControllerImpl implements CustomerController {
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable("id") Integer id) {
         Optional<Customer> customer = this.customerService.getCustomerById(id);
-        return new ResponseEntity<>(new CustomerResponse(customer.get()),HttpStatus.OK);
+        return new ResponseEntity<>(new CustomerResponse(customer.get()), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/documentNumber/{documentNumber}")
     public ResponseEntity<CustomerResponse> getCustomerByDocumentNumber(@PathVariable("documentNumber") String documentNumber) {
         Optional<Customer> customer = this.customerService.getCustomerByDocumentNumber(documentNumber);
-        return new ResponseEntity<>(new CustomerResponse(customer.get()),HttpStatus.OK);
+        return new ResponseEntity<>(new CustomerResponse(customer.get()), HttpStatus.OK);
     }
 
 
@@ -65,13 +65,13 @@ public class CustomerControllerImpl implements CustomerController {
     @PatchMapping("/{id}")
     public ResponseEntity<CustomerResponse> partialUpdateCustomer(@RequestBody Customer customer, @PathVariable Integer id) {
         Customer updatedCustomer = this.customerService.partialUpdateCustomer(customer, id);
-        return new ResponseEntity<>(new CustomerResponse(updatedCustomer),HttpStatus.OK);
+        return new ResponseEntity<>(new CustomerResponse(updatedCustomer), HttpStatus.OK);
     }
 
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<CustomerResponse> deleteCustomer(@PathVariable("id") Integer id) {
         this.customerService.deleteCustomer(id);
-        return new ResponseEntity<>(new CustomerResponse(null),HttpStatus.OK);
+        return new ResponseEntity<>(new CustomerResponse(null), HttpStatus.OK);
     }
 }

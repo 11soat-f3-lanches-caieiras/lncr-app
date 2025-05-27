@@ -35,17 +35,17 @@ public class CustomerOrderControllerImpl implements CustomerOrderController {
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<CustomerOrderResponse> getCustomerOrderById(@PathVariable Integer id,
-                                                                      @RequestParam(name="includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems) {
-        CustomerOrder customerOrder = customerOrderServices.findById(id,includeFoodItems);
-        return new ResponseEntity<CustomerOrderResponse> (new CustomerOrderResponse(customerOrder), HttpStatus.OK);
+                                                                      @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems) {
+        CustomerOrder customerOrder = customerOrderServices.findById(id, includeFoodItems);
+        return new ResponseEntity<CustomerOrderResponse>(new CustomerOrderResponse(customerOrder), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/status/{status}")
     public ResponseEntity<CustomerOrderListResponse>
-            getCustomerOrderByStatus(@PathVariable(name = "status") String status,
-                                     @RequestParam(name="includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems) {
-        List<CustomerOrder> customerOrders= customerOrderServices.findByStatus(status, includeFoodItems);
+    getCustomerOrderByStatus(@PathVariable(name = "status") String status,
+                             @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems) {
+        List<CustomerOrder> customerOrders = customerOrderServices.findByStatus(status, includeFoodItems);
         if (customerOrders == null) {
             return new ResponseEntity<CustomerOrderListResponse>(HttpStatus.NOT_FOUND);
         }
@@ -53,10 +53,10 @@ public class CustomerOrderControllerImpl implements CustomerOrderController {
     }
 
     @Override
-    @PutMapping("/{id}/updateStatus/{newStatus}")
-    public ResponseEntity<CustomerOrderResponse> updateOrderStatusById(@PathVariable(name="id", required = true) Integer id,
-                                                                       @PathVariable(name="newStatus", required = true) String newStatus,
-                                                                       @RequestParam(name="forceUpdate", required = false, defaultValue = "false") Boolean forceUpdate) {
+    @PatchMapping("/{id}/updateStatus/{newStatus}")
+    public ResponseEntity<CustomerOrderResponse> updateOrderStatusById(@PathVariable(name = "id", required = true) Integer id,
+                                                                       @PathVariable(name = "newStatus", required = true) String newStatus,
+                                                                       @RequestParam(name = "forceUpdate", required = false, defaultValue = "false") Boolean forceUpdate) {
         CustomerOrder customerOrder = customerOrderServices.updateStatusById(id, newStatus, forceUpdate);
         return new ResponseEntity<CustomerOrderResponse>(new CustomerOrderResponse(customerOrder), HttpStatus.OK);
 

@@ -7,7 +7,7 @@ import java.util.List;
 public interface CustomerOrderUseCases {
     public CustomerOrder createCustomerOrder(CustomerOrder customerOrder);
 
-    public CustomerOrder findById(Integer id, Boolean includeFoodItems) ;
+    public CustomerOrder findById(Integer id, Boolean includeFoodItems);
 
     public List<CustomerOrder> findByStatus(String status, Boolean includeFoodItems);
 

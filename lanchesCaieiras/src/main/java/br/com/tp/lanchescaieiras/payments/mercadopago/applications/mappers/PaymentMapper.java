@@ -15,7 +15,7 @@ public interface PaymentMapper {
             @Mapping(target = "amount", source = "jpaPaymentEntity.amount"),
             @Mapping(target = "storeOrderId", source = "jpaPaymentEntity.storeOrderId"),
             @Mapping(target = "qrData", source = "jpaPaymentEntity.qrData"),
-            @Mapping(target = "status", expression= "java(PaymentStatus.fromId(jpaPaymentEntity.getStatusId()).getDescription())"),
+            @Mapping(target = "status", expression = "java(PaymentStatus.fromId(jpaPaymentEntity.getStatusId()).getDescription())"),
             @Mapping(target = "paymentId", source = "jpaPaymentEntity.paymentId")
     })
     Payment jpaToDomain(JpaPaymentEntity jpaPaymentEntity);

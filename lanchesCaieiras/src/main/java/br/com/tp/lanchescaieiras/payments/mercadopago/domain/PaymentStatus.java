@@ -2,8 +2,8 @@ package br.com.tp.lanchescaieiras.payments.mercadopago.domain;
 
 
 public enum PaymentStatus {
-    CHARGED(1,"Charged"),
-    PAID(2,"Paid");
+    CHARGED(1, "Charged"),
+    PAID(2, "Paid");
 
     private final int id;
     private final String description;

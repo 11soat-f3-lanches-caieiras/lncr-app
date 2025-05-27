@@ -5,7 +5,9 @@ import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemExc
 
 public interface FoodItemImageStorage {
     void saveImageFile(JpaFoodItemImageEntity jpaFoodItemImageEntity) throws FoodItemException;
+
     void deleteImageFile(String fileName) throws FoodItemException;
+
     String getImgaeData(String fileName) throws FoodItemException;
 
 }

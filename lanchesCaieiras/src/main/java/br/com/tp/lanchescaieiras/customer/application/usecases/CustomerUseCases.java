@@ -8,10 +8,15 @@ import java.util.Optional;
 public interface CustomerUseCases {
 
     Customer createCustomer(Customer customer);
+
     Optional<Customer> getCustomerById(Integer id);
+
     List<Customer> getAllCustomers(Integer limit);
+
     Optional<Customer> getCustomerByDocumentNumber(String documentNumber);
+
     Customer partialUpdateCustomer(Customer customer, Integer id);
+
     void deleteCustomer(Integer id);
 
 }

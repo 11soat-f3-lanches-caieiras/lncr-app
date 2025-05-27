@@ -43,7 +43,7 @@ public class FoodItemImageStorageImpl implements FoodItemImageStorage {
     @Override
     public void deleteImageFile(String fileName) throws FoodItemException {
         File file = new File(imageConfig.getDirectory() + fileName);
-        if(file.exists()) {
+        if (file.exists()) {
             log.info("Deletando arquivo: {}", file.getName());
             file.delete();
         }

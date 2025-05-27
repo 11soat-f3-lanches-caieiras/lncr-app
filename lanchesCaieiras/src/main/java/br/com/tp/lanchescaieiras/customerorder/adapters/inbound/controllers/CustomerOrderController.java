@@ -14,10 +14,11 @@ public interface CustomerOrderController {
 
     public ResponseEntity<CustomerOrderResponse> getCustomerOrderById(@PathVariable Integer id,
                                                                       @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
+
     public ResponseEntity<CustomerOrderListResponse> getCustomerOrderByStatus(@PathVariable String status,
                                                                               @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
 
     public ResponseEntity<CustomerOrderResponse> updateOrderStatusById(@PathVariable Integer id,
-                                                                       @PathVariable String newStatus,@RequestParam Boolean forceUpdate);
+                                                                       @PathVariable String newStatus, @RequestParam Boolean forceUpdate);
 
 }

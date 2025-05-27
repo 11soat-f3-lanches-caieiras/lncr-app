@@ -3,6 +3,7 @@ package br.com.tp.lanchescaieiras.customerorder.adapters.outbound.entities;
 import jakarta.persistence.*;
 
 import java.util.List;
+
 @Entity
 @Table(name = "customer_order")
 public class JpaCustomerOrderEntity {

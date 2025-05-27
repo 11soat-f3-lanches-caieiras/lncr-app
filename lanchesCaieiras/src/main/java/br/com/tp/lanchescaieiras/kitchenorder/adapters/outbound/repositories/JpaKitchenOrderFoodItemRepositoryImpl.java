@@ -15,7 +15,7 @@ public class JpaKitchenOrderFoodItemRepositoryImpl implements KitchenOrderFoodIt
     public final JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository;
     public final KitchenOrderFoodItemMapper kitchenOrderFoodItemMapper;
 
-    public JpaKitchenOrderFoodItemRepositoryImpl(@Lazy JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository, KitchenOrderFoodItemMapper kitchenOrderFoodItemMapper ) {
+    public JpaKitchenOrderFoodItemRepositoryImpl(@Lazy JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository, KitchenOrderFoodItemMapper kitchenOrderFoodItemMapper) {
         this.jpaKitchenOrderFoodItemRepository = jpaKitchenOrderFoodItemRepository;
         this.kitchenOrderFoodItemMapper = kitchenOrderFoodItemMapper;
     }

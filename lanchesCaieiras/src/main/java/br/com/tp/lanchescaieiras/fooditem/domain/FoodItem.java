@@ -70,7 +70,7 @@ public class FoodItem {
 
     @JsonSetter("category")
     public void setCategory(String category) {
-        if(category != null) {
+        if (category != null) {
             this.category = FoodItemCategory.valueOf(category.toUpperCase());
         }
     }
@@ -80,7 +80,6 @@ public class FoodItem {
     }
 
 
-
     public List<FoodItemImage> getImages() {
         return images;
     }
@@ -88,7 +87,6 @@ public class FoodItem {
     public void setImages(List<FoodItemImage> foodItemImages) {
         this.images = foodItemImages;
     }
-
 
 
 }

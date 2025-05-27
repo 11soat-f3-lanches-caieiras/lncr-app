@@ -15,7 +15,7 @@ public class JpaCustomerOrderFoodItemRepositoryImpl implements CustomerOrderFood
     public final JpaCustomerOrderFoodItemRepository jpaCustomerOrderFoodItemRepository;
     public final CustomerOrderFoodItemMapper customerOrderFoodItemMapper;
 
-    public JpaCustomerOrderFoodItemRepositoryImpl(@Lazy JpaCustomerOrderFoodItemRepository jpaCustomerOrderFoodItemRepository, CustomerOrderFoodItemMapper customerOrderFoodItemMapper ) {
+    public JpaCustomerOrderFoodItemRepositoryImpl(@Lazy JpaCustomerOrderFoodItemRepository jpaCustomerOrderFoodItemRepository, CustomerOrderFoodItemMapper customerOrderFoodItemMapper) {
         this.jpaCustomerOrderFoodItemRepository = jpaCustomerOrderFoodItemRepository;
         this.customerOrderFoodItemMapper = customerOrderFoodItemMapper;
     }

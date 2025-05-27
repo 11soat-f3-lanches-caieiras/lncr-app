@@ -10,6 +10,6 @@ import java.util.Optional;
 
 public interface JpaPaymentRepository extends JpaRepository<JpaPaymentEntity, Integer> {
 
-    @Query(value="select * from payment p where p.order_id = :customerOrderId",nativeQuery=true)
+    @Query(value = "select * from payment p where p.order_id = :customerOrderId", nativeQuery = true)
     Optional<JpaPaymentEntity> findByCustomerOrOrderId(@Param("customerOrderId") Integer customerOrderId);
 }

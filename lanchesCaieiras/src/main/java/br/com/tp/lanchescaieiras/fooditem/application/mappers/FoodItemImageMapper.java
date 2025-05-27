@@ -27,7 +27,6 @@ public interface FoodItemImageMapper {
     FoodItemImage jpaToDomain(JpaFoodItemImageEntity jpaFoodItemImageEntity);
 
 
-
     @Mapping(target = "_data", source = "jpaFoodItemImageEntity._data")
     FoodItemImage jpaToImageData(JpaFoodItemImageEntity jpaFoodItemImageEntity);
 }

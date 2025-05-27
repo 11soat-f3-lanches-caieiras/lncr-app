@@ -34,7 +34,9 @@ public class JpaFoodItemImageRepositoryImpl implements FoodItemImageRepository {
     public FoodItem saveImages(FoodItem foodItem) {
         int limit = 0;
         for (FoodItemImage foodItemImage : foodItem.getImages()) {
-            if (limit >= 4) { break; }
+            if (limit >= 4) {
+                break;
+            }
             foodItem.getImages().set(limit, saveImageList(foodItemImage, foodItem.getId(), limit));
             limit++;
         }
@@ -81,7 +83,7 @@ public class JpaFoodItemImageRepositoryImpl implements FoodItemImageRepository {
         JpaFoodItemImageEntity jpaFoodItemImageEntity = new JpaFoodItemImageEntity();
         try {
             jpaFoodItemImageEntity = jpaFoodItemImageRepository.findById(id).get();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new FoodItemException("Imagem não encontrada com o ID: " + id, 404);
         }
 
