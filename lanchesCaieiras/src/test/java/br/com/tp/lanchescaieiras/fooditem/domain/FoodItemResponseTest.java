@@ -13,9 +13,9 @@ class FoodItemResponseTest {
         FoodItemResponse response = new FoodItemResponse(responseMetada, foodItem);
 
         Assertions.assertNotNull(response.get_response());
-        Assertions.assertNotNull(response.getFoodItem());
+        Assertions.assertNotNull(response.get_content());
         //Assertions.assertEquals("200", response.get_response().getCode());
-        Assertions.assertEquals("Sanduíche Natural", response.getFoodItem().getName());
+        Assertions.assertEquals("Sanduíche Natural", response.get_content().getName());
     }
 
     @Test
@@ -24,8 +24,8 @@ class FoodItemResponseTest {
         FoodItemResponse response = new FoodItemResponse(foodItem);
 
         Assertions.assertNotNull(response.get_response());
-        Assertions.assertNotNull(response.getFoodItem());
-        Assertions.assertEquals("Suco de Laranja", response.getFoodItem().getName());
+        Assertions.assertNotNull(response.get_content());
+        Assertions.assertEquals("Suco de Laranja", response.get_content().getName());
     }
 
     @Test
@@ -33,7 +33,7 @@ class FoodItemResponseTest {
         FoodItemResponse response = new FoodItemResponse();
 
         Assertions.assertNull(response.get_response());
-        Assertions.assertNull(response.getFoodItem());
+        Assertions.assertNull(response.get_content());
     }
 
     @Test
@@ -50,9 +50,9 @@ class FoodItemResponseTest {
     void deveAtualizarItemNaResposta() {
         FoodItemResponse response = new FoodItemResponse();
         FoodItem foodItem = new FoodItem(3, "Pudim", "Pudim de leite condensado", 10.0, FoodItemCategory.DESSERT, null);
-        response.setFoodItem(foodItem);
+        response.set_content(foodItem);
 
-        Assertions.assertNotNull(response.getFoodItem());
-        Assertions.assertEquals("Pudim", response.getFoodItem().getName());
+        Assertions.assertNotNull(response.get_content());
+        Assertions.assertEquals("Pudim", response.get_content().getName());
     }
 }

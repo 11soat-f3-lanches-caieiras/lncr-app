@@ -22,6 +22,7 @@ public class FoodItemImageDataResponse {
     }
 
     public FoodItemImageDataResponse() {
+        this._response = new ResponseMetada();
     }
 
     public ResponseMetada get_response() {

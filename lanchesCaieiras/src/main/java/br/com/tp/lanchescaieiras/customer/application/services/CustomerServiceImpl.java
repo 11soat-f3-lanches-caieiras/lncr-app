@@ -6,6 +6,7 @@ import br.com.tp.lanchescaieiras.customer.domain.Customer;
 import br.com.tp.lanchescaieiras.customer.infraestructure.exceptions.CustomerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class CustomerServiceImpl implements CustomerUseCases {
     @Override
     public Customer createCustomer(Customer customer) {
         log.info("Iniciando criação de cliente: {}", customer.toString());
+        validateFields(customer);
         validateDocumentNumber(customer);
         validateEmail(customer);
         customer = this.customerRepository.save(customer);
@@ -77,9 +79,15 @@ public class CustomerServiceImpl implements CustomerUseCases {
         this.customerRepository.deleteById(id);
     }
 
+    public void validateFields(Customer customer){
+        if (customer.getDocumentNumber() == null || customer.getEmail() == null || customer.getName() == null){
+            throw new CustomerException("Campos obrigatórios faltantes", 400);
+        }
+    }
+
     public void validateDocumentNumber(Customer customer) {
-        log.info("Validando documento: " + customer.getDocumentNumber());
         if (customer.documentNumberIsValid()) {
+            log.info("Validando documento: " + customer.getDocumentNumber());
             if (customerRepository.existsByDocumentNumber(customer.getDocumentNumber())) {
                 throw new CustomerException("Documento já utilizado por outro cliente", 409);
             }

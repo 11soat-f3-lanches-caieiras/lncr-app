@@ -5,6 +5,7 @@ import br.com.tp.lanchescaieiras.customer.domain.Customer;
 import br.com.tp.lanchescaieiras.customer.domain.CustomerListResponse;
 import br.com.tp.lanchescaieiras.customer.domain.CustomerResponse;
 import br.com.tp.lanchescaieiras.customer.infraestructure.config.CustomerConfig;
+import br.com.tp.lanchescaieiras.customer.infraestructure.exceptions.CustomerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,18 +30,16 @@ public class CustomerControllerImpl implements CustomerController {
     @PostMapping
     public ResponseEntity<CustomerResponse> createCustomer(@RequestBody Customer customer) {
         customer = this.customerService.createCustomer(customer);
-        Customer createdCustomer = new Customer();
-        createdCustomer.setId(customer.getId());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .header("Location", customerConfig.getLocationPrefix() + "/" + customer.getId())
-                .body(new CustomerResponse(createdCustomer));
+                .body(new CustomerResponse());
     }
 
     @Override
     @GetMapping
     public ResponseEntity<CustomerListResponse> getAllCustomers(Optional<Integer> _limit) {
         if (_limit.isPresent() && (_limit.get() <= 0 || _limit.get() > 50)) {
-            throw new IllegalArgumentException("Limite deve ser maior que 0 e menor ou igual a 50");
+            throw new CustomerException("Limite deve ser maior que 0 e menor ou igual a 50",400);
         }
         List<Customer> customerList = this.customerService.getAllCustomers(_limit.orElse(10));
         return new ResponseEntity<>(new CustomerListResponse(customerList), HttpStatus.OK);

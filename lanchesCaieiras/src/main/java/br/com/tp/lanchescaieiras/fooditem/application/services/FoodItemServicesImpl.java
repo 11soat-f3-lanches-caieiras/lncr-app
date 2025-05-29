@@ -64,9 +64,13 @@ public class FoodItemServicesImpl implements FoodItemUseCases {
 
     @Override
     public void deleteFoodItemById(Integer id) {
-        try {
+        log.info("Buscando item de alimentação a ser deletado");
+        Optional<FoodItem> foodItem = jpaFoodItemRepository.findById(id);
+        if (foodItem.isPresent()) {
+            this.jpaFoodItemImageRepository.deleteFoodItemImagesByFoodItemId(id);
             this.jpaFoodItemRepository.deleteFoodItemById(id);
-        } catch (Exception e) {
+        }
+        else{
             throw new FoodItemException("Item de alimentação não encontrado com o ID: " + id, 404);
         }
     }

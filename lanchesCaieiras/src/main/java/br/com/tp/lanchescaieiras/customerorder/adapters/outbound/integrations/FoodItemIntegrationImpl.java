@@ -47,7 +47,7 @@ public class FoodItemIntegrationImpl implements FoodItemIntegration {
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(json);
-            JsonNode foodItems = jsonNode.get("foodItem");
+            JsonNode foodItems = jsonNode.get("_content");
 
             return new CustomerOrderFoodItem(
                     foodItems.get("id").asInt(),

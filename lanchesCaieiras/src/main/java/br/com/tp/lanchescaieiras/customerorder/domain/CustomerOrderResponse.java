@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerOrderResponse {
     private ResponseMetada _response;
-    private CustomerOrder customerOrder;
+    private CustomerOrder _content;
 
     public CustomerOrderResponse(ResponseMetada _response, CustomerOrder customerOrder) {
         this._response = _response;
-        this.customerOrder = customerOrder;
+        this._content = customerOrder;
     }
 
     public CustomerOrderResponse() {
@@ -18,7 +18,7 @@ public class CustomerOrderResponse {
     }
 
     public CustomerOrderResponse(CustomerOrder customerOrder) {
-        this.customerOrder = customerOrder;
+        this._content = customerOrder;
         this._response = new ResponseMetada();
     }
 
@@ -30,11 +30,11 @@ public class CustomerOrderResponse {
         this._response = _response;
     }
 
-    public CustomerOrder getCustomerOrder() {
-        return customerOrder;
+    public CustomerOrder get_content() {
+        return _content;
     }
 
-    public void setCustomerOrder(CustomerOrder customerOrder) {
-        this.customerOrder = customerOrder;
+    public void set_content(CustomerOrder _content) {
+        this._content = _content;
     }
 }

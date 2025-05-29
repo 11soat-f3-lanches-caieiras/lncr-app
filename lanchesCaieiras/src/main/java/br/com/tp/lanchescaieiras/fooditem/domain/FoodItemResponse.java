@@ -6,15 +6,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FoodItemResponse {
     private ResponseMetada _response;
-    private FoodItem foodItem;
+    private FoodItem _content;
 
-    public FoodItemResponse(ResponseMetada _response, FoodItem foodItem) {
+    public FoodItemResponse(ResponseMetada _response, FoodItem _content) {
         this._response = _response;
-        this.foodItem = foodItem;
+        this._content = _content;
     }
 
-    public FoodItemResponse(FoodItem foodItem) {
-        this.foodItem = foodItem;
+    public FoodItemResponse(FoodItem _content) {
+        this._content = _content;
         this._response = new ResponseMetada();
     }
 
@@ -29,12 +29,12 @@ public class FoodItemResponse {
         this._response = _response;
     }
 
-    public FoodItem getFoodItem() {
-        return foodItem;
+    public FoodItem get_content() {
+        return _content;
     }
 
-    public void setFoodItem(FoodItem foodItem) {
-        this.foodItem = foodItem;
+    public void set_content(FoodItem _content) {
+        this._content = _content;
     }
 
 

@@ -31,7 +31,7 @@ public class PaymentControllerImpl implements PaymentController {
     }
 
     @Override
-    @PostMapping("/callback")
+    @PatchMapping("/callback")
     public ResponseEntity<PaymentResponse> paymentRecived(@RequestParam(name = "data.id", required = true) String dataId,
                                                           @RequestParam(name = "type", required = true) String type) {
         return new ResponseEntity<PaymentResponse>(new PaymentResponse(paymentService.updatePaymentByPaymentId(dataId)), HttpStatus.OK);
