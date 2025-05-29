@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class NotificationINboundHandler {
+public class NotificationInboundHandler {
 
     @ExceptionHandler(NotificationException.class)
     public ResponseEntity<Object> handlerNotificationException(NotificationException ex) {

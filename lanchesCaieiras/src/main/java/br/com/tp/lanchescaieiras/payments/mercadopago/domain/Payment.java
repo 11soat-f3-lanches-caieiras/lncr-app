@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Payment {
-    private String id;
+    private Integer id;
     private Integer orderId;
     private Double amount;
     private UUID storeOrderId;
@@ -14,7 +14,7 @@ public class Payment {
     private String status;
     private String paymentId;
 
-    public Payment(String id, Integer orderId, Double amount, UUID storeOrderId, String qrData, String status, String paymentId) {
+    public Payment(Integer id, Integer orderId, Double amount, UUID storeOrderId, String qrData, String status, String paymentId) {
         this.id = id;
         this.orderId = orderId;
         this.amount = amount;
@@ -24,11 +24,14 @@ public class Payment {
         this.paymentId = paymentId;
     }
 
-    public String getId() {
+    public Payment() {
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

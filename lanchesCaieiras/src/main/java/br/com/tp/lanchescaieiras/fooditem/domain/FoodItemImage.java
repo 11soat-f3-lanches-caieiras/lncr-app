@@ -100,7 +100,10 @@ public class FoodItemImage {
 
     public byte[] getDecodeImageData(String _base64) {
         try {
-            return Base64.getDecoder().decode(_base64);
+            if (_base64 != null) {
+                return Base64.getDecoder().decode(_base64);
+            }
+            throw new FoodItemException("Sem informações da imagem", 400);
         } catch (IllegalArgumentException e) {
             throw new FoodItemException("Erro ao decodificar a imagem. Informar um base64 válido .", 404);
         }

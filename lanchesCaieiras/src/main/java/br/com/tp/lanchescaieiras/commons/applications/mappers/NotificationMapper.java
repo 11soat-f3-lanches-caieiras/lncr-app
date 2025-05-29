@@ -22,6 +22,7 @@ public interface NotificationMapper {
             @Mapping(target = "id", source = "notification.id"),
             @Mapping(target = "notificationType", source = "notification.notificationType"),
             @Mapping(target = "artefactId", source = "notification.artefactId"),
-            @Mapping(target = "message", source = "notification.message")})
+            @Mapping(target = "message", source = "notification.message"),
+            @Mapping(target = "createdAt", source = "notification.createdAt")})
     JpaNotificationEntity domainToJpa(Notification notification);
 }
