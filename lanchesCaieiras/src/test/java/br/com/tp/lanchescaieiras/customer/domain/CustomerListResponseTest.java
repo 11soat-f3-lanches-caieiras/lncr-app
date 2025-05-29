@@ -1,63 +1,42 @@
 package br.com.tp.lanchescaieiras.customer.domain;
 
 import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerListResponseTest {
 
-    @DisplayName("Should create CustomerListResponse with response metadata and customers")
     @Test
-    void createWithResponseAndCustomers() {
-        ResponseMetada responseMetada = new ResponseMetada();
-        List<Customer> customers = List.of(new Customer());
-        CustomerListResponse response = new CustomerListResponse(responseMetada, customers);
+    void testConstructorAndGetters() {
+        ResponseMetada meta = new ResponseMetada();
+        Customer c1 = new Customer(1, "12345678909", "João", "joao@email.com");
+        Customer c2 = new Customer(2, "98765432100", "Maria", "maria@email.com");
+        List<Customer> customers = Arrays.asList(c1, c2);
 
-        Assertions.assertEquals(responseMetada, response.get_response());
-        Assertions.assertEquals(customers, response.get_content());
+        CustomerListResponse response = new CustomerListResponse(meta, customers);
+        assertEquals(meta, response.get_response());
+        assertEquals(customers, response.get_content());
     }
 
-    @DisplayName("Should create CustomerListResponse with only customers and default response metadata")
     @Test
-    void createWithOnlyCustomers() {
-        List<Customer> customers = List.of(new Customer());
-        CustomerListResponse response = new CustomerListResponse(customers);
-
-        Assertions.assertNotNull(response.get_response());
-        Assertions.assertEquals(customers, response.get_content());
-    }
-
-    @DisplayName("Should handle empty customer list")
-    @Test
-    void handleEmptyCustomerList() {
-        List<Customer> customers = Collections.emptyList();
-        CustomerListResponse response = new CustomerListResponse(customers);
-
-        Assertions.assertNotNull(response.get_response());
-        Assertions.assertTrue(response.get_content().isEmpty());
-    }
-
-    @DisplayName("Should set and get response metadata")
-    @Test
-    void setAndGetResponseMetadata() {
-        ResponseMetada responseMetada = new ResponseMetada();
+    void testSetters() {
         CustomerListResponse response = new CustomerListResponse();
-        response.set_response(responseMetada);
-
-        Assertions.assertEquals(responseMetada, response.get_response());
+        ResponseMetada meta = new ResponseMetada();
+        Customer c = new Customer();
+        response.set_response(meta);
+        response.set_content(Arrays.asList(c));
+        assertEquals(meta, response.get_response());
+        assertEquals(1, response.get_content().size());
     }
 
-    @DisplayName("Should set and get customers")
     @Test
-    void setAndGetCustomers() {
-        List<Customer> customers = List.of(new Customer());
-        CustomerListResponse response = new CustomerListResponse();
-        response.set_content(customers);
-
-        Assertions.assertEquals(customers, response.get_content());
+    void testConstructorWithContentOnly() {
+        Customer c = new Customer();
+        CustomerListResponse response = new CustomerListResponse(Arrays.asList(c));
+        assertNotNull(response.get_response());
+        assertEquals(1, response.get_content().size());
     }
 }

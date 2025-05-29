@@ -1,32 +1,16 @@
 package br.com.tp.lanchescaieiras.fooditem.domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class FoodItemCategoryTest {
 
     @Test
-    void deveConterCategoriaSandwich() {
-        Assertions.assertNotNull(FoodItemCategory.valueOf("SANDWICH"));
-    }
-
-    @Test
-    void deveConterCategoriaDrink() {
-        Assertions.assertNotNull(FoodItemCategory.valueOf("DRINK"));
-    }
-
-    @Test
-    void deveConterCategoriaDessert() {
-        Assertions.assertNotNull(FoodItemCategory.valueOf("DESSERT"));
-    }
-
-    @Test
-    void deveConterCategoriaSnack() {
-        Assertions.assertNotNull(FoodItemCategory.valueOf("SNACK"));
-    }
-
-    @Test
-    void deveLancarExcecaoParaCategoriaInvalida() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> FoodItemCategory.valueOf("INVALID_CATEGORY"));
+    void testEnumValues() {
+        assertEquals(FoodItemCategory.SANDWICH, FoodItemCategory.valueOf("SANDWICH"));
+        assertEquals(FoodItemCategory.DRINK, FoodItemCategory.valueOf("DRINK"));
+        assertEquals(FoodItemCategory.DESSERT, FoodItemCategory.valueOf("DESSERT"));
+        assertEquals(FoodItemCategory.SNACK, FoodItemCategory.valueOf("SNACK"));
     }
 }

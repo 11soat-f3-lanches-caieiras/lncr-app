@@ -1,73 +1,110 @@
 package br.com.tp.lanchescaieiras.fooditem.domain;
 
-import org.junit.jupiter.api.Assertions;
+import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class FoodItemImageTest {
 
     @Test
-    void deveValidarImagemComTamanhoEExtensaoValidos() {
-        FoodItemImage image = new FoodItemImage();
-        String base64 = Base64.getEncoder().encodeToString(new byte[1024]);
-        Map<String, String> config = Map.of("jpg", "FFD8FF", "png", "89504E");
-
-        String result = image.validateImage(base64, config, 2048);
-
-        Assertions.assertEquals("Imagens inválidas. Extensões permitidas:jpg, png", result);
+    void testConstructorAndGetters() {
+        FoodItemImage img = new FoodItemImage(1, "data", "loc", "file.jpg", "jpg");
+        assertEquals(1, img.getId());
+        assertEquals("data", img.get_data());
+        assertEquals("loc", img.getLocation());
+        assertEquals("file.jpg", img.getFileName());
+        assertEquals("jpg", img.getFileExtension());
     }
 
     @Test
-    void deveRetornarErroParaImagemComTamanhoExcedido() {
-        FoodItemImage image = new FoodItemImage();
-        String base64 = Base64.getEncoder().encodeToString(new byte[4096]);
-        Map<String, String> config = Map.of("jpg", "FFD8FF", "png", "89504E");
+    void testSetters() {
+        FoodItemImage img = new FoodItemImage();
+        img.setId(2);
+        img.set_data("abc");
+        img.setLocation("local");
+        img.setFileName("img.png");
+        img.setFileExtension("png");
 
-        String result = image.validateImage(base64, config, 2048);
-
-        Assertions.assertEquals("Tamanho da imagem excede o limite de 2048 bytes", result);
+        assertEquals(2, img.getId());
+        assertEquals("abc", img.get_data());
+        assertEquals("local", img.getLocation());
+        assertEquals("img.png", img.getFileName());
+        assertEquals("png", img.getFileExtension());
     }
 
     @Test
-    void deveRetornarErroParaImagemComExtensaoInvalida() {
-        FoodItemImage image = new FoodItemImage();
-        String base64 = Base64.getEncoder().encodeToString(new byte[1024]);
-        Map<String, String> config = Map.of("jpg", "FFD8FF", "png", "89504E");
-
-        String result = image.validateImage(base64, config, 2048);
-
-        Assertions.assertTrue(result.contains("Imagens inválidas. Extensões permitidas:"));
+    void testValidateImageSizeTrue() {
+        FoodItemImage img = new FoodItemImage();
+        String base64 = Base64.getEncoder().encodeToString("12345".getBytes());
+        assertTrue(img.validateImageSize(base64, 10));
     }
 
     @Test
-    void deveDecodificarDadosBase64ComSucesso() {
-        FoodItemImage image = new FoodItemImage();
-        String base64 = Base64.getEncoder().encodeToString("dados".getBytes());
-
-        byte[] result = image.getDecodeImageData(base64);
-
-        Assertions.assertArrayEquals("dados".getBytes(), result);
+    void testValidateImageSizeFalse() {
+        FoodItemImage img = new FoodItemImage();
+        String base64 = Base64.getEncoder().encodeToString("1234567890".getBytes());
+        assertFalse(img.validateImageSize(base64, 5));
     }
 
     @Test
-    void deveValidarExtensaoDeImagemComSucesso() {
-        FoodItemImage image = new FoodItemImage();
-        String base64 = Base64.getEncoder().encodeToString(new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF});
-
-        boolean result = image.validateImageExtention(base64, "FFD8FF");
-
-        Assertions.assertTrue(result);
+    void testGetDecodeImageDataValid() {
+        FoodItemImage img = new FoodItemImage();
+        String base64 = Base64.getEncoder().encodeToString("abc".getBytes());
+        byte[] decoded = img.getDecodeImageData(base64);
+        assertArrayEquals("abc".getBytes(), decoded);
     }
 
     @Test
-    void deveRetornarFalsoParaExtensaoDeImagemInvalida() {
-        FoodItemImage image = new FoodItemImage();
-        String base64 = Base64.getEncoder().encodeToString(new byte[]{(byte) 0x89, (byte) 0x50, (byte) 0x4E});
+    void testGetDecodeImageDataInvalidThrows() {
+        FoodItemImage img = new FoodItemImage();
+        assertThrows(FoodItemException.class, () -> img.getDecodeImageData("not_base64"));
+    }
 
-        boolean result = image.validateImageExtention(base64, "FFD8FF");
+    @Test
+    void testValidateImageExtension() {
+        FoodItemImage img = new FoodItemImage();
+        // Simula um header hexadecimal para PNG (89504E47)
+        byte[] pngBytes = new byte[]{(byte)0x89, 0x50, 0x4E, 0x47};
+        String base64 = Base64.getEncoder().encodeToString(pngBytes);
+        assertTrue(img.validateImageExtention(base64, "89504E47"));
+        assertFalse(img.validateImageExtention(base64, "FFD8FF"));
+    }
 
-        Assertions.assertFalse(result);
+    @Test
+    void testValidateImage() {
+        FoodItemImage img = new FoodItemImage();
+        byte[] pngBytes = new byte[]{(byte)0x89, 0x50, 0x4E, 0x47};
+        String base64 = Base64.getEncoder().encodeToString(pngBytes);
+        Map<String, String> config = new HashMap<>();
+        config.put("png", "89504E47");
+        String result = img.validateImage(base64, config, 10);
+        assertEquals("png", result);
+    }
+
+    @Test
+    void testValidateImageInvalidExtension() {
+        FoodItemImage img = new FoodItemImage();
+        byte[] gifBytes = new byte[]{0x47, 0x49, 0x46, 0x38};
+        String base64 = Base64.getEncoder().encodeToString(gifBytes);
+        Map<String, String> config = new HashMap<>();
+        config.put("png", "89504E47");
+        String result = img.validateImage(base64, config, 10);
+        assertTrue(result.contains("Imagens inválidas"));
+    }
+
+    @Test
+    void testValidateImageInvalidSize() {
+        FoodItemImage img = new FoodItemImage();
+        byte[] pngBytes = new byte[]{(byte)0x89, 0x50, 0x4E, 0x47};
+        String base64 = Base64.getEncoder().encodeToString(pngBytes);
+        Map<String, String> config = new HashMap<>();
+        config.put("png", "89504E47");
+        String result = img.validateImage(base64, config, 2);
+        assertTrue(result.contains("Tamanho da imagem excede o limite"));
     }
 }

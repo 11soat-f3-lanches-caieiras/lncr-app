@@ -12,5 +12,5 @@ import java.util.List;
 public interface JpaCustomerOrderFoodItemRepository extends JpaRepository<JpaCustomerOrderFoodItemEntity, Integer> {
 
     @Query(value = "select * from customer_order_food_item where order_id = :orderId", nativeQuery = true)
-    List<JpaCustomerOrderFoodItemEntity> findByCustomerOrderId(@Param("orderId") Integer orderId);
+    List<JpaCustomerOrderFoodItemEntity>  findByCustomerOrderId(@Param("orderId") Integer orderId);
 }

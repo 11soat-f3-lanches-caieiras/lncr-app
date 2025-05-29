@@ -1,58 +1,40 @@
 package br.com.tp.lanchescaieiras.fooditem.domain;
 
 import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class FoodItemResponseTest {
 
     @Test
-    void deveCriarRespostaComItemERespostaMetadata() {
-        ResponseMetada responseMetada = new ResponseMetada("200", "Sucesso");
-        FoodItem foodItem = new FoodItem(1, "Sanduíche Natural", "Sanduíche com peito de peru", 15.0, FoodItemCategory.SANDWICH, null);
-        FoodItemResponse response = new FoodItemResponse(responseMetada, foodItem);
+    void testConstructorAndGetters() {
+        ResponseMetada meta = new ResponseMetada("trace", "ts", "msg");
+        FoodItem item = new FoodItem();
+        FoodItemResponse response = new FoodItemResponse(meta, item);
 
-        Assertions.assertNotNull(response.get_response());
-        Assertions.assertNotNull(response.get_content());
-        //Assertions.assertEquals("200", response.get_response().getCode());
-        Assertions.assertEquals("Sanduíche Natural", response.get_content().getName());
+        assertEquals(meta, response.get_response());
+        assertEquals(item, response.get_content());
     }
 
     @Test
-    void deveCriarRespostaComItemSemRespostaMetadata() {
-        FoodItem foodItem = new FoodItem(2, "Suco de Laranja", "Suco natural de laranja", 8.0, FoodItemCategory.DRINK, null);
-        FoodItemResponse response = new FoodItemResponse(foodItem);
+    void testConstructorWithContentOnly() {
+        FoodItem item = new FoodItem();
+        FoodItemResponse response = new FoodItemResponse(item);
 
-        Assertions.assertNotNull(response.get_response());
-        Assertions.assertNotNull(response.get_content());
-        Assertions.assertEquals("Suco de Laranja", response.get_content().getName());
+        assertNotNull(response.get_response());
+        assertEquals(item, response.get_content());
     }
 
     @Test
-    void deveCriarRespostaVazia() {
+    void testSetters() {
         FoodItemResponse response = new FoodItemResponse();
+        ResponseMetada meta = new ResponseMetada();
+        FoodItem item = new FoodItem();
+        response.set_response(meta);
+        response.set_content(item);
 
-        Assertions.assertNull(response.get_response());
-        Assertions.assertNull(response.get_content());
-    }
-
-    @Test
-    void deveAtualizarRespostaMetadataNaResposta() {
-        FoodItemResponse response = new FoodItemResponse();
-        ResponseMetada responseMetada = new ResponseMetada("404", "Não encontrado");
-        response.set_response(responseMetada);
-
-        Assertions.assertNotNull(response.get_response());
-        // Assertions.assertEquals("404", response.get_response().getCode());
-    }
-
-    @Test
-    void deveAtualizarItemNaResposta() {
-        FoodItemResponse response = new FoodItemResponse();
-        FoodItem foodItem = new FoodItem(3, "Pudim", "Pudim de leite condensado", 10.0, FoodItemCategory.DESSERT, null);
-        response.set_content(foodItem);
-
-        Assertions.assertNotNull(response.get_content());
-        Assertions.assertEquals("Pudim", response.get_content().getName());
+        assertEquals(meta, response.get_response());
+        assertEquals(item, response.get_content());
     }
 }

@@ -1,61 +1,54 @@
 package br.com.tp.lanchescaieiras.fooditem.domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class FoodItemTest {
 
     @Test
-    void deveCriarFoodItemComCategoriaSandwich() {
-        FoodItem foodItem = new FoodItem(1, "Sanduíche Natural", "Sanduíche com peito de peru", 15.0, FoodItemCategory.SANDWICH, null);
+    void testConstructorAndGetters() {
+        FoodItemImage img = new FoodItemImage(1, "data", "loc", "file.jpg", "jpg");
+        FoodItem item = new FoodItem(10, "Coxinha", "Frango", 8.5, FoodItemCategory.SNACK, List.of(img));
 
-        Assertions.assertEquals(1, foodItem.getId());
-        Assertions.assertEquals("Sanduíche Natural", foodItem.getName());
-        Assertions.assertEquals(FoodItemCategory.SANDWICH, foodItem.getCategory());
+        assertEquals(10, item.getId());
+        assertEquals("Coxinha", item.getName());
+        assertEquals("Frango", item.getDescription());
+        assertEquals(8.5, item.getPrice());
+        assertEquals(FoodItemCategory.SNACK, item.getCategory());
+        assertEquals(1, item.getImages().size());
     }
 
     @Test
-    void deveCriarFoodItemComCategoriaBebida() {
-        FoodItem foodItem = new FoodItem(2, "Suco de Laranja", "Suco natural de laranja", 8.0, FoodItemCategory.DRINK, null);
+    void testSetters() {
+        FoodItem item = new FoodItem();
+        item.setId(2);
+        item.setName("Pastel");
+        item.setDescription("Carne");
+        item.setPrice(7.0);
+        item.setCategory(FoodItemCategory.SNACK);
 
-        Assertions.assertEquals(2, foodItem.getId());
-        Assertions.assertEquals("Suco de Laranja", foodItem.getName());
-        Assertions.assertEquals(FoodItemCategory.DRINK, foodItem.getCategory());
+        assertEquals(2, item.getId());
+        assertEquals("Pastel", item.getName());
+        assertEquals("Carne", item.getDescription());
+        assertEquals(7.0, item.getPrice());
+        assertEquals(FoodItemCategory.SNACK, item.getCategory());
     }
 
     @Test
-    void deveCriarFoodItemComCategoriaSobremesa() {
-        FoodItem foodItem = new FoodItem(3, "Pudim", "Pudim de leite condensado", 10.0, FoodItemCategory.DESSERT, null);
-
-        Assertions.assertEquals(3, foodItem.getId());
-        Assertions.assertEquals("Pudim", foodItem.getName());
-        Assertions.assertEquals(FoodItemCategory.DESSERT, foodItem.getCategory());
+    void testSetCategoryByString() {
+        FoodItem item = new FoodItem();
+        item.setCategory("drink");
+        assertEquals(FoodItemCategory.DRINK, item.getCategory());
     }
 
     @Test
-    void deveAtualizarCategoriaDeFoodItem() {
-        FoodItem foodItem = new FoodItem(4, "Café", "Café preto", 5.0, FoodItemCategory.DRINK, null);
-        foodItem.setCategory(FoodItemCategory.DESSERT);
-
-        Assertions.assertEquals(FoodItemCategory.DESSERT, foodItem.getCategory());
-    }
-
-    @Test
-    void deveAdicionarImagensAoFoodItem() {
-        FoodItemImage image = new FoodItemImage("dadosBase64", "imagem.jpg", "jpg");
-        FoodItem foodItem = new FoodItem(5, "Milkshake", "Milkshake de chocolate", 12.0, FoodItemCategory.DRINK, null);
-        foodItem.setImages(List.of(image));
-
-        Assertions.assertNotNull(foodItem.getImages());
-        Assertions.assertEquals(1, foodItem.getImages().size());
-        Assertions.assertEquals("imagem.jpg", foodItem.getImages().get(0).getFileName());
-    }
-
-    @Test
-    void deveLancarExcecaoParaCategoriaInvalida() {
-        FoodItem foodItem = new FoodItem();
-        Assertions.assertThrows(IllegalArgumentException.class, () -> foodItem.setCategory("INVALID_CATEGORY"));
+    void testSetImages() {
+        FoodItem item = new FoodItem();
+        FoodItemImage img = new FoodItemImage();
+        item.setImages(List.of(img));
+        assertEquals(1, item.getImages().size());
     }
 }

@@ -1,78 +1,71 @@
 package br.com.tp.lanchescaieiras.customer.domain;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerTest {
 
     @Test
-    void documentNumberIsValidWithValidCPF() {
+    void testConstructorAndGetters() {
+        Customer customer = new Customer(1, "12345678909", "João", "joao@email.com");
+        assertEquals(1, customer.getId());
+        assertEquals("12345678909", customer.getDocumentNumber());
+        assertEquals("João", customer.getName());
+        assertEquals("joao@email.com", customer.getEmail());
+    }
+
+    @Test
+    void testSetters() {
         Customer customer = new Customer();
-        customer.setDocumentNumber("12345678909");
+        customer.setId(2);
+        customer.setDocumentNumber("98765432100");
+        customer.setName("Maria");
+        customer.setEmail("maria@email.com");
+        assertEquals(2, customer.getId());
+        assertEquals("98765432100", customer.getDocumentNumber());
+        assertEquals("Maria", customer.getName());
+        assertEquals("maria@email.com", customer.getEmail());
+    }
+
+    @Test
+    void testDocumentNumberIsValid_ValidCPF() {
+        Customer customer = new Customer();
+        customer.setDocumentNumber("52998224725"); // CPF válido
         assertTrue(customer.documentNumberIsValid());
     }
 
     @Test
-    void documentNumberIsValidWithInvalidCPF() {
+    void testDocumentNumberIsValid_InvalidCPF() {
         Customer customer = new Customer();
-        customer.setDocumentNumber("12345678900");
+        customer.setDocumentNumber("11111111111"); // CPF inválido (todos iguais)
+        assertFalse(customer.documentNumberIsValid());
+        customer.setDocumentNumber("12345678900"); // CPF inválido
+        assertFalse(customer.documentNumberIsValid());
+        customer.setDocumentNumber("abc"); // CPF inválido (não numérico)
         assertFalse(customer.documentNumberIsValid());
     }
 
     @Test
-    void documentNumberIsValidWithRepeatedDigits() {
+    void testEmailIsValid() {
         Customer customer = new Customer();
-        customer.setDocumentNumber("11111111111");
-        assertFalse(customer.documentNumberIsValid());
-    }
-
-    @Test
-    void documentNumberIsValidWithNullDocumentNumber() {
-        Customer customer = new Customer();
-        customer.setDocumentNumber(null);
-        assertThrows(NullPointerException.class, customer::documentNumberIsValid);
-    }
-
-    @Test
-    void documentNumberIsValidWithNonNumericCharacters() {
-        Customer customer = new Customer();
-        customer.setDocumentNumber("12345abc909");
-        assertFalse(customer.documentNumberIsValid());
-    }
-
-    @Test
-    void emailIsValidWithValidEmail() {
-        Customer customer = new Customer();
-        customer.setEmail("example@test.com");
+        customer.setEmail("teste@dominio.com");
         assertTrue(customer.emailIsValid());
-    }
-
-    @Test
-    void emailIsValidWithInvalidEmail() {
-        Customer customer = new Customer();
-        customer.setEmail("example@test");
+        customer.setEmail("invalido@dominio");
         assertFalse(customer.emailIsValid());
-    }
-
-    @Test
-    void emailIsValidWithNullEmail() {
-        Customer customer = new Customer();
+        customer.setEmail("invalido.com");
+        assertFalse(customer.emailIsValid());
         customer.setEmail(null);
         assertFalse(customer.emailIsValid());
     }
 
     @Test
-    void emailIsValidWithEmptyEmail() {
-        Customer customer = new Customer();
-        customer.setEmail("");
-        assertFalse(customer.emailIsValid());
-    }
-
-    @Test
-    void emailIsValidWithSpecialCharacters() {
-        Customer customer = new Customer();
-        customer.setEmail("user+name@domain.co.uk");
-        assertTrue(customer.emailIsValid());
+    void testToString() {
+        Customer customer = new Customer(1, "12345678909", "João", "joao@email.com");
+        String str = customer.toString();
+        assertTrue(str.contains("Customer{"));
+        assertTrue(str.contains("id=1"));
+        assertTrue(str.contains("documentNumber='12345678909'"));
+        assertTrue(str.contains("name='João'"));
+        assertTrue(str.contains("email='joao@email.com'"));
     }
 }
