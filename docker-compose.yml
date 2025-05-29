@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  db-lncr:
+      image: postgres:15.7
+      container_name: db-postgres-lncr
+      environment:
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        - POSTGRES_DB=${POSTGRES_DB}
+          
+      volumes:
+        - ./storage/db-lncr:/var/lib/postgresql/data
+      networks:
+        - lncr_network
+      ports:
+        - "5432:5432"
+      expose:
+        - "5432"
+      healthcheck:
+        test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+        interval: 30s
+        timeout: 10s
+        retries: 3
+      
+  app-lncr:
+    build:
+      context: ./lanchesCaieiras
+      dockerfile: Dockerfile
+    image: lanches-caieiras:1.0
+    container_name: lncr
+    volumes:
+        - ./storage/images:/lanchesCaieiras/images/
+    networks:
+      - lncr_network
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    depends_on:
+      - db-lncr
+    links:
+      - db-lncr
+networks:
+  lncr_network:
+    driver: bridge
