@@ -9,6 +9,12 @@ info:
 servers:
   - url: 'http://localhost:8080/'
 tags:
+  - name: Customers
+  - name: CustomerOrders
+  - name: FoodItems
+  - name: KitchenOrders
+  - name: Notifications
+  - name: Payments
   - name: CollectionOperations
     description: Operações que utilizam arquétipos de coleções
   - name: ManagedOperations
@@ -20,7 +26,8 @@ paths:
       description: Criar um novo cliente
       summary: Criar um novo cliente
       tags:
-        - CollectionOperations
+         - Customers
+         - CollectionOperations
       requestBody:
         $ref: '#/components/requestBodies/CreateCustomer'
       responses:
@@ -37,7 +44,8 @@ paths:
       description: Lista de clientes
       summary: Listar clientes
       tags:
-        - CollectionOperations
+        - Customers
+        - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/Limit'
       responses:
@@ -53,6 +61,7 @@ paths:
       description: Obter um cliente pelo Id
       summary: Obter informacoes de um cliente id
       tags:
+        - Customers
         - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/CustomerId'
@@ -68,6 +77,7 @@ paths:
       description: Atualizar parcialmente os dados de um cliente
       summary: Atualizar parcialmente os dados de um cliente
       tags:
+        - Customers
         - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/CustomerId'
@@ -75,7 +85,7 @@ paths:
         $ref: '#/components/requestBodies/PartialUpdateCustomer'
       responses:
         '200':
-          $ref: '#/components/responses/PartialUpdateResponse'
+          $ref: '#/components/responses/PartialUpdateCustomerResponse'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -85,6 +95,7 @@ paths:
       description: Deletar dados de um cliente por Id
       summary: Deletar dados de um cliente por Id
       tags:
+        - Customers
         - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/CustomerId'
@@ -101,6 +112,7 @@ paths:
       description: Obter um cliente pelo documento
       summary: Obter informacoes de um cliente pelo documento
       tags:
+        - Customers
         - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/DocumentNumber'
@@ -116,6 +128,7 @@ paths:
       description: Atualizar parcialmente os dados de um cliente
       summary: Atualizar parcialmente os dados de um cliente
       tags:
+        - Customers
         - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/DocumentNumber'
@@ -123,7 +136,7 @@ paths:
         $ref: '#/components/requestBodies/PartialUpdateCustomer'
       responses:
         '200':
-          $ref: '#/components/responses/PartialUpdateResponse'
+          $ref: '#/components/responses/PartialUpdateCustomerResponse'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -134,6 +147,7 @@ paths:
       description: Criar um novo pedido do Cliente
       summary: Criar um novo pedido do Cliente
       tags:
+        - CustomerOrders
         - CollectionOperations
       requestBody:
         $ref: '#/components/requestBodies/CreateCustomerOrder'
@@ -150,6 +164,7 @@ paths:
       description: Buscar Pedido do cliente por id
       summary: Buscar Pedido do cliente por id
       tags:
+        - CustomerOrders
         - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/CustomerOrderId'
@@ -166,6 +181,7 @@ paths:
       description: Buscar Lista de Pedidos de Clientes por status
       summary: Buscar Lista de Pedidos de Clientes por status
       tags:
+        - CustomerOrders
         - CollectionOperations
       parameters:
         - $ref: '#/components/parameters/CustomerOrderStatus'
@@ -183,6 +199,7 @@ paths:
       description: Atualizar status do pedido do cliente
       summary: Atualizar status do pedido do cliente
       tags:
+        - CustomerOrders
         - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/CustomerOrderId'
@@ -190,7 +207,7 @@ paths:
         - $ref: '#/components/parameters/ForceUpdateStatus'
       responses:
         '200':
-          $ref: '#/components/responses/PartialUpdateResponse'
+          $ref: '#/components/responses/UpdatedCustomerOrderStatus'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -201,6 +218,7 @@ paths:
       description: Criar um novo item
       summary: Criar um novo Item de Alimentacao
       tags:
+        - FoodItems
         - CollectionOperations
       requestBody:
         $ref: '#/components/requestBodies/CreateFoodItem'
@@ -216,6 +234,7 @@ paths:
       description: Buscar Lista de Items de Alimentacao
       summary: Buscar Lista de Items de Alimentacao
       tags:
+        - FoodItems
         - CollectionOperations
       parameters:
         - $ref: '#/components/parameters/FoodStatus'
@@ -233,6 +252,7 @@ paths:
       description: Buscar Item de Alimentacao por Id
       summary: Buscar Item de Alimentacao por Id
       tags:
+        - FoodItems
         - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/FoodItemId'
@@ -248,7 +268,8 @@ paths:
       description: Atualizar parcialmente informacoes de um item de Alimentacao
       summary: Atualizar parcialmente informacoes de um item de Alimentacao
       tags:
-        - ManagedOperations
+        - FoodItems
+        - CollectionOperations
       parameters:
         - $ref: '#/components/parameters/FoodItemId'
       requestBody:
@@ -265,7 +286,8 @@ paths:
       description: Deletar dados de um item de alimentacao
       summary: Deletar dados de um item de alimentacao
       tags:
-        - ManagedOperations
+        - FoodItems
+        - CollectionOperations
       parameters:
         - $ref: '#/components/parameters/FoodItemId'
       responses:
@@ -281,6 +303,7 @@ paths:
       description: Buscar imagem de um item de alimentacao por Id
       summary: Buscar imagem de um item de alimentacao por Id
       tags:
+        - FoodItems
         - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/ImageId'
@@ -296,7 +319,8 @@ paths:
       description: Atualizar imagem de um item de alimentação
       summary: Atualizar imagem de um item de alimentação
       tags:
-        - ManagedOperations
+        - FoodItems
+        - CollectionOperations
       parameters:
         - $ref: "#/components/parameters/ImageId"
       requestBody:
@@ -313,7 +337,8 @@ paths:
       description: Deletar imagem de um item de alimentação
       summary: Deletar imagem de um item de alimentação
       tags:
-        - ManagedOperations
+        - FoodItems
+        - CollectionOperations
       parameters:
         - $ref: "#/components/parameters/ImageId"
       responses:
@@ -329,6 +354,7 @@ paths:
       description: Criar uma nova ordem de preparo
       summary: Criar uma nova ordem de preparo
       tags:
+        - KitchenOrders
         - CollectionOperations
       requestBody:
         $ref: '#/components/requestBodies/CreateKitchenOrder'
@@ -337,6 +363,8 @@ paths:
           $ref: '#/components/responses/CreatedKitchenOrder'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: "#/components/responses/Conflict"
         '500':
           $ref: '#/components/responses/InternalServerError'
     get:
@@ -344,6 +372,7 @@ paths:
       description: Buscar lista de ordens de preparo
       summary: Buscar lista de ordens de preparo
       tags:
+        - KitchenOrders
         - CollectionOperations
       parameters:
         - $ref: '#/components/parameters/KitchenCustomerOrderId'
@@ -355,15 +384,17 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/kitchenOrders/{id}':
+  '/kitchenOrders/{KitchenOrderId}':
     get:
       operationId: getKitchenOrder
       description: Buscar uma ordem de prepraro por id
       summary: Buscar uma ordem de preparo por id
       tags:
+        - KitchenOrders
         - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/KitchenOrderId'
+        - $ref: '#/components/parameters/IncludeFoodItems'
       responses:
         '200':
           $ref: '#/components/responses/GetKitchenOrder'
@@ -371,29 +402,89 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/kitchenOrders/{id}/updateStatus/{newStatus}':
+  '/kitchenOrders/customerOrder/{customerOrderId}':
+    get:
+      operationId: getKitchenOrder
+      description: Buscar uma ordem de prepraro pelo id do pedido do cliente
+      summary: Buscar uma ordem de preparo pelo id do pedido do cliente
+      tags:
+        - KitchenOrders
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerOrderId'
+        - $ref: '#/components/parameters/IncludeFoodItems'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetKitchenOrder'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/kitchenOrders/status/{kitchenOrderStatus}':
+    get:
+      operationId: getKitchenOrder
+      description: Buscar lista de preparos por status
+      summary: Buscar lista de preparos por status
+      tags:
+        - KitchenOrders
+        - CollectionOperations
+      parameters:
+        - $ref: '#/components/parameters/KitchenOrderStatus'
+        - $ref: '#/components/parameters/IncludeFoodItems'
+      responses:
+        '200':
+          $ref: '#/components/responses/ListKitchenOrders'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/kitchenOrders/{KitchenOrderId}/updateStatus/{newStatus}':
     patch:
       operationId: kitchenOrderUpdateStatus
       description: Atualizar status de uma ordem de preparo
       summary: Atualizar status de uma ordem de preparo
       tags:
-        - ManagedOperations
+        - KitchenOrders
+        - CollectionOperations
       parameters:
-        - $ref: '#/components/parameters/CustomerOrderId'
+        - $ref: '#/components/parameters/KitchenOrderId'
         - $ref: '#/components/parameters/KitchenOrderNewStatus'
+        - $ref: "#/components/parameters/ForceUpdateStatus"
       responses:
         '200':
-          $ref: '#/components/responses/PartialUpdateResponse'
+          $ref: "#/components/responses/UpdatedKitchenOrderStatus"
+        '400':
+          $ref: "#/components/responses/BadRequest"
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  '/notifications/{notificationType}':
+    get:
+      operationId: getNotificationsByType
+      description: Buscar lista de notificações por Tipo
+      summary: Buscar lista de notificações por Tipo
+      tags:
+        - Notifications
+        - CollectionOperations
+      parameters:
+        - $ref: "#/components/parameters/NotificationType"
+      responses:
+        '200':
+          $ref: "#/components/responses/ListNotifications"
+        '404':
+          $ref: "#/components/responses/NotFound"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '500':
+          $ref: "#/components/responses/InternalServerError"
   '/payments/mercadoPago/charge':
     post:
       operationId: createPaymentCharge
       description: Cria cobrança do Pedido no MercadoPago
       summary: Gera QRCode de cobrança
       tags:
+        - Payments
         - CollectionOperations
       requestBody:
         $ref: '#/components/requestBodies/CreatePaymentCharge'
@@ -410,6 +501,7 @@ paths:
       description: Informar Pagamento pagamento realizado
       summary: Informado Id do pagamento do MercadoPago
       tags:
+        - Payments
         - CollectionOperations
       parameters:
         - $ref: '#/components/parameters/CallbackPaymentDataId'
@@ -427,6 +519,7 @@ paths:
       description: Buscar pagamento/cobrança pelo id do pedido do cleinte
       summary: Buscar pagamento/cobrança pelo id do pedido do cleinte
       tags:
+        - Payments
         - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/CustomerOrderId'
@@ -549,24 +642,29 @@ components:
             CreateKitchenOrder:
               summary: Nova Ordem de preparo
               value:
-                customerOrder:
-                  id: 1
+                customerOrderId: 2
                 foodItems:
-                  - id: 1
+                  - notes: Sem Mostarda e ao ponto
                     name: X-Salada
-                    category: Sandwich
-                    notes: 'Ponto da Carne: Ao ponto'
-                  - id: 2
-                    name: Coca-cola zero
-                    category: Drink
-                    notes: Sem gelo
-                  - id: 3
-                    name: Batata-frita
-                    category: Side
-                  - id: 4
-                    name: Sorvete de Chocolate
-                    category: Dessert
-                    notes: Trocar amendoin por flocos de arroz
+                    description: "Pão de Hamburger, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup."
+                  - notes: Sem vinagrete
+                    name: Cachorro-quente
+                    description: "Pão de cahorro-quente, 1 salsicha, purê de batata, maionese, ketchup, mostarda, vinagrete e batata palha."
+                  - notes: copo com gelo e limão
+                    name: Coca-Cola Zero Lata
+                    description: Coca-Cola Zero Lata 350ml
+                  - notes: copo com gelo e limão
+                    name: Coca-Cola Zero Lata
+                    description: Coca-Cola Zero Lata 350ml
+                  - notes: ""
+                    name: "Porção de Batata-Frita"
+                    description: "Porção de Batata-Frita com 200g"
+                  - notes: Cobertura Chocolate
+                    name: Sundae
+                    description: "Sorvete de creme com castanhas picadas e cobertura de Chocolate, Morango ou Caramelo"
+                  - notes: Cobertura Morango
+                    name: Sundae
+                    description: "Sorvete de creme com castanhas picadas e cobertura de Chocolate, Morango ou Caramelo"
     CreatePaymentCharge:
       description: Criação de cobrança do pedido do cliente
       content:
@@ -744,9 +842,7 @@ components:
                 _response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2025-02-12T21:41:43.286Z'
-                order:
-                  id: 1
-                  status: Recived
+
       headers:
         Location:
           $ref: '#/components/headers/Location'
@@ -907,26 +1003,48 @@ components:
           schema:
             $ref: '#/components/schemas/GetKitchenOrderType'
           examples:
-            GetKitchenOrder:
-              summary: Ordem de Preparo
+            GetKitchenOrderWithoutFoodItems:
+              summary: Ordem de preparo sem itens de alimentação
               value:
                 _response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2021-02-11T21:41:43.286Z'
-                customerOrder:
+                _content:
                   id: 1
-                order:
+                  customerOrderId: 2
+                  status: Received
+            GetKitchenOrderWithFoodItems:
+              summary: Ordem de preparo com detalhes dos itens de alimentação
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2021-02-11T21:41:43.286Z'
+                _content:
                   id: 1
-                  foodItems:
-                    - id: 1
-                      name: X-Salada
-                      category: Sandwich
-                      notes: 'Ponto da Carne: Ao ponto'
-                    - id: 2
-                      name: Coca Zero
-                      categoty: Drink
-                      notes: Sem Gelo
-                  status: Preparing
+                  customerOrderId: 2
+                  status: Received
+                foodItems:
+                  - notes: Sem Mostarda e ao ponto
+                    name: X-Salada
+                    description: "Pão de Hamburger, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup."
+                  - notes: Sem vinagrete
+                    name: Cachorro-quente
+                    description: "Pão de cahorro-quente, 1 salsicha, purê de batata, maionese, ketchup, mostarda, vinagrete e batata palha."
+                  - notes: copo com gelo e limão
+                    name: Coca-Cola Zero Lata
+                    description: "Coca-Cola Zero Lata 350ml"
+                  - notes: copo com gelo e limão
+                    name: Coca-Cola Zero Lata
+                    description: "Coca-Cola Zero Lata 350ml"
+                  - notes: ""
+                    name: "Porção de Batata-Frita"
+                    description: "Porção de Batata-Frita com 200g"
+                  - notes: Cobertura Chocolate
+                    name: Sundae
+                    description: "Sorvete de creme com castanhas picadas e cobertura de Chocolate, Morango ou Caramelo"
+                  - notes: Cobertura Morango
+                    name: Sundae
+                    description: "Sorvete de creme com castanhas picadas e cobertura de Chocolate, Morango ou Caramelo"
     GetPayment:
       description: Resposta para consulta de pagamento.
       content:
@@ -1022,7 +1140,7 @@ components:
                         name: "Porção de Batata-Frita"
                         description: "Porção de Batata-Frita com 200g"
                         price: 12.99
-                        notes: "A"
+                        notes: ""
                       - id: 6
                         name: "Sundae"
                         description: "Sorvete de creme com castanhas picadas e cobertura de Chocolate, Morango ou Caramelo"
@@ -1156,6 +1274,79 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ListKitchenOrdersType'
+          examples:
+            ListKitchenOrderWithOutFoodItems:
+              summary: Lista de preparo sem itens de alimentação
+              value:
+                _response:
+                  _traceId: b6f8bab6-eeba-4220-a7ea-b400d4c3f47e
+                  _timestamp: "2025-05-29T10:33:41.841339100Z"
+                _content:
+                  - id: 1
+                    customerOrderId: 2
+                    status: Received
+                  - id: 2
+                    customerOrderId: 4
+                    status: Preparing
+            ListKitchenOrderWithFoodItems:
+              summary: Lista de preparo com itens de alimentação
+              value:
+                _response:
+                  _traceId: b6f8bab6-eeba-4220-a7ea-b400d4c3f47e
+                  _timestamp: "2025-05-29T10:33:41.841339100Z"
+                _content:
+                  - id: 1
+                    customerOrderId: 2
+                    status: Received
+                    foodItems:
+                      - id: 1
+                        name: "X-Salada"
+                        description: "Pão de Hamburger, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup."
+                        price: 29.99
+                        notes: "Sem Mostarda e ao ponto"
+                      - id: 2
+                        name: "Cachorro-quente"
+                        description: "Pão de cahorro-quente, 1 salsicha, purê de batata, maionese, ketchup, mostarda,vinagrete e batata palha"
+                        price: 12.5
+                        notes: "Sem vinagrete"
+                  - id: 2
+                    customerOrderId: 4
+                    status: Preparing
+                    foodItems:
+                      - id: 1
+                        name: "X-Salada"
+                        description: "Pão de Hamburger, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup."
+                        price: 29.99
+                        notes: "Sem Mostarda e ao ponto"
+                      - id: 2
+                        name: "Cachorro-quente"
+                        description: "Pão de cahorro-quente, 1 salsicha, purê de batata, maionese, ketchup, mostarda,vinagrete e batata palha"
+                        price: 12.5
+                        notes: "Sem vinagrete"
+    ListNotifications:
+      description: Lista de notificações
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListNotificationType'
+          examples:
+            ListNotification:
+              summary: Lista de notificações
+              value:
+                _response:
+                  _traceId: 9bc2bea1-6586-4870-9940-f99b7979189e
+                  _timestamp: "2025-05-29T11:14:05.927893900Z"
+                notifications:
+                  - id: 1
+                    notificationType: PAYMENT
+                    artefactId: 2
+                    message: "Cobrança criada para o pedido: 2. Valor: 91.43"
+                    createdAt: "2025-05-28T20:27:19.481908"
+                  - id: 2
+                    notificationType: PAYMENT
+                    artefactId: 3
+                    message: "Cobrança criada para o pedido: 3. Valor: 100.00"
+                    createdAt: "2025-05-29T20:27:19.481908"
     NoContent:
       description: No Content
     NotFound:
@@ -1175,7 +1366,7 @@ components:
       headers:
         Location:
           $ref: '#/components/headers/Location'
-    PartialUpdateResponse:
+    PartialUpdateCustomerResponse:
       description: Response padrão de atualização parcial
       content:
         application/json:
@@ -1214,6 +1405,40 @@ components:
       headers:
         Location:
           $ref: '#/components/headers/Location'
+    UpdatedCustomerOrderStatus:
+      description: Resposta de atualização de status do pedido do cliente
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdatedCustomerOrderStatusType"
+          examples:
+            UpdatedKitchenOrderStatus:
+              summary: Status do predido atualizado
+              value:
+                response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                _content:
+                  id: 1
+                  customerOrderId: 2,
+                  status: Preparing
+    UpdatedKitchenOrderStatus:
+      description: Resposta de atualização de status de preparo
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdatedKitchenOrderStatusType"
+          examples:
+            UpdatedKitchenOrderStatus:
+              summary: Status do preparo atualizado
+              value:
+                response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                _content:
+                  id: 1
+                  customerOrderId: 2,
+                  status: Preparing
   parameters:
     CallbackPaymentDataId:
       name: data.id
@@ -1247,13 +1472,13 @@ components:
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/CustomerOrderTemplate/properties/order/properties/status'
+        $ref: '#/components/schemas/CustomerOrderTemplate/properties/status'
     CustomerOrderStatus:
       name: status
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/CustomerOrderTemplate/properties/order/properties/status'
+        $ref: '#/components/schemas/CustomerOrderTemplate/properties/status'
     DocumentNumber:
       name: documentNumber
       in: path
@@ -1308,7 +1533,7 @@ components:
       schema:
         $ref: '#/components/schemas/OrderTemplate/properties/id'
     KitchenOrderId:
-      name: id
+      name: kichenOrderId
       in: path
       required: true
       schema:
@@ -1319,14 +1544,13 @@ components:
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/KitchenOrderTemplate/properties/order/properties/status'
+        $ref: '#/components/schemas/KitchenOrderTemplate/properties/status'
     KitchenOrderStatus:
-      name: status
-      in: query
+      name: kitchenOrderStatus
+      in: path
       required: true
       schema:
-        $ref: '#/components/schemas/KitchenOrderTemplate/properties/order/properties/status'
-
+        $ref: '#/components/schemas/KitchenOrderTemplate/properties/status'
     Limit:
       name: _limit
       in: query
@@ -1334,28 +1558,23 @@ components:
       required: false
       schema:
         $ref: '#/components/schemas/LimitTemplate'
+    NotificationType:
+      name: notificationType
+      in: path
+      required: true
+      schema:
+        type: string
   headers:
     Location:
-      description: URI do recuros
+      description: URI do recurso
       required: true
       schema:
         type: string
         format: uri
   schemas:
-    CreatePaymentChargeType:
+    CreateCustomerOrderType:
       allOf:
-        - $ref: '#/components/schemas/PaymentTemplate/properties/orderId'
-        - $ref: '#/components/schemas/PaymentTemplate/properties/amount'
-    GetPaymentType:
-      description: Resposta do QRCode Gerado
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/PaymentTemplate'
-    CreatedPaymentChargeType:
-      description: Resposta do QRCode Gerado
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/PaymentTemplate'
+        - $ref: '#/components/schemas/CustomerOrderTemplate'
     CreateCustomerType:
       allOf:
         - $ref: '#/components/schemas/CustomerTemplate'
@@ -1363,9 +1582,31 @@ components:
             - documentNumber
             - name
             - email
-    CreateCustomerOrderType:
+    CreatedCustomerOrderType:
       allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/CustomerOrderTemplate'
+    CreatedCustomerType:
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/CustomerTemplate'
+        - required:
+            - customerId
+    CreatedFoodType:
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/FoodItemTemplate'
+        - required:
+            - id
+    CreatedKitchenOrderType:
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/KitchenOrderTemplate'
+    CreatedPaymentChargeType:
+      description: Resposta do QRCode Gerado
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/PaymentTemplate'
     CreateFoodItemType:
       allOf:
         - $ref: '#/components/schemas/FoodItemTemplate'
@@ -1378,170 +1619,35 @@ components:
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/KitchenOrderTemplate'
-    CreatedCustomerType:
+    CreatePaymentChargeType:
       allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/CustomerTemplate'
-        - required:
-            - customerId
-    CreatedCustomerOrderType:
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/CustomerOrderTemplate'
-    CreatedKitchenOrderType:
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/KitchenOrderTemplate'
-    CreatedFoodType:
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/FoodItemTemplate'
-        - required:
-            - id
-    PartialUpdateCustomerType:
-      description: Atualiza informacoes parciais do Cliente
-      allOf:
-        - $ref: '#/components/schemas/CustomerTemplate'
-    PartialUpdateFoodItemType:
-      description: Atualiza informacoes parciais do Item de Alimentacao
-      allOf:
-        - $ref: '#/components/schemas/FoodItemTemplate'
-    GetCustomerType:
-      description: Informação de um cliente
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/CustomerTemplate'
-    GetFoodItemType:
-      description: Informação de um cliente
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/FoodItemTemplate'
-    GetCustomerOrderType:
-      description: Informação de um pedido de cliente
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/CustomerOrderTemplate'
-    GetKitchenOrderType:
-      description: Informação de um pedido de cliente
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/KitchenOrderTemplate'
-    GetImageType:
-      description: Buscar imagem do item de alimentação
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - $ref: '#/components/schemas/ImageTemplate/properties/_data'
-    ListCustomersType:
-      description: Lista de clientes
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - type: object
-      properties:
-        _content:
-          type: array
-          items:
-            allOf:
-              - $ref: '#/components/schemas/CustomerTemplate'
-              - type: object
-                required:
-                  - documentNumber
-                  - name
-                  - email
-    ListKitchenOrdersType:
-      description: Lista de ordens de preparo
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - type: object
-      properties:
-        _content:
-          type: array
-          items:
-            allOf:
-              - $ref: '#/components/schemas/KitchenOrderTemplate'
-              - type: object
-                required:
-                  - customer id
-                  - foodItems
-    ListFoodItemsType:
-      description: Lista de Items de Alimentacao
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - type: object
-      properties:
-        _content:
-          type: array
-          items:
-            allOf:
-              - $ref: '#/components/schemas/FoodItemTemplate'
-              - type: object
-                required:
-                  - id
-                  - name
-                  - description
-                  - category
-                  - price
-    ListCustomerOrdersType:
-      description: Tipo de lista de pedido de clientes
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - type: object
-      properties:
-        _content:
-          type: array
-          items:
-            allOf:
-              - $ref: '#/components/schemas/CustomerOrderTemplate'
-              - type: object
-                required:
-                  - order
-                  - payment
-
-    LimitTemplate:
-      description: Número de registros a serem retornados em uma consulta
-      type: integer
-      minimum: 1
-      exclusiveMinimum: false
-      maximum: 50
-      default: 10
+        - $ref: '#/components/schemas/PaymentTemplate/properties/orderId'
+        - $ref: '#/components/schemas/PaymentTemplate/properties/amount'
     CustomerOrderTemplate:
       description: Modelo de dados do Pedido do Cliente
       type: object
       properties:
+        id:
+          description: identificador único do pedido do cliente
+          type: integer
+          format: int32
         customer:
           type: object
           allOf:
             - $ref: '#/components/schemas/CustomerTemplate'
-        order:
-          type: object
-          allOf:
-            - $ref: '#/components/schemas/OrderTemplate'
-          properties:
-            status:
-              type: string
-              enum:
-                - Checkout
-                - Received
-                - Preparing
-                - Ready
-                - Finished
-    KitchenOrderTemplate:
-      description: Modelo de dados do Ordem de Preparo
-      type: object
-      properties:
-        customerOrder:
-          type: object
-          allOf:
-            - $ref: '#/components/schemas/OrderTemplate/properties/id'
-        order:
-          allOf:
-            - $ref: '#/components/schemas/OrderTemplate'
-          properties:
-            status:
-              type: string
-              enum:
-                - Received
-                - Prepering
-                - Finished
+        foodItems:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/FoodItemTemplate'
+        status:
+          type: string
+          enum:
+            - Checkout
+            - Received
+            - Preparing
+            - Ready
+            - Finished
     CustomerTemplate:
       description: Modelo de dados do cliente
       properties:
@@ -1568,27 +1674,6 @@ components:
           pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$' # Regex para validação de e-mail
           minLength: 1
           maxLength: 100
-    ImageTemplate:
-      description: Modelo de dados de imagem do Item de Alimentacao
-      type: object
-      properties:
-        id:
-          description: Id único da imagem
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 99999
-        _data:
-          description: Imagem do Item de Alimentacao em base64
-          type: string
-          format: base64
-        location:
-          description: URL da imagem do Item de Alimentacao
-          type: string
-          format: uri
-        fileExtension:
-          description: Mensagem de erro de extensão inválida
-          type: string
     FoodItemTemplate:
       description: Modelo de dados do Item de Alimentacao
       properties:
@@ -1625,6 +1710,181 @@ components:
           items:
             allOf:
               - $ref: '#/components/schemas/ImageTemplate'
+    GetCustomerOrderType:
+      description: Informação de um pedido de cliente
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/CustomerOrderTemplate'
+    GetCustomerType:
+      description: Informação de um cliente
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/CustomerTemplate'
+    GetFoodItemType:
+      description: Informação de um cliente
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/FoodItemTemplate'
+    GetImageType:
+      description: Buscar imagem do item de alimentação
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/ImageTemplate/properties/_data'
+    GetKitchenOrderType:
+      description: Informação de um pedido de cliente
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/KitchenOrderTemplate'
+    GetPaymentType:
+      description: Resposta do QRCode Gerado
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/PaymentTemplate'
+    ImageTemplate:
+      description: Modelo de dados de imagem do Item de Alimentacao
+      type: object
+      properties:
+        id:
+          description: Id único da imagem
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 99999
+        _data:
+          description: Imagem do Item de Alimentacao em base64
+          type: string
+          format: base64
+        location:
+          description: URL da imagem do Item de Alimentacao
+          type: string
+          format: uri
+        fileExtension:
+          description: Mensagem de erro de extensão inválida
+          type: string
+    KitchenOrderTemplate:
+      description: Modelo de dados do Ordem de Preparo
+      type: object
+      properties:
+        id:
+          description: identificador único do pedido de preparo
+          type: integer
+          format: int32
+        customerOrderId:
+          allOf:
+            - $ref: '#/components/schemas/OrderTemplate/properties/id'
+        foodItems:
+          type: array
+          maxItems: 5
+          items:
+            allOf:
+              - $ref: '#/components/schemas/FoodItemTemplate'
+        status:
+          type: string
+          enum:
+            - Received
+            - Prepering
+            - Finished
+    LimitTemplate:
+      description: Número de registros a serem retornados em uma consulta
+      type: integer
+      minimum: 1
+      exclusiveMinimum: false
+      maximum: 50
+      default: 10
+    ListCustomerOrdersType:
+      description: Tipo de lista de pedido de clientes
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - type: object
+      properties:
+        _content:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/CustomerOrderTemplate'
+              - type: object
+                required:
+                  - order
+                  - payment
+    ListCustomersType:
+      description: Lista de clientes
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - type: object
+      properties:
+        _content:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/CustomerTemplate'
+              - type: object
+                required:
+                  - documentNumber
+                  - name
+                  - email
+    ListFoodItemsType:
+      description: Lista de Items de Alimentacao
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - type: object
+      properties:
+        _content:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/FoodItemTemplate'
+              - type: object
+                required:
+                  - id
+                  - name
+                  - description
+                  - category
+                  - price
+    ListKitchenOrdersType:
+      description: Lista de ordens de preparo
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - type: object
+      properties:
+        _content:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/KitchenOrderTemplate'
+              - type: object
+                required:
+                  - customer id
+                  - foodItems
+    ListNotificationType:
+      description: Resposta para uma lista de notificações
+      allOf:
+        - $ref: "#/components/schemas/ResponseTemplate"
+      properties:
+        _content:
+          type: array
+          items:
+            allOf:
+              - $ref: "#/components/schemas/NotificationTemplate"
+    NotificationTemplate:
+      description: Modelo de dados de uma notificação
+      properties:
+        id:
+          description: Id único da notificação
+          type: integer
+          format: int32
+        notificationType:
+          description: Tipo de notificação
+          type: string
+        artefactId:
+          description: Id único do recurso que gerou notificação
+          type: integer
+          format: int32
+        message:
+          description: Mensagem da notificação
+          type: string
+        createdAt:
+          description: Data da criação da notificação
+          type: date-time
     OrderTemplate:
       description: Modelo de Dados base de uma ordem genérica
       type: object
@@ -1651,6 +1911,14 @@ components:
                 description: Observações do Item de Alimentacao
                 type: string
                 maxLength: 256
+    PartialUpdateCustomerType:
+      description: Atualiza informacoes parciais do Cliente
+      allOf:
+        - $ref: '#/components/schemas/CustomerTemplate'
+    PartialUpdateFoodItemType:
+      description: Atualiza informacoes parciais do Item de Alimentacao
+      allOf:
+        - $ref: '#/components/schemas/FoodItemTemplate'
     PaymentTemplate:
       description: Modelo de dados de pagamento de pedido do cliente
       type: object
@@ -1702,12 +1970,25 @@ components:
               type: string
               description: Menssagem de resposta
               maxLength: 50
-    UpdateFoodItemImageType:
-      description: Atualização de imagem.
+    UpdatedCustomerOrderStatusType:
+      description: Retorno para atualização de status de preparo
       allOf:
-        - $ref: '#/components/schemas/ImageTemplate'
+        - $ref: "#/components/schemas/CustomerOrderTemplate"
+      properties:
+        foodItems:
+          type: null
     UpdatedFoodItemImageType:
       description: Retorno para Atualização de imagem.
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
-
+    UpdatedKitchenOrderStatusType:
+      description: Retorno para atualização de status de preparo
+      allOf:
+        - $ref: "#/components/schemas/KitchenOrderTemplate"
+      properties:
+        foodItems:
+          type: null
+    UpdateFoodItemImageType:
+      description: Atualização de imagem.
+      allOf:
+        - $ref: '#/components/schemas/ImageTemplate'

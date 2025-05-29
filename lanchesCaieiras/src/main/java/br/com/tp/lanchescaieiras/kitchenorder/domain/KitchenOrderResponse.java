@@ -6,19 +6,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class KitchenOrderResponse {
     private ResponseMetada _response;
-    private KitchenOrder kitchenOrder;
+    private KitchenOrder _content;
 
-    public KitchenOrderResponse(ResponseMetada _response, KitchenOrder kitchenOrder) {
+    public KitchenOrderResponse(ResponseMetada _response, KitchenOrder _content) {
         this._response = _response;
-        this.kitchenOrder = kitchenOrder;
+        this._content = _content;
     }
 
     public KitchenOrderResponse() {
         this._response = new ResponseMetada();
     }
 
-    public KitchenOrderResponse(KitchenOrder kitchenOrder) {
-        this.kitchenOrder = kitchenOrder;
+    public KitchenOrderResponse(KitchenOrder _content) {
+        this._content = _content;
         this._response = new ResponseMetada();
     }
 
@@ -30,11 +30,11 @@ public class KitchenOrderResponse {
         this._response = _response;
     }
 
-    public KitchenOrder getKitchenOrder() {
-        return kitchenOrder;
+    public KitchenOrder get_content() {
+        return _content;
     }
 
-    public void setKitchenOrder(KitchenOrder kitchenOrder) {
-        this.kitchenOrder = kitchenOrder;
+    public void set_content(KitchenOrder _content) {
+        this._content = _content;
     }
 }

@@ -9,19 +9,19 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class KitchenOrderListResponse {
     private ResponseMetada _response;
-    private List<KitchenOrder> kitchenOrder;
+    private List<KitchenOrder> _content;
 
 
-    public KitchenOrderListResponse(ResponseMetada _response, List<KitchenOrder> kitchenOrder) {
+    public KitchenOrderListResponse(ResponseMetada _response, List<KitchenOrder> _content) {
         this._response = _response;
-        this.kitchenOrder = kitchenOrder;
+        this._content = _content;
     }
 
     public KitchenOrderListResponse() {
     }
 
-    public KitchenOrderListResponse(List<KitchenOrder> kitchenOrder) {
-        this.kitchenOrder = kitchenOrder;
+    public KitchenOrderListResponse(List<KitchenOrder> _content) {
+        this._content = _content;
         this._response = new ResponseMetada();
     }
 
@@ -33,11 +33,11 @@ public class KitchenOrderListResponse {
         this._response = _response;
     }
 
-    public List<KitchenOrder> getKitchenOrder() {
-        return kitchenOrder;
+    public List<KitchenOrder> get_content() {
+        return _content;
     }
 
-    public void setKitchenOrder(List<KitchenOrder> kitchenOrder) {
-        this.kitchenOrder = kitchenOrder;
+    public void set_content(List<KitchenOrder> _content) {
+        this._content = _content;
     }
 }
