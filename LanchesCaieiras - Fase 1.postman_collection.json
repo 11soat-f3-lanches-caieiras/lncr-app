@@ -328,7 +328,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"_comment\":\"Não utilizar documentNumber e email em uso. Enviar somente campos a serem atualizado\",\r\n  \"documentNumber\": \"96227583804\",\r\n  \"name\": \"Tereza Nina Monteiro\",\r\n  \"email\": \"tereza_monteiro@gestion.com.br\"\r\n  \r\n}",
+							"raw": "{\r\n  \"_comment\":\"Não utilizar documentNumber e email em uso. Enviar somente campos a serem atualizado\",\r\n  \"documentNumber\": \"96227583804\",\r\n  \"name\": \"Tereza Nina Monteiro da Silva\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -336,7 +336,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/customers/documentNumber/{{customerId}}",
+							"raw": "http://localhost:8080/customers/{{customerId}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -344,7 +344,6 @@
 							"port": "8080",
 							"path": [
 								"customers",
-								"documentNumber",
 								"{{customerId}}"
 							]
 						}
@@ -747,7 +746,7 @@
 					"response": []
 				},
 				{
-					"name": "getFoodItemImageById Copy",
+					"name": "updateFoodItemImageById",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -1177,7 +1176,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/kitchenOrders/customerOrder/{{customerId}}?includFoodItems=false",
+							"raw": "http://localhost:8080/kitchenOrders/customerOrder/{{customerOrderId}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1186,13 +1185,14 @@
 							"path": [
 								"kitchenOrders",
 								"customerOrder",
-								"{{customerId}}"
+								"{{customerOrderId}}"
 							],
 							"query": [
 								{
 									"key": "includFoodItems",
 									"value": "false",
-									"description": "Detalhamento dos items de alimentação"
+									"description": "Detalhamento dos items de alimentação",
+									"disabled": true
 								}
 							]
 						}
@@ -1220,7 +1220,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/kitchenOrders/status/Received?includFoodItems=false",
+							"raw": "http://localhost:8080/kitchenOrders/status/Finished?includFoodItems=false",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1229,7 +1229,7 @@
 							"path": [
 								"kitchenOrders",
 								"status",
-								"Received"
+								"Finished"
 							],
 							"query": [
 								{
@@ -1244,14 +1244,11 @@
 				},
 				{
 					"name": "updateKitchenOrderStatus",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "noauth"
 						},
-						"method": "GET",
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -1263,7 +1260,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/kitchenOrders/status/Received?includeFoodItems=true",
+							"raw": "http://localhost:8080/kitchenOrders/{{kitchenOrderId}}/updateStatus/{{kitchenOrderNewStatus}}?forceUpdate=true",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1271,14 +1268,15 @@
 							"port": "8080",
 							"path": [
 								"kitchenOrders",
-								"status",
-								"Received"
+								"{{kitchenOrderId}}",
+								"updateStatus",
+								"{{kitchenOrderNewStatus}}"
 							],
 							"query": [
 								{
-									"key": "includeFoodItems",
+									"key": "forceUpdate",
 									"value": "true",
-									"description": "Detalhes dos items de Alimentação"
+									"description": "Força atualização de um preparo fora do fluxo comum"
 								}
 							]
 						}
