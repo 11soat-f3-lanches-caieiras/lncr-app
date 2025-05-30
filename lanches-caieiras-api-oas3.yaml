@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: Lanchonete Caieiras
-  description: 'Gerenciador de Pedidos, Ordem de Preparo, Produtos e Pagamento'
+  title: Lanches Caieiras
+  description: 'Gerenciador de Pedidos, Ordem de Preparo, Produtos e Pagamento da Lanches Caieiras'
   contact:
     email: titoparizotto@gmail.com
     name: Tito de Morais Parizotto
@@ -269,7 +269,7 @@ paths:
       summary: Atualizar parcialmente informacoes de um item de Alimentacao
       tags:
         - FoodItems
-        - CollectionOperations
+        - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/FoodItemId'
       requestBody:
@@ -287,7 +287,7 @@ paths:
       summary: Deletar dados de um item de alimentacao
       tags:
         - FoodItems
-        - CollectionOperations
+        - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/FoodItemId'
       responses:
@@ -320,7 +320,7 @@ paths:
       summary: Atualizar imagem de um item de alimentação
       tags:
         - FoodItems
-        - CollectionOperations
+        - ManagedOperations
       parameters:
         - $ref: "#/components/parameters/ImageId"
       requestBody:
@@ -338,7 +338,7 @@ paths:
       summary: Deletar imagem de um item de alimentação
       tags:
         - FoodItems
-        - CollectionOperations
+        - ManagedOperations
       parameters:
         - $ref: "#/components/parameters/ImageId"
       responses:
@@ -445,7 +445,7 @@ paths:
       summary: Atualizar status de uma ordem de preparo
       tags:
         - KitchenOrders
-        - CollectionOperations
+        - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/KitchenOrderId'
         - $ref: '#/components/parameters/KitchenOrderNewStatus'
@@ -502,7 +502,7 @@ paths:
       summary: Informado Id do pagamento do MercadoPago
       tags:
         - Payments
-        - CollectionOperations
+        - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/CallbackPaymentDataId'
         - $ref: '#/components/parameters/CallbackPaymentType'
