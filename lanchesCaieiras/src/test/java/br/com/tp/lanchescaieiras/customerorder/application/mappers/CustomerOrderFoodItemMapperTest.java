@@ -4,7 +4,8 @@ import br.com.tp.lanchescaieiras.customerorder.adapters.outbound.entities.JpaCus
 import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderFoodItem;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class CustomerOrderFoodItemMapperTest {
 

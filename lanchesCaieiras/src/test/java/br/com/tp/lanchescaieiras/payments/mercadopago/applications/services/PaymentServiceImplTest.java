@@ -9,7 +9,6 @@ import br.com.tp.lanchescaieiras.payments.mercadopago.domain.PaymentStatus;
 import br.com.tp.lanchescaieiras.payments.mercadopago.infraestructure.exceptions.PaymentException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.springframework.context.ApplicationEventPublisher;
 
 import static org.junit.jupiter.api.Assertions.*;

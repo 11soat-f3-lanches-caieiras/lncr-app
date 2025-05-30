@@ -5,9 +5,8 @@ import br.com.tp.lanchescaieiras.kitchenorder.domain.KitchenOrder;
 import br.com.tp.lanchescaieiras.kitchenorder.domain.KitchenOrderStatus;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class KitchenOrderMapperTest {
 

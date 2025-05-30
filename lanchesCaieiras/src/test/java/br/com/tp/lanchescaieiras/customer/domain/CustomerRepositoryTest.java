@@ -1,10 +1,12 @@
 package br.com.tp.lanchescaieiras.customer.domain;
 
 import org.junit.jupiter.api.Test;
-import java.util.Optional;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CustomerRepositoryTest {
 

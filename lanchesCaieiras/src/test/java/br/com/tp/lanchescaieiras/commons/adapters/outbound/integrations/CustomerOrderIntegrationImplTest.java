@@ -3,12 +3,11 @@ package br.com.tp.lanchescaieiras.commons.adapters.outbound.integrations;
 import br.com.tp.lanchescaieiras.commons.infraestructure.config.IntegrationConfig;
 import br.com.tp.lanchescaieiras.payments.mercadopago.infraestructure.exceptions.PaymentException;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class CustomerOrderIntegrationImplTest {
 

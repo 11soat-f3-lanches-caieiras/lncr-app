@@ -5,12 +5,12 @@ import br.com.tp.lanchescaieiras.kitchenorder.application.mappers.KitchenOrderFo
 import br.com.tp.lanchescaieiras.kitchenorder.domain.KitchenOrderFoodItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class JpaKitchenOrderFoodItemRepositoryImplTest {
 

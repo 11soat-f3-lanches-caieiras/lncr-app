@@ -1,6 +1,7 @@
 package br.com.tp.lanchescaieiras.kitchenorder.adapters.outbound.entities;
 
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

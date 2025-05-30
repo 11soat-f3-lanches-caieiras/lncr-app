@@ -8,13 +8,13 @@ import br.com.tp.lanchescaieiras.customer.infraestructure.config.CustomerConfig;
 import br.com.tp.lanchescaieiras.customer.infraestructure.exceptions.CustomerException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class CustomerControllerImplTest {

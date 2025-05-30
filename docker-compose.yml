@@ -26,9 +26,11 @@ services:
       context: ./lanchesCaieiras
       dockerfile: Dockerfile
     image: lanches-caieiras:1.0
+    env_file:
+      - .env
     container_name: lncr
     volumes:
-        - ./storage/images:/lanchesCaieiras/images/
+      - ./storage/images:/lanchesCaieiras/images/
     networks:
       - lncr_network
     ports:

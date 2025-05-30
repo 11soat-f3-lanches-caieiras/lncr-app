@@ -4,7 +4,7 @@ import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderFoodItem;
 import br.com.tp.lanchescaieiras.kitchenorder.domain.KitchenOrderFoodItem;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IntegrationMapperTest {
 

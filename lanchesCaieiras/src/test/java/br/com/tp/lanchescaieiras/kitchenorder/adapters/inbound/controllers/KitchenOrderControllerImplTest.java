@@ -7,14 +7,14 @@ import br.com.tp.lanchescaieiras.kitchenorder.domain.KitchenOrderResponse;
 import br.com.tp.lanchescaieiras.kitchenorder.infraestructure.config.KitchenOrderConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class KitchenOrderControllerImplTest {
 

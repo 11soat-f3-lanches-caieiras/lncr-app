@@ -8,8 +8,6 @@ RUN mvn clean test package
 # Etapa 2: Execução
 FROM openjdk:17-jdk-slim
 WORKDIR /lanchesCaieiras
-# Copiar o arquivo .env para a imagem
-COPY ../.env .env
 
 # Adicionar variáveis de ambiente
 ARG ENV_FILE=.env

@@ -1,11 +1,12 @@
 package br.com.tp.lanchescaieiras.customerorder.adapters.inbound.controllers;
 
 import br.com.tp.lanchescaieiras.customerorder.application.services.CustomerOrderServicesImpl;
-import br.com.tp.lanchescaieiras.customerorder.domain.*;
+import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrder;
+import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderListResponse;
+import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderResponse;
 import br.com.tp.lanchescaieiras.customerorder.infraestructure.config.CustomerOrderConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

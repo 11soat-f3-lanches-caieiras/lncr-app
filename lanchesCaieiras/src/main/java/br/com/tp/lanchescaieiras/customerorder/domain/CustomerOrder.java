@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.annotation.PostConstruct;
 
 import java.text.DecimalFormat;
-import java.text.Format;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

@@ -3,8 +3,9 @@ package br.com.tp.lanchescaieiras.customerorder.adapters.outbound.integrations;
 import br.com.tp.lanchescaieiras.commons.infraestructure.config.IntegrationConfig;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class PaymentIntegrationImplTest {
 

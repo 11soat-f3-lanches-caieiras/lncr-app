@@ -5,13 +5,10 @@ import br.com.tp.lanchescaieiras.customerorder.application.mappers.IntegrationMa
 import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderFoodItem;
 import br.com.tp.lanchescaieiras.customerorder.infraestructure.exceptions.CustomerOrderException;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 class FoodItemIntegrationImplTest {
 

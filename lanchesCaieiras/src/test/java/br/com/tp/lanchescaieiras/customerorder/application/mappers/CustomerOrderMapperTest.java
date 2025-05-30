@@ -6,7 +6,7 @@ import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderCustomer;
 import br.com.tp.lanchescaieiras.customerorder.domain.CustomerOrderStatus;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CustomerOrderMapperTest {
 
