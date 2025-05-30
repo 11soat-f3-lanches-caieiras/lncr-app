@@ -1,7 +1,9 @@
 package br.com.tp.lanchescaieiras.kitchenorder.domain;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class KitchenOrderFoodItemTest {
 

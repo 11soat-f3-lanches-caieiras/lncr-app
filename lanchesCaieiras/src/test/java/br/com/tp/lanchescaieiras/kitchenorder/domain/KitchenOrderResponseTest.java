@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras.kitchenorder.domain;
 
 import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 class KitchenOrderResponseTest {
