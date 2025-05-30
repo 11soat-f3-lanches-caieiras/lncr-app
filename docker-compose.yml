@@ -38,7 +38,8 @@ services:
     expose:
       - "8080"
     depends_on:
-      - db-lncr
+      db-lncr:
+        condition: service_healthy
     links:
       - db-lncr
 networks:
