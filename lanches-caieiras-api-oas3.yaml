@@ -193,7 +193,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/customerOrder/{id}/updateStatus/{newStatus}':
+  '/customerOrder/{customerOrderId}/updateStatus/{newStatus}':
     patch:
       operationId: customerOrderUpdateStatus
       description: Atualizar status do pedido do cliente
@@ -376,7 +376,7 @@ paths:
         - CollectionOperations
       parameters:
         - $ref: '#/components/parameters/KitchenCustomerOrderId'
-        - $ref: '#/components/parameters/KitchenOrderStatus'
+        - $ref: '#/components/parameters/KitchenOrderStatusQuery'
       responses:
         '200':
           $ref: '#/components/responses/ListKitchenOrders'
@@ -384,7 +384,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/kitchenOrders/{KitchenOrderId}':
+  '/kitchenOrders/{kitchenOrderId}':
     get:
       operationId: getKitchenOrder
       description: Buscar uma ordem de prepraro por id
@@ -404,7 +404,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
   '/kitchenOrders/customerOrder/{customerOrderId}':
     get:
-      operationId: getKitchenOrder
+      operationId: getKitchenOrderByCustomerOrder
       description: Buscar uma ordem de prepraro pelo id do pedido do cliente
       summary: Buscar uma ordem de preparo pelo id do pedido do cliente
       tags:
@@ -422,14 +422,14 @@ paths:
           $ref: '#/components/responses/InternalServerError'
   '/kitchenOrders/status/{kitchenOrderStatus}':
     get:
-      operationId: getKitchenOrder
+      operationId: getKitchenOrderByCustomerOrderId
       description: Buscar lista de preparos por status
       summary: Buscar lista de preparos por status
       tags:
         - KitchenOrders
         - CollectionOperations
       parameters:
-        - $ref: '#/components/parameters/KitchenOrderStatus'
+        - $ref: '#/components/parameters/KitchenOrderStatusPath'
         - $ref: '#/components/parameters/IncludeFoodItems'
       responses:
         '200':
@@ -438,7 +438,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/kitchenOrders/{KitchenOrderId}/updateStatus/{newStatus}':
+  '/kitchenOrders/{kitchenOrderId}/updateStatus/{newStatus}':
     patch:
       operationId: kitchenOrderUpdateStatus
       description: Atualizar status de uma ordem de preparo
@@ -1533,7 +1533,7 @@ components:
       schema:
         $ref: '#/components/schemas/OrderTemplate/properties/id'
     KitchenOrderId:
-      name: kichenOrderId
+      name: kitchenOrderId
       in: path
       required: true
       schema:
@@ -1545,10 +1545,16 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/KitchenOrderTemplate/properties/status'
-    KitchenOrderStatus:
+    KitchenOrderStatusPath:
       name: kitchenOrderStatus
       in: path
       required: true
+      schema:
+        $ref: '#/components/schemas/KitchenOrderTemplate/properties/status'
+    KitchenOrderStatusQuery:
+      name: kitchenOrderStatus
+      in: query
+      required: false
       schema:
         $ref: '#/components/schemas/KitchenOrderTemplate/properties/status'
     Limit:
@@ -1884,7 +1890,8 @@ components:
           type: string
         createdAt:
           description: Data da criação da notificação
-          type: date-time
+          type: string
+          format: date-time
     OrderTemplate:
       description: Modelo de Dados base de uma ordem genérica
       type: object
@@ -1975,8 +1982,8 @@ components:
       allOf:
         - $ref: "#/components/schemas/CustomerOrderTemplate"
       properties:
-        foodItems:
-          type: null
+        foodItems: 
+          type: object
     UpdatedFoodItemImageType:
       description: Retorno para Atualização de imagem.
       allOf:
@@ -1987,7 +1994,7 @@ components:
         - $ref: "#/components/schemas/KitchenOrderTemplate"
       properties:
         foodItems:
-          type: null
+          type: object
     UpdateFoodItemImageType:
       description: Atualização de imagem.
       allOf:
