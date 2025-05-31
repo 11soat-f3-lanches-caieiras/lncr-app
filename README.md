@@ -14,7 +14,7 @@
 
 Sistema para gerenciamento de pedidos de uma lanchonete, desenvolvido no Tech Challange - Fase 1 da pós-graduação FIAP 11SOAT.
 
-Este projeto tem como objetivo simular o funcionamento de uma lanchonete, permitindo o cadastro de produtos, montagem de pedidos e cálculo de valores aplicando os conceitos de arquitetura hexagonal.
+Este projeto tem como objetivo simular o funcionamento de uma lanchonete, permitindo o cadastro cleinte, items de alimentação, pedidos de clientes, pagamentos e notificações aplicando os conceitos de arquitetura hexagonal.
 
 ## Requisitos
 
@@ -41,14 +41,14 @@ Este projeto tem como objetivo simular o funcionamento de uma lanchonete, permit
    POSTGRES_DB=postgres
    POSTGRES_JDBC=jdbc:postgresql://db-postgres-lncr:5432/postgres
    POSTGRES_USER=postgres
-   POSTGRES_PASSWORD= #Definir senha do banco de dados Postgres
+   POSTGRES_PASSWORD= # Definir senha do banco de dados Postgres
    LNCR_BASE_URL=http://localhost:8080 # URL base da API
    MERCADOPAGO_USER_ID= # Id do usuário da sua conta do Mercado Pago
-   MERCADOPAGO_POS_ID= #Id do ponto de venda (POS) da sua conta do Mercado Pago
-   MERCADOPAGO_CALLBACK_URL= #criar URL de callback do Mercado Pago Ex: https://webhook.site/
+   MERCADOPAGO_POS_ID= # Id do ponto de venda (POS) da sua conta do Mercado Pago
+   MERCADOPAGO_CALLBACK_URL= # criar URL de callback do Mercado Pago Ex: https://webhook.site/
    MERCADOPAGO_QRCODE_URL=https://api.mercadopago.com/instore/orders/qr/seller/collectors/${MERCADOPAGO_USER_ID}/pos/${MERCADOPAGO_POS_ID}/qrs
    MERCADOPAGO_PAYMENTS_URL=https://api.mercadopago.com/v1/payments
-   MERCADOPAGO_ACCESS_TOKEN= #Token de acesso da sua conta do Mercado Pago
+   MERCADOPAGO_ACCESS_TOKEN= # Token de acesso da sua conta do Mercado Pago
    ```
 
 ## Como usar
