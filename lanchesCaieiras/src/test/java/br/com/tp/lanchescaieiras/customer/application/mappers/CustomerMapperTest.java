@@ -1,7 +1,8 @@
 package br.com.tp.lanchescaieiras.customer.application.mappers;
 
-import br.com.tp.lanchescaieiras.customer.adapters.outbound.entities.JpaCustomerEntity;
-import br.com.tp.lanchescaieiras.customer.domain.Customer;
+import br.com.tp.lanchescaieiras.customer.application.usecases.mappers.CustomerMapper;
+import br.com.tp.lanchescaieiras.customer.external.datasource.entities.JpaCustomerEntity;
+import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 

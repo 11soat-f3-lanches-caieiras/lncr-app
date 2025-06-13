@@ -1,6 +1,8 @@
 package br.com.tp.lanchescaieiras.customer.domain;
 
 import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
+import br.com.tp.lanchescaieiras.customer.domain.shared.CustomerResponse;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

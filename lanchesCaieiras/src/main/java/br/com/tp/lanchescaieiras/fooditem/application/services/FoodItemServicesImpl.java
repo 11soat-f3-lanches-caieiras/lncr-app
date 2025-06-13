@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.fooditem.application.services;
 
-import br.com.tp.lanchescaieiras.customer.infraestructure.exceptions.CustomerException;
+import br.com.tp.lanchescaieiras.customer.domain.shared.exceptions.CustomerException;
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.repositories.JpaFoodItemImageRepositoryImpl;
 import br.com.tp.lanchescaieiras.fooditem.adapters.outbound.repositories.JpaFoodItemRepositoryImpl;
 import br.com.tp.lanchescaieiras.fooditem.application.usecases.FoodItemUseCases;

@@ -1,9 +1,11 @@
 package br.com.tp.lanchescaieiras.customer.adapters.outbound.repositories;
 
-import br.com.tp.lanchescaieiras.customer.adapters.outbound.entities.JpaCustomerEntity;
-import br.com.tp.lanchescaieiras.customer.application.mappers.CustomerMapper;
-import br.com.tp.lanchescaieiras.customer.domain.Customer;
-import br.com.tp.lanchescaieiras.customer.infraestructure.exceptions.CustomerException;
+import br.com.tp.lanchescaieiras.customer.external.datasource.entities.JpaCustomerEntity;
+import br.com.tp.lanchescaieiras.customer.application.usecases.mappers.CustomerMapper;
+import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
+import br.com.tp.lanchescaieiras.customer.external.datasource.repositories.interfaces.JpaCustomerRepository;
+import br.com.tp.lanchescaieiras.customer.external.datasource.repositories.impl.JpaCustomerReposityImpl;
+import br.com.tp.lanchescaieiras.customer.domain.shared.exceptions.CustomerException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageImpl;

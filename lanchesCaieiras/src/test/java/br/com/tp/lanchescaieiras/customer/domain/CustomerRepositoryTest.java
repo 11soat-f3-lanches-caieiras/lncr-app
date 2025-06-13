@@ -1,5 +1,7 @@
 package br.com.tp.lanchescaieiras.customer.domain;
 
+import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
+import br.com.tp.lanchescaieiras.customer.domain.repositories.CustomerRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

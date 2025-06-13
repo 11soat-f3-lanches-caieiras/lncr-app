@@ -1,5 +1,6 @@
 package br.com.tp.lanchescaieiras.customer.domain;
 
+import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

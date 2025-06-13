@@ -1,11 +1,12 @@
 package br.com.tp.lanchescaieiras.customer.adapters.inbound.controllers;
 
-import br.com.tp.lanchescaieiras.customer.application.services.CustomerServiceImpl;
-import br.com.tp.lanchescaieiras.customer.domain.Customer;
-import br.com.tp.lanchescaieiras.customer.domain.CustomerListResponse;
-import br.com.tp.lanchescaieiras.customer.domain.CustomerResponse;
-import br.com.tp.lanchescaieiras.customer.infraestructure.config.CustomerConfig;
-import br.com.tp.lanchescaieiras.customer.infraestructure.exceptions.CustomerException;
+import br.com.tp.lanchescaieiras.customer.application.services.impl.CustomerServiceImpl;
+import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
+import br.com.tp.lanchescaieiras.customer.domain.shared.CustomerListResponse;
+import br.com.tp.lanchescaieiras.customer.domain.shared.CustomerResponse;
+import br.com.tp.lanchescaieiras.customer.external.api.impl.CustomerControllerImpl;
+import br.com.tp.lanchescaieiras.customer.application.config.CustomerConfig;
+import br.com.tp.lanchescaieiras.customer.domain.shared.exceptions.CustomerException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
