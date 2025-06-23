@@ -1,7 +1,9 @@
+/*
 package br.com.tp.lanchescaieiras.customer.application.services.impl;
 
-import br.com.tp.lanchescaieiras.customer.external.datasource.repositories.impl.JpaCustomerReposityImpl;
-import br.com.tp.lanchescaieiras.customer.application.usecases.interfaces.CustomerUseCases;
+import br.com.tp.lanchescaieiras.commons.domain.Response;
+import br.com.tp.lanchescaieiras.customer.external.datasource.repositories.JpaCustomerReposityImpl;
+import br.com.tp.lanchescaieiras.customer.application.usecases.CustomerUseCases;
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
 import br.com.tp.lanchescaieiras.customer.domain.shared.exceptions.CustomerException;
 import org.slf4j.Logger;
@@ -34,8 +36,9 @@ public class CustomerServiceImpl implements CustomerUseCases {
 
 
     @Override
-    public Optional<Customer> getCustomerById(Integer id) {
-        log.info("Buscando cliente com id: " + id);
+    public Optional<Response<Customer>> getCustomerById(Integer id) {
+        */
+/*log.info("Buscando cliente com id: " + id);
         Optional<Customer> customer = this.customerRepository.findById(id);
 
         if (customer.isPresent()) {
@@ -43,7 +46,9 @@ public class CustomerServiceImpl implements CustomerUseCases {
             return customer;
         } else {
             throw new CustomerException("Cliente não encontrado com o ID: " + id, 404);
-        }
+        }*//*
+
+        return null;
     }
 
     @Override
@@ -85,7 +90,7 @@ public class CustomerServiceImpl implements CustomerUseCases {
     }
 
     public void validateDocumentNumber(Customer customer) {
-        if (customer.documentNumberIsValid()) {
+        if (customer.) {
             log.info("Validando documento: " + customer.getDocumentNumber());
             if (customerRepository.existsByDocumentNumber(customer.getDocumentNumber())) {
                 throw new CustomerException("Documento já utilizado por outro cliente", 409);
@@ -105,4 +110,4 @@ public class CustomerServiceImpl implements CustomerUseCases {
             throw new CustomerException("Email informado invalido", 404);
         }
     }
-}
+}*/

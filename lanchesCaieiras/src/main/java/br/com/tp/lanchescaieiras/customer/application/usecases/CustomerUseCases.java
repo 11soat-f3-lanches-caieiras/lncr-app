@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.customer.application.usecases.interfaces;
+package br.com.tp.lanchescaieiras.customer.application.usecases;
 
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
 

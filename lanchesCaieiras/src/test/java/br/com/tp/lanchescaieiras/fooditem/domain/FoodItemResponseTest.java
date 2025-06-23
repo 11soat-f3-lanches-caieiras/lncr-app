@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.fooditem.domain;
 
-import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetadata;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,7 +10,7 @@ class FoodItemResponseTest {
 
     @Test
     void testConstructorAndGetters() {
-        ResponseMetada meta = new ResponseMetada("trace", "ts", "msg");
+        ResponseMetadata meta = new ResponseMetadata("trace", "ts", "msg");
         FoodItem item = new FoodItem();
         FoodItemResponse response = new FoodItemResponse(meta, item);
 
@@ -30,7 +30,7 @@ class FoodItemResponseTest {
     @Test
     void testSetters() {
         FoodItemResponse response = new FoodItemResponse();
-        ResponseMetada meta = new ResponseMetada();
+        ResponseMetadata meta = new ResponseMetadata();
         FoodItem item = new FoodItem();
         response.set_response(meta);
         response.set_content(item);

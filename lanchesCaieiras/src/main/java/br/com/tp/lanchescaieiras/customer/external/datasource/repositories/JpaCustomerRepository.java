@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.customer.external.datasource.repositories.interfaces;
+package br.com.tp.lanchescaieiras.customer.external.datasource.repositories;
 
 import br.com.tp.lanchescaieiras.customer.external.datasource.entities.JpaCustomerEntity;
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;

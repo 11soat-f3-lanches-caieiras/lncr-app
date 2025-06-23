@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.commons.infraestructure.handlers;
 
-import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,7 @@ public class ExceptionHandlerUtil {
         };
     }
 
-    private static ResponseMetada createResponse(String message) {
-        return new ResponseMetada(UUID.randomUUID().toString(), OffsetDateTime.now().toString(), message);
+    private static ResponseMetadata createResponse(String message) {
+        return new ResponseMetadata(UUID.randomUUID().toString(), OffsetDateTime.now().toString(), message);
     }
 }

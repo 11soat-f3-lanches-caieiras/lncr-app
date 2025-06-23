@@ -25,7 +25,7 @@ class NotificationListResponseTest {
     @Test
     void testSetters() {
         NotificationListResponse response = new NotificationListResponse(null);
-        ResponseMetada meta = new ResponseMetada("id", "ts", "msg");
+        ResponseMetadata meta = new ResponseMetadata("id", "ts", "msg");
         response.set_response(meta);
 
         assertEquals(meta, response.get_response());

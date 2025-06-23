@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.payments.mercadopago.domain;
 
-import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetadata;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +10,7 @@ class PaymentResponseTest {
     @Test
     void testConstructorAndGettersSetters() {
         Payment payment = new Payment(1, 2, 10.0, null, null, "Paid", "pid");
-        ResponseMetada meta = new ResponseMetada();
+        ResponseMetadata meta = new ResponseMetadata();
         PaymentResponse response = new PaymentResponse(meta, payment);
 
         assertEquals(meta, response.get_response());
@@ -20,7 +20,7 @@ class PaymentResponseTest {
         response.setPayment(payment2);
         assertEquals(payment2, response.getPayment());
 
-        ResponseMetada meta2 = new ResponseMetada();
+        ResponseMetadata meta2 = new ResponseMetadata();
         response.set_response(meta2);
         assertEquals(meta2, response.get_response());
     }

@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.kitchenorder.domain;
 
-import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetadata;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,7 +11,7 @@ class KitchenOrderResponseTest {
     @Test
     void testConstructorAndGetters() {
         KitchenOrder order = new KitchenOrder();
-        ResponseMetada meta = new ResponseMetada();
+        ResponseMetadata meta = new ResponseMetadata();
         KitchenOrderResponse response = new KitchenOrderResponse(meta, order);
 
         assertEquals(meta, response.get_response());
@@ -21,7 +21,7 @@ class KitchenOrderResponseTest {
     @Test
     void testSetters() {
         KitchenOrderResponse response = new KitchenOrderResponse();
-        ResponseMetada meta = new ResponseMetada();
+        ResponseMetadata meta = new ResponseMetadata();
         KitchenOrder order = new KitchenOrder();
 
         response.set_response(meta);

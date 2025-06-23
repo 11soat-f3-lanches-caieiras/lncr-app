@@ -1,32 +1,32 @@
 package br.com.tp.lanchescaieiras.customer.domain.shared;
 
-import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetadata;
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerResponse {
-    private ResponseMetada _response;
+    private ResponseMetadata _response;
     private Customer _content;
 
     public CustomerResponse() {
     }
 
-    public CustomerResponse(ResponseMetada _response, Customer _content) {
+    public CustomerResponse(ResponseMetadata _response, Customer _content) {
         this._response = _response;
         this._content = _content;
     }
 
     public CustomerResponse(Customer _content) {
         this._content = _content;
-        this._response = new ResponseMetada();
+        this._response = new ResponseMetadata();
     }
 
-    public ResponseMetada get_response() {
+    public ResponseMetadata get_response() {
         return _response;
     }
 
-    public void set_response(ResponseMetada _response) {
+    public void set_response(ResponseMetadata _response) {
         this._response = _response;
     }
 

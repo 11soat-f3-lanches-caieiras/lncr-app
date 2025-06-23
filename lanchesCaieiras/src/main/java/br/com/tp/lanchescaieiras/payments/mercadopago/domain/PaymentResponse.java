@@ -1,14 +1,14 @@
 package br.com.tp.lanchescaieiras.payments.mercadopago.domain;
 
-import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetadata;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PaymentResponse {
-    private ResponseMetada _response;
+    private ResponseMetadata _response;
     private Payment payment;
 
-    public PaymentResponse(ResponseMetada _response, Payment payment) {
+    public PaymentResponse(ResponseMetadata _response, Payment payment) {
         this._response = _response;
         this.payment = payment;
     }
@@ -18,14 +18,14 @@ public class PaymentResponse {
 
     public PaymentResponse(Payment payment) {
         this.payment = payment;
-        this._response = new ResponseMetada();
+        this._response = new ResponseMetadata();
     }
 
-    public ResponseMetada get_response() {
+    public ResponseMetadata get_response() {
         return _response;
     }
 
-    public void set_response(ResponseMetada _response) {
+    public void set_response(ResponseMetadata _response) {
         this._response = _response;
     }
 

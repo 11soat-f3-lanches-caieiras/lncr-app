@@ -6,19 +6,19 @@ import java.util.List;
 
 @JsonPropertyOrder({"_response", "notifications"})
 public class NotificationListResponse {
-    private ResponseMetada _response;
+    private ResponseMetadata _response;
     private List<Notification> notifications;
 
     public NotificationListResponse(List<Notification> notifications) {
         this.notifications = notifications;
-        this._response = new ResponseMetada();
+        this._response = new ResponseMetadata();
     }
 
-    public ResponseMetada get_response() {
+    public ResponseMetadata get_response() {
         return _response;
     }
 
-    public void set_response(ResponseMetada _response) {
+    public void set_response(ResponseMetadata _response) {
         this._response = _response;
     }
 

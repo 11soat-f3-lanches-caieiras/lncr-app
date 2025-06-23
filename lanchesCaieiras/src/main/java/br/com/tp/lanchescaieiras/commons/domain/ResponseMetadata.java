@@ -6,24 +6,24 @@ import java.time.Instant;
 import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ResponseMetada {
+public class ResponseMetadata {
     private String _traceId;
     private String _timestamp;
     private String _message;
 
-    public ResponseMetada() {
+    public ResponseMetadata() {
         this._traceId = UUID.randomUUID().toString();
         this._timestamp = Instant.now().toString();
         this._message = null;
     }
 
-    public ResponseMetada(String _traceId, String _timestamp, String _message) {
+    public ResponseMetadata(String _traceId, String _timestamp, String _message) {
         this._traceId = _traceId;
         this._timestamp = _timestamp;
         this._message = _message;
     }
 
-    public ResponseMetada(String _traceId, String _timestamp) {
+    public ResponseMetadata(String _traceId, String _timestamp) {
         this._traceId = _traceId;
         this._timestamp = _timestamp;
     }

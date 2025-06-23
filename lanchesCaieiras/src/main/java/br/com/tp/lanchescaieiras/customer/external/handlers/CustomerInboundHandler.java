@@ -3,10 +3,10 @@ package br.com.tp.lanchescaieiras.customer.external.handlers;
 import br.com.tp.lanchescaieiras.commons.infraestructure.handlers.ExceptionHandlerUtil;
 import br.com.tp.lanchescaieiras.customer.domain.shared.exceptions.CustomerException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice
+@ControllerAdvice
 public class CustomerInboundHandler {
 
     @ExceptionHandler(CustomerException.class)

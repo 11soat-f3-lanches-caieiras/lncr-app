@@ -1,31 +1,31 @@
 package br.com.tp.lanchescaieiras.fooditem.domain;
 
-import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetadata;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FoodItemResponse {
-    private ResponseMetada _response;
+    private ResponseMetadata _response;
     private FoodItem _content;
 
-    public FoodItemResponse(ResponseMetada _response, FoodItem _content) {
+    public FoodItemResponse(ResponseMetadata _response, FoodItem _content) {
         this._response = _response;
         this._content = _content;
     }
 
     public FoodItemResponse(FoodItem _content) {
         this._content = _content;
-        this._response = new ResponseMetada();
+        this._response = new ResponseMetadata();
     }
 
     public FoodItemResponse() {
     }
 
-    public ResponseMetada get_response() {
+    public ResponseMetadata get_response() {
         return _response;
     }
 
-    public void set_response(ResponseMetada _response) {
+    public void set_response(ResponseMetadata _response) {
         this._response = _response;
     }
 

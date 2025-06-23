@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.customer.domain;
 
-import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetadata;
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
 import br.com.tp.lanchescaieiras.customer.domain.shared.CustomerResponse;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ class CustomerResponseTest {
 
     @Test
     void testConstructorAndGetters() {
-        ResponseMetada meta = new ResponseMetada();
+        ResponseMetadata meta = new ResponseMetadata();
         Customer customer = new Customer(1, "12345678909", "João", "joao@email.com");
         CustomerResponse response = new CustomerResponse(meta, customer);
         assertEquals(meta, response.get_response());
@@ -22,7 +22,7 @@ class CustomerResponseTest {
     @Test
     void testSetters() {
         CustomerResponse response = new CustomerResponse();
-        ResponseMetada meta = new ResponseMetada();
+        ResponseMetadata meta = new ResponseMetadata();
         Customer customer = new Customer();
         response.set_response(meta);
         response.set_content(customer);

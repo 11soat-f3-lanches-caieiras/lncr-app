@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.customerorder.domain;
 
-import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetadata;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -12,7 +12,7 @@ class CustomerOrderListResponseTest {
 
     @Test
     void testConstructorAndGetters() {
-        ResponseMetada meta = new ResponseMetada("trace", "ts", "msg");
+        ResponseMetadata meta = new ResponseMetadata("trace", "ts", "msg");
         CustomerOrder order = new CustomerOrder();
         List<CustomerOrder> orders = List.of(order);
 
@@ -25,7 +25,7 @@ class CustomerOrderListResponseTest {
     @Test
     void testSetters() {
         CustomerOrderListResponse response = new CustomerOrderListResponse();
-        ResponseMetada meta = new ResponseMetada();
+        ResponseMetadata meta = new ResponseMetadata();
         CustomerOrder order = new CustomerOrder();
         response.set_response(meta);
         response.set_content(List.of(order));

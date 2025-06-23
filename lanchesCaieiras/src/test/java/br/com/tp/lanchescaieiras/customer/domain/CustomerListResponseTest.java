@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.customer.domain;
 
-import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetadata;
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
 import br.com.tp.lanchescaieiras.customer.domain.shared.CustomerListResponse;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ class CustomerListResponseTest {
 
     @Test
     void testConstructorAndGetters() {
-        ResponseMetada meta = new ResponseMetada();
+        ResponseMetadata meta = new ResponseMetadata();
         Customer c1 = new Customer(1, "12345678909", "João", "joao@email.com");
         Customer c2 = new Customer(2, "98765432100", "Maria", "maria@email.com");
         List<Customer> customers = Arrays.asList(c1, c2);
@@ -28,7 +28,7 @@ class CustomerListResponseTest {
     @Test
     void testSetters() {
         CustomerListResponse response = new CustomerListResponse();
-        ResponseMetada meta = new ResponseMetada();
+        ResponseMetadata meta = new ResponseMetadata();
         Customer c = new Customer();
         response.set_response(meta);
         response.set_content(Arrays.asList(c));

@@ -1,0 +1,22 @@
+package br.com.tp.lanchescaieiras.customer.domain.entities;
+
+public class CustomerEmail {
+    private final String value;
+
+    public CustomerEmail(String value) {
+        if (!emailIsValid()) {
+            throw new IllegalArgumentException("Email inválido: " + value);
+        }
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public boolean emailIsValid() {
+        String emailRegex = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}(\\.[a-zA-Z]{2,})?$";
+        return this.value != null && this.value.matches(emailRegex);
+    }
+
+}

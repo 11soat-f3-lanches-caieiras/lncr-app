@@ -1,32 +1,32 @@
 package br.com.tp.lanchescaieiras.kitchenorder.domain;
 
-import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetadata;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class KitchenOrderResponse {
-    private ResponseMetada _response;
+    private ResponseMetadata _response;
     private KitchenOrder _content;
 
-    public KitchenOrderResponse(ResponseMetada _response, KitchenOrder _content) {
+    public KitchenOrderResponse(ResponseMetadata _response, KitchenOrder _content) {
         this._response = _response;
         this._content = _content;
     }
 
     public KitchenOrderResponse() {
-        this._response = new ResponseMetada();
+        this._response = new ResponseMetadata();
     }
 
     public KitchenOrderResponse(KitchenOrder _content) {
         this._content = _content;
-        this._response = new ResponseMetada();
+        this._response = new ResponseMetadata();
     }
 
-    public ResponseMetada get_response() {
+    public ResponseMetadata get_response() {
         return _response;
     }
 
-    public void set_response(ResponseMetada _response) {
+    public void set_response(ResponseMetadata _response) {
         this._response = _response;
     }
 

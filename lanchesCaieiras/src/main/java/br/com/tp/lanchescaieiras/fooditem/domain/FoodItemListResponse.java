@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.fooditem.domain;
 
-import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetadata;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
@@ -8,28 +8,28 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FoodItemListResponse {
 
-    ResponseMetada responseMetada;
+    ResponseMetadata responseMetadata;
     List<FoodItem> _content;
 
     public FoodItemListResponse() {
     }
 
-    public FoodItemListResponse(ResponseMetada responseMetada, List<FoodItem> _content) {
-        this.responseMetada = responseMetada;
+    public FoodItemListResponse(ResponseMetadata responseMetadata, List<FoodItem> _content) {
+        this.responseMetadata = responseMetadata;
         this._content = _content;
     }
 
     public FoodItemListResponse(List<FoodItem> _content) {
         this._content = _content;
-        this.responseMetada = new ResponseMetada();
+        this.responseMetadata = new ResponseMetadata();
     }
 
-    public ResponseMetada getResponseMetada() {
-        return responseMetada;
+    public ResponseMetadata getResponseMetada() {
+        return responseMetadata;
     }
 
-    public void setResponseMetada(ResponseMetada responseMetada) {
-        this.responseMetada = responseMetada;
+    public void setResponseMetada(ResponseMetadata responseMetadata) {
+        this.responseMetadata = responseMetadata;
     }
 
     public List<FoodItem> get_content() {

@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.customer.domain.shared;
 
-import br.com.tp.lanchescaieiras.commons.domain.ResponseMetada;
+import br.com.tp.lanchescaieiras.commons.domain.ResponseMetadata;
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -8,10 +8,10 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerListResponse {
-    private ResponseMetada _response;
+    private ResponseMetadata _response;
     private List<Customer> _content;
 
-    public CustomerListResponse(ResponseMetada _response, List<Customer> _content) {
+    public CustomerListResponse(ResponseMetadata _response, List<Customer> _content) {
         this._response = _response;
         this._content = _content;
     }
@@ -21,14 +21,14 @@ public class CustomerListResponse {
 
     public CustomerListResponse(List<Customer> _content) {
         this._content = _content;
-        this._response = new ResponseMetada();
+        this._response = new ResponseMetadata();
     }
 
-    public ResponseMetada get_response() {
+    public ResponseMetadata get_response() {
         return _response;
     }
 
-    public void set_response(ResponseMetada _response) {
+    public void set_response(ResponseMetadata _response) {
         this._response = _response;
     }
 

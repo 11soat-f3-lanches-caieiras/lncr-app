@@ -1,10 +1,9 @@
-package br.com.tp.lanchescaieiras.customer.external.datasource.repositories.impl;
+package br.com.tp.lanchescaieiras.customer.external.datasource.repositories;
 
 import br.com.tp.lanchescaieiras.customer.external.datasource.entities.JpaCustomerEntity;
 import br.com.tp.lanchescaieiras.customer.application.usecases.mappers.CustomerMapper;
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
 import br.com.tp.lanchescaieiras.customer.domain.repositories.CustomerRepository;
-import br.com.tp.lanchescaieiras.customer.external.datasource.repositories.interfaces.JpaCustomerRepository;
 import br.com.tp.lanchescaieiras.customer.domain.shared.exceptions.CustomerException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
