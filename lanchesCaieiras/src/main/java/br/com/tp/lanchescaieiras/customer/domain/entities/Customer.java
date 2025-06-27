@@ -1,43 +1,64 @@
 package br.com.tp.lanchescaieiras.customer.domain.entities;
 
-public class Customer <DocumentNumber extends IDocumentNumber> {
+public class Customer {
     Integer id;
-    DocumentNumber customerDocumentNumber;
+    CustomerCPF documentNumber;
     String name;
     CustomerEmail email;
 
     public Customer() {
     }
 
-    public Customer(Integer id, DocumentNumber documentNumber, String name, String email) {
+    public Customer(Integer id, String documentNumber, String name, String email) {
         this.id = id;
-        this.customerDocumentNumber = documentNumber;
+        this.documentNumber = new CustomerCPF(documentNumber);
         this.name = name;
         this.email = new CustomerEmail(email);
     }
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    public Integer getId() {
+        return id;
+    }
 
-    public String getDocumentNumber() { return customerDocumentNumber.getValue(); }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public void setDocumentNumber(DocumentNumber documentNumber) { this.customerDocumentNumber = documentNumber; }
+    public String getDocumentNumber() {
+        return documentNumber.getValue();
+    }
 
-    public boolean documentNumberIsValid() { return this.customerDocumentNumber.documentNumberIsValid(); }
+    public void setDocumentNumber(String documentNumber) {
+        this.documentNumber = new CustomerCPF(documentNumber);
+    }
 
-    public String getName() { return name; }
+    public boolean documentNumberIsValid() {
+        return this.documentNumber.documentNumberIsValid(this.documentNumber.getValue());
+    }
 
-    public void setName(String name) { this.name = name;}
+    public String getName() {
+        return name;
+    }
 
-    public String getEmail() { return email.getValue(); }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public void setEmail(String email) { this.email = new CustomerEmail(email); }
+    public String getEmail() {
+        return email.getValue();
+    }
 
-    public boolean emailIsValid() { return this.email.emailIsValid(); }
+    public void setEmail(String email) {
+        this.email = new CustomerEmail(email);
+    }
+
+    public boolean emailIsValid() {
+        return this.email.emailIsValid(this.email.getValue());
+    }
 
     @Override
     public String toString() {
-        return "Customer{" + "id=" + id + ", documentNumber='" + customerDocumentNumber + '\'' + ", name='" + name + '\'' + ", email='" + email + '\'' + '}';
+        return "Customer{" + "id=" + id + ", documentNumber='" + documentNumber + '\'' + ", name='" + name + '\'' + ", email='" + email + '\'' + '}';
     }
 }
 

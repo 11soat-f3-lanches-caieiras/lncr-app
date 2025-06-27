@@ -1,10 +1,10 @@
 package br.com.tp.lanchescaieiras.customer.adapters.outbound.repositories;
 
-import br.com.tp.lanchescaieiras.customer.external.datasource.entities.JpaCustomerEntity;
-import br.com.tp.lanchescaieiras.customer.application.usecases.mappers.CustomerMapper;
+import br.com.tp.lanchescaieiras.customer.external.datasources.postgres.JpaCustomerPostgresEntity;
+import br.com.tp.lanchescaieiras.customer.application.mappers.CustomerDtoMapper;
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
-import br.com.tp.lanchescaieiras.customer.external.datasource.repositories.JpaCustomerRepository;
-import br.com.tp.lanchescaieiras.customer.external.datasource.repositories.JpaCustomerReposityImpl;
+import br.com.tp.lanchescaieiras.customer.external.datasources.postgres.JpaCustomerPostgresRepository;
+import br.com.tp.lanchescaieiras.customer.external.datasources.postgres.JpaCustomerPostgresReposityImpl;
 import br.com.tp.lanchescaieiras.customer.domain.shared.exceptions.CustomerException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,23 +17,23 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class JpaCustomerReposityImplTest {
+class JpaCustomerH2ReposityImplTest {
 
-    private JpaCustomerRepository jpaRepo;
-    private CustomerMapper mapper;
-    private JpaCustomerReposityImpl repo;
+    private JpaCustomerPostgresRepository jpaRepo;
+    private CustomerDtoMapper mapper;
+    private JpaCustomerPostgresReposityImpl repo;
 
     @BeforeEach
     void setUp() {
-        jpaRepo = mock(JpaCustomerRepository.class);
-        mapper = mock(CustomerMapper.class);
-        repo = new JpaCustomerReposityImpl(jpaRepo, mapper);
+        jpaRepo = mock(JpaCustomerPostgresRepository.class);
+        mapper = mock(CustomerDtoMapper.class);
+        repo = new JpaCustomerPostgresReposityImpl(jpaRepo, mapper);
     }
 
     @Test
     void save() {
         Customer c = new Customer(1, "123", "João", "joao@email.com");
-        JpaCustomerEntity entity = new JpaCustomerEntity(1, "123", "João", "joao@email.com");
+        JpaCustomerPostgresEntity entity = new JpaCustomerPostgresEntity(1, "123", "João", "joao@email.com");
         when(mapper.domainToJpa(c)).thenReturn(entity);
         when(jpaRepo.save(entity)).thenReturn(entity);
         when(mapper.jpaToDomain(entity)).thenReturn(c);
@@ -44,7 +44,7 @@ class JpaCustomerReposityImplTest {
 
     @Test
     void findByDocumentNumber_Found() {
-        JpaCustomerEntity entity = new JpaCustomerEntity(1, "123", "João", "joao@email.com");
+        JpaCustomerPostgresEntity entity = new JpaCustomerPostgresEntity(1, "123", "João", "joao@email.com");
         Customer c = new Customer(1, "123", "João", "joao@email.com");
         when(jpaRepo.findByDocumentNumber("123")).thenReturn(Optional.of(entity));
         when(mapper.jpaToDomain(entity)).thenReturn(c);
@@ -62,7 +62,7 @@ class JpaCustomerReposityImplTest {
 
     @Test
     void partialUpdateById_Found() {
-        JpaCustomerEntity entity = new JpaCustomerEntity(1, "123", "João", "joao@email.com");
+        JpaCustomerPostgresEntity entity = new JpaCustomerPostgresEntity(1, "123", "João", "joao@email.com");
         Customer c = new Customer(1, "123", "João", "joao@email.com");
         when(jpaRepo.findById(1)).thenReturn(Optional.of(entity));
         when(jpaRepo.save(entity)).thenReturn(entity);
@@ -83,7 +83,7 @@ class JpaCustomerReposityImplTest {
 
     @Test
     void deleteById_Found() {
-        JpaCustomerEntity entity = new JpaCustomerEntity(1, "123", "João", "joao@email.com");
+        JpaCustomerPostgresEntity entity = new JpaCustomerPostgresEntity(1, "123", "João", "joao@email.com");
         when(jpaRepo.findById(1)).thenReturn(Optional.of(entity));
         doNothing().when(jpaRepo).delete(entity);
         assertDoesNotThrow(() -> repo.deleteById(1));
@@ -97,7 +97,7 @@ class JpaCustomerReposityImplTest {
 
     @Test
     void findById() {
-        JpaCustomerEntity entity = new JpaCustomerEntity(1, "123", "João", "joao@email.com");
+        JpaCustomerPostgresEntity entity = new JpaCustomerPostgresEntity(1, "123", "João", "joao@email.com");
         Customer c = new Customer(1, "123", "João", "joao@email.com");
         when(jpaRepo.findById(1)).thenReturn(Optional.of(entity));
         when(mapper.jpaToDomain(entity)).thenReturn(c);
@@ -109,7 +109,7 @@ class JpaCustomerReposityImplTest {
 
     @Test
     void findAll() {
-        JpaCustomerEntity entity = new JpaCustomerEntity(1, "123", "João", "joao@email.com");
+        JpaCustomerPostgresEntity entity = new JpaCustomerPostgresEntity(1, "123", "João", "joao@email.com");
         Customer c = new Customer(1, "123", "João", "joao@email.com");
         when(jpaRepo.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(entity)));
         when(mapper.jpaToDomain(entity)).thenReturn(c);

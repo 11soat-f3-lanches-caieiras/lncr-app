@@ -3,6 +3,7 @@ package br.com.tp.lanchescaieiras.commons.applications.applications;
 import br.com.tp.lanchescaieiras.commons.adapters.outbound.repositories.JpaNotificationsRepositoryImpl;
 import br.com.tp.lanchescaieiras.commons.applications.usecases.NotificationUseCases;
 import br.com.tp.lanchescaieiras.commons.domain.Notification;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Service
 public class NotificationsServicesImpl implements NotificationUseCases {
 
+    @Autowired
     private final JpaNotificationsRepositoryImpl notificationRepository;
 
 

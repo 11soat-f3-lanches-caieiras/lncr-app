@@ -1,15 +1,17 @@
-package br.com.tp.lanchescaieiras.customer.external.datasource.entities;
+package br.com.tp.lanchescaieiras.customer.external.datasources.postgres;
 
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
 import jakarta.persistence.*;
 
 
-@Table(name = "customer", uniqueConstraints = {
+@Table(name = "customer",
+        schema = "public",
+        uniqueConstraints = {
         @UniqueConstraint(columnNames = "documentNumber"),
         @UniqueConstraint(columnNames = "email")
 })
 @Entity
-public class JpaCustomerEntity {
+public class JpaCustomerPostgresEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
@@ -17,17 +19,17 @@ public class JpaCustomerEntity {
     String name;
     String email;
 
-    public JpaCustomerEntity() {
+    public JpaCustomerPostgresEntity() {
     }
 
-    public JpaCustomerEntity(Integer id, String documentNumber, String name, String email) {
+    public JpaCustomerPostgresEntity(Integer id, String documentNumber, String name, String email) {
         this.id = id;
         this.documentNumber = documentNumber;
         this.name = name;
         this.email = email;
     }
 
-    public JpaCustomerEntity(Customer customer) {
+    public JpaCustomerPostgresEntity(Customer customer) {
         this.id = customer.getId();
         this.name = customer.getName();
         this.documentNumber = customer.getDocumentNumber();

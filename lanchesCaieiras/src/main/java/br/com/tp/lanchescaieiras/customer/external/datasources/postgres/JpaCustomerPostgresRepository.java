@@ -1,21 +1,16 @@
-package br.com.tp.lanchescaieiras.customer.external.datasource.repositories;
+package br.com.tp.lanchescaieiras.customer.external.datasources.postgres;
 
-import br.com.tp.lanchescaieiras.customer.external.datasource.entities.JpaCustomerEntity;
-import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@EnableJpaRepositories
-public interface JpaCustomerRepository extends JpaRepository<JpaCustomerEntity, Integer> {
-
-    Customer save(Customer customer);
+public interface JpaCustomerPostgresRepository extends JpaRepository<JpaCustomerPostgresEntity, Integer> {
 
     @Query(value = "SELECT * FROM customer WHERE document_number = :documentNumber", nativeQuery = true)
-    Optional<JpaCustomerEntity> findByDocumentNumber(@Param("documentNumber") String documentNumber);
+    Optional<JpaCustomerPostgresEntity> findByDocumentNumber(@Param("documentNumber") String documentNumber);
 
     @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM customer WHERE document_number = :documentNumber", nativeQuery = true)
     Boolean existsByDocumentNumber(@Param("documentNumber") String documentNumber);

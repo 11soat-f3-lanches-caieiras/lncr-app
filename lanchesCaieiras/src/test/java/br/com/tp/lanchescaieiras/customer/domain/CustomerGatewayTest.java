@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras.customer.domain;
 
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
-import br.com.tp.lanchescaieiras.customer.domain.repositories.CustomerRepository;
+import br.com.tp.lanchescaieiras.commons.interfaces.CustomerGateway;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -10,9 +10,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class CustomerRepositoryTest {
+class CustomerGatewayTest {
 
-    static class DummyCustomerRepository implements CustomerRepository {
+    static class DummyCustomerGateway implements CustomerGateway {
         @Override public Customer save(Customer customer) { return customer; }
         @Override public List<Customer> findAll(Integer _limit) { return List.of(); }
         @Override public Optional<Customer> findById(Integer id) { return Optional.empty(); }
@@ -25,7 +25,7 @@ class CustomerRepositoryTest {
 
     @Test
     void testInterfaceImplementation() {
-        CustomerRepository repo = new DummyCustomerRepository();
+        CustomerGateway repo = new DummyCustomerGateway();
         assertNotNull(repo);
         assertDoesNotThrow(() -> repo.save(new Customer()));
         assertDoesNotThrow(() -> repo.findAll(10));

@@ -4,7 +4,7 @@ public class CustomerCPF implements IDocumentNumber {
     private final String value;
 
     public CustomerCPF(String value) {
-        if (!documentNumberIsValid()) {
+        if (!documentNumberIsValid(value)) {
             throw new IllegalArgumentException("Número de documento inválido: " + value);
         }
         this.value = value;
@@ -16,8 +16,8 @@ public class CustomerCPF implements IDocumentNumber {
     }
 
     @Override
-    public boolean documentNumberIsValid() {
-        if (this.value.length() != 11 || value.matches("(\\d)\\1{10}")) {
+    public final boolean documentNumberIsValid(String value) {
+        if (value.length() != 11 ||value.matches("(\\d)\\1{10}")) {
             return false;
         }
         try {

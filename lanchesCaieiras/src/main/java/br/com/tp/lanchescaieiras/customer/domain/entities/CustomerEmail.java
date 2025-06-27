@@ -4,7 +4,7 @@ public class CustomerEmail {
     private final String value;
 
     public CustomerEmail(String value) {
-        if (!emailIsValid()) {
+        if (!emailIsValid(value)) {
             throw new IllegalArgumentException("Email inválido: " + value);
         }
         this.value = value;
@@ -14,9 +14,9 @@ public class CustomerEmail {
         return value;
     }
 
-    public boolean emailIsValid() {
+    public boolean emailIsValid(String value) {
         String emailRegex = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}(\\.[a-zA-Z]{2,})?$";
-        return this.value != null && this.value.matches(emailRegex);
+        return value != null && value.matches(emailRegex);
     }
 
 }

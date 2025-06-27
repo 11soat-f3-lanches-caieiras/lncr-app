@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.customer.application.services;
 
-import br.com.tp.lanchescaieiras.customer.external.datasource.repositories.JpaCustomerReposityImpl;
+import br.com.tp.lanchescaieiras.customer.external.datasources.postgres.JpaCustomerPostgresReposityImpl;
 import br.com.tp.lanchescaieiras.customer.application.services.impl.CustomerServiceImpl;
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
 import br.com.tp.lanchescaieiras.customer.domain.shared.exceptions.CustomerException;
@@ -15,12 +15,12 @@ import static org.mockito.Mockito.*;
 
 class CustomerServiceImplTest {
 
-    private JpaCustomerReposityImpl repo;
+    private JpaCustomerPostgresReposityImpl repo;
     private CustomerServiceImpl service;
 
     @BeforeEach
     void setUp() {
-        repo = mock(JpaCustomerReposityImpl.class);
+        repo = mock(JpaCustomerPostgresReposityImpl.class);
         service = new CustomerServiceImpl(repo);
     }
 
