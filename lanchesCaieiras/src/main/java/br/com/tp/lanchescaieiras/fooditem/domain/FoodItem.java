@@ -1,24 +1,18 @@
 package br.com.tp.lanchescaieiras.fooditem.domain;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import br.com.tp.lanchescaieiras.commons.enums.FoodItemCategory;
+import br.com.tp.lanchescaieiras.fooditem.external.config.FoodItemConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@JsonPropertyOrder({"id", "name", "description", "price", "category", "images"})
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FoodItem {
     public Integer id;
     public String name;
     public String description;
     public Double price;
-
-    @Enumerated(EnumType.STRING)
     public FoodItemCategory category;
-    public List<FoodItemImage> images;
+    public List<FoodItemImage> images = new ArrayList<>(5);
 
     public FoodItem(Integer id, String name, String description, Double price, FoodItemCategory category, List<FoodItemImage> images) {
         this.id = id;
@@ -68,7 +62,6 @@ public class FoodItem {
         return category;
     }
 
-    @JsonSetter("category")
     public void setCategory(String category) {
         if (category != null) {
             this.category = FoodItemCategory.valueOf(category.toUpperCase());
@@ -79,7 +72,6 @@ public class FoodItem {
         this.category = category;
     }
 
-
     public List<FoodItemImage> getImages() {
         return images;
     }
@@ -88,5 +80,9 @@ public class FoodItem {
         this.images = foodItemImages;
     }
 
-
+    public void validadeFoodItemImages(FoodItemConfig foodItemConfig){
+        for (FoodItemImage foodItemImage : this.images) {
+            foodItemImage.validateImage(foodItemConfig);
+        }
+    }
 }

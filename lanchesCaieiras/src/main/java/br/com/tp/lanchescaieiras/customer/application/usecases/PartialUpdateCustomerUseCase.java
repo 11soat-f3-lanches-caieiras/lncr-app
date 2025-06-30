@@ -2,47 +2,50 @@ package br.com.tp.lanchescaieiras.customer.application.usecases;
 
 import br.com.tp.lanchescaieiras.commons.dtos.CustomerDTO;
 import br.com.tp.lanchescaieiras.commons.interfaces.CustomerGateway;
-import br.com.tp.lanchescaieiras.customer.application.mappers.CustomerDtoMapper;
+import br.com.tp.lanchescaieiras.customer.adapters.CustomerMapper;
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
-import br.com.tp.lanchescaieiras.customer.domain.shared.exceptions.CustomerException;
+import br.com.tp.lanchescaieiras.customer.domain.exceptions.CustomerException;
 
 import java.lang.reflect.Field;
 
 public class PartialUpdateCustomerUseCase {
 
-    private CustomerDtoMapper customerDtoMapper;
-
-    public PartialUpdateCustomerUseCase() {
-        this.customerDtoMapper = new CustomerDtoMapper();
-    }
-
-    public CustomerDTO partialUpdateById(Integer id, CustomerDTO customerDto, CustomerGateway customerGateway) {
+    public CustomerDTO execute(Integer id, CustomerDTO customerDto, CustomerGateway customerGateway, CustomerMapper customerMapper) {
        validateUpdateFields(customerDto, customerGateway);
-       CustomerDTO existingCustomerDto = getById(id, customerGateway);
-       Customer updatedCustomer = mergeCustomerDto(existingCustomerDto, customerDto);
+       CustomerDTO existingCustomerDto = getById(id, customerGateway, customerMapper);
+       Customer updatedCustomer = mergeCustomerDto(existingCustomerDto, customerDto, customerMapper);
        updatedCustomer = customerGateway.save(updatedCustomer);
-       return customerDtoMapper.domainToDto(updatedCustomer);
+       return customerMapper.domainToDto(updatedCustomer);
     }
 
-    private CustomerDTO getById(Integer id, CustomerGateway customerGateway) {
-        GetCustomerUseCase getCustomerUseCase = new GetCustomerUseCase();
-        return getCustomerUseCase.getById(id, customerGateway);
-    }
-
-    private boolean validateUpdateFields(CustomerDTO updateCustomerDto, CustomerGateway customerGateway) {
-        GetCustomerUseCase getCustomerUseCase = new GetCustomerUseCase();
-        if (getCustomerUseCase.existsByDocumentNumber(updateCustomerDto, customerGateway)) {
-            throw new CustomerException("Cliente já cadastrado com o mesmo número de documento: " + updateCustomerDto.getDocumentNumber(), 409);
+    private CustomerDTO getById(Integer id, CustomerGateway customerGateway, CustomerMapper customerMapper) {
+        Customer customer = customerGateway.findById(id);
+        if (customer == null) {
+            throw new CustomerException("Cliente não encontrado com o ID: " + id, 404);
         }
-        if (getCustomerUseCase.existsByEmail(updateCustomerDto, customerGateway)) {
-            throw new CustomerException("Cliente já cadastrado com o mesmo e-mail: " + updateCustomerDto.getEmail(), 409);
-        }
-        return true;
+        return customerMapper.domainToDto(customer);
     }
 
-    private Customer mergeCustomerDto(CustomerDTO existingCustomerDto, CustomerDTO updatedCustomerDto) {
-        Customer existingCustomer = customerDtoMapper.dtoToDomain(existingCustomerDto);
-        Customer updatedCustomer = customerDtoMapper.dtoToDomain(updatedCustomerDto);
+    private void validateUpdateFields(CustomerDTO updateCustomerDto, CustomerGateway customerGateway) {
+        existsByDocumentNumber(updateCustomerDto, customerGateway);
+        existsByEmail(updateCustomerDto, customerGateway);
+    }
+
+    private void existsByDocumentNumber(CustomerDTO customerDto, CustomerGateway customerGateway) {
+        if (customerGateway.existsByDocumentNumber(customerDto.getDocumentNumber())) {
+            throw new CustomerException("Cliente já cadastrado com o mesmo número de documento: " + customerDto.getDocumentNumber(), 409);
+        }
+    }
+
+    private void existsByEmail(CustomerDTO customerDto, CustomerGateway customerGateway) {
+        if (customerGateway.existsByEmail(customerDto.getEmail())) {
+            throw new CustomerException("Cliente já cadastrado com o mesmo e-mail: " + customerDto.getEmail(), 409);
+        }
+    }
+
+    private Customer mergeCustomerDto(CustomerDTO existingCustomerDto, CustomerDTO updatedCustomerDto, CustomerMapper customerMapper) {
+        Customer existingCustomer = customerMapper.dtoToDomain(existingCustomerDto);
+        Customer updatedCustomer = customerMapper.dtoToDomain(updatedCustomerDto);
         updatedCustomer.setId(null);
 
         try {

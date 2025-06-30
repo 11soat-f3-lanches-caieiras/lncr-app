@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras.customer.adapters;
 
 import br.com.tp.lanchescaieiras.commons.domain.Response;
 import br.com.tp.lanchescaieiras.commons.domain.ResponseList;
+import br.com.tp.lanchescaieiras.customer.application.usecases.DeleteCustomerUseCase;
 import br.com.tp.lanchescaieiras.customer.application.usecases.GetCustomerUseCase;
 import br.com.tp.lanchescaieiras.customer.application.usecases.PartialUpdateCustomerUseCase;
 import br.com.tp.lanchescaieiras.customer.external.config.CustomerConfig;
@@ -23,7 +24,8 @@ public class CustomerControllerImpl implements CustomerController {
         CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
 
         CreateCustomerUseCase createCustomerUseCase = new CreateCustomerUseCase();
-        customerDto = createCustomerUseCase.createCustomer(customerDto, customerGateway);
+        CustomerMapper customerMapper = new CustomerMapper();
+        customerDto = createCustomerUseCase.execute(customerDto, customerGateway, customerMapper);
 
         CustomerPresenter customerPresenter = new CustomerPresenter();
         return customerPresenter.created(customerDto, customerConfig);
@@ -35,7 +37,8 @@ public class CustomerControllerImpl implements CustomerController {
         CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
 
         GetCustomerUseCase getCustomerUseCase = new GetCustomerUseCase();
-        List<CustomerDTO> customerDTOList = getCustomerUseCase.getAll(_limit, customerGateway);
+        CustomerMapper customerMapper = new CustomerMapper();
+        List<CustomerDTO> customerDTOList = getCustomerUseCase.getAll(_limit, customerGateway, customerMapper);
 
         CustomerPresenter customerPresenter = new CustomerPresenter();
         return customerPresenter.getAll(customerDTOList);
@@ -46,7 +49,8 @@ public class CustomerControllerImpl implements CustomerController {
         CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
 
         GetCustomerUseCase getCustomerUseCase = new GetCustomerUseCase();
-        CustomerDTO customerDTO = getCustomerUseCase.getById(id, customerGateway);
+        CustomerMapper customerMapper = new CustomerMapper();
+        CustomerDTO customerDTO = getCustomerUseCase.getById(id, customerGateway, customerMapper);
 
         CustomerPresenter customerPresenter = new CustomerPresenter();
         return customerPresenter.getById(customerDTO);
@@ -57,7 +61,8 @@ public class CustomerControllerImpl implements CustomerController {
         CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
 
         GetCustomerUseCase getCustomerUseCase = new GetCustomerUseCase();
-        CustomerDTO customerDTO = getCustomerUseCase.getByDocumentNumber(documentNumber, customerGateway);
+        CustomerMapper customerMapper = new CustomerMapper();
+        CustomerDTO customerDTO = getCustomerUseCase.getByDocumentNumber(documentNumber, customerGateway, customerMapper);
 
         CustomerPresenter customerPresenter = new CustomerPresenter();
         return customerPresenter.getByDocumentNumber(customerDTO);
@@ -68,7 +73,8 @@ public class CustomerControllerImpl implements CustomerController {
         CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
 
         PartialUpdateCustomerUseCase partialUpdateCustomerUseCase = new PartialUpdateCustomerUseCase();
-        CustomerDTO updatedCustomerDTO = partialUpdateCustomerUseCase.partialUpdateById(id, customerDTO, customerGateway);
+        CustomerMapper customerMapper = new CustomerMapper();
+        CustomerDTO updatedCustomerDTO = partialUpdateCustomerUseCase.execute(id, customerDTO, customerGateway, customerMapper);
 
         CustomerPresenter customerPresenter = new CustomerPresenter();
         return customerPresenter.getById(updatedCustomerDTO);
@@ -78,10 +84,11 @@ public class CustomerControllerImpl implements CustomerController {
     public ResponseEntity<Response<CustomerDTO>> delete(Integer id, CustomerDatabase customerDatabase) {
         CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
 
-        GetCustomerUseCase getCustomerUseCase = new GetCustomerUseCase();
-        CustomerDTO customerDTO = getCustomerUseCase.deleteById(id, customerGateway);
+        DeleteCustomerUseCase deleteCustomerUseCase = new DeleteCustomerUseCase();
+        CustomerMapper customerMapper = new CustomerMapper();
+        deleteCustomerUseCase.execute(id, customerGateway, customerMapper);
 
         CustomerPresenter customerPresenter = new CustomerPresenter();
-        return customerPresenter.deleted(customerDTO);
+        return customerPresenter.deleted();
     }
 }

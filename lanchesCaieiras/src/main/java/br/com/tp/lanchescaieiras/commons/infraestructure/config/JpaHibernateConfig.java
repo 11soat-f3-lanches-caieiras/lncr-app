@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class JpaHibernateConfig {
 
     @Bean(name="hibernateCustomerProperties")
-    public HashMap<String, Object> hibernateCustomerProperties() {
+    public HashMap<String, Object> hibernateProperties() {
         HashMap<String, Object> properties = new HashMap<>();
         properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("spring.jpa.show-sql", true);

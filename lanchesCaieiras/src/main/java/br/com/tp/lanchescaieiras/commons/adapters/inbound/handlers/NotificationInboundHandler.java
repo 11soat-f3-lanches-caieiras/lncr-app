@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras.commons.adapters.inbound.handlers;
 
 import br.com.tp.lanchescaieiras.commons.infraestructure.exceptions.NotificationException;
-import br.com.tp.lanchescaieiras.commons.infraestructure.handlers.ExceptionHandlerUtil;
+import br.com.tp.lanchescaieiras.commons.utils.ExceptionHandlerUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

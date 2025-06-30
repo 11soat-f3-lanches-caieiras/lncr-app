@@ -2,28 +2,37 @@ package br.com.tp.lanchescaieiras.customer.application.usecases;
 
 import br.com.tp.lanchescaieiras.commons.dtos.CustomerDTO;
 import br.com.tp.lanchescaieiras.commons.interfaces.CustomerGateway;
-import br.com.tp.lanchescaieiras.customer.application.mappers.CustomerDtoMapper;
+import br.com.tp.lanchescaieiras.customer.adapters.CustomerMapper;
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
-import br.com.tp.lanchescaieiras.customer.domain.shared.exceptions.CustomerException;
+import br.com.tp.lanchescaieiras.customer.domain.exceptions.CustomerException;
 
 public class CreateCustomerUseCase {
 
-    private CustomerDtoMapper customerDtoMapper;
-
     public CreateCustomerUseCase() {
-        this.customerDtoMapper = new CustomerDtoMapper();
     }
 
-    public CustomerDTO createCustomer(CustomerDTO customerDTO,
-                                      CustomerGateway customerGateway) {
-        Customer customer = customerDtoMapper.dtoToDomain(customerDTO);
-        GetCustomerUseCase getCustomerUseCase = new GetCustomerUseCase();
-        if (getCustomerUseCase.existsByDocumentNumber(customerDTO, customerGateway)) {
-            throw new CustomerException("Cliente já cadastrado com o mesmo número de documento: " + customerDTO.getDocumentNumber(), 409);
+    public CustomerDTO execute(CustomerDTO customerDTO,
+                                      CustomerGateway customerGateway,
+                                      CustomerMapper customerMapper) {
+        Customer customer = customerMapper.dtoToDomain(customerDTO);
+        validateUpdateFields(customer, customerGateway);
+        return customerMapper.domainToDto(customerGateway.save(customer));
+    }
+
+    private void validateUpdateFields(Customer customer, CustomerGateway customerGateway) {
+        existsByDocumentNumber(customer, customerGateway);
+        existsByEmail(customer, customerGateway);
+    }
+
+    private void existsByDocumentNumber(Customer customer, CustomerGateway customerGateway) {
+        if (customerGateway.existsByDocumentNumber(customer.getDocumentNumber())) {
+            throw new CustomerException("Cliente já cadastrado com o mesmo número de documento: " + customer.getDocumentNumber(), 409);
         }
-        if (getCustomerUseCase.existsByEmail(customerDTO, customerGateway)) {
-            throw new CustomerException("Cliente já cadastrado com o mesmo e-mail: " + customerDTO.getEmail(), 409);
+    }
+
+    private void existsByEmail(Customer customer, CustomerGateway customerGateway) {
+        if (customerGateway.existsByEmail(customer.getEmail())) {
+            throw new CustomerException("Cliente já cadastrado com o mesmo e-mail: " + customer.getEmail(), 409);
         }
-        return customerDtoMapper.domainToDto(customerGateway.save(customer));
     }
 }

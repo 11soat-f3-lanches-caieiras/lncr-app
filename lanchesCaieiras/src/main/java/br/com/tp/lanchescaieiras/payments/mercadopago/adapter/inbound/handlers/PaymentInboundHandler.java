@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.payments.mercadopago.adapter.inbound.handlers;
 
-import br.com.tp.lanchescaieiras.commons.infraestructure.handlers.ExceptionHandlerUtil;
+import br.com.tp.lanchescaieiras.commons.utils.ExceptionHandlerUtil;
 import br.com.tp.lanchescaieiras.payments.mercadopago.infraestructure.exceptions.PaymentException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

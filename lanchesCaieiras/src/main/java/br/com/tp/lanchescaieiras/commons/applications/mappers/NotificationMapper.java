@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.commons.applications.mappers;
 
-import br.com.tp.lanchescaieiras.commons.adapters.outbound.entity.JpaNotificationEntity;
+import br.com.tp.lanchescaieiras.commons.adapters.outbound.entities.JpaNotificationEntity;
 import br.com.tp.lanchescaieiras.commons.domain.Notification;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

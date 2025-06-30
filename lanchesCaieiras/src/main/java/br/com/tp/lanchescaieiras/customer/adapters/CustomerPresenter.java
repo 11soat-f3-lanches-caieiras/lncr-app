@@ -36,7 +36,7 @@ public class CustomerPresenter {
                 .body(new ResponseList<>(customerDTO));
     }
 
-    public ResponseEntity<Response<CustomerDTO>> deleted(CustomerDTO customerDTO) {
+    public ResponseEntity<Response<CustomerDTO>> deleted() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new Response<>(null));
     }

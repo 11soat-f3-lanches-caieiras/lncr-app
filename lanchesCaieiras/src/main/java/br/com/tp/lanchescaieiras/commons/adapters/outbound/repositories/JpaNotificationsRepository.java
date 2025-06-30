@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.commons.adapters.outbound.repositories;
 
-import br.com.tp.lanchescaieiras.commons.adapters.outbound.entity.JpaNotificationEntity;
+import br.com.tp.lanchescaieiras.commons.adapters.outbound.entities.JpaNotificationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

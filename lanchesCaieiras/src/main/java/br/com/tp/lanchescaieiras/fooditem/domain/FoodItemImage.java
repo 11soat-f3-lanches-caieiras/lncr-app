@@ -1,7 +1,8 @@
 package br.com.tp.lanchescaieiras.fooditem.domain;
 
-import br.com.tp.lanchescaieiras.fooditem.infraestructure.exceptions.FoodItemException;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import br.com.tp.lanchescaieiras.fooditem.domain.exceptions.FoodItemException;
+
+import br.com.tp.lanchescaieiras.fooditem.external.config.FoodItemConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,30 +10,27 @@ import java.util.Base64;
 import java.util.Map;
 
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FoodItemImage {
     private static final Logger log = LoggerFactory.getLogger(FoodItemImage.class);
     public Integer id;
+    public Integer foodItemId;
     public String _data;
     public String location;
     public String fileName;
     public String fileExtension;
+    public String imageError;
 
     public FoodItemImage() {
     }
 
-    public FoodItemImage(Integer id, String _data, String location, String fileName, String fileExtension) {
+    public FoodItemImage(Integer id, Integer foodItemId, String _data, String location, String fileName, String fileExtension, String imageError) {
         this.id = id;
+        this.foodItemId = foodItemId;
         this._data = _data;
         this.location = location;
         this.fileName = fileName;
         this.fileExtension = fileExtension;
-    }
-
-    public FoodItemImage(String _data, String fileName, String fileExtension) {
-        this._data = _data;
-        this.fileName = fileName;
-        this.fileExtension = fileExtension;
+        this.imageError = imageError;
     }
 
     public Integer getId() {
@@ -42,6 +40,10 @@ public class FoodItemImage {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public Integer getFoodItemId() {return foodItemId;}
+
+    public void setFoodItemId(Integer foodItemId) {this.foodItemId = foodItemId;  }
 
     public String get_data() {
         return _data;
@@ -75,27 +77,35 @@ public class FoodItemImage {
         this.fileExtension = fileExtension;
     }
 
+    public String getImageError() {return imageError;}
+
+    public void setImageError(String imageError) {this.imageError = imageError;}
+
     //Método para validar imagens enviadas
-    public String validateImage(String _base64, Map<String, String> imageConfig, Integer maxSizeInBytes) {
-        if (validateImageSize(_base64, maxSizeInBytes)) { // Valida tamanho
-            for (Map.Entry<String, String> entry : imageConfig.entrySet()) { // Lista de extensões permitidas
+    public void validateImage(FoodItemConfig foodItemConfig) {
+        String allowedExtensions = String.join(", ", foodItemConfig.getImage().getExtensions().keySet());
+        Integer maxSizeInBytes = foodItemConfig.getImage().getMaxSize();
+
+        if (validateImageSize(this._data, maxSizeInBytes)) { // Valida tamanho
+            for (Map.Entry<String, String> entry : foodItemConfig.getImage().getExtensions().entrySet()) { // Lista de extensões permitidas
                 String headerExtensions = entry.getValue();
-                if (validateImageExtention(_base64, headerExtensions)) { // Valida se extensão é permitida
-                    return entry.getKey();
+                if (validateImageExtention(this._data, headerExtensions)) { // Valida se extensão é permitida
+                    this.fileExtension = entry.getKey();
                 }
             }
-            String allowedExtensions = String.join(", ", imageConfig.keySet());
-            log.info("Imagens inválidas. Extensões permitidas: {}", allowedExtensions);
-            return "Imagens inválidas. Extensões permitidas:" + allowedExtensions; //Adiciona mensagem de erro de extensão não permitida
+            if (this.fileExtension == null){
+                log.info("Imagens inválidas. Extensões permitidas: {}", allowedExtensions);
+                this.imageError =  "Encontrada uma imagem inválida. Extensões permitidas:" + allowedExtensions; //Adiciona mensagem de erro de extensão não permitida
+            }
         }
-        ;
-        log.info("Tamanho da imagem excede o limite de {} bytes", maxSizeInBytes);
-        return "Tamanho da imagem excede o limite de " + maxSizeInBytes + " bytes"; //Adiciona mensagem de erro de tamanho inválid para o suário
+        else {
+            log.info("Tamanho da imagem excede o limite de {} bytes", maxSizeInBytes);
+            this.imageError = "Encontrada imagem que excede o limite de " + maxSizeInBytes + "bytes"; //Adiciona mensagem de erro de tamanho inválid para o usuário
+        }
     }
 
     public boolean validateImageSize(String _base64, Integer maxSizeInBytes) {
         return getDecodeImageData(_base64).length <= maxSizeInBytes;
-
     }
 
     public byte[] getDecodeImageData(String _base64) {
@@ -121,4 +131,6 @@ public class FoodItemImage {
         }
         return hexString.toString();
     }
+
+
 }

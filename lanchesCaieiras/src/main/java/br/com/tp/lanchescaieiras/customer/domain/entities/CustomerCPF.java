@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.customer.domain.entities;
 
-public class CustomerCPF implements IDocumentNumber {
+public class CustomerCPF implements DocumentNumber {
     private final String value;
 
     public CustomerCPF(String value) {

@@ -43,14 +43,14 @@ lncr:
 
   food-item:
     location-prefix: "${lncr.base-url}/foodItems"
-
-  food-item-image:
-    location-prefix: "${lncr.base-url}/foodItems/image"
-    directory: "./images/"
-    maxSize: 524288 # 512 KB
-    extensions:
-      ".jpg": "FFD8"
-      ".png": "89504E47"
+    max-images: 5
+    image:
+      location-prefix: "${lncr.base-url}/foodItems/image"
+      directory: "./images/"
+      maxSize: 524288 # 512 KB
+      extensions:
+        ".jpg": "FFD8"
+        ".png": "89504E47"
 
   kitchen-order:
     location-prefix: "${lncr.base-url}/kitchenOrders"

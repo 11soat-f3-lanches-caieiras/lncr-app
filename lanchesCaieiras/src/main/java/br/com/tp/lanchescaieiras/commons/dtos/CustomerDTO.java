@@ -1,8 +1,8 @@
 package br.com.tp.lanchescaieiras.commons.dtos;
 
-import br.com.tp.lanchescaieiras.customer.domain.entities.CustomerCPF;
-import br.com.tp.lanchescaieiras.customer.domain.entities.CustomerEmail;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerDTO {
     Integer id;
     String documentNumber;

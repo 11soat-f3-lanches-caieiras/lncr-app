@@ -1,6 +1,5 @@
 package br.com.tp.lanchescaieiras.customer.adapters;
 
-import br.com.tp.lanchescaieiras.customer.application.mappers.CustomerDtoMapper;
 import br.com.tp.lanchescaieiras.commons.dtos.CustomerDTO;
 import br.com.tp.lanchescaieiras.commons.interfaces.CustomerGateway;
 import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
@@ -12,7 +11,7 @@ import java.util.Optional;
 public class CustomerGatewayImpl implements CustomerGateway {
 
     private final CustomerDatabase customerDatabase;
-    private final CustomerDtoMapper customerDtoMapper = new CustomerDtoMapper();
+    private final CustomerMapper customerMapper = new CustomerMapper();
 
     public CustomerGatewayImpl(CustomerDatabase customerDatabase) {
         this.customerDatabase = customerDatabase;
@@ -20,8 +19,8 @@ public class CustomerGatewayImpl implements CustomerGateway {
 
     @Override
     public Customer save(Customer customer) {
-        CustomerDTO customerDTO = customerDatabase.save(customerDtoMapper.domainToDto(customer));
-        return customerDtoMapper.dtoToDomain(customerDTO);
+        CustomerDTO customerDTO = customerDatabase.save(customerMapper.domainToDto(customer));
+        return customerMapper.dtoToDomain(customerDTO);
     }
 
     @Override
@@ -30,7 +29,7 @@ public class CustomerGatewayImpl implements CustomerGateway {
         if (customerDTO.isEmpty()) {
             return null;
         }
-        return customerDtoMapper.dtoToDomain(customerDTO.get());
+        return customerMapper.dtoToDomain(customerDTO.get());
     }
 
     @Override
@@ -39,13 +38,13 @@ public class CustomerGatewayImpl implements CustomerGateway {
         if (customerDTO.isEmpty()) {
             return null;
         }
-        return customerDtoMapper.dtoToDomain(customerDTO.get());
+        return customerMapper.dtoToDomain(customerDTO.get());
     }
 
     @Override
     public List<Customer> findAll(Integer _limit) {
         return customerDatabase.findAll(_limit).stream()
-                .map(customerDtoMapper::dtoToDomain)
+                .map(customerMapper::dtoToDomain)
                 .toList();
     }
 
@@ -59,12 +58,13 @@ public class CustomerGatewayImpl implements CustomerGateway {
         return this.customerDatabase.existsByEmail(email);
     }
 
+    @Override
     public void deleteById(Integer id) {
         Customer customer = this.findById(id);
         if (customer == null) {
             throw new RuntimeException("Cliente não encontrado com o ID: " + id);
         }
-        CustomerDTO customerDTO = customerDtoMapper.domainToDto(customer);
+        CustomerDTO customerDTO = customerMapper.domainToDto(customer);
         this.customerDatabase.deleteById(id);
     }
 }
