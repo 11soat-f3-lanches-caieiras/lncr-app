@@ -36,7 +36,7 @@ public class CustomerRestControllerImpl implements CustomerRestController {
 
     @Override
     @GetMapping
-    public ResponseEntity<ResponseList<CustomerDTO>> getAllCustomers(Optional<Integer> _limit) {
+    public ResponseEntity<ResponseList<CustomerDTO>> getAllCustomers(@RequestParam("_limit") Optional<Integer> _limit) {
         return this.customerControllerImpl.getAll(_limit, this.jpaCustomerPostgresReposityImpl);
     }
 

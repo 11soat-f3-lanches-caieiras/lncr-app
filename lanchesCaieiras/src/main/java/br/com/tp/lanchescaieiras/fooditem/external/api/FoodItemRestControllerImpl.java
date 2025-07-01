@@ -62,18 +62,15 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
 
     @Override
     @PatchMapping("/{id}")
-    public ResponseEntity<Response<FoodItemDTO>> partialUpdateFoodItemById(@PathVariable Integer id, @RequestBody FoodItemDTO foodItemDTO) {
-        return null;
-        /*FoodItem updatedFoodItem = this.foodItemServices.partialUpdateFoodItemById(id, foodItem);
-        return new ResponseEntity<>(new FoodItemResponse(updatedFoodItem), HttpStatus.OK);*/
+    public ResponseEntity<Response<FoodItemDTO>> partialUpdateFoodItemById(@PathVariable(name = "id") Integer foodItemId, @RequestBody FoodItemDTO foodItemDTO) {
+        FoodItemDataProxy foodItemDatabase = new FoodItemDataProxy(this.jpaFoodItemDatabase, this.jpaFoodItemImageDatabase, this.foodItemImageStorage);
+        return this.foodItemController.partialUpdateById(foodItemId, foodItemDTO, foodItemDatabase, this.foodItemConfig, this.foodItemMapper);
     }
 
     @Override
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response<FoodItemDTO>> deleteFoodItemById(@PathVariable Integer id) {
+    public ResponseEntity<Response<FoodItemDTO>> deleteFoodItemById(@PathVariable(name = "id") Integer id) {
         return null;
-        /*this.foodItemServices.deleteFoodItemById(id);
-        return new ResponseEntity<>(new FoodItemResponse(null), HttpStatus.OK);*/
     }
 
     @Override

@@ -1,5 +1,6 @@
 package br.com.tp.lanchescaieiras.commons.interfaces;
 
+import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
 import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemMapper;
@@ -20,4 +21,8 @@ public interface FoodItemGateway {
                                    FoodItemMapper foodItemMapper);
 
     FoodItem getFoodItemById(Integer foodItemId, Boolean includeImages);
+
+    FoodItem getFoodItemById(Integer foodItemId);
+
+    FoodItemDTO saveFoodItem(FoodItem foodItem);
 }

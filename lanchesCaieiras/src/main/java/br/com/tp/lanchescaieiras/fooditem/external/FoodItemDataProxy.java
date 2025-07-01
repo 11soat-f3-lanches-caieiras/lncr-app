@@ -25,6 +25,11 @@ public class FoodItemDataProxy implements FoodItemDatabase {
 
     @Override
     public FoodItemDTO save(FoodItemDTO foodItemDTO) {
+        return this.jpaFoodItemDatabase.save(foodItemDTO);
+    }
+
+    @Override
+    public FoodItemImageDTO save(FoodItemImageDTO foodItemImageDTO) {
         return null;
     }
 

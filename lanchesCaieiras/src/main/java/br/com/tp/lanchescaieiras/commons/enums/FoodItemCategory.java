@@ -3,7 +3,6 @@ package br.com.tp.lanchescaieiras.commons.enums;
 import br.com.tp.lanchescaieiras.commons.interfaces.EnumWithIdDescription;
 import br.com.tp.lanchescaieiras.commons.utils.EnumUtils;
 import br.com.tp.lanchescaieiras.fooditem.domain.exceptions.FoodItemException;
-import br.com.tp.lanchescaieiras.customerorder.infraestructure.exceptions.CustomerOrderException;
 import jakarta.persistence.Id;
 
 public enum FoodItemCategory implements EnumWithIdDescription {
@@ -38,7 +37,7 @@ public enum FoodItemCategory implements EnumWithIdDescription {
 
     public static FoodItemCategory fromDescription(String description) {
         return EnumUtils.fromDescription(FoodItemCategory.class, description,
-            new CustomerOrderException("Categoria inválida: " + description + ". As categorias válidas são: " + listOfAllowDescriptions(), 400));
+            new FoodItemException("Categoria inválida: " + description + ". As categorias válidas são: " + listOfAllowDescriptions(), 400));
     }
 
     public static String listOfAllowDescriptions() {

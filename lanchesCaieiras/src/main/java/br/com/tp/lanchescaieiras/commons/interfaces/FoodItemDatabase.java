@@ -10,6 +10,8 @@ public interface FoodItemDatabase {
 
     FoodItemDTO save(FoodItemDTO foodItemDTO);
 
+    FoodItemImageDTO save (FoodItemImageDTO foodItemImageDTO);
+
     FoodItemDTO create(FoodItemDTO foodItemDTO);
 
     boolean existsByName(String foodItemName);

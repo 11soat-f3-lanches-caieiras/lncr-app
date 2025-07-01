@@ -20,7 +20,8 @@ public interface FoodItemRestController {
     ResponseEntity<Response<FoodItemDTO>> getFoodItemById(@PathVariable(name = "id") Integer foodItemId,
                                                           @RequestParam(name = "includeImages", required = false) Boolean includeImages);
 
-    ResponseEntity<Response<FoodItemDTO>> partialUpdateFoodItemById(@PathVariable Integer id, @RequestBody FoodItemDTO foodItemDTO);
+    ResponseEntity<Response<FoodItemDTO>> partialUpdateFoodItemById(@PathVariable(name = "foodItemId") Integer foodItemId,
+                                                                    @RequestBody FoodItemDTO foodItemDTO);
 
     ResponseEntity<Response<FoodItemDTO>> deleteFoodItemById(@PathVariable Integer id);
 
