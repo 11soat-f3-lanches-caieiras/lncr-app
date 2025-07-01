@@ -7,7 +7,6 @@ import br.com.tp.lanchescaieiras.fooditem.external.datasources.postgres.JpaFoodI
 import br.com.tp.lanchescaieiras.fooditem.external.datasources.postgres.JpaFoodItemImagePostgresDatabaseImpl;
 import br.com.tp.lanchescaieiras.fooditem.external.storage.FoodItemImageStorageImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FoodItemDataProxy implements FoodItemDatabase {
@@ -44,9 +43,6 @@ public class FoodItemDataProxy implements FoodItemDatabase {
             foodItemImageStorage.saveImagesFiles(savedFoodItemDTO.getImages());
             return savedFoodItemDTO;
         }
-
-
-
         return null;
     }
 
@@ -67,7 +63,7 @@ public class FoodItemDataProxy implements FoodItemDatabase {
 
     @Override
     public List<FoodItemDTO> getAllFoodItems(Integer _limit, Integer categoryId, Boolean includeImages) {
-        List<FoodItemDTO> foodItemsDTOList = new ArrayList<>();
+        List<FoodItemDTO> foodItemsDTOList;
 
         if (categoryId == null) {
             foodItemsDTOList = jpaFoodItemDatabase.getAllFoodItems(_limit);
@@ -86,5 +82,15 @@ public class FoodItemDataProxy implements FoodItemDatabase {
             }
         }
         return foodItemsDTOList;
+    }
+
+    @Override
+    public FoodItemDTO getFoodItemById(Integer foodItemId, Boolean includeImages) {
+        FoodItemDTO foodItemDTO = this.jpaFoodItemDatabase.findById(foodItemId);
+        if (includeImages !=null && foodItemDTO != null){
+            foodItemDTO.setImages(this.jpaFoodItemImageDatabase.findAllByFoodItemId(foodItemId));
+            return foodItemDTO;
+        }
+        return foodItemDTO;
     }
 }

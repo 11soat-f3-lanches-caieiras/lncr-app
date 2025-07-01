@@ -3,14 +3,10 @@ package br.com.tp.lanchescaieiras.fooditem.external.datasources.postgres;
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
 import br.com.tp.lanchescaieiras.fooditem.external.config.FoodItemConfig;
 import br.com.tp.lanchescaieiras.fooditem.external.storage.FoodItemImageStorageImpl;
-import br.com.tp.lanchescaieiras.commons.interfaces.FoodItemDatabase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
-import static java.util.Arrays.stream;
 
 @Repository
 public class JpaFoodItemPostgresDatabaseImpl {
@@ -49,6 +45,12 @@ public class JpaFoodItemPostgresDatabaseImpl {
                 .stream()
                 .map(jpaFoodItemPostgresMapper::toFoodItemDTO)
                 .toList();
+    }
+
+    public FoodItemDTO findById(Integer foodItemId) {
+        return this.jpaFoodItemPostgresMapper.toFoodItemDTO(
+                this.jpaFoodItemPostgresReposity.findById(foodItemId)
+                        .orElse(null));
     }
 
    /* @Override

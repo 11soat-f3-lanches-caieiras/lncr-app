@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public interface CustomerOrderController {
 
-    public ResponseEntity<CustomerOrderResponse> createCustomerOrder(@RequestBody CustomerOrder customerOrder);
+    ResponseEntity<CustomerOrderResponse> createCustomerOrder(@RequestBody CustomerOrder customerOrder);
 
-    public ResponseEntity<CustomerOrderResponse> getCustomerOrderById(@PathVariable Integer id,
-                                                                      @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
+    ResponseEntity<CustomerOrderResponse> getCustomerOrderById(@PathVariable Integer id,
+                                                               @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
 
-    public ResponseEntity<CustomerOrderListResponse> getCustomerOrderByStatus(@PathVariable String status,
-                                                                              @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
+    ResponseEntity<CustomerOrderListResponse> getCustomerOrderByStatus(@PathVariable String status,
+                                                                       @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
 
-    public ResponseEntity<CustomerOrderResponse> updateOrderStatusById(@PathVariable Integer id,
-                                                                       @PathVariable String newStatus, @RequestParam Boolean forceUpdate);
+    ResponseEntity<CustomerOrderResponse> updateOrderStatusById(@PathVariable Integer id,
+                                                                @PathVariable String newStatus, @RequestParam Boolean forceUpdate);
 
 }

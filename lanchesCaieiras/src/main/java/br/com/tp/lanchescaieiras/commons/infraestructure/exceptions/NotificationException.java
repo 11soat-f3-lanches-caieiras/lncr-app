@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras.commons.infraestructure.exceptions;
 
 public class NotificationException extends RuntimeException {
-    private Integer code;
+    private final Integer code;
 
     public NotificationException(String message, Integer code) {
         super(message);

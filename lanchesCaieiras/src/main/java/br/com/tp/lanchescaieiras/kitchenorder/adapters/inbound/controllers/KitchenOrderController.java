@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public interface KitchenOrderController {
 
-    public ResponseEntity<KitchenOrderResponse> createKitchenOrder(@RequestBody KitchenOrder kitchenOrder);
+    ResponseEntity<KitchenOrderResponse> createKitchenOrder(@RequestBody KitchenOrder kitchenOrder);
 
-    public ResponseEntity<KitchenOrderResponse> getKitchenOrderById(@PathVariable Integer id,
-                                                                    @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
+    ResponseEntity<KitchenOrderResponse> getKitchenOrderById(@PathVariable Integer id,
+                                                             @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
 
 
-    public ResponseEntity<KitchenOrderResponse> getKitchenOrderByCustomerOrderId(@PathVariable(name = "customerOrderId") Integer customerOrderId,
-                                                                                 @RequestParam(name = "includeFoodItems", required = false, defaultValue = "true") Boolean includeFoodItems);
+    ResponseEntity<KitchenOrderResponse> getKitchenOrderByCustomerOrderId(@PathVariable(name = "customerOrderId") Integer customerOrderId,
+                                                                          @RequestParam(name = "includeFoodItems", required = false, defaultValue = "true") Boolean includeFoodItems);
 
-    public ResponseEntity<KitchenOrderListResponse> getKitchenOrderByStatus(@PathVariable String status,
-                                                                            @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
+    ResponseEntity<KitchenOrderListResponse> getKitchenOrderByStatus(@PathVariable String status,
+                                                                     @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
 
-    public ResponseEntity<KitchenOrderResponse> updateOrderStatusById(@PathVariable Integer id,
-                                                                      @PathVariable String newStatus,
-                                                                      @RequestParam Boolean forceUpdate,
-                                                                      @RequestParam(name = "updateCustomerOrder", required = false, defaultValue = "true") Boolean updateCustomerOrder);
+    ResponseEntity<KitchenOrderResponse> updateOrderStatusById(@PathVariable Integer id,
+                                                               @PathVariable String newStatus,
+                                                               @RequestParam Boolean forceUpdate,
+                                                               @RequestParam(name = "updateCustomerOrder", required = false, defaultValue = "true") Boolean updateCustomerOrder);
 
 }

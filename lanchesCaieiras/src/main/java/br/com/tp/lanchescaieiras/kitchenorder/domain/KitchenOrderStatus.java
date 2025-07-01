@@ -45,7 +45,7 @@ public enum KitchenOrderStatus {
     }
 
     public static String listOfAllowDescriptions() {
-        String listOfAllowDescriptions = new String();
+        String listOfAllowDescriptions = "";
         for (KitchenOrderStatus status : values()) {
             if (!listOfAllowDescriptions.isEmpty()) {
                 listOfAllowDescriptions = listOfAllowDescriptions + ", ";
@@ -56,7 +56,7 @@ public enum KitchenOrderStatus {
     }
 
     public static String listOfAllowIds() {
-        String listOfAllowIds = new String();
+        String listOfAllowIds = "";
 
         for (KitchenOrderStatus status : values()) {
             if (!listOfAllowIds.isEmpty()) {

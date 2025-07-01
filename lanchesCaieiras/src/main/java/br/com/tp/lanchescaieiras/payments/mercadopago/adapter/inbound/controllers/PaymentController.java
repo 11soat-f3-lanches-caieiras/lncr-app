@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public interface PaymentController {
 
-    public ResponseEntity<PaymentResponse> createCharge(@RequestBody Payment payment);
+    ResponseEntity<PaymentResponse> createCharge(@RequestBody Payment payment);
 
-    ResponseEntity<PaymentResponse> paymentRecived(@RequestParam(name = "data.id", required = true) String dataId,
-                                                   @RequestParam(name = "type", required = true) String type);
+    ResponseEntity<PaymentResponse> paymentRecived(@RequestParam(name = "data.id") String dataId,
+                                                   @RequestParam(name = "type") String type);
 
-    public ResponseEntity<PaymentResponse> getPaymentByCustomerOrderId(@PathVariable(name = "customerOrderId") Integer customerOrderId);
+    ResponseEntity<PaymentResponse> getPaymentByCustomerOrderId(@PathVariable(name = "customerOrderId") Integer customerOrderId);
 
 }

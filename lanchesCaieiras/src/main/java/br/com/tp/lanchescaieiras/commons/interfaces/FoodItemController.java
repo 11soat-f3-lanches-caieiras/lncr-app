@@ -8,13 +8,12 @@ import br.com.tp.lanchescaieiras.fooditem.external.config.FoodItemConfig;
 import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemMapper;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Optional;
-
 public interface FoodItemController {
 
     ResponseEntity<Response<FoodItemDTO>> create(FoodItemDTO foodItemDTO, FoodItemDatabase foodItemDatabase, FoodItemConfig foodItemConfig, FoodItemMapper foodItemMapper);
 
     ResponseEntity<ResponseList<FoodItemDTO>> getAll(Integer _limit, String category, Boolean includeImages, FoodItemDataProxy foodItemDatabase, FoodItemConfig foodItemConfig, FoodItemMapper foodItemMapper);
+    ResponseEntity<Response<FoodItemDTO>> getById(Integer foodItemId, Boolean includeImages, FoodItemDatabase foodItemDatabase, FoodItemConfig foodItemConfig, FoodItemMapper foodItemMapper);
 
   /*  ResponseEntity<ResponseList<FoodItemDTO>> getAllFoodItems(Optional<Integer> _limit, Optional<String> category);
 

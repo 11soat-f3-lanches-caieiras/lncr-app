@@ -11,15 +11,15 @@ import java.util.Optional;
 
 public interface CustomerRestController {
 
-    public ResponseEntity<Response<CustomerDTO>> createCustomer(@RequestBody CustomerDTO customerDto);
+    ResponseEntity<Response<CustomerDTO>> createCustomer(@RequestBody CustomerDTO customerDto);
 
-    public ResponseEntity<ResponseList<CustomerDTO>> getAllCustomers(Optional<Integer> _limit);
+    ResponseEntity<ResponseList<CustomerDTO>> getAllCustomers(Optional<Integer> _limit);
 
-    public ResponseEntity<Response<CustomerDTO>> getCustomerById(@PathVariable Integer id);
+    ResponseEntity<Response<CustomerDTO>> getCustomerById(@PathVariable Integer id);
 
-    public ResponseEntity<Response<CustomerDTO>> getCustomerByDocumentNumber(@PathVariable String documentNumber);
+    ResponseEntity<Response<CustomerDTO>> getCustomerByDocumentNumber(@PathVariable String documentNumber);
 
-    public ResponseEntity<Response<CustomerDTO>> partialUpdateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable Integer id);
+    ResponseEntity<Response<CustomerDTO>> partialUpdateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable Integer id);
 
-    public ResponseEntity<Response<CustomerDTO>> deleteCustomer(@PathVariable Integer id);
+    ResponseEntity<Response<CustomerDTO>> deleteCustomer(@PathVariable Integer id);
 }

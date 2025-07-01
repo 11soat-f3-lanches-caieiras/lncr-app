@@ -6,7 +6,7 @@ import org.springframework.context.event.EventListener;
 public interface NotificationListener {
 
     @EventListener
-    public void handleNotification(Notification notification);
+    void handleNotification(Notification notification);
 
 
 }

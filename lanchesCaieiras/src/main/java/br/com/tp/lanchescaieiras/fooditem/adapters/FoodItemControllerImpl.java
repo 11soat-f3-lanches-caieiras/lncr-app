@@ -20,13 +20,8 @@ public class FoodItemControllerImpl implements FoodItemController {
     @Override
     public ResponseEntity<Response<FoodItemDTO>> create(FoodItemDTO foodItemDTO, FoodItemDatabase foodItemDatabase, FoodItemConfig foodItemConfig, FoodItemMapper foodItemMapper) {
         FoodItemGatewayImpl foodItemGateway = new FoodItemGatewayImpl(foodItemDatabase, foodItemMapper);
-
         CreateFoodItemUseCase createFoodItemUseCase = new CreateFoodItemUseCase();
         foodItemDTO = createFoodItemUseCase.execute(foodItemDTO, foodItemGateway, foodItemConfig, foodItemMapper);
-
-
-
-
         return new FoodItemPresenter().created(foodItemDTO, foodItemConfig);
     }
 
@@ -34,8 +29,16 @@ public class FoodItemControllerImpl implements FoodItemController {
     public ResponseEntity<ResponseList<FoodItemDTO>> getAll(Integer _limit, String category, Boolean includeImages, FoodItemDataProxy foodItemDatabase, FoodItemConfig foodItemConfig, FoodItemMapper foodItemMapper) {
         FoodItemGatewayImpl foodItemGateway = new FoodItemGatewayImpl(foodItemDatabase, foodItemMapper);
         List<FoodItemDTO> foodItemListDTO = new GetFoodItemUseCase().getAll(_limit, category, includeImages, foodItemGateway, foodItemMapper);
-
-
         return new FoodItemPresenter().getAll(foodItemListDTO, foodItemConfig);
     }
+
+    @Override
+    public ResponseEntity<Response<FoodItemDTO>> getById(Integer foodItemId, Boolean includeImages, FoodItemDatabase foodItemDatabase, FoodItemConfig foodItemConfig, FoodItemMapper foodItemMapper) {
+        FoodItemGatewayImpl foodItemGateway = new FoodItemGatewayImpl(foodItemDatabase, foodItemMapper);
+        GetFoodItemUseCase getFoodItemUseCase = new GetFoodItemUseCase();
+        FoodItemDTO foodItemDTO =  getFoodItemUseCase.getById(foodItemId, includeImages,foodItemGateway,foodItemMapper);
+        return new FoodItemPresenter().getById(foodItemDTO,foodItemConfig);
+    }
+
+
 }

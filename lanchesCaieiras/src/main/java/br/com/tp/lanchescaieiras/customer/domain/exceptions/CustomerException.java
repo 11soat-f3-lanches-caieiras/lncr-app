@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras.customer.domain.exceptions;
 
 public class CustomerException extends RuntimeException {
-    private Integer code;
+    private final Integer code;
 
     public CustomerException(String message, Integer code) {
 

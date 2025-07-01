@@ -31,7 +31,7 @@ class NotificationListResponseTest {
         assertEquals(meta, response.get_response());
 
         Notification n = new Notification(new Object(), 3, "ERROR", 30, "msg3");
-        response.setNotifications(Arrays.asList(n));
+        response.setNotifications(List.of(n));
         assertEquals(1, response.getNotifications().size());
         assertEquals(n, response.getNotifications().get(0));
     }

@@ -1,14 +1,12 @@
 package br.com.tp.lanchescaieiras.fooditem.application;
 
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
-import br.com.tp.lanchescaieiras.commons.enums.FoodItemCategory;
 import br.com.tp.lanchescaieiras.fooditem.adapters.FoodItemGatewayImpl;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemMapper;
 
 import java.util.List;
-import java.util.Optional;
 
 public class GetFoodItemUseCase {
     public List<FoodItemDTO> getAll(Integer _limit, String category, Boolean includeImages,
@@ -26,5 +24,13 @@ public class GetFoodItemUseCase {
         return foodItemList.stream()
                 .map(foodItemMapper::domainToDto)
                 .toList();
+    }
+
+    public FoodItemDTO getById(Integer foodItemId, Boolean includeImages, FoodItemGatewayImpl foodItemGateway, FoodItemMapper foodItemMapper) {
+        FoodItem foodItem = foodItemGateway.getFoodItemById(foodItemId,includeImages);
+        if (foodItem == null){
+            throw new FoodItemException("Item de Alimentação não encontrado com id: "+ foodItemId,404);
+        }
+        return foodItemMapper.domainToDto(foodItem);
     }
 }

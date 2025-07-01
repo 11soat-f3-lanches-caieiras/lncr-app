@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras.kitchenorder.infraestructure.exceptions;
 
 public class KitchenOrderException extends RuntimeException {
-    private Integer code;
+    private final Integer code;
 
     public KitchenOrderException(String message, Integer code) {
 

@@ -11,13 +11,13 @@ import java.util.Optional;
 
 public interface CustomerController {
 
-    public ResponseEntity<Response<CustomerDTO>> create(CustomerDTO customerDto, CustomerDatabase customerDatabase, CustomerConfig config);
+    ResponseEntity<Response<CustomerDTO>> create(CustomerDTO customerDto, CustomerDatabase customerDatabase, CustomerConfig config);
 
-    public ResponseEntity<ResponseList<CustomerDTO>> getAll(Optional<Integer> _limit, CustomerDatabase customerDatabase);
+    ResponseEntity<ResponseList<CustomerDTO>> getAll(Optional<Integer> _limit, CustomerDatabase customerDatabase);
 
-    public ResponseEntity<Response<CustomerDTO>> getById(Integer id, CustomerDatabase customerDatabase);
+    ResponseEntity<Response<CustomerDTO>> getById(Integer id, CustomerDatabase customerDatabase);
 
-    public ResponseEntity<Response<CustomerDTO>> getByDocumentNumber(String documentNumber, CustomerDatabase customerDatabase);
-    public ResponseEntity<Response<CustomerDTO>> partialUpdateById(Integer id, CustomerDTO CustomerDTO,CustomerDatabase customerDatabase);
-    public ResponseEntity<Response<CustomerDTO>> delete(Integer id, CustomerDatabase customerDatabase);
+    ResponseEntity<Response<CustomerDTO>> getByDocumentNumber(String documentNumber, CustomerDatabase customerDatabase);
+    ResponseEntity<Response<CustomerDTO>> partialUpdateById(Integer id, CustomerDTO CustomerDTO, CustomerDatabase customerDatabase);
+    ResponseEntity<Response<CustomerDTO>> delete(Integer id, CustomerDatabase customerDatabase);
 }

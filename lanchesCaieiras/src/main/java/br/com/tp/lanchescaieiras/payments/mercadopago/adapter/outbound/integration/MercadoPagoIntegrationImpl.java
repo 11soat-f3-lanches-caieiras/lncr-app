@@ -88,7 +88,7 @@ public class MercadoPagoIntegrationImpl implements MercadoPagoIntegration {
     }
 
     private String createQrCodeRequestBody(Payment payment) {
-        return new String("{\n" +
+        return "{\n" +
                 "    \"external_reference\": \"" + payment.getId() + "\",\n" +
                 "    \"title\": \"Pedido id " + payment.getOrderId() + "\",\n" +
                 "    \"description\": \"Novo Pedido Lanches Caieiras\",\n" +
@@ -103,7 +103,7 @@ public class MercadoPagoIntegrationImpl implements MercadoPagoIntegration {
                 "            \"total_amount\": " + payment.getAmount() + "\n" +
                 "        }\n" +
                 "    ]\n" +
-                "}");
+                "}";
     }
 
     private Payment parseResponseToPayment(String response, Payment payment) {

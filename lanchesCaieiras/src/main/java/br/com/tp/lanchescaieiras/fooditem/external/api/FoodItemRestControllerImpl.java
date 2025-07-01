@@ -52,12 +52,12 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
         return this.foodItemController.getAll(_limit, category, includeImages, foodItemDatabase, this.foodItemConfig, this.foodItemMapper);
     }
 
-    @Override
     @GetMapping("/{id}")
-    public ResponseEntity<Response<FoodItemDTO>> getFoodItemById(@PathVariable("id") Integer foodItemId) {
-        return null;
-        /*Optional<FoodItem> foodItem = this.foodItemServices.getFoodItem(id);
-        return new ResponseEntity<>(new FoodItemResponse(foodItem.get()), HttpStatus.OK);*/
+    @Override
+    public ResponseEntity<Response<FoodItemDTO>> getFoodItemById(@PathVariable(name = "id") Integer foodItemId,
+                                                                 @RequestParam(name = "includeImages", required = false) Boolean includeImages) {
+        FoodItemDataProxy foodItemDatabase = new FoodItemDataProxy(this.jpaFoodItemDatabase, this.jpaFoodItemImageDatabase, this.foodItemImageStorage);
+        return this.foodItemController.getById(foodItemId,includeImages, foodItemDatabase, this.foodItemConfig, this.foodItemMapper);
     }
 
     @Override

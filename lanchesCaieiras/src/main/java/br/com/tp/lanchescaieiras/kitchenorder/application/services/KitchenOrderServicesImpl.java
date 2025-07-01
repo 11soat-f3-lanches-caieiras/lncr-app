@@ -50,7 +50,7 @@ public class KitchenOrderServicesImpl implements KitchenOrderUseCases {
         }
 
         log.info("Criando novo pedido de preparo {}", kitchenOrder);
-        if (kitchenOrder.getStatus() == null || kitchenOrder.getStatus().toUpperCase() != "RECEIVED") {
+        if (kitchenOrder.getStatus() == null || !kitchenOrder.getStatus().equalsIgnoreCase("RECEIVED")) {
             log.info("Definindo Status do pedido para Received");
             kitchenOrder.setStatus(KitchenOrderStatus.RECEIVED.getDescription());
         }
@@ -122,7 +122,7 @@ public class KitchenOrderServicesImpl implements KitchenOrderUseCases {
         kitchenOrder.setStatus(KitchenOrderStatus.fromDescription(newStatus).getDescription());
         kitchenOrder = jpaKitchenOrderRepositoryImpl.save(kitchenOrder);
 
-        if (updateCustomerOrder && !kitchenOrder.getStatus().toUpperCase().equals("FINISHED")) {
+        if (updateCustomerOrder && !kitchenOrder.getStatus().equalsIgnoreCase("FINISHED")) {
             log.info("Atualizando Pedido do cliente id: {} para {}", kitchenOrder.getCustomerOrderId(), newStatus);
             customerOrderIntegration.updateCustomerOrderStatus(kitchenOrder.getCustomerOrderId(), newStatus);
         }
