@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.customer.domain.entities;
+package br.com.tp.lanchescaieiras.customer.domain;
 
 public interface DocumentNumber {
     String getValue();

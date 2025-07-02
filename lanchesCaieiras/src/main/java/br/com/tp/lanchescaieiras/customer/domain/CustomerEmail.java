@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.customer.domain.entities;
+package br.com.tp.lanchescaieiras.customer.domain;
 
 public class CustomerEmail {
     private final String value;

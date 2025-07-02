@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.fooditem.mappers;
+package br.com.tp.lanchescaieiras.fooditem.adapters;
 
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
 import br.com.tp.lanchescaieiras.commons.enums.FoodItemCategory;

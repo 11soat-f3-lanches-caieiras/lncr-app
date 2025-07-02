@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras.commons.interfaces;
+package br.com.tp.lanchescaieiras.commons.interfaces.customer;
 
 import br.com.tp.lanchescaieiras.commons.dtos.CustomerDTO;
 

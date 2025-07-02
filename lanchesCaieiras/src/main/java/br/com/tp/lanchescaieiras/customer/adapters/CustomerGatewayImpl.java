@@ -1,9 +1,9 @@
 package br.com.tp.lanchescaieiras.customer.adapters;
 
 import br.com.tp.lanchescaieiras.commons.dtos.CustomerDTO;
-import br.com.tp.lanchescaieiras.commons.interfaces.CustomerGateway;
-import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
-import br.com.tp.lanchescaieiras.commons.interfaces.CustomerDatabase;
+import br.com.tp.lanchescaieiras.commons.interfaces.customer.CustomerGateway;
+import br.com.tp.lanchescaieiras.customer.domain.Customer;
+import br.com.tp.lanchescaieiras.commons.interfaces.customer.CustomerDatabase;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,5 +1,6 @@
 package br.com.tp.lanchescaieiras.fooditem.external.config;
 
+import br.com.tp.lanchescaieiras.fooditem.adapters.FoodItemImageControllerImpl;
 import br.com.tp.lanchescaieiras.fooditem.external.datasources.postgres.JpaFoodItemImagePostgresDatabaseImpl;
 import br.com.tp.lanchescaieiras.fooditem.external.datasources.postgres.JpaFoodItemImagePostgresRepository;
 import br.com.tp.lanchescaieiras.fooditem.external.datasources.postgres.JpaFoodItemPostgresDatabaseImpl;
@@ -14,7 +15,7 @@ import org.springframework.context.annotation.Bean;
 import java.util.Map;
 
 import br.com.tp.lanchescaieiras.fooditem.adapters.FoodItemControllerImpl;
-import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemMapper;
+import br.com.tp.lanchescaieiras.fooditem.adapters.FoodItemMapper;
 
 @Component
 @ConfigurationProperties(prefix = "lncr.food-item")
@@ -97,6 +98,9 @@ public class FoodItemConfig {
     }
 
     @Bean
+    public FoodItemImageControllerImpl foodItemImageController(){return new FoodItemImageControllerImpl();}
+
+    @Bean
     public FoodItemMapper foodItemMapper() {return new FoodItemMapper();}
 
     @Bean
@@ -120,6 +124,8 @@ public class FoodItemConfig {
             JpaFoodItemPostgresMapper foodItemMapper){
         return new JpaFoodItemImagePostgresDatabaseImpl(jpaFoodItemImagePostgresRepository, foodItemImageStorage, foodItemMapper);
     }
+
+
 
     @Bean
     public FoodItemImageStorageImpl foodItemImageStorageImpl(FoodItemConfig foodItemConfig) {

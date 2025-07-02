@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras.customer.external.datasources.postgres;
 
-import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
+import br.com.tp.lanchescaieiras.customer.domain.Customer;
 import jakarta.persistence.*;
 
 

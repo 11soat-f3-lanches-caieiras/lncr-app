@@ -1,9 +1,9 @@
-package br.com.tp.lanchescaieiras.customer.application.usecases;
+package br.com.tp.lanchescaieiras.customer.application;
 
 import br.com.tp.lanchescaieiras.commons.dtos.CustomerDTO;
-import br.com.tp.lanchescaieiras.commons.interfaces.CustomerGateway;
+import br.com.tp.lanchescaieiras.commons.interfaces.customer.CustomerGateway;
 import br.com.tp.lanchescaieiras.customer.adapters.CustomerMapper;
-import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
+import br.com.tp.lanchescaieiras.customer.domain.Customer;
 import br.com.tp.lanchescaieiras.customer.domain.exceptions.CustomerException;
 
 import java.lang.reflect.Field;

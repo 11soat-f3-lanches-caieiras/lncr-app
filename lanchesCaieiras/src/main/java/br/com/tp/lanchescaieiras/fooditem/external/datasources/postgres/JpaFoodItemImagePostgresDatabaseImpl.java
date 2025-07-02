@@ -1,9 +1,6 @@
 package br.com.tp.lanchescaieiras.fooditem.external.datasources.postgres;
 
-import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemImageDTO;
-import br.com.tp.lanchescaieiras.commons.interfaces.FoodItemDatabase;
-import br.com.tp.lanchescaieiras.fooditem.external.config.FoodItemConfig;
 import br.com.tp.lanchescaieiras.fooditem.external.storage.FoodItemImageStorageImpl;
 import org.springframework.stereotype.Repository;
 
@@ -38,10 +35,6 @@ public class JpaFoodItemImagePostgresDatabaseImpl {
 
     public void deleteByFoodItemId(List<FoodItemImageDTO> foodItemImageDTOList) {
         this.jpaFoodItemImagePostgresRepository.deleteAll(this.foodItemMapper.toJpaFoodItemImageEntityList(foodItemImageDTOList));
-    }
-
-    public Integer getCountImagesByFoodItemId(Integer foodItemId) {
-        return this.jpaFoodItemImagePostgresRepository.getCountImagesByFoodItemId(foodItemId);
     }
 
     public void save(FoodItemImageDTO foodItemImageDTO) {

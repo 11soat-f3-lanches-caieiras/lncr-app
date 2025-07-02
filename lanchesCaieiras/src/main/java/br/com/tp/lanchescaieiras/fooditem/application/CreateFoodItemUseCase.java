@@ -1,15 +1,12 @@
 package br.com.tp.lanchescaieiras.fooditem.application;
 
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
-import br.com.tp.lanchescaieiras.commons.dtos.FoodItemImageDTO;
-import br.com.tp.lanchescaieiras.commons.interfaces.FoodItemDatabase;
-import br.com.tp.lanchescaieiras.commons.interfaces.FoodItemGateway;
-import br.com.tp.lanchescaieiras.fooditem.adapters.FoodItemPresenter;
+import br.com.tp.lanchescaieiras.commons.interfaces.foodItem.FoodItemGateway;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
 import br.com.tp.lanchescaieiras.fooditem.domain.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras.fooditem.external.config.FoodItemConfig;
-import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemMapper;
+import br.com.tp.lanchescaieiras.fooditem.adapters.FoodItemMapper;
 
 import java.util.List;
 

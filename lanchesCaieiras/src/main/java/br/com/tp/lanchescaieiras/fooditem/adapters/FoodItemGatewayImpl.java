@@ -3,11 +3,10 @@ package br.com.tp.lanchescaieiras.fooditem.adapters;
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemImageDTO;
 import br.com.tp.lanchescaieiras.commons.enums.FoodItemCategory;
-import br.com.tp.lanchescaieiras.commons.interfaces.FoodItemDatabase;
-import br.com.tp.lanchescaieiras.commons.interfaces.FoodItemGateway;
+import br.com.tp.lanchescaieiras.commons.interfaces.foodItem.FoodItemDatabase;
+import br.com.tp.lanchescaieiras.commons.interfaces.foodItem.FoodItemGateway;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
-import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemMapper;
 
 import java.util.List;
 
@@ -64,9 +63,12 @@ public class FoodItemGatewayImpl implements FoodItemGateway {
     public FoodItem getFoodItemById(Integer foodItemId) {
         return getFoodItemById(foodItemId,false);
     }
+
     @Override
-    public FoodItemDTO saveFoodItem(FoodItem foodItem) {
-        return this.foodItemDatabase.save(foodItemMapper.domainToDto(foodItem));
+    public FoodItem saveFoodItem(FoodItem foodItem) {
+        FoodItemDTO foodItemDTO = this.foodItemMapper.domainToDto(foodItem);
+        foodItemDTO = this.foodItemDatabase.save(foodItemDTO);
+        return this.foodItemMapper.dtoToDomain(foodItemDTO);
     }
 
     @Override
@@ -75,8 +77,10 @@ public class FoodItemGatewayImpl implements FoodItemGateway {
     }
 
     @Override
-    public Integer getCountImagesByFoodItemId(Integer foodItemId) {
-        return foodItemDatabase.getCountImagesByFoodItemId(foodItemId);
+    public List<FoodItemImage> findAllFoodItemImagesByFoodItemId(Integer foodItemId, Boolean includeData) {
+
+        List<FoodItemImageDTO> foodItemImageDTOList = this.foodItemDatabase.findAllFoodItemImagesByFoodItemId(foodItemId,includeData);
+        return foodItemMapper.imageDtoListToDomainList(foodItemImageDTOList);
     }
 
     @Override

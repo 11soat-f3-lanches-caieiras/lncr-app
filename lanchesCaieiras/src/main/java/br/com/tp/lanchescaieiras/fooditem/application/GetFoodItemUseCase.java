@@ -1,10 +1,13 @@
 package br.com.tp.lanchescaieiras.fooditem.application;
 
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
+import br.com.tp.lanchescaieiras.commons.dtos.FoodItemImageDTO;
 import br.com.tp.lanchescaieiras.fooditem.adapters.FoodItemGatewayImpl;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
+import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
 import br.com.tp.lanchescaieiras.fooditem.domain.exceptions.FoodItemException;
-import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemMapper;
+import br.com.tp.lanchescaieiras.fooditem.adapters.FoodItemMapper;
+import br.com.tp.lanchescaieiras.fooditem.external.config.FoodItemConfig;
 
 import java.util.List;
 
@@ -32,5 +35,14 @@ public class GetFoodItemUseCase {
             throw new FoodItemException("Item de Alimentação não encontrado com id: "+ foodItemId,404);
         }
         return foodItemMapper.domainToDto(foodItem);
+    }
+
+    public List<FoodItemImageDTO> getAllImages(Integer foodItemId, Boolean includeData, FoodItemGatewayImpl foodItemGateway, FoodItemMapper foodItemMapper) {
+        List<FoodItemImage> foodItemList = foodItemGateway.findAllFoodItemImagesByFoodItemId(foodItemId,includeData);
+        if (foodItemList.isEmpty()){
+            throw new FoodItemException("Não encontrada imagens para o item de alimentação com id: "+ foodItemId,404);
+        }
+        return foodItemMapper.imageDomainListToDtoList(foodItemList);
+
     }
 }

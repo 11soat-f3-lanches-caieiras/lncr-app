@@ -1,6 +1,7 @@
 package br.com.tp.lanchescaieiras.fooditem.adapters;
 
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
+import br.com.tp.lanchescaieiras.commons.dtos.FoodItemImageDTO;
 import br.com.tp.lanchescaieiras.fooditem.external.config.FoodItemConfig;
 
 import java.util.List;
@@ -48,5 +49,6 @@ public class FoodItemPresenter {
         }
         return foodItemDTO;
     }
+
 
 }

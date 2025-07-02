@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras.fooditem.external;
 
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemImageDTO;
-import br.com.tp.lanchescaieiras.commons.interfaces.FoodItemDatabase;
+import br.com.tp.lanchescaieiras.commons.interfaces.foodItem.FoodItemDatabase;
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
 import br.com.tp.lanchescaieiras.fooditem.external.datasources.postgres.JpaFoodItemPostgresDatabaseImpl;
 import br.com.tp.lanchescaieiras.fooditem.external.datasources.postgres.JpaFoodItemImagePostgresDatabaseImpl;
@@ -9,7 +9,6 @@ import br.com.tp.lanchescaieiras.fooditem.external.storage.FoodItemImageStorageI
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FoodItemDataProxy implements FoodItemDatabase {
@@ -115,8 +114,19 @@ public class FoodItemDataProxy implements FoodItemDatabase {
     }
 
     @Override
-    public Integer getCountImagesByFoodItemId(Integer foodItemId) {
-        return this.jpaFoodItemImageDatabase.getCountImagesByFoodItemId(foodItemId);
+    public List<FoodItemImageDTO> findAllFoodItemImagesByFoodItemId(Integer foodItemId, Boolean includeData) {
+        List<FoodItemImageDTO> foodItemImageDTOList = this.jpaFoodItemImageDatabase.findAllByFoodItemId(foodItemId);
+        //Validar se includeData não é false e se lista de imagens não é vazia
+        if (includeData != false && !foodItemImageDTOList.isEmpty()) {
+            for (FoodItemImageDTO image : foodItemImageDTOList) {
+                try {
+                    image.set_data(this.foodItemImageStorage.getImgaeData(image.getFileName()));
+                }catch (Exception e){
+                    log.error("Erro ao buscar arquivo " + image.getFileName() + " no sistema de arquivos");
+                }
+            }
+        }
+            return foodItemImageDTOList;
     }
 
     @Override
@@ -127,6 +137,12 @@ public class FoodItemDataProxy implements FoodItemDatabase {
 
     @Override
     public FoodItemImageDTO getFoodItemImageById(Integer foodItemImageId) {
-        return this.jpaFoodItemImageDatabase.findById(foodItemImageId);
+        FoodItemImageDTO foodItemImageDTO =  this.jpaFoodItemImageDatabase.findById(foodItemImageId);
+        try {
+            foodItemImageDTO.set_data(this.foodItemImageStorage.getImgaeData(foodItemImageDTO.getFileName()));
+        }catch (Exception e){
+            return foodItemImageDTO;
+        }
+        return foodItemImageDTO;
     }
 }

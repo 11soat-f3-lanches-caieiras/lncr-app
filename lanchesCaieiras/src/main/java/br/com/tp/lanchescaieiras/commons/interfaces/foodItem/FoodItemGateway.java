@@ -1,9 +1,8 @@
-package br.com.tp.lanchescaieiras.commons.interfaces;
+package br.com.tp.lanchescaieiras.commons.interfaces.foodItem;
 
-import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 import br.com.tp.lanchescaieiras.fooditem.domain.FoodItemImage;
-import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemMapper;
+import br.com.tp.lanchescaieiras.fooditem.adapters.FoodItemMapper;
 
 import java.util.List;
 
@@ -24,11 +23,11 @@ public interface FoodItemGateway {
 
     FoodItem getFoodItemById(Integer foodItemId);
 
-    FoodItemDTO saveFoodItem(FoodItem foodItem);
+    FoodItem saveFoodItem(FoodItem foodItem);
 
     void delete(FoodItem foodItem);
 
-    Integer getCountImagesByFoodItemId(Integer foodItemId);
+    List<FoodItemImage> findAllFoodItemImagesByFoodItemId(Integer foodItemId, Boolean includeData);
 
     FoodItemImage getFoodItemImageById(Integer foodItemImageId);
 }

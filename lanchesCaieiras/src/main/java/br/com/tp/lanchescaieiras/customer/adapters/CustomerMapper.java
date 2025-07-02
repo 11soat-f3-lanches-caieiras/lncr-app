@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras.customer.adapters;
 
 import br.com.tp.lanchescaieiras.commons.dtos.CustomerDTO;
-import br.com.tp.lanchescaieiras.customer.domain.entities.Customer;
+import br.com.tp.lanchescaieiras.customer.domain.Customer;
 
 public class CustomerMapper {
 

@@ -1,13 +1,11 @@
-package br.com.tp.lanchescaieiras.commons.interfaces;
+package br.com.tp.lanchescaieiras.commons.interfaces.foodItem;
 
 import br.com.tp.lanchescaieiras.commons.domain.Response;
 import br.com.tp.lanchescaieiras.commons.domain.ResponseList;
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemImageDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 public interface FoodItemRestController {
 
@@ -25,17 +23,9 @@ public interface FoodItemRestController {
 
     ResponseEntity<Response<FoodItemDTO>> deleteFoodItemById(@PathVariable Integer id);
 
-    ResponseEntity<Response<FoodItemImageDTO>> createFoodItemImage(@RequestBody FoodItemImageDTO foodItemImageDTO);
+    ResponseEntity<Response<FoodItemImageDTO>> createFoodItemImage(@PathVariable("foodItemId") Integer foodItemId, @RequestBody FoodItemImageDTO foodItemImageDTO);
 
-    ResponseEntity<Response<FoodItemImageDTO>> getFoodItemImageById(@PathVariable Integer foodItemImageId);
+    ResponseEntity<ResponseList<FoodItemImageDTO>> getFoodItemImagesByFoodItemId(@PathVariable Integer foodItemId, @RequestParam(name="includeData",required = false, defaultValue = "false") Boolean includeData);
 
-    ResponseEntity<ResponseList<FoodItemImageDTO>> getFoodItemImageByFoodItemId(@PathVariable Integer foodItemId);
-
-    ResponseEntity<Response<FoodItemImageDTO>> updateFoodItemImageById(@PathVariable Integer foodItemImageId, @RequestBody FoodItemImageDTO foodItemImageDTO);
-
-    ResponseEntity<Response<FoodItemImageDTO>> deleteFoodItemImageById(@PathVariable Integer foodItemImageId, @RequestBody FoodItemImageDTO foodItemImageDTO);
-
-    ResponseEntity<Response<FoodItemImageDTO>> deleteFoodItemImageByFoodItemId(@PathVariable Integer foodItemId, @RequestBody FoodItemImageDTO foodItemImageDTO);
-
-
+    ResponseEntity<Response<FoodItemImageDTO>> deleteFoodItemImageByFoodItemId(@RequestParam("foodItemId") Integer foodItemId, FoodItemImageDTO foodItemImageDTO);
 }

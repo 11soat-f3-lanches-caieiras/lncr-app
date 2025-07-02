@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras.customer.external.datasources.postgres;
 
 import br.com.tp.lanchescaieiras.commons.dtos.CustomerDTO;
-import br.com.tp.lanchescaieiras.commons.interfaces.CustomerDatabase;
+import br.com.tp.lanchescaieiras.commons.interfaces.customer.CustomerDatabase;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 

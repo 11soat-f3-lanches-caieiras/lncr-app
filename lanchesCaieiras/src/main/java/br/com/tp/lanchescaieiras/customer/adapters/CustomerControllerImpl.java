@@ -1,15 +1,11 @@
 package br.com.tp.lanchescaieiras.customer.adapters;
 
-import br.com.tp.lanchescaieiras.commons.domain.Response;
-import br.com.tp.lanchescaieiras.commons.domain.ResponseList;
-import br.com.tp.lanchescaieiras.customer.application.usecases.DeleteCustomerUseCase;
-import br.com.tp.lanchescaieiras.customer.application.usecases.GetCustomerUseCase;
-import br.com.tp.lanchescaieiras.customer.application.usecases.PartialUpdateCustomerUseCase;
-import br.com.tp.lanchescaieiras.customer.external.config.CustomerConfig;
-import br.com.tp.lanchescaieiras.customer.application.usecases.CreateCustomerUseCase;
+import br.com.tp.lanchescaieiras.customer.application.DeleteCustomerUseCase;
+import br.com.tp.lanchescaieiras.customer.application.GetCustomerUseCase;
+import br.com.tp.lanchescaieiras.customer.application.PartialUpdateCustomerUseCase;
+import br.com.tp.lanchescaieiras.customer.application.CreateCustomerUseCase;
 import br.com.tp.lanchescaieiras.commons.dtos.CustomerDTO;
-import br.com.tp.lanchescaieiras.commons.interfaces.CustomerDatabase;
-import org.springframework.http.ResponseEntity;
+import br.com.tp.lanchescaieiras.commons.interfaces.customer.CustomerDatabase;
 
 import java.util.List;
 import java.util.Optional;
