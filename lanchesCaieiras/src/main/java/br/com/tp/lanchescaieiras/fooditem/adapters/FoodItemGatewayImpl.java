@@ -68,4 +68,23 @@ public class FoodItemGatewayImpl implements FoodItemGateway {
     public FoodItemDTO saveFoodItem(FoodItem foodItem) {
         return this.foodItemDatabase.save(foodItemMapper.domainToDto(foodItem));
     }
+
+    @Override
+    public void delete(FoodItem foodItem) {
+        this.foodItemDatabase.delete(this.foodItemMapper.domainToDto(foodItem));
+    }
+
+    @Override
+    public Integer getCountImagesByFoodItemId(Integer foodItemId) {
+        return foodItemDatabase.getCountImagesByFoodItemId(foodItemId);
+    }
+
+    @Override
+    public FoodItemImage getFoodItemImageById(Integer foodItemImageId) {
+        return foodItemMapper.imageDtoToDomain(foodItemDatabase.getFoodItemImageById(foodItemImageId));
+    }
+
+    public void create(FoodItemImage foodItemImage) {
+        this.foodItemDatabase.create(this.foodItemMapper.imageDomainToDto(foodItemImage));
+    }
 }

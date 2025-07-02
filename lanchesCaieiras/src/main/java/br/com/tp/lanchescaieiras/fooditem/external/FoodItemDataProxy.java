@@ -6,10 +6,15 @@ import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
 import br.com.tp.lanchescaieiras.fooditem.external.datasources.postgres.JpaFoodItemPostgresDatabaseImpl;
 import br.com.tp.lanchescaieiras.fooditem.external.datasources.postgres.JpaFoodItemImagePostgresDatabaseImpl;
 import br.com.tp.lanchescaieiras.fooditem.external.storage.FoodItemImageStorageImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FoodItemDataProxy implements FoodItemDatabase {
+
+    private static final Logger log = LoggerFactory.getLogger(FoodItemDataProxy.class);
 
     private final JpaFoodItemPostgresDatabaseImpl jpaFoodItemDatabase;
     private final JpaFoodItemImagePostgresDatabaseImpl jpaFoodItemImageDatabase;
@@ -40,7 +45,8 @@ public class FoodItemDataProxy implements FoodItemDatabase {
         if (savedFoodItemDTO.getImages() != null && !savedFoodItemDTO.getImages().isEmpty()) {
             for (int i = 0; i < savedFoodItemDTO.getImages().size(); i++) {
                 savedFoodItemDTO.getImages().get(i).setFoodItemId(savedFoodItemDTO.getId());
-                String imageId = String.valueOf(savedFoodItemDTO.getId()) + i;
+                int imageIndex = i+1;
+                String imageId = String.valueOf(savedFoodItemDTO.getId()) + imageIndex;
                 savedFoodItemDTO.getImages().get(i).setId(Integer.parseInt(imageId));
                 savedFoodItemDTO.getImages().get(i).setFileName(imageId + "." + savedFoodItemDTO.getImages().get(i).getFileExtension());
             }
@@ -97,5 +103,30 @@ public class FoodItemDataProxy implements FoodItemDatabase {
             return foodItemDTO;
         }
         return foodItemDTO;
+    }
+
+    @Override
+    public void delete(FoodItemDTO foodItemDTO) {
+        this.jpaFoodItemDatabase.deleteById(foodItemDTO.getId());
+        if (!foodItemDTO.getImages().isEmpty()) {
+            this.jpaFoodItemImageDatabase.deleteByFoodItemId(foodItemDTO.getImages());
+            this.foodItemImageStorage.deleteImagesFiles(foodItemDTO.getImages());
+        }
+    }
+
+    @Override
+    public Integer getCountImagesByFoodItemId(Integer foodItemId) {
+        return this.jpaFoodItemImageDatabase.getCountImagesByFoodItemId(foodItemId);
+    }
+
+    @Override
+    public void create(FoodItemImageDTO foodItemImageDTO) {
+        this.jpaFoodItemImageDatabase.save(foodItemImageDTO);
+        this.foodItemImageStorage.saveImageFile(foodItemImageDTO);
+    }
+
+    @Override
+    public FoodItemImageDTO getFoodItemImageById(Integer foodItemImageId) {
+        return this.jpaFoodItemImageDatabase.findById(foodItemImageId);
     }
 }

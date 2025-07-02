@@ -53,6 +53,10 @@ public class JpaFoodItemPostgresDatabaseImpl {
                         .orElse(null));
     }
 
+    public void deleteById(Integer foodItemId) {
+        this.jpaFoodItemPostgresReposity.deleteById(foodItemId);
+    }
+
    /* @Override
     public List<FoodItemDTO> findAll(Integer _limit) {
         *//*return jpaFoodItemPostgresReposity.findAll(Pageable.ofSize(_limit)).stream()

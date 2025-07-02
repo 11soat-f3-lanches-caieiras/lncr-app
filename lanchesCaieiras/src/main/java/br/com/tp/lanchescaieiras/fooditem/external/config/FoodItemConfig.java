@@ -117,9 +117,8 @@ public class FoodItemConfig {
     public JpaFoodItemImagePostgresDatabaseImpl jpaFoodItemImagePostgresDatabaseImpl(
             JpaFoodItemImagePostgresRepository jpaFoodItemImagePostgresRepository,
             FoodItemImageStorageImpl foodItemImageStorage,
-            JpaFoodItemPostgresMapper foodItemMapper,
-            FoodItemConfig foodItemConfig) {
-        return new JpaFoodItemImagePostgresDatabaseImpl(jpaFoodItemImagePostgresRepository, foodItemImageStorage, foodItemMapper, foodItemConfig);
+            JpaFoodItemPostgresMapper foodItemMapper){
+        return new JpaFoodItemImagePostgresDatabaseImpl(jpaFoodItemImagePostgresRepository, foodItemImageStorage, foodItemMapper);
     }
 
     @Bean

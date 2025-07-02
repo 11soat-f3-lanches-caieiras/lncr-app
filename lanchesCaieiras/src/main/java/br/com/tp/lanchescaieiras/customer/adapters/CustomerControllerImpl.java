@@ -20,75 +20,53 @@ public class CustomerControllerImpl implements CustomerController {
     }
 
     @Override
-    public ResponseEntity<Response<CustomerDTO>> create(CustomerDTO customerDto, CustomerDatabase customerDatabase, CustomerConfig customerConfig) {
+    public CustomerDTO create(CustomerDTO customerDto, CustomerDatabase customerDatabase) {
         CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
 
         CreateCustomerUseCase createCustomerUseCase = new CreateCustomerUseCase();
         CustomerMapper customerMapper = new CustomerMapper();
         customerDto = createCustomerUseCase.execute(customerDto, customerGateway, customerMapper);
-
-        CustomerPresenter customerPresenter = new CustomerPresenter();
-        return customerPresenter.created(customerDto, customerConfig);
+        return customerDto;
 
     }
 
     @Override
-    public ResponseEntity<ResponseList<CustomerDTO>> getAll(Optional<Integer> _limit, CustomerDatabase customerDatabase) {
+    public List<CustomerDTO> getAll(Optional<Integer> _limit, CustomerDatabase customerDatabase) {
         CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
-
-        GetCustomerUseCase getCustomerUseCase = new GetCustomerUseCase();
         CustomerMapper customerMapper = new CustomerMapper();
-        List<CustomerDTO> customerDTOList = getCustomerUseCase.getAll(_limit, customerGateway, customerMapper);
-
-        CustomerPresenter customerPresenter = new CustomerPresenter();
-        return customerPresenter.getAll(customerDTOList);
+        List<CustomerDTO> customerDTOList = new GetCustomerUseCase().getAll(_limit, customerGateway, customerMapper);
+        return customerDTOList;
     }
 
     @Override
-    public ResponseEntity<Response<CustomerDTO>> getById(Integer id, CustomerDatabase customerDatabase) {
+    public CustomerDTO getById(Integer id, CustomerDatabase customerDatabase) {
         CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
-
-        GetCustomerUseCase getCustomerUseCase = new GetCustomerUseCase();
         CustomerMapper customerMapper = new CustomerMapper();
-        CustomerDTO customerDTO = getCustomerUseCase.getById(id, customerGateway, customerMapper);
-
-        CustomerPresenter customerPresenter = new CustomerPresenter();
-        return customerPresenter.getById(customerDTO);
+        CustomerDTO customerDTO = new GetCustomerUseCase().getById(id, customerGateway, customerMapper);
+        return customerDTO;
     }
 
     @Override
-    public ResponseEntity<Response<CustomerDTO>> getByDocumentNumber(String documentNumber, CustomerDatabase customerDatabase) {
+    public CustomerDTO getByDocumentNumber(String documentNumber, CustomerDatabase customerDatabase) {
         CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
-
-        GetCustomerUseCase getCustomerUseCase = new GetCustomerUseCase();
         CustomerMapper customerMapper = new CustomerMapper();
-        CustomerDTO customerDTO = getCustomerUseCase.getByDocumentNumber(documentNumber, customerGateway, customerMapper);
-
-        CustomerPresenter customerPresenter = new CustomerPresenter();
-        return customerPresenter.getByDocumentNumber(customerDTO);
+        CustomerDTO customerDTO = new GetCustomerUseCase().getByDocumentNumber(documentNumber, customerGateway, customerMapper);
+        return customerDTO;
     }
 
     @Override
-    public ResponseEntity<Response<CustomerDTO>> partialUpdateById(Integer id, CustomerDTO customerDTO, CustomerDatabase customerDatabase) {
+    public CustomerDTO partialUpdateById(Integer id, CustomerDTO customerDTO, CustomerDatabase customerDatabase) {
         CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
-
-        PartialUpdateCustomerUseCase partialUpdateCustomerUseCase = new PartialUpdateCustomerUseCase();
         CustomerMapper customerMapper = new CustomerMapper();
-        CustomerDTO updatedCustomerDTO = partialUpdateCustomerUseCase.execute(id, customerDTO, customerGateway, customerMapper);
-
-        CustomerPresenter customerPresenter = new CustomerPresenter();
-        return customerPresenter.getById(updatedCustomerDTO);
+        customerDTO = new PartialUpdateCustomerUseCase().execute(id, customerDTO, customerGateway, customerMapper);
+        return customerDTO;
     }
 
     @Override
-    public ResponseEntity<Response<CustomerDTO>> delete(Integer id, CustomerDatabase customerDatabase) {
+    public void delete(Integer id, CustomerDatabase customerDatabase) {
         CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
-
+        CustomerMapper customerMapper = new CustomerMapper();
         DeleteCustomerUseCase deleteCustomerUseCase = new DeleteCustomerUseCase();
-        CustomerMapper customerMapper = new CustomerMapper();
         deleteCustomerUseCase.execute(id, customerGateway, customerMapper);
-
-        CustomerPresenter customerPresenter = new CustomerPresenter();
-        return customerPresenter.deleted();
     }
 }

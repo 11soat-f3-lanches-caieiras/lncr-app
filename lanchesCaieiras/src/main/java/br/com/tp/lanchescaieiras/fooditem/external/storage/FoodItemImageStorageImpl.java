@@ -42,6 +42,14 @@ public class FoodItemImageStorageImpl {
         }
     }
 
+    public void saveImageFile(FoodItemImageDTO foodItemImageDTO){
+        try {
+            saveImageFile(foodItemImageDTO.get_data(), foodItemImageDTO.getFileName());
+        } catch (IOException e) {
+            log.error("Erro ao salvar a imagem: " + foodItemImageDTO.getFileName(), e);
+        }
+    }
+
     public void saveImageFile(String _data, String fileName) throws IOException {
         byte[] fileData = Base64.getDecoder().decode(_data);
 

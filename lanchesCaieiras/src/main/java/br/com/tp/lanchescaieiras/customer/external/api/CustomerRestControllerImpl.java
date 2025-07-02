@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras.customer.external.api;
 
 import br.com.tp.lanchescaieiras.commons.domain.Response;
 import br.com.tp.lanchescaieiras.commons.domain.ResponseList;
+import br.com.tp.lanchescaieiras.commons.utils.ResponseEntityUtil;
 import br.com.tp.lanchescaieiras.customer.adapters.CustomerControllerImpl;
 import br.com.tp.lanchescaieiras.customer.external.config.CustomerConfig;
 import br.com.tp.lanchescaieiras.commons.dtos.CustomerDTO;
@@ -9,6 +10,7 @@ import br.com.tp.lanchescaieiras.customer.external.datasources.postgres.JpaCusto
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -31,37 +33,44 @@ public class CustomerRestControllerImpl implements CustomerRestController {
     @Override
     @PostMapping
     public ResponseEntity<Response<CustomerDTO>> createCustomer(@RequestBody CustomerDTO customerDto) {
-        return this.customerControllerImpl.create(customerDto, this.jpaCustomerPostgresReposityImpl, this.customerConfig);
+        customerDto = this.customerControllerImpl.create(customerDto, this.jpaCustomerPostgresReposityImpl);
+        return ResponseEntityUtil.created(customerDto, customerConfig.getLocationPrefix());
     }
 
     @Override
     @GetMapping
     public ResponseEntity<ResponseList<CustomerDTO>> getAllCustomers(@RequestParam("_limit") Optional<Integer> _limit) {
-        return this.customerControllerImpl.getAll(_limit, this.jpaCustomerPostgresReposityImpl);
+        List<CustomerDTO> listCustomerDTO = this.customerControllerImpl.getAll(_limit, this.jpaCustomerPostgresReposityImpl);
+        return ResponseEntityUtil.listOK(listCustomerDTO);
     }
 
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<Response<CustomerDTO>> getCustomerById(@PathVariable("id") Integer id) {
-        return this.customerControllerImpl.getById(id, this.jpaCustomerPostgresReposityImpl);
+        CustomerDTO customerDTO = this.customerControllerImpl.getById(id, this.jpaCustomerPostgresReposityImpl);
+        return  ResponseEntityUtil.OK(customerDTO);
     }
 
     @Override
     @GetMapping("/documentNumber/{documentNumber}")
     public ResponseEntity<Response<CustomerDTO>> getCustomerByDocumentNumber(@PathVariable("documentNumber") String documentNumber) {
-        return this.customerControllerImpl.getByDocumentNumber(documentNumber,this.jpaCustomerPostgresReposityImpl);
+        CustomerDTO customerDTO = this.customerControllerImpl.getByDocumentNumber(documentNumber,this.jpaCustomerPostgresReposityImpl);
+        return  ResponseEntityUtil.OK(customerDTO);
+
     }
 
 
     @Override
     @PatchMapping("/{id}")
     public ResponseEntity<Response<CustomerDTO>> partialUpdateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable Integer id) {
-        return this.customerControllerImpl.partialUpdateById(id, customerDTO, this.jpaCustomerPostgresReposityImpl);
+        customerDTO = this.customerControllerImpl.partialUpdateById(id, customerDTO, this.jpaCustomerPostgresReposityImpl);
+        return  ResponseEntityUtil.OK(customerDTO);
     }
 
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Response<CustomerDTO>> deleteCustomer(@PathVariable("id") Integer id) {
-        return this.customerControllerImpl.delete(id, this.jpaCustomerPostgresReposityImpl);
+        this.customerControllerImpl.delete(id, this.jpaCustomerPostgresReposityImpl);
+        return ResponseEntityUtil.OK(null);
     }
 }

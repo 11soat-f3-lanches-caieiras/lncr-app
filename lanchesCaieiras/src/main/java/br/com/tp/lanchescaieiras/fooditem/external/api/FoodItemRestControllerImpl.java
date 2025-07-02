@@ -5,6 +5,7 @@ import br.com.tp.lanchescaieiras.commons.domain.ResponseList;
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemImageDTO;
 import br.com.tp.lanchescaieiras.commons.interfaces.FoodItemRestController;
+import br.com.tp.lanchescaieiras.commons.utils.ResponseEntityUtil;
 import br.com.tp.lanchescaieiras.fooditem.adapters.FoodItemControllerImpl;
 import br.com.tp.lanchescaieiras.fooditem.external.FoodItemDataProxy;
 import br.com.tp.lanchescaieiras.fooditem.external.datasources.postgres.JpaFoodItemImagePostgresDatabaseImpl;
@@ -14,6 +15,8 @@ import br.com.tp.lanchescaieiras.fooditem.mappers.FoodItemMapper;
 import br.com.tp.lanchescaieiras.fooditem.external.config.FoodItemConfig;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/foodItems")
@@ -40,7 +43,8 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
     @PostMapping
     public ResponseEntity<Response<FoodItemDTO>> createFoodItem(@RequestBody FoodItemDTO foodItemDTO) {
         FoodItemDataProxy foodItemDatabase = new FoodItemDataProxy(this.jpaFoodItemDatabase, this.jpaFoodItemImageDatabase, this.foodItemImageStorage);
-        return this.foodItemController.create(foodItemDTO, foodItemDatabase, this.foodItemConfig, this.foodItemMapper);
+        foodItemDTO = this.foodItemController.create(foodItemDTO, foodItemDatabase, this.foodItemConfig, this.foodItemMapper);
+        return ResponseEntityUtil.created(foodItemDTO,foodItemConfig.getLocationPrefix()+ "/" + foodItemDTO.getId());
     }
 
     @Override
@@ -49,7 +53,8 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
                                                                      @RequestParam(name = "category", required = false) String category,
                                                                      @RequestParam(name = "includeImages", required = false) Boolean includeImages) {
         FoodItemDataProxy foodItemDatabase = new FoodItemDataProxy(this.jpaFoodItemDatabase, this.jpaFoodItemImageDatabase, this.foodItemImageStorage);
-        return this.foodItemController.getAll(_limit, category, includeImages, foodItemDatabase, this.foodItemConfig, this.foodItemMapper);
+        List<FoodItemDTO> getAllFoodItemsList = this.foodItemController.getAll(_limit, category, includeImages, foodItemDatabase, this.foodItemConfig, this.foodItemMapper);
+        return ResponseEntityUtil.listOK(getAllFoodItemsList);
     }
 
     @GetMapping("/{id}")
@@ -57,100 +62,64 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
     public ResponseEntity<Response<FoodItemDTO>> getFoodItemById(@PathVariable(name = "id") Integer foodItemId,
                                                                  @RequestParam(name = "includeImages", required = false) Boolean includeImages) {
         FoodItemDataProxy foodItemDatabase = new FoodItemDataProxy(this.jpaFoodItemDatabase, this.jpaFoodItemImageDatabase, this.foodItemImageStorage);
-        return this.foodItemController.getById(foodItemId,includeImages, foodItemDatabase, this.foodItemConfig, this.foodItemMapper);
+        FoodItemDTO foodItemDTO = this.foodItemController.getById(foodItemId,includeImages, foodItemDatabase, this.foodItemConfig, this.foodItemMapper);
+        return ResponseEntityUtil.OK(foodItemDTO);
+
     }
 
     @Override
     @PatchMapping("/{id}")
     public ResponseEntity<Response<FoodItemDTO>> partialUpdateFoodItemById(@PathVariable(name = "id") Integer foodItemId, @RequestBody FoodItemDTO foodItemDTO) {
         FoodItemDataProxy foodItemDatabase = new FoodItemDataProxy(this.jpaFoodItemDatabase, this.jpaFoodItemImageDatabase, this.foodItemImageStorage);
-        return this.foodItemController.partialUpdateById(foodItemId, foodItemDTO, foodItemDatabase, this.foodItemConfig, this.foodItemMapper);
+        foodItemDTO = this.foodItemController.partialUpdateById(foodItemId, foodItemDTO, foodItemDatabase, this.foodItemConfig, this.foodItemMapper);
+        return ResponseEntityUtil.OK(foodItemDTO);
     }
 
     @Override
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response<FoodItemDTO>> deleteFoodItemById(@PathVariable(name = "id") Integer id) {
+    public ResponseEntity<Response<FoodItemDTO>> deleteFoodItemById(@PathVariable(name = "id") Integer foodItemId) {
+        return ResponseEntityUtil.OK(null);
+    }
+
+    @Override
+    @PostMapping("/image")
+    public ResponseEntity<Response<FoodItemImageDTO>> createFoodItemImage(@RequestBody FoodItemImageDTO foodItemImageDTO) {
+        FoodItemDataProxy foodItemDatabase = new FoodItemDataProxy(this.jpaFoodItemDatabase, this.jpaFoodItemImageDatabase, this.foodItemImageStorage);
+        foodItemImageDTO = this.foodItemController.create(foodItemImageDTO, foodItemDatabase, this.foodItemConfig, this.foodItemMapper);
+        return ResponseEntityUtil.OK(foodItemImageDTO);
+    }
+
+    @Override
+    @GetMapping("image/{foodItemImageId}")
+    public ResponseEntity<Response<FoodItemImageDTO>> getFoodItemImageById(@PathVariable(name = "foodItemImageId") Integer foodItemImageId) {
+        FoodItemDataProxy foodItemDatabase = new FoodItemDataProxy(this.jpaFoodItemDatabase, this.jpaFoodItemImageDatabase, this.foodItemImageStorage);
+        FoodItemImageDTO foodItemImageDTO =  this.foodItemController.getImageById(foodItemImageId, foodItemDatabase, this.foodItemConfig, this.foodItemMapper);
+        return ResponseEntityUtil.OK(foodItemImageDTO);
+    }
+
+    @Override
+    @GetMapping("images/{foodItemId}")
+    public ResponseEntity<ResponseList<FoodItemImageDTO>> getFoodItemImageByFoodItemId(@PathVariable(name = "foodItemId") Integer foodItemId) {
         return null;
     }
 
     @Override
-    @GetMapping("/image/{id}")
-    public ResponseEntity<Response<FoodItemImageDTO>> getImageData(@PathVariable Integer id) {
-        return null;
-        /*FoodItemImage foodItemImage = this.foodItemServices.getImageData(id);
-        return new ResponseEntity<>(new FoodItemImageDataResponse(
-                foodItemImage.get_data(), foodItemImage.getFileName()),
-                HttpStatus.OK);*/
-    }
-
-    @Override
-    @PostMapping("/image/{foodItemId}")
-    public ResponseEntity<Response<FoodItemImageDTO>> createImage(@PathVariable Integer foodItemId, @RequestBody FoodItemImageDTO foodItemImageDTO) {
+    @PutMapping("image/{foodItemImageId}")
+    public ResponseEntity<Response<FoodItemImageDTO>> updateFoodItemImageById(@PathVariable(name = "foodItemImageId") Integer foodItemImageId, @RequestBody FoodItemImageDTO foodItemImageDTO) {
         return null;
     }
 
     @Override
-    @PutMapping("/image/{id}")
-    public ResponseEntity<Response<FoodItemImageDTO>> updateImageById(@PathVariable Integer id, @RequestBody FoodItemImageDTO foodItemImageDTO) {
-       return null;
-        /*validateImage(foodItemImage);
-        foodItemImage = this.foodItemServices.updateImageById(id, foodItemImage);
-        return ResponseEntity.status(HttpStatus.OK)
-                .header("Location", imageConfig.getLocationPrefix() + "/" + id)
-                .body(new FoodItemImageDataResponse());*/
+    @DeleteMapping("image/{foodItemImageId}")
+    public ResponseEntity<Response<FoodItemImageDTO>> deleteFoodItemImageById(Integer foodItemImageId, FoodItemImageDTO foodItemImageDTO) {
+        return null;
+    }
+
+    @Override
+    @DeleteMapping("images/{foodItemId}")
+    public ResponseEntity<Response<FoodItemImageDTO>> deleteFoodItemImageByFoodItemId(Integer foodItemId, FoodItemImageDTO foodItemImageDTO) {
+        return null;
     }
 
 
-    /*private void validateImages(FoodItem foodItem) {
-        for (FoodItemImage foodItemImage : foodItem.getImages()) {
-            String fileExtention = foodItemImage.validateImage(foodItemImage._data, imageConfig.getExtensions(), imageConfig.getMaxSize());
-            foodItemImage.setFileExtension(fileExtention);
-        }
-    }
-
-    private void validateImage(FoodItemImage foodItemImage) {
-        FoodItem foodItem = new FoodItem();
-        foodItem.setImages(List.of(foodItemImage));
-        validateImages(foodItem);
-        invalidateImages(foodItem);
-        if (foodItemImage.get_data() == null) {
-            throw new FoodItemException(foodItemImage.getFileExtension(), 404);
-
-    }
-
-    private void invalidateImages(FoodItem foodItem) {
-        for (FoodItemImage foodItemImage : foodItem.getImages()) {
-            if (!imageConfig.getExtensions().keySet().toString().contains(foodItemImage.getFileExtension())) {
-                foodItemImage._data = null;
-            }
-        }
-    }
-
-    private void validadeAllFoodItemCategoryFilter(Optional<Integer> _limit, Optional<String> category) {
-        validateLimitFilter(_limit);
-        validadeCategoryFilter(category);
-        ;
-    }
-
-    private boolean validateLimitFilter(Optional<Integer> _limit) {
-        if (_limit.isPresent() && (_limit.get() <= 0 || _limit.get() > 50)) {
-            throw new IllegalArgumentException("Limite deve ser maior que 0 e menor ou igual a 50");
-        }
-        return true;
-    }
-
-    private boolean validadeCategoryFilter(Optional<String> category) {
-        if (category.isPresent()) {
-            try {
-                FoodItemCategory foodItemCategory = FoodItemCategory.valueOf(category.get().toUpperCase());
-                return true;
-            } catch (IllegalArgumentException e) {
-                throw new FoodItemException("Categoria " + category.get() + " inválida", 404);
-            }
-        } else {
-            return true;
-        }
-    }
-
-    */
 }

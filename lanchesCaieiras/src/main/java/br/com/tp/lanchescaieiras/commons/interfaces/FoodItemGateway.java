@@ -25,4 +25,10 @@ public interface FoodItemGateway {
     FoodItem getFoodItemById(Integer foodItemId);
 
     FoodItemDTO saveFoodItem(FoodItem foodItem);
+
+    void delete(FoodItem foodItem);
+
+    Integer getCountImagesByFoodItemId(Integer foodItemId);
+
+    FoodItemImage getFoodItemImageById(Integer foodItemImageId);
 }

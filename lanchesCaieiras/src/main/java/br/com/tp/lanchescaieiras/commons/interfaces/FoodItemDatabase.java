@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras.commons.interfaces;
 
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemDTO;
 import br.com.tp.lanchescaieiras.commons.dtos.FoodItemImageDTO;
+import br.com.tp.lanchescaieiras.fooditem.domain.FoodItem;
 
 import java.util.List;
 
@@ -23,4 +24,12 @@ public interface FoodItemDatabase {
     List<FoodItemDTO> getAllFoodItems(Integer _limit, Integer categoryId, Boolean includeImages);
 
     FoodItemDTO getFoodItemById(Integer foodItemId, Boolean includeImages);
+
+    void delete(FoodItemDTO foodItemDTO);
+
+    Integer getCountImagesByFoodItemId(Integer foodItemId);
+
+    void create(FoodItemImageDTO foodItemImageDTO);
+
+    FoodItemImageDTO getFoodItemImageById(Integer foodItemImageId);
 }

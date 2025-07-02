@@ -25,9 +25,17 @@ public interface FoodItemRestController {
 
     ResponseEntity<Response<FoodItemDTO>> deleteFoodItemById(@PathVariable Integer id);
 
-    ResponseEntity<Response<FoodItemImageDTO>> getImageData(@PathVariable Integer id);
+    ResponseEntity<Response<FoodItemImageDTO>> createFoodItemImage(@RequestBody FoodItemImageDTO foodItemImageDTO);
 
-    ResponseEntity<Response<FoodItemImageDTO>> createImage(@PathVariable Integer foodItemId, @RequestBody FoodItemImageDTO foodItemImageDTO);
+    ResponseEntity<Response<FoodItemImageDTO>> getFoodItemImageById(@PathVariable Integer foodItemImageId);
 
-    ResponseEntity<Response<FoodItemImageDTO>> updateImageById(@PathVariable Integer id, @RequestBody FoodItemImageDTO foodItemImageDTO);
+    ResponseEntity<ResponseList<FoodItemImageDTO>> getFoodItemImageByFoodItemId(@PathVariable Integer foodItemId);
+
+    ResponseEntity<Response<FoodItemImageDTO>> updateFoodItemImageById(@PathVariable Integer foodItemImageId, @RequestBody FoodItemImageDTO foodItemImageDTO);
+
+    ResponseEntity<Response<FoodItemImageDTO>> deleteFoodItemImageById(@PathVariable Integer foodItemImageId, @RequestBody FoodItemImageDTO foodItemImageDTO);
+
+    ResponseEntity<Response<FoodItemImageDTO>> deleteFoodItemImageByFoodItemId(@PathVariable Integer foodItemId, @RequestBody FoodItemImageDTO foodItemImageDTO);
+
+
 }
