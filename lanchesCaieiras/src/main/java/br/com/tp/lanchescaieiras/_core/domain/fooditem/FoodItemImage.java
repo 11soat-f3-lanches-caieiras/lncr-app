@@ -32,12 +32,18 @@ public class FoodItemImage {
             this.foodItemId = foodItemImageDTO.getFoodItemId();
             this._data = foodItemImageDTO.get_data();
             this.location = foodItemImageDTO.getLocation();
-            this.fileName = foodItemImageDTO.getFileName();
+            if (foodItemImageDTO.getFileName() != null) {
+                this.fileName = foodItemImageDTO.getFileName();
+            }
             this.fileExtension = foodItemImageDTO.getFileExtension();
             this.imageError = foodItemImageDTO.getImageError();
             if (foodItemImageRules != null) {
                 validateImage(foodItemImageRules);
             }
+            if(this.fileExtension != null && this.id != null){
+                this.fileName = this.id + "." + this.fileExtension;
+            }
+
         }
     }
 

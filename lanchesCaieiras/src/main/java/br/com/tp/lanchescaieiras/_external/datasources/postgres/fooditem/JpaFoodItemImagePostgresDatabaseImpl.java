@@ -39,7 +39,7 @@ public class JpaFoodItemImagePostgresDatabaseImpl {
 
     public FoodItemImageDTO save(FoodItemImageDTO foodItemImageDTO) {
         JpaFoodItemImagePostgresEntity newJpaImage = this.foodItemMapper.toJpaFoodItemImageEntity(foodItemImageDTO);
-        newJpaImage = this  .jpaFoodItemImagePostgresRepository.save(newJpaImage);
+        newJpaImage = this.jpaFoodItemImagePostgresRepository.save(newJpaImage);
         return foodItemMapper.toFoodItemImageDTO(newJpaImage);
     }
 
