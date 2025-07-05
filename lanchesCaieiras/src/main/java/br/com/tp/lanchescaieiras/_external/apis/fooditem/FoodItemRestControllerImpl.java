@@ -78,7 +78,7 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
 
 
     @Override
-    @PostMapping("/{foodItemId}/image")
+    @PostMapping("/{foodItemId}/images")
     public ResponseEntity<Response<FoodItemImageDTO>> createFoodItemImage(@PathVariable("foodItemId") Integer foodItemId,
                                                                           @RequestBody FoodItemImageDTO foodItemImageDTO) {
         foodItemImageDTO = this.foodItemController.create(foodItemId, foodItemImageDTO, newFoodItemDatabase(), newFoodItemImageRule());
