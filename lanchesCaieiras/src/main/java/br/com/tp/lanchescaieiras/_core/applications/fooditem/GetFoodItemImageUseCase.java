@@ -8,11 +8,9 @@ import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImage;
 public class GetFoodItemImageUseCase {
 
     private final FoodItemGateway foodItemGateway;
-    private final FoodItemMapper foodItemMapper;
 
-    public GetFoodItemImageUseCase(FoodItemGateway foodItemGateway, FoodItemMapper foodItemMapper) {
+    public GetFoodItemImageUseCase(FoodItemGateway foodItemGateway) {
         this.foodItemGateway = foodItemGateway;
-        this.foodItemMapper = foodItemMapper;
     }
 
     public FoodItemImage getById(Integer foodItemImageId) {

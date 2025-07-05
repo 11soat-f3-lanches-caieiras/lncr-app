@@ -3,6 +3,7 @@ package br.com.tp.lanchescaieiras._external.apis.fooditem;
 import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemDatabase;
 import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityUtil;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImageRules;
 import br.com.tp.lanchescaieiras._external.commons.model.Response;
@@ -104,7 +105,7 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
         return new FoodItemImageRules(foodItemConfig.getImage().getLocationPrefix(), foodItemConfig.getMaxImages(), foodItemConfig.getImage().getMaxSize(), foodItemConfig.getImage().getAllowedExtensions());
     }
 
-    private FoodItemDataProxy newFoodItemDatabase() {
+    private FoodItemDatabase newFoodItemDatabase() {
         return new FoodItemDataProxy(this.jpaFoodItemDatabase, this.jpaFoodItemImageDatabase, this.foodItemImageStorage);
     }
 

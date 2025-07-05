@@ -3,6 +3,7 @@ package br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemDatabase;
+import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImage;
 import br.com.tp.lanchescaieiras._external.datasources.storage.fooditem.FoodItemImageStorageImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,20 +24,6 @@ public class FoodItemDataProxy implements FoodItemDatabase {
         this.jpaFoodItemDatabase = jpaFoodItemDatabase;
         this.jpaFoodItemImageDatabase = jpaFoodItemImageDatabase;
         this.foodItemImageStorage = foodItemImageStorage;
-    }
-
-    @Override
-    public FoodItemDTO save(FoodItemDTO foodItemDTO) {
-        return this.jpaFoodItemDatabase.save(foodItemDTO);
-    }
-
-    @Override
-    public FoodItemImageDTO save(FoodItemImageDTO foodItemImageDTO) {
-        FoodItemImageDTO newFoodItemImage = this.jpaFoodItemImageDatabase.save(foodItemImageDTO);
-        if (newFoodItemImage != null) {
-            this.foodItemImageStorage.saveImageFile(foodItemImageDTO);
-        }
-        return foodItemImageDTO;
     }
 
     @Override
@@ -64,17 +51,7 @@ public class FoodItemDataProxy implements FoodItemDatabase {
     }
 
     @Override
-    public void saveImages(List<FoodItemImageDTO> foodItemImageDTOList) {
-        jpaFoodItemImageDatabase.saveAll(foodItemImageDTOList);
-    }
-
-    @Override
-    public void saveImageFiles(List<FoodItemImageDTO> foodItemImageDTOList) {
-        foodItemImageStorage.saveImagesFiles(null);
-    }
-
-    @Override
-    public List<FoodItemDTO> getAllFoodItems(Integer _limit, Integer categoryId, Boolean includeImages) {
+    public List<FoodItemDTO> findAllFoodItems(Integer _limit, Integer categoryId, Boolean includeImages) {
         List<FoodItemDTO> foodItemsDTOList;
 
         if (categoryId == null) {
@@ -97,13 +74,37 @@ public class FoodItemDataProxy implements FoodItemDatabase {
     }
 
     @Override
-    public FoodItemDTO getFoodItemById(Integer foodItemId, Boolean includeImages) {
+    public FoodItemDTO findFoodItemById(Integer foodItemId, Boolean includeImages) {
         FoodItemDTO foodItemDTO = this.jpaFoodItemDatabase.findById(foodItemId);
         if (includeImages != false && foodItemDTO != null) {
             foodItemDTO.setImages(this.jpaFoodItemImageDatabase.findAllByFoodItemId(foodItemId));
             return foodItemDTO;
         }
         return foodItemDTO;
+    }
+
+    @Override
+    public FoodItemImageDTO findFoodItemImageById(Integer foodItemImageId) {
+        return jpaFoodItemImageDatabase.findById(foodItemImageId);
+    }
+
+    @Override
+    public List<FoodItemImageDTO> findAllFoodItemImagesByFoodItemId(Integer foodItemId, Boolean includeData) {
+        return jpaFoodItemImageDatabase.findAllByFoodItemId(foodItemId);
+    }
+
+    @Override
+    public FoodItemDTO save(FoodItemDTO foodItemDTO) {
+        return this.jpaFoodItemDatabase.save(foodItemDTO);
+    }
+
+    @Override
+    public FoodItemImageDTO save(FoodItemImageDTO foodItemImageDTO) {
+        FoodItemImageDTO newFoodItemImageDTO = this.jpaFoodItemImageDatabase.save(foodItemImageDTO);
+        if (newFoodItemImageDTO != null) {
+            this.foodItemImageStorage.saveImageFile(foodItemImageDTO);
+        }
+        return foodItemImageDTO;
     }
 
     @Override
@@ -116,36 +117,20 @@ public class FoodItemDataProxy implements FoodItemDatabase {
     }
 
     @Override
-    public List<FoodItemImageDTO> findAllFoodItemImagesByFoodItemId(Integer foodItemId, Boolean includeData) {
-        List<FoodItemImageDTO> foodItemImageDTOList = this.jpaFoodItemImageDatabase.findAllByFoodItemId(foodItemId);
-        //Validar se includeData não é false e se lista de imagens não é vazia
-        if (includeData != false && !foodItemImageDTOList.isEmpty()) {
-            for (FoodItemImageDTO image : foodItemImageDTOList) {
-                try {
-                    image.set_data(this.foodItemImageStorage.getImgaeData(image.getFileName()));
-                } catch (Exception e) {
-                    log.error("Erro ao buscar arquivo " + image.getFileName() + " no sistema de arquivos");
-                }
-            }
-        }
-        return foodItemImageDTOList;
+    public void delete(FoodItemImageDTO foodItemImageDTO) {
+        this.jpaFoodItemImageDatabase.delete(foodItemImageDTO);
+        this.foodItemImageStorage.deleteImageFile(foodItemImageDTO.getFileName());
+    }
+
+    @Override
+    public void deleteImageFile(String fileName) {
+        this.foodItemImageStorage.deleteImageFile(fileName);
     }
 
     @Override
     public void create(FoodItemImageDTO foodItemImageDTO) {
         this.jpaFoodItemImageDatabase.save(foodItemImageDTO);
         this.foodItemImageStorage.saveImageFile(foodItemImageDTO);
-    }
-
-    @Override
-    public FoodItemImageDTO getFoodItemImageById(Integer foodItemImageId) {
-        FoodItemImageDTO foodItemImageDTO = this.jpaFoodItemImageDatabase.findById(foodItemImageId);
-        try {
-            foodItemImageDTO.set_data(this.foodItemImageStorage.getImgaeData(foodItemImageDTO.getFileName()));
-        } catch (Exception e) {
-            return foodItemImageDTO;
-        }
-        return foodItemImageDTO;
     }
 
     @Override

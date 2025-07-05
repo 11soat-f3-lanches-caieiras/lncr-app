@@ -21,10 +21,23 @@ public class FoodItemGatewayImpl implements FoodItemGateway {
     }
 
     @Override
-    public FoodItem create(FoodItem foodItem) {
-        FoodItemDTO foodItemDTO = this.foodItemMapper.domainToDto(foodItem);
-        foodItemDTO = this.foodItemDatabase.create(foodItemDTO);
-        return this.foodItemMapper.dtoToDomain(foodItemDTO);
+    public void delete(FoodItem foodItem) {
+        this.foodItemDatabase.delete(this.foodItemMapper.domainToDto(foodItem));
+    }
+
+    @Override
+    public void delete(FoodItemImage foodItemImage) {
+        this.foodItemDatabase.delete(this.foodItemMapper.imageDomainToDto(foodItemImage));
+    }
+
+    @Override
+    public void deleteImagesByFoodItemId(Integer foodItemId) {
+        this.foodItemDatabase.deleteImagesByFoodItemId(foodItemId);
+    }
+
+    @Override
+    public void deleteImageFile(String fileName) {
+        this.foodItemDatabase.deleteImageFile(fileName);
     }
 
     @Override
@@ -33,34 +46,40 @@ public class FoodItemGatewayImpl implements FoodItemGateway {
     }
 
     @Override
-    public void saveImages(List<FoodItemImage> foodItemImages) {
-        List<FoodItemImageDTO> foodItemImageDTOList = this.foodItemMapper.imageDomainListToDtoList(foodItemImages);
-        this.foodItemDatabase.saveImages(foodItemImageDTOList);
-    }
-
-    @Override
-    public void saveImagesFiles(List<FoodItemImage> foodItemImage) {
-        this.foodItemDatabase.saveImageFiles(this.foodItemMapper.imageDomainListToDtoList(foodItemImage));
+    public List<FoodItemImage> getAllImagesByFoodItemId(Integer foodItemId, Boolean includeData) {
+        List<FoodItemImageDTO> foodItemImageDTOList = this.foodItemDatabase.findAllFoodItemImagesByFoodItemId(foodItemId, includeData);
+        return foodItemMapper.imageDtoListToDomainList(foodItemImageDTOList);
     }
 
     @Override
     public List<FoodItem> getAllFoodItems(Integer _limit, String category, Boolean includeImages) {
         Integer categoryId = category == null ? null : FoodItemCategory.fromDescription(category).getId();
-
-        return this.foodItemDatabase.getAllFoodItems(_limit, categoryId, includeImages)
+        return this.foodItemDatabase.findAllFoodItems(_limit, categoryId, includeImages)
                 .stream()
                 .map(foodItemMapper::dtoToDomain)
                 .toList();
     }
 
     @Override
-    public FoodItem getFoodItemById(Integer foodItemId, Boolean includeImages) {
-        return this.foodItemMapper.dtoToDomain(this.foodItemDatabase.getFoodItemById(foodItemId, includeImages));
+    public FoodItem getFoodItemById(Integer foodItemId) {
+        return getFoodItemById(foodItemId, false);
     }
 
     @Override
-    public FoodItem getFoodItemById(Integer foodItemId) {
-        return getFoodItemById(foodItemId, false);
+    public FoodItem getFoodItemById(Integer foodItemId, Boolean includeImages) {
+        return this.foodItemMapper.dtoToDomain(this.foodItemDatabase.findFoodItemById(foodItemId, includeImages));
+    }
+
+    @Override
+    public FoodItemImage getFoodItemImageById(Integer foodItemImageId) {
+        return foodItemMapper.imageDtoToDomain(foodItemDatabase.findFoodItemImageById(foodItemImageId));
+    }
+
+    @Override
+    public FoodItem save(FoodItem foodItem) {
+        FoodItemDTO foodItemDTO = this.foodItemMapper.domainToDto(foodItem);
+        foodItemDTO = this.foodItemDatabase.create(foodItemDTO);
+        return this.foodItemMapper.dtoToDomain(foodItemDTO);
     }
 
     @Override
@@ -71,28 +90,7 @@ public class FoodItemGatewayImpl implements FoodItemGateway {
     }
 
     @Override
-    public void delete(FoodItem foodItem) {
-        this.foodItemDatabase.delete(this.foodItemMapper.domainToDto(foodItem));
-    }
-
-    @Override
-    public List<FoodItemImage> getAllImagesByFoodItemId(Integer foodItemId, Boolean includeData) {
-
-        List<FoodItemImageDTO> foodItemImageDTOList = this.foodItemDatabase.findAllFoodItemImagesByFoodItemId(foodItemId, includeData);
-        return foodItemMapper.imageDtoListToDomainList(foodItemImageDTOList);
-    }
-
-    @Override
-    public FoodItemImage getFoodItemImageById(Integer foodItemImageId) {
-        return foodItemMapper.imageDtoToDomain(foodItemDatabase.getFoodItemImageById(foodItemImageId));
-    }
-
-    @Override
-    public void deleteImagesByFoodItemId(Integer foodItemId) {
-        this.foodItemDatabase.deleteImagesByFoodItemId(foodItemId);
-    }
-
-    public FoodItemImage create(FoodItemImage foodItemImage) {
+    public FoodItemImage save(FoodItemImage foodItemImage) {
         FoodItemImageDTO foodItemImageDTO = foodItemMapper.imageDomainToDto(foodItemImage);
         foodItemImageDTO = this.foodItemDatabase.save(foodItemImageDTO);
         return foodItemMapper.imageDtoToDomain(foodItemImageDTO);

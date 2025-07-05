@@ -35,7 +35,7 @@ public class CreateFoodItemImageUseCase {
         }
 
         foodItemImage = setImageInfo(foodItemId, foodItemImage, foodItemImageList, maxImages);
-        foodItemGateway.create(foodItemImage);
+        foodItemGateway.save(foodItemImage);
 
         return foodItemImage;
     }

@@ -2,35 +2,31 @@ package br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
+import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImage;
 
 import java.util.List;
 
 
 public interface FoodItemDatabase {
 
-    FoodItemDTO save(FoodItemDTO foodItemDTO);
-
-    FoodItemImageDTO save(FoodItemImageDTO foodItemImageDTO);
 
     FoodItemDTO create(FoodItemDTO foodItemDTO);
-
-    boolean existsByName(String foodItemName);
-
-    void saveImages(List<FoodItemImageDTO> foodItemImageDTOList);
-
-    void saveImageFiles(List<FoodItemImageDTO> foodItemImageDTOList);
-
-    List<FoodItemDTO> getAllFoodItems(Integer _limit, Integer categoryId, Boolean includeImages);
-
-    FoodItemDTO getFoodItemById(Integer foodItemId, Boolean includeImages);
-
-    void delete(FoodItemDTO foodItemDTO);
-
-    List<FoodItemImageDTO> findAllFoodItemImagesByFoodItemId(Integer foodItemId, Boolean includeData);
-
     void create(FoodItemImageDTO foodItemImageDTO);
 
-    FoodItemImageDTO getFoodItemImageById(Integer foodItemImageId);
+    void delete(FoodItemDTO foodItemDTO);
+    void delete(FoodItemImageDTO foodItemImageDTO);
+    void deleteImageFile(String fileName);
 
     void deleteImagesByFoodItemId(Integer foodItemId);
+    boolean existsByName(String foodItemName);
+
+    List<FoodItemImageDTO> findAllFoodItemImagesByFoodItemId(Integer foodItemId, Boolean includeData);
+    List<FoodItemDTO> findAllFoodItems(Integer _limit, Integer categoryId, Boolean includeImages);
+    FoodItemDTO findFoodItemById(Integer foodItemId, Boolean includeImages);
+    FoodItemImageDTO findFoodItemImageById(Integer foodItemImageId);
+
+    FoodItemDTO save(FoodItemDTO foodItemDTO);
+    FoodItemImageDTO save(FoodItemImageDTO foodItemImageDTO);
+
+
 }

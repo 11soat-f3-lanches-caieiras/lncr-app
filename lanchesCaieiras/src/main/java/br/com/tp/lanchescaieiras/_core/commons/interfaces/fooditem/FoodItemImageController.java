@@ -6,9 +6,11 @@ import br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem.FoodIte
 
 public interface FoodItemImageController {
 
-    FoodItemImageDTO create(Integer foodItemId, FoodItemImageDTO foodItemImageDTO, FoodItemDataProxy foodItemDatabase, FoodItemImageRules foodItemImageRules);
+    FoodItemImageDTO create(Integer foodItemId, FoodItemImageDTO foodItemImageDTO, FoodItemDatabase foodItemDatabase, FoodItemImageRules foodItemImageRules);
 
-    FoodItemImageDTO getImageById(Integer foodItemImageId, FoodItemDataProxy foodItemDatabase, String imageLocationPrefix);
+    FoodItemImageDTO getImageById(Integer foodItemImageId, FoodItemDatabase foodItemDatabase, String imageLocationPrefix);
 
+    FoodItemImageDTO updateImageById(Integer foodItemImageId, FoodItemImageDTO foodItemImageDTO, FoodItemDatabase foodItemDatabase, FoodItemImageRules foodItemImageRules);
 
+    void deleteImageById(Integer foodItemImageId, FoodItemDatabase foodItemDatabase);
 }

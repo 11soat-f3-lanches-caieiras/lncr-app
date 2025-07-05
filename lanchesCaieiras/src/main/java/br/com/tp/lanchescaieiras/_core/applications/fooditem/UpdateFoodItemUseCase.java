@@ -2,12 +2,19 @@ package br.com.tp.lanchescaieiras._core.applications.fooditem;
 
 import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemGatewayImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemGateway;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItem;
 
 public class UpdateFoodItemUseCase {
 
-    public FoodItem partialUpdateById(Integer foodItemId, FoodItemDTO foodItemDTO, FoodItemGatewayImpl foodItemGateway) {
+    private final FoodItemGateway foodItemGateway;
+
+    public UpdateFoodItemUseCase(FoodItemGateway foodItemGateway) {
+        this.foodItemGateway = foodItemGateway;
+    }
+
+    public FoodItem partialUpdateById(Integer foodItemId, FoodItemDTO foodItemDTO) {
         FoodItem existFoodItem = foodItemGateway.getFoodItemById(foodItemId);
         if (existFoodItem == null) {
             throw new FoodItemException("Não encontrado Item de alimentação com Id: " + foodItemId, 404);

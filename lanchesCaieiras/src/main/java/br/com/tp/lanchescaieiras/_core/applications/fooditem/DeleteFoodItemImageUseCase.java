@@ -21,4 +21,13 @@ public class DeleteFoodItemImageUseCase {
         }
         this.foodItemGateway.deleteImagesByFoodItemId(foodItemId);
     }
+
+    public void deleteById(Integer foodItemImageId) {
+        FoodItemImage foodItemImage = this.foodItemGateway.getFoodItemImageById(foodItemImageId);
+        if (foodItemImage == null) {
+            throw new FoodItemException("Não encontrada imagen id: " + foodItemImageId, 404);
+        }
+
+        this.foodItemGateway.delete(foodItemImage);
+    }
 }

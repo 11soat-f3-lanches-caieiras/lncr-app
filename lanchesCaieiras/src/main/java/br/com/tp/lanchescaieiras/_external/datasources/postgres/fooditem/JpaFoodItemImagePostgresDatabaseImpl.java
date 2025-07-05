@@ -38,7 +38,8 @@ public class JpaFoodItemImagePostgresDatabaseImpl {
     }
 
     public FoodItemImageDTO save(FoodItemImageDTO foodItemImageDTO) {
-        JpaFoodItemImagePostgresEntity newJpaImage = this.jpaFoodItemImagePostgresRepository.save(this.foodItemMapper.toJpaFoodItemImageEntity(foodItemImageDTO));
+        JpaFoodItemImagePostgresEntity newJpaImage = this.foodItemMapper.toJpaFoodItemImageEntity(foodItemImageDTO);
+        newJpaImage = this  .jpaFoodItemImagePostgresRepository.save(newJpaImage);
         return foodItemMapper.toFoodItemImageDTO(newJpaImage);
     }
 
@@ -52,5 +53,9 @@ public class JpaFoodItemImagePostgresDatabaseImpl {
         List<FoodItemImageDTO> listImagestoDelete = findAllByFoodItemId(foodItemId);
         this.jpaFoodItemImagePostgresRepository.deleteAll(foodItemMapper.toJpaFoodItemImageEntityList(listImagestoDelete));
         return listImagestoDelete;
+    }
+
+    public void delete(FoodItemImageDTO foodItemImageDTO) {
+        this.jpaFoodItemImagePostgresRepository.delete(foodItemMapper.toJpaFoodItemImageEntity(foodItemImageDTO));
     }
 }

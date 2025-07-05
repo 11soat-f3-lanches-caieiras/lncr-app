@@ -40,7 +40,7 @@ public class FoodItemControllerImpl implements FoodItemController {
     @Override
     public FoodItemDTO partialUpdateById(Integer foodItemId, FoodItemDTO foodItemDTO, FoodItemDatabase foodItemDatabase, FoodItemImageRules foodItemImageRules) {
         FoodItemGatewayImpl foodItemGateway = new FoodItemGatewayImpl(foodItemDatabase, foodItemMapper);
-        FoodItem foodItem = new UpdateFoodItemUseCase().partialUpdateById(foodItemId, foodItemDTO, foodItemGateway);
+        FoodItem foodItem = new UpdateFoodItemUseCase(foodItemGateway).partialUpdateById(foodItemId, foodItemDTO);
         return new FoodItemPresenter(foodItemMapper).patialUpdateById(foodItem, foodItemImageRules.getImageLocation());
     }
 

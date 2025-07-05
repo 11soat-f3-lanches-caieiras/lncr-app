@@ -21,6 +21,10 @@ public class FoodItemImagePresenter {
         return formatFoodItemImageDTO(foodItemMapper.imageDomainToDto(foodItemImage), imageLocationPrefix, true);
     }
 
+    public FoodItemImageDTO updateById(FoodItemImage updateFoodItemImage, String imageLocationPrefix) {
+        return formatFoodItemImageDTO(foodItemMapper.imageDomainToDto(updateFoodItemImage), imageLocationPrefix, false);
+    }
+
     public List<FoodItemImageDTO> getAllImagesByFoodItemId(List<FoodItemImage> foodItemImageList, String imageLocationPrefix, Boolean includeData) {
         return foodItemImageDTOList(foodItemImageList.stream().map(foodItemMapper::imageDomainToDto).toList(), imageLocationPrefix, includeData);
     }
@@ -46,6 +50,7 @@ public class FoodItemImagePresenter {
         }
         return foodItemImageDTOList;
     }
+
 
 
 }
