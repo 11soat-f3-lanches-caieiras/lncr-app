@@ -1,7 +1,0 @@
-package br.com.tp.lanchescaieiras.customerorder.adapters.outbound.integrations;
-
-public interface KitchenOrderIntegration {
-
-    void sendKitchenOrder(String kitchenOrder);
-
-}

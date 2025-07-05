@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: Lanches Caieiras
+  jackson:
+    default-property-inclusion: non_null
   datasources:
     postgres:
       url: "${POSTGRES_JDBC}"
@@ -48,7 +50,7 @@ lncr:
       location-prefix: "${lncr.base-url}/foodItems/image"
       directory: "./images/"
       maxSize: 524288 # 512 KB
-      extensions:
+      allowed-extensions:
         ".jpg": "FFD8"
         ".png": "89504E47"
 
