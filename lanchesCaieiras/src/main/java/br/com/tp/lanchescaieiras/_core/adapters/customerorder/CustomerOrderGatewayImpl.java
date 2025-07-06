@@ -38,5 +38,15 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
                 .map(customerOrderMapper::foodItemInOrderToDomain)
                 .toList();
     }
+
+    @Override
+    public void createPaymentCharge(CustomerOrder customerOrder) {
+        this.customerOrderDatabase.createPaymentCharge(customerOrder.getId(),customerOrder.getTotalCost());
+    }
+
+    @Override
+    public void sendNotification(String notificationSource, Integer artefactId, String message) {
+        this.customerOrderDatabase.sendNotification(notificationSource,artefactId,message);
+    }
 }
 

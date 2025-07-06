@@ -61,5 +61,15 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
         return foodItemsDetailList;
     }
 
+    @Override
+    public void createPaymentCharge(Integer id, Double totalCost) {
+        //this.paymentIntegration.createPayment();
+    }
+
+    @Override
+    public void sendNotification(String notificationSource, Integer artefactId, String message) {
+        //implementar envio de notificação
+    }
+
 
 }

@@ -14,6 +14,10 @@ public interface CustomerOrderDatabase {
 
     List<CustomerOrderFoodItemDTO> getFoodItemsDetails(List<Integer> foodItemListIds);
 
+    void createPaymentCharge(Integer id, Double totalCost);
+
+    void sendNotification(String notificationSource, Integer artefactId, String message);
+
     /*CustomerOrder findById(Integer id);
 
     List<CustomerOrder> findByStatusId(Integer statusId);

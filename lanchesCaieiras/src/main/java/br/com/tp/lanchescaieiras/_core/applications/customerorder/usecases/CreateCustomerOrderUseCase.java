@@ -30,7 +30,13 @@ public class CreateCustomerOrderUseCase {
 
         //Obtendo informações dos items de alimentação
         customerOrder = CustomerOrderUseCaseUtils.getFoodItemsDetails(customerOrder,customerOrderGateway);
-        return this.customerOrderGateway.createCustomerOrder(customerOrder);
+        customerOrder = this.customerOrderGateway.createCustomerOrder(customerOrder);
+
+        //TODO - implementar integrações com pagamento e notificações
+        //this.customerOrderGateway.createPaymentCharge(customerOrder);
+        //this.customerOrderGateway.sendNotification("CustomerOrder",1,"mensagem");
+
+        return customerOrder;
     }
 
 

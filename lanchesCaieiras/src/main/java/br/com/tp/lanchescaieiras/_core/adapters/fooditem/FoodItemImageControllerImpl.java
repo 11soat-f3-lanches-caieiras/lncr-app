@@ -1,6 +1,9 @@
 package br.com.tp.lanchescaieiras._core.adapters.fooditem;
 
-import br.com.tp.lanchescaieiras._core.applications.fooditem.*;
+import br.com.tp.lanchescaieiras._core.applications.fooditem.CreateFoodItemImageUseCase;
+import br.com.tp.lanchescaieiras._core.applications.fooditem.DeleteFoodItemImageUseCase;
+import br.com.tp.lanchescaieiras._core.applications.fooditem.GetFoodItemImageUseCase;
+import br.com.tp.lanchescaieiras._core.applications.fooditem.UpdateFoodItemImageUseCase;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemDatabase;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemImageController;

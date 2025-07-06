@@ -14,6 +14,10 @@ public interface CustomerOrderGateway {
 
     List<CustomerOrderFoodItem> getFoodItemsDetails(List<Integer> foodItemListIds);
 
+    void createPaymentCharge(CustomerOrder customerOrder);
+
+    void sendNotification(String notificationSource, Integer artefactId, String message);
+
     /*CustomerOrder getCustomerOrderById(Integer id, Boolean includeFoodItems);
 
     List<CustomerOrder> getCustomerOrderByStatus(String status, Boolean includeFoodItems);
