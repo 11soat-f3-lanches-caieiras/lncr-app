@@ -1,38 +1,44 @@
 package br.com.tp.lanchescaieiras._external.apis.customerorder;
 
-import br.com.tp.lanchescaieiras._core.applications.customerorder.services.CustomerOrderServicesImpl;
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderListResponse;
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderResponse;
+import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderController;
+import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityUtil;
+import br.com.tp.lanchescaieiras._external.commons.model.Response;
 import br.com.tp.lanchescaieiras._external.configs.CustomerOrderConfig;
-import org.springframework.http.HttpStatus;
+import br.com.tp.lanchescaieiras._external.dataproxy.CustomerOrderDataProxy;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/customerOrders")
-public class CustomerOrderControllerImpl implements CustomerOrderController {
+public class CustomerOrderRestControllerImpl implements CustomerOrderRestController {
 
-    public final CustomerOrderServicesImpl customerOrderServices;
     public final CustomerOrderConfig customerOrderConfig;
+    public final CustomerOrderDataProxy customerOrderDataProxy;
+    public final CustomerOrderController customerOrderController;
 
-    public CustomerOrderControllerImpl(CustomerOrderServicesImpl customerOrderServices, CustomerOrderConfig customerOrderConfig, CustomerOrderConfig customerOrderConfig1) {
-        this.customerOrderServices = customerOrderServices;
-        this.customerOrderConfig = customerOrderConfig1;
+    public CustomerOrderRestControllerImpl(CustomerOrderConfig customerOrderConfig, CustomerOrderDataProxy customerOrderDataProxy, CustomerOrderController customerOrderController) {
+        this.customerOrderConfig = customerOrderConfig;
+        this.customerOrderDataProxy = customerOrderDataProxy;
+        this.customerOrderController = customerOrderController;
     }
 
     @Override
     @PostMapping()
-    public ResponseEntity<CustomerOrderResponse> createCustomerOrder(@RequestBody CustomerOrder customerOrder) {
-        CustomerOrder createdCustomerOrder = customerOrderServices.createCustomerOrder(customerOrder);
+    public ResponseEntity<Response<CustomerOrderDTO>> createCustomerOrder(@RequestBody CustomerOrderDTO customerOrderDTO) {
+        customerOrderDTO = this.customerOrderController.create(customerOrderDataProxy, customerOrderDTO);
+        return ResponseEntityUtil.created(null,customerOrderConfig.getLocationPrefix() + "/" + customerOrderDTO.getId());
+
+        /*CustomerOrder createdCustomerOrder = customerOrderServices.createCustomerOrder(customerOrder);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .header("Location", customerOrderConfig.getLocationPrefix() + "/" + createdCustomerOrder.getId())
-                .body(new CustomerOrderResponse());
+                .body(new CustomerOrderResponse());*/
     }
 
-    @Override
+    /*@Override
     @GetMapping("/{id}")
     public ResponseEntity<CustomerOrderResponse> getCustomerOrderById(@PathVariable Integer id,
                                                                       @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems) {
@@ -60,5 +66,5 @@ public class CustomerOrderControllerImpl implements CustomerOrderController {
         CustomerOrder customerOrder = customerOrderServices.updateStatusById(id, newStatus, forceUpdate);
         return new ResponseEntity<CustomerOrderResponse>(new CustomerOrderResponse(customerOrder), HttpStatus.OK);
 
-    }
+    }*/
 }

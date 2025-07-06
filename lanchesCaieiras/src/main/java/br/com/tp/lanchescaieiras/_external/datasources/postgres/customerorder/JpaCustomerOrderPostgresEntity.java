@@ -2,37 +2,37 @@ package br.com.tp.lanchescaieiras._external.datasources.postgres.customerorder;
 
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "customer_order")
-public class JpaCustomerOrderEntity {
-
+public class JpaCustomerOrderPostgresEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double totalCost = 0.0;
     private Integer statusId;
     private Integer customerId;
+    private LocalDateTime created;
 
     @Transient
-    private List<JpaCustomerOrderFoodItemEntity> foodItems;
+    private String customerName;
 
-    public JpaCustomerOrderEntity(Integer id, Double totalCost, Integer statusId, Integer customerId, List<JpaCustomerOrderFoodItemEntity> foodItems) {
+    public JpaCustomerOrderPostgresEntity(Integer id, Double totalCost, Integer statusId, Integer customerId, LocalDateTime created, String customerName) {
         this.id = id;
         this.totalCost = totalCost;
         this.statusId = statusId;
         this.customerId = customerId;
-        this.foodItems = foodItems;
+        this.created = created;
+        this.customerName = customerName;
     }
 
-    public JpaCustomerOrderEntity() {
+    public JpaCustomerOrderPostgresEntity() {
     }
 
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -40,7 +40,6 @@ public class JpaCustomerOrderEntity {
     public Double getTotalCost() {
         return totalCost;
     }
-
     public void setTotalCost(Double totalCost) {
         this.totalCost = totalCost;
     }
@@ -48,7 +47,6 @@ public class JpaCustomerOrderEntity {
     public Integer getStatusId() {
         return statusId;
     }
-
     public void setStatusId(Integer statusId) {
         this.statusId = statusId;
     }
@@ -56,16 +54,19 @@ public class JpaCustomerOrderEntity {
     public Integer getCustomerId() {
         return customerId;
     }
-
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 
-    public List<JpaCustomerOrderFoodItemEntity> getFoodItems() {
-        return foodItems;
+    public String getCustomerName() {return customerName;}
+    public void setCustomerName(String customerName) {this.customerName = customerName;}
+
+    public LocalDateTime getCreated() {
+        return created;
     }
 
-    public void setFoodItems(List<JpaCustomerOrderFoodItemEntity> foodItems) {
-        this.foodItems = foodItems;
+    @PrePersist
+    protected void onCreate() {
+        this.created = LocalDateTime.now();
     }
 }

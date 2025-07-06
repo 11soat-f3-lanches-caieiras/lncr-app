@@ -7,7 +7,7 @@ import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityUtil;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImageRules;
 import br.com.tp.lanchescaieiras._external.commons.model.Response;
 import br.com.tp.lanchescaieiras._external.configs.FoodItemConfig;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem.FoodItemDataProxy;
+import br.com.tp.lanchescaieiras._external.dataproxy.FoodItemDataProxy;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem.JpaFoodItemImagePostgresDatabaseImpl;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem.JpaFoodItemPostgresDatabaseImpl;
 import br.com.tp.lanchescaieiras._external.datasources.storage.fooditem.FoodItemImageStorageImpl;

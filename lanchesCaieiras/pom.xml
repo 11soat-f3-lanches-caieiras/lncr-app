@@ -110,6 +110,10 @@
             <artifactId>httpcore5-h2</artifactId>
             <version>5.3.4</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

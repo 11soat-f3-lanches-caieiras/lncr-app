@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "customer_order_food_item")
-public class JpaCustomerOrderFoodItemEntity {
+public class JpaCustomerOrderFoodItemPostgresEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -12,16 +12,22 @@ public class JpaCustomerOrderFoodItemEntity {
     private Integer foodItemId;
     private Double price;
     private String notes;
+    @Transient
+    private String name;
+    @Transient
+    private String description;
 
-    public JpaCustomerOrderFoodItemEntity(Integer id, Integer orderId, Integer foodItemId, Double price, String notes) {
+    public JpaCustomerOrderFoodItemPostgresEntity(Integer id, Integer orderId, Integer foodItemId, Double price, String notes, String name, String description) {
         this.id = id;
         this.orderId = orderId;
         this.foodItemId = foodItemId;
         this.price = price;
         this.notes = notes;
+        this.name = name;
+        this.description = description;
     }
 
-    public JpaCustomerOrderFoodItemEntity() {
+    public JpaCustomerOrderFoodItemPostgresEntity() {
     }
 
     public Integer getId() {
@@ -63,4 +69,21 @@ public class JpaCustomerOrderFoodItemEntity {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

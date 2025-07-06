@@ -23,7 +23,6 @@ import java.util.HashMap;
 @EnableJpaRepositories(
         basePackages = {
                 "br.com.tp.lanchescaieiras._external.datasources.postgres.customer",
-                "br.com.tp.lanchescaieiras._external.datasources.postgres.customerorder",
                 "br.com.tp.lanchescaieiras._external.datasources.postgres.kitichenorder",
                 "br.com.tp.lanchescaieiras._external.datasources.postgres.payment",
                 "br.com.tp.lanchescaieiras._external.datasources.postgres.notification"
@@ -31,7 +30,7 @@ import java.util.HashMap;
         entityManagerFactoryRef = "postgresCustomerEntityManagerFactory",
         transactionManagerRef = "postgresCustomerTransactionManager"
 )
-public class CustomerPostGresDatabaseConfig {
+public class CustomerPostgresDatabaseConfig {
 
     @Autowired
     private JpaHibernateConfig jpaHibernateConfig;
@@ -55,7 +54,6 @@ public class CustomerPostGresDatabaseConfig {
                 .dataSource(postgresCustomerDataSource())
                 .properties(properties)
                 .packages("br.com.tp.lanchescaieiras._external.datasources.postgres.customer",
-                        "br.com.tp.lanchescaieiras._external.datasources.postgres.customerorder",
                         "br.com.tp.lanchescaieiras._external.datasources.postgres.kitichenorder",
                         "br.com.tp.lanchescaieiras._external.datasources.postgres.payment",
                         "br.com.tp.lanchescaieiras._external.datasources.postgres.notification")

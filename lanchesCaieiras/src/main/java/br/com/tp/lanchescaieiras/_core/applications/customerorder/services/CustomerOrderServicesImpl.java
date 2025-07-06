@@ -1,34 +1,12 @@
 package br.com.tp.lanchescaieiras._core.applications.customerorder.services;
 
-import br.com.tp.lanchescaieiras._core.applications.customerorder.usecases.CustomerOrderUseCases;
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderFoodItem;
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderStatus;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
-import br.com.tp.lanchescaieiras._core.domain.notification.Notification;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.customerorder.JpaCustomerOrderFoodItemRepositoryImpl;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.customerorder.JpaCustomerOrderRepositoryImpl;
-import br.com.tp.lanchescaieiras._external.integrations.customer.CustomerIntegrationImpl;
-import br.com.tp.lanchescaieiras._external.integrations.fooditem.FoodItemIntegrationImpl;
-import br.com.tp.lanchescaieiras._external.integrations.kitchenorder.KitchenOrderIntegrationImpl;
-import br.com.tp.lanchescaieiras._external.integrations.payment.PaymentIntegrationImpl;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Service
-public class CustomerOrderServicesImpl implements CustomerOrderUseCases {
+public class CustomerOrderServicesImpl {
 
-    private static final Logger log = LoggerFactory.getLogger(CustomerOrderServicesImpl.class);
+    /*private static final Logger log = LoggerFactory.getLogger(CustomerOrderServicesImpl.class);
     private final JpaCustomerOrderRepositoryImpl jpaCustomerOrderRepositoryImpl;
     private final JpaCustomerOrderFoodItemRepositoryImpl jpaCustomerOrderFoodItemRepository;
     private final FoodItemIntegrationImpl foodItemIntegration;
@@ -66,7 +44,7 @@ public class CustomerOrderServicesImpl implements CustomerOrderUseCases {
 
         customerOrder = validateCustomer(customerOrder);
         customerOrder = customerOrderFoodsItemDetails(customerOrder);
-        customerOrder.setTotalCost(); //Calcular valor total do pedido
+        //customerOrder.setTotalCost(dto.getTotalCost()); //Calcular valor total do pedido
 
         CustomerOrder createdCustomerOrder = jpaCustomerOrderRepositoryImpl.save(customerOrder);
         log.info("Ordem criada com sucesso!");
@@ -253,7 +231,7 @@ public class CustomerOrderServicesImpl implements CustomerOrderUseCases {
 
     private void publishNotification(String artetefactType, Integer artifactId, String message) {
         eventPublisher.publishEvent(new Notification(this, null, artetefactType, artifactId, message));
-    }
+    }*/
 }
 
 

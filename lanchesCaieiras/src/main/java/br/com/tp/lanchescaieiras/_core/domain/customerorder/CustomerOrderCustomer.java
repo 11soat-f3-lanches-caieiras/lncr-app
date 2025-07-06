@@ -1,8 +1,7 @@
 package br.com.tp.lanchescaieiras._core.domain.customerorder;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderCustomerDTO;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerOrderCustomer {
     Integer id;
     String name;
@@ -13,6 +12,11 @@ public class CustomerOrderCustomer {
     public CustomerOrderCustomer(Integer id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public CustomerOrderCustomer(CustomerOrderCustomerDTO dto) {
+        this.id = dto.getId();
+        this.name = dto.getName();
     }
 
     public Integer getId() {
@@ -32,5 +36,3 @@ public class CustomerOrderCustomer {
     }
 
 }
-
-

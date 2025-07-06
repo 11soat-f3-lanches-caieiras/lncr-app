@@ -1,9 +1,9 @@
 package br.com.tp.lanchescaieiras._external.integrations.customer;
 
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderCustomer;
+import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderCustomerDTO;
 
 public interface CustomerIntegration {
 
-    CustomerOrderCustomer getCustomerOrderCustomerDetails(Integer customerId);
+    CustomerOrderCustomerDTO getCustomerDetails(Integer customerId);
 
 }

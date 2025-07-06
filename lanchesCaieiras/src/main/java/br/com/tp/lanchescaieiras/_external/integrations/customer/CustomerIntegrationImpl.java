@@ -1,11 +1,9 @@
 package br.com.tp.lanchescaieiras._external.integrations.customer;
 
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderCustomer;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
+import br.com.tp.lanchescaieiras._core.commons.dtos.customer.CustomerDTO;
+import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderCustomerDTO;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras._external.configs.IntegrationConfig;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,31 +20,25 @@ public class CustomerIntegrationImpl implements CustomerIntegration {
     }
 
     @Override
-    public CustomerOrderCustomer getCustomerOrderCustomerDetails(Integer customerId) {
+    public CustomerOrderCustomerDTO getCustomerDetails(Integer customerId) {
         String url = integrationConfig.getCustomersUrl() + "/" + customerId;
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> getCustomerDetails = new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        ResponseEntity<CustomerDTO> getCustomerDetails = new ResponseEntity<CustomerDTO>(HttpStatus.NOT_FOUND);
         try {
-            getCustomerDetails = restTemplate.getForEntity(url, String.class);
+            getCustomerDetails = restTemplate.getForEntity(url, CustomerDTO.class);
         } catch (Exception e) {
             if (e instanceof HttpClientErrorException.NotFound) {
                 throw new FoodItemException("Cliente id: " + customerId + " não encontrado", 404);
             }
         }
-        return jsonToCustomerOrderCustomer(getCustomerDetails.getBody());
+        return customerDtoToCustumerInCustomerOrder(getCustomerDetails.getBody());
     }
 
-    public CustomerOrderCustomer jsonToCustomerOrderCustomer(String json) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode jsonNode = mapper.readTree(json);
-            JsonNode _content = jsonNode.get("_content");
-
-            return new CustomerOrderCustomer(
-                    _content.get("id").asInt(),
-                    _content.get("name").asText());
-        } catch (Exception e) {
-            throw new CustomerOrderException("Error converting JSON to CustomerOrderCustomer", 500);
-        }
+    private CustomerOrderCustomerDTO customerDtoToCustumerInCustomerOrder(CustomerDTO customerDTO){
+        if (customerDTO == null) return null;
+        return  new CustomerOrderCustomerDTO(customerDTO.getId(), customerDTO.getName());
     }
+
+
+
 }

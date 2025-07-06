@@ -1,16 +1,17 @@
 package br.com.tp.lanchescaieiras._core.domain.customerorder;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.annotation.PostConstruct;
+import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
+import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
 
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerOrder {
     private Integer id;
     private String status;
     private Double totalCost;
+    private LocalDateTime _created;
     private CustomerOrderCustomer customer;
     private List<CustomerOrderFoodItem> foodItems;
 
@@ -20,19 +21,44 @@ public class CustomerOrder {
         this.customer = customer;
         this.foodItems = foodItems;
         this.totalCost = totalCost;
+        this._created = LocalDateTime.now();
+        setTotalCost();
     }
 
-    @PostConstruct
+    public CustomerOrder(CustomerOrderDTO dto) {
+        this.id = dto.getId();
+        this.status = dto.getStatus();
+        this.totalCost = dto.getTotalCost();
+        this._created = dto.get_created();
+        this.customer = null;
+        if (dto.getCustomer() != null) {
+            this.customer = new CustomerOrderCustomer(dto.getCustomer());
+        }
+
+        //Regra de negócio que pedido deve ter pelo menos um item no pedido
+        if (dto.getFoodItems()==null || dto.getFoodItems().isEmpty()) {
+            throw new CustomerOrderException("Pedido do cliente deve conter pelo menos 1 item",400);
+        }
+
+        this.foodItems = dto.getFoodItems().stream().map(CustomerOrderFoodItem::new).toList();
+        setTotalCost();
+    }
+
+    public CustomerOrder() {
+
+    }
+
     public void setTotalCost() {
         this.totalCost = 0.0;
-        for (CustomerOrderFoodItem foodItem : foodItems) {
-            this.totalCost += foodItem.getPrice();
+        if (this.foodItems != null){
+            for (CustomerOrderFoodItem foodItem : foodItems) {
+                this.totalCost += foodItem.getPrice() == null ? 0.00 : foodItem.getPrice();
+            }
         }
         this.totalCost = Double.parseDouble(new DecimalFormat("#.00").format(this.totalCost).replace(",", "."));
     }
 
-    public CustomerOrder() {
-    }
+
 
     public Integer getId() {
         return id;
@@ -54,11 +80,6 @@ public class CustomerOrder {
         return totalCost;
     }
 
-    public void setTotalCost(Double totalCost) {
-        this.totalCost = totalCost;
-    }
-
-
     public CustomerOrderCustomer getCustomer() {
         return customer;
     }
@@ -73,6 +94,7 @@ public class CustomerOrder {
 
     public void setFoodItems(List<CustomerOrderFoodItem> foodItems) {
         this.foodItems = foodItems;
+        setTotalCost();
     }
 
     public void setStatus(CustomerOrderStatus status) {
@@ -81,6 +103,14 @@ public class CustomerOrder {
 
     public String fromCustomerOrderStatus(CustomerOrderStatus status) {
         return status.getDescription();
+    }
+
+    public LocalDateTime get_created() {
+        return _created;
+    }
+
+    public void set_created(LocalDateTime _created) {
+        this._created = _created;
     }
 
 }
