@@ -4,18 +4,28 @@ import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.Customer
 import br.com.tp.lanchescaieiras._core.commons.utils.integrations.CustomerOrderIntegrationUtil;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderFoodItem;
+import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CustomerOrderUseCaseUtils {
 
-    public static CustomerOrder getFoodItemsDetails(CustomerOrder customerOrder, CustomerOrderGateway customerOrderGateway){
+    public static void getCustomerDetails(CustomerOrder customerOrder, CustomerOrderGateway customerOrderGateway){
+        //Validação somente quando é informado id do cliente. Requer um id válido
+        if (customerOrder.getCustomer() != null && customerOrder.getCustomer().getId() != null) {
+            Integer customerId = customerOrder.getCustomer().getId();
+            customerOrder.setCustomer(CustomerOrderIntegrationUtil.getCustomerDetail(customerId,customerOrderGateway));
+            if (customerOrder.getCustomer() ==null){
+                throw new CustomerOrderException("Cliente com id "+ customerId +" não encontrado. Envie um pedido com cliente válido.",400);
+            }
+        }
+    }
 
+    public static void getFoodItemsDetails(CustomerOrder customerOrder, CustomerOrderGateway customerOrderGateway){
         List<Integer> foodItemsIds = customerOrder.getFoodItems().stream().map(CustomerOrderFoodItem::getId).distinct().collect(Collectors.toList());
         List<CustomerOrderFoodItem> foodItemDetails = CustomerOrderIntegrationUtil.getFoodItemDetails(foodItemsIds,customerOrderGateway);
         customerOrder.setFoodItems(mergeDetails(customerOrder.getFoodItems(),foodItemDetails));
-        return customerOrder;
     }
 
     public static List<CustomerOrderFoodItem> mergeDetails(List<CustomerOrderFoodItem> orderItems, List<CustomerOrderFoodItem> foodItemDetails) {
