@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras._core.domain.notification;
 
-import br.com.tp.lanchescaieiras._core.commons.domain.ResponseMetadata;
+import br.com.tp.lanchescaieiras._core.commons.model.ResponseMetadata;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.util.List;

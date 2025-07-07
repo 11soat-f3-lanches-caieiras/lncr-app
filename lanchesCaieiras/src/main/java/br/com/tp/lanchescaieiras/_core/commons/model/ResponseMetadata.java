@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras._core.commons.domain;
+package br.com.tp.lanchescaieiras._core.commons.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

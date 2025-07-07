@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras._external.commons.utils;
 
-import br.com.tp.lanchescaieiras._core.commons.domain.ResponseMetadata;
+import br.com.tp.lanchescaieiras._core.commons.model.ResponseMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

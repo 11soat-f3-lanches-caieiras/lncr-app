@@ -1,7 +1,6 @@
 package br.com.tp.lanchescaieiras._core.commons.utils;
 
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderGateway;
-import br.com.tp.lanchescaieiras._core.commons.utils.integrations.CustomerOrderIntegrationUtil;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderFoodItem;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
@@ -15,7 +14,7 @@ public class CustomerOrderUseCaseUtils {
         //Validação somente quando é informado id do cliente. Requer um id válido
         if (customerOrder.getCustomer() != null && customerOrder.getCustomer().getId() != null) {
             Integer customerId = customerOrder.getCustomer().getId();
-            customerOrder.setCustomer(CustomerOrderIntegrationUtil.getCustomerDetail(customerId,customerOrderGateway));
+            customerOrder.setCustomer(customerOrderGateway.getCustomerDetails(customerId));
             if (customerOrder.getCustomer() ==null){
                 throw new CustomerOrderException("Cliente com id "+ customerId +" não encontrado. Envie um pedido com cliente válido.",400);
             }
@@ -24,7 +23,7 @@ public class CustomerOrderUseCaseUtils {
 
     public static void getFoodItemsDetails(CustomerOrder customerOrder, CustomerOrderGateway customerOrderGateway){
         List<Integer> foodItemsIds = customerOrder.getFoodItems().stream().map(CustomerOrderFoodItem::getId).distinct().collect(Collectors.toList());
-        List<CustomerOrderFoodItem> foodItemDetails = CustomerOrderIntegrationUtil.getFoodItemDetails(foodItemsIds,customerOrderGateway);
+        List<CustomerOrderFoodItem> foodItemDetails = customerOrderGateway.getFoodItemsDetails(foodItemsIds);
         customerOrder.setFoodItems(mergeDetails(customerOrder.getFoodItems(),foodItemDetails));
     }
 
