@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras._core.adapters.customerorder;
 
 import br.com.tp.lanchescaieiras._core.applications.customerorder.usecases.CreateCustomerOrderUseCase;
 import br.com.tp.lanchescaieiras._core.applications.customerorder.usecases.GetCustomerOrderUseCase;
+import br.com.tp.lanchescaieiras._core.applications.customerorder.usecases.UpdateCustomerOrderUseCase;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderController;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderDatabase;
@@ -38,6 +39,12 @@ public class CustomerOrderControllerImpl implements CustomerOrderController {
     public List<CustomerOrderDTO> getByStatusList(CustomerOrderDatabase customerOrderDatabase, List<String> statusList, Boolean includeFoodItems) {
         List<CustomerOrder> customerOrderList = new GetCustomerOrderUseCase(createCustomerOrderGateway()).getByStatusList(statusList,includeFoodItems);
         return new CustomerOrderPresenter(customerOrderMapper).getByStatusList(customerOrderList, statusList);
+    }
+
+    @Override
+    public CustomerOrderDTO updateStatusById(CustomerOrderDatabase customerOrderDatabase, Integer customerOrderId, String newStatus, Boolean forceUpdate) {
+        CustomerOrder customerOrder = new UpdateCustomerOrderUseCase(createCustomerOrderGateway()).updateStatusById(customerOrderId,newStatus,forceUpdate);
+        return new CustomerOrderPresenter(customerOrderMapper).updatedStatus(customerOrder);
     }
 
     private CustomerOrderGateway createCustomerOrderGateway(){

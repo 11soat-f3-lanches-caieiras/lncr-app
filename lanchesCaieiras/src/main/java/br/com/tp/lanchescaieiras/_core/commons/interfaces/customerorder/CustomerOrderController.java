@@ -12,6 +12,8 @@ public interface CustomerOrderController {
 
     List<CustomerOrderDTO> getByStatusList(CustomerOrderDatabase customerOrderDatabase, List<String> statusList, Boolean includeFoodItems);
 
+    CustomerOrderDTO updateStatusById(CustomerOrderDatabase customerOrderDatabase, Integer customerOrderId, String newStatus, Boolean forceUpdate);
+
     /*CustomerOrderDTO getCustomerOrderById(Integer id, Boolean includeFoodItems);
 
     List<CustomerOrderDTO> getCustomerOrderByStatus(String status, Boolean includeFoodItems);

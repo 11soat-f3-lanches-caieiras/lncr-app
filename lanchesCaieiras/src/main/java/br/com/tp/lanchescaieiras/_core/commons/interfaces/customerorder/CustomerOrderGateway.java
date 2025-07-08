@@ -20,9 +20,15 @@ public interface CustomerOrderGateway {
 
     void sendNotification(String notificationSource, Integer artefactId, String message);
 
+    CustomerOrder getCustomerOrderById(Integer customerOrderId);
+
     CustomerOrder getCustomerOrderById(Integer customerOrderId, Boolean includFoodItems);
 
     List<CustomerOrder> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems);
+
+    CustomerOrder updateCustomerOrder(CustomerOrder updateCustomerOrder);
+
+
 
     /*CustomerOrder getCustomerOrderById(Integer id, Boolean includeFoodItems);
 

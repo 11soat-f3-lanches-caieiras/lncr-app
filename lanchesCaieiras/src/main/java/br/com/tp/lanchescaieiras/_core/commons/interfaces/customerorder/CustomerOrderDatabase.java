@@ -24,15 +24,6 @@ public interface CustomerOrderDatabase {
 
     List<CustomerOrderDTO> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems);
 
+    CustomerOrderDTO updateCustomerOrder(CustomerOrderDTO updatedCustomerOrderDTO);
 
-
-    /*CustomerOrder findById(Integer id);
-
-    List<CustomerOrder> findByStatusId(Integer statusId);
-
-    CustomerOrder updateStatusById(Integer id, Integer statusId);
-
-    CustomerOrderFoodItem save(CustomerOrderFoodItem foodItem, Integer id);
-
-    List<CustomerOrderFoodItem> findByCustomerOrderId(Integer customerOrderId);*/
 }

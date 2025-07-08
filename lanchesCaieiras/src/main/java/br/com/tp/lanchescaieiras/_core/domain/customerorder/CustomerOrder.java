@@ -74,8 +74,12 @@ public class CustomerOrder {
         return status;
     }
 
+    public void setStatus(String status, Boolean forceUpdate) {
+        this.status = validateNewStatusRules(this.status,status,forceUpdate);
+    }
+
     public void setStatus(String status) {
-        this.status = status;
+        this.status = validateNewStatusRules(this.status,status,true);
     }
 
     public Double getTotalCost() {
@@ -115,6 +119,21 @@ public class CustomerOrder {
 
     public void set_created(LocalDateTime _created) {
         this._created = _created;
+    }
+
+    private String validateNewStatusRules(String actualStatus, String newStatus, Boolean forceUpdate) {
+        newStatus = CustomerOrderStatus.fromDescription(newStatus).getDescription();
+        if (forceUpdate == true) {
+            return newStatus;
+        } else {
+            Integer actualStatusId = CustomerOrderStatus.fromDescription(actualStatus).getId();
+            Integer newStatusId = CustomerOrderStatus.fromDescription(newStatus).getId();
+            if (actualStatusId + 1 == newStatusId) {
+                return newStatus;
+            } else {
+                throw new CustomerOrderException("Erro na atualização no status do pedido. Não é permitido atualizar o status de: " + actualStatus + " para: " + newStatus, 400);
+            }
+        }
     }
 
 }

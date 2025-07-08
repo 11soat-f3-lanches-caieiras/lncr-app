@@ -20,13 +20,8 @@ public interface CustomerOrderRestController {
     ResponseEntity<ResponseListModel<CustomerOrderDTO>>getCustomerOrderByStatus(@PathVariable(name = "statusList") List<String> statusList,
                                                                                 @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
 
-    /*ResponseEntity<CustomerOrderResponse> getCustomerOrderById(@PathVariable Integer id,
-                                                               @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
-
-    ResponseEntity<CustomerOrderListResponse> getCustomerOrderByStatus(@PathVariable String status,
-                                                                       @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
-
-    ResponseEntity<CustomerOrderResponse> updateOrderStatusById(@PathVariable Integer id,
-                                                                @PathVariable String newStatus, @RequestParam Boolean forceUpdate);*/
+    ResponseEntity<ResponseModel<CustomerOrderDTO>> updateOrderStatusById(@PathVariable(name="customerOrderId") Integer customerOrderId,
+                                                                @PathVariable(name = "newStatus") String newStatus,
+                                                                @RequestParam(name="forceUpdate", required = false, defaultValue = "false") Boolean forceUpdate);
 
 }

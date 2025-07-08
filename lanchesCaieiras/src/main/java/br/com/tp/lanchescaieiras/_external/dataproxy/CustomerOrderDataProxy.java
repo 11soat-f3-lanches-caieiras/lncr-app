@@ -87,6 +87,11 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
         return customerOrderDTOList;
     }
 
+    @Override
+    public CustomerOrderDTO updateCustomerOrder(CustomerOrderDTO updateCustomerOrderDTO) {
+        return this.jpaCustomerOrderPostgresRepository.save(updateCustomerOrderDTO);
+    }
+
     private List<CustomerOrderFoodItemDTO> getFoodItemsInCustomerOrdersIdList(List<CustomerOrderDTO> customerOrderDTOList, Boolean includeFoodItems){
             List<Integer> customerOrdersIdsList = customerOrderDTOList.stream()
                     .map(CustomerOrderDTO::getId)

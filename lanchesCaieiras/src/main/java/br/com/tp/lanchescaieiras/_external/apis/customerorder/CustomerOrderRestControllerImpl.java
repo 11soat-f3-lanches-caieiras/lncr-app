@@ -17,19 +17,19 @@ import java.util.List;
 public class CustomerOrderRestControllerImpl implements CustomerOrderRestController {
 
     public final CustomerOrderConfig customerOrderConfig;
-    public final CustomerOrderDataProxy customerOrderDataProxy;
+    public final CustomerOrderDataProxy customerOrderDatabase;
     public final CustomerOrderController customerOrderController;
 
-    public CustomerOrderRestControllerImpl(CustomerOrderConfig customerOrderConfig, CustomerOrderDataProxy customerOrderDataProxy, CustomerOrderController customerOrderController) {
+    public CustomerOrderRestControllerImpl(CustomerOrderConfig customerOrderConfig, CustomerOrderDataProxy customerOrderDatabase, CustomerOrderController customerOrderController) {
         this.customerOrderConfig = customerOrderConfig;
-        this.customerOrderDataProxy = customerOrderDataProxy;
+        this.customerOrderDatabase = customerOrderDatabase;
         this.customerOrderController = customerOrderController;
     }
 
     @Override
     @PostMapping()
     public ResponseEntity<ResponseModel<CustomerOrderDTO>> createCustomerOrder(@RequestBody CustomerOrderDTO customerOrderDTO) {
-        customerOrderDTO = this.customerOrderController.create(customerOrderDataProxy, customerOrderDTO);
+        customerOrderDTO = this.customerOrderController.create(customerOrderDatabase, customerOrderDTO);
         return ResponseEntityModelUtil.created(customerOrderDTO,customerOrderConfig.getLocationPrefix() + "/" + customerOrderDTO.getId());
 
     }
@@ -39,7 +39,7 @@ public class CustomerOrderRestControllerImpl implements CustomerOrderRestControl
     @GetMapping("/{customerOrderId}")
     public ResponseEntity<ResponseModel<CustomerOrderDTO>> getCustomerOrderById(@PathVariable(name="customerOrderId") Integer customerOrderId,
                                                                                 @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems) {
-        CustomerOrderDTO customerOrderDTO = this.customerOrderController.getById(customerOrderDataProxy, customerOrderId, includeFoodItems);
+        CustomerOrderDTO customerOrderDTO = this.customerOrderController.getById(customerOrderDatabase, customerOrderId, includeFoodItems);
         return ResponseEntityModelUtil.OK(customerOrderDTO);
     }
 
@@ -48,17 +48,16 @@ public class CustomerOrderRestControllerImpl implements CustomerOrderRestControl
     public ResponseEntity<ResponseListModel<CustomerOrderDTO>>
     getCustomerOrderByStatus(@PathVariable(name = "statusList") List<String> statusList,
                              @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems) {
-        List<CustomerOrderDTO> customerOrderDTOList = this.customerOrderController.getByStatusList(customerOrderDataProxy, statusList, includeFoodItems);
+        List<CustomerOrderDTO> customerOrderDTOList = this.customerOrderController.getByStatusList(customerOrderDatabase, statusList, includeFoodItems);
         return ResponseEntityModelUtil.listOK(customerOrderDTOList);
     }
-    /*
-    @Override
-    @PatchMapping("/{id}/updateStatus/{newStatus}")
-    public ResponseEntity<CustomerOrderResponse> updateOrderStatusById(@PathVariable(name = "id", required = true) Integer id,
-                                                                       @PathVariable(name = "newStatus", required = true) String newStatus,
-                                                                       @RequestParam(name = "forceUpdate", required = false, defaultValue = "false") Boolean forceUpdate) {
-        CustomerOrder customerOrder = customerOrderServices.updateStatusById(id, newStatus, forceUpdate);
-        return new ResponseEntity<CustomerOrderResponse>(new CustomerOrderResponse(customerOrder), HttpStatus.OK);
 
-    }*/
+    @Override
+    @PatchMapping("/{customerOrderId}/updateStatus/{newStatus}")
+    public ResponseEntity<ResponseModel<CustomerOrderDTO>> updateOrderStatusById(@PathVariable(name = "customerOrderId") Integer customerOrderId,
+                                                                                 @PathVariable(name = "newStatus") String newStatus,
+                                                                                 @RequestParam(name = "forceUpdate", required = false, defaultValue = "false") Boolean forceUpdate){
+        CustomerOrderDTO updatedCustomerOrderDTO = this.customerOrderController.updateStatusById(customerOrderDatabase,customerOrderId,newStatus,forceUpdate);
+        return ResponseEntityModelUtil.OK(updatedCustomerOrderDTO);
+    }
 }

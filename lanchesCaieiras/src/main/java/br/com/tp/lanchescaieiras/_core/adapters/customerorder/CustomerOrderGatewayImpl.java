@@ -57,6 +57,11 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
     }
 
     @Override
+    public CustomerOrder getCustomerOrderById(Integer customerOrderId) {
+        return getCustomerOrderById(customerOrderId,false);
+    }
+
+    @Override
     public CustomerOrder getCustomerOrderById(Integer customerOrderId, Boolean includFoodItems) {
         CustomerOrderDTO customerOrderDTO = this.customerOrderDatabase.getCustomerOrderById(customerOrderId,includFoodItems);
         return this.customerOrderMapper.customerOrderToDomain(customerOrderDTO);
@@ -66,6 +71,14 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
     public List<CustomerOrder> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems) {
         List<CustomerOrderDTO> customerOrderDTOList = this.customerOrderDatabase.getCustomerOrderByStatusList(statusListIds,includeFoodItems);
         return customerOrderDTOList.stream().map(customerOrderMapper::customerOrderToDomain).toList();
+    }
+
+    @Override
+    public CustomerOrder updateCustomerOrder(CustomerOrder updatedCustomerOrder) {
+
+        CustomerOrderDTO updatedCustomerOrderDTO = this.customerOrderMapper.customerOrderToDTO(updatedCustomerOrder);
+        updatedCustomerOrderDTO = this.customerOrderDatabase.updateCustomerOrder(updatedCustomerOrderDTO);
+        return this.customerOrderMapper.customerOrderToDomain(updatedCustomerOrderDTO);
     }
 }
 

@@ -3,7 +3,11 @@ package br.com.tp.lanchescaieiras._core.adapters.customerorder;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CustomerOrderPresenter {
 
@@ -23,7 +27,11 @@ public class CustomerOrderPresenter {
     }
 
     public List<CustomerOrderDTO> getByStatusList(List<CustomerOrder> customerOrderList, List<String> statusOrderList) {
-        List<CustomerOrder> newCustomerOrderList = new ArrayList<>(customerOrderList);
+        //Defensiva para não ter registros sem informações que são utilizados na ordenação.
+        List<CustomerOrder> newCustomerOrderList = customerOrderList.stream()
+                .filter(order -> order.get_created() != null && order.getStatus() != null)
+                .collect(Collectors.toList());
+        //Executar ordenação pela sequência de status consultados, estes mais
         newCustomerOrderList.sort(Comparator
                 .comparingInt((CustomerOrder o) -> statusOrderMap(statusOrderList).getOrDefault(o.getStatus(), Integer.MAX_VALUE))
                 .thenComparing(CustomerOrder::get_created));
@@ -35,5 +43,9 @@ public class CustomerOrderPresenter {
         for (int i = 0; i < statusOrderList.size(); i++)
             statusOrderMap.put(statusOrderList.get(i),i+1);
         return statusOrderMap;
+    }
+
+    public CustomerOrderDTO updatedStatus(CustomerOrder customerOrder) {
+        return this.customerOrderMapper.customerOrderToDTO(customerOrder);
     }
 }
