@@ -2,32 +2,36 @@ package br.com.tp.lanchescaieiras._external.apis.fooditem;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
-import br.com.tp.lanchescaieiras._external.commons.model.Response;
-import br.com.tp.lanchescaieiras._external.commons.model.ResponseList;
+import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
+import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 public interface FoodItemRestController {
 
-    ResponseEntity<Response<FoodItemDTO>> createFoodItem(@RequestBody FoodItemDTO foodItemDTO);
+    ResponseEntity<ResponseModel<FoodItemDTO>> createFoodItem(@RequestBody FoodItemDTO foodItemDTO);
 
-    ResponseEntity<ResponseList<FoodItemDTO>> getAllFoodItems(@RequestParam(name = "_limit", required = false) Integer _limit,
-                                                              @RequestParam(name = "category", required = false) String category,
-                                                              @RequestParam(name = "includeImages", required = false) Boolean includeImages);
+    ResponseEntity<ResponseListModel<FoodItemDTO>> getAllFoodItems(@RequestParam(name = "_limit", required = false) Integer _limit,
+                                                                   @RequestParam(name = "category", required = false) String category,
+                                                                   @RequestParam(name = "includeImages", required = false) Boolean includeImages);
 
-    ResponseEntity<Response<FoodItemDTO>> getFoodItemById(@PathVariable(name = "id") Integer foodItemId,
-                                                          @RequestParam(name = "includeImages", required = false) Boolean includeImages);
+    ResponseEntity<ResponseModel<FoodItemDTO>> getFoodItemById(@PathVariable(name = "foodItemId") Integer foodItemId,
+                                                               @RequestParam(name = "includeImages", required = false) Boolean includeImages);
 
-    ResponseEntity<Response<FoodItemDTO>> partialUpdateFoodItemById(@PathVariable(name = "foodItemId") Integer foodItemId,
-                                                                    @RequestBody FoodItemDTO foodItemDTO);
+    ResponseEntity<ResponseListModel<FoodItemDTO>> getFoodItemByIdList(@PathVariable(name = "foodItemIdList") List<Integer> foodItemIdList);
 
-    ResponseEntity<Response<FoodItemDTO>> deleteFoodItemById(@PathVariable Integer id);
+    ResponseEntity<ResponseModel<FoodItemDTO>> partialUpdateFoodItemById(@PathVariable(name = "foodItemId") Integer foodItemId,
+                                                                         @RequestBody FoodItemDTO foodItemDTO);
 
-    ResponseEntity<Response<FoodItemImageDTO>> createFoodItemImage(@PathVariable("foodItemId") Integer foodItemId, @RequestBody FoodItemImageDTO foodItemImageDTO);
+    ResponseEntity<ResponseModel<FoodItemDTO>> deleteFoodItemById(@PathVariable Integer id);
 
-    ResponseEntity<ResponseList<FoodItemImageDTO>> getFoodItemImagesByFoodItemId(@PathVariable Integer foodItemId, @RequestParam(name = "includeData", required = false, defaultValue = "false") Boolean includeData);
+    ResponseEntity<ResponseModel<FoodItemImageDTO>> createFoodItemImage(@PathVariable("foodItemId") Integer foodItemId, @RequestBody FoodItemImageDTO foodItemImageDTO);
 
-    ResponseEntity<Response<FoodItemImageDTO>> deleteFoodItemImageByFoodItemId(@PathVariable("foodItemId") Integer foodItemId);
+    ResponseEntity<ResponseListModel<FoodItemImageDTO>> getFoodItemImagesByFoodItemId(@PathVariable Integer foodItemId, @RequestParam(name = "includeData", required = false, defaultValue = "false") Boolean includeData);
+
+    ResponseEntity<ResponseModel<FoodItemImageDTO>> deleteFoodItemImageByFoodItemId(@PathVariable("foodItemId") Integer foodItemId);
 }

@@ -12,11 +12,19 @@ public interface CustomerOrderDatabase {
 
     CustomerOrderCustomerDTO getCustomerDetails(Integer customerId);
 
-    List<CustomerOrderFoodItemDTO> getFoodItemsDetails(List<Integer> foodItemListIds);
+    List<CustomerOrderCustomerDTO> getCustomerDetailsList(List<Integer> customerIdList);
+
+    List<CustomerOrderFoodItemDTO> getFoodItemsDetailsList(List<Integer> foodItemListIds);
 
     void createPaymentCharge(Integer id, Double totalCost);
 
     void sendNotification(String notificationSource, Integer artefactId, String message);
+
+    CustomerOrderDTO getCustomerOrderById(Integer customerOrderId, Boolean includFoodItems);
+
+    List<CustomerOrderDTO> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems);
+
+
 
     /*CustomerOrder findById(Integer id);
 

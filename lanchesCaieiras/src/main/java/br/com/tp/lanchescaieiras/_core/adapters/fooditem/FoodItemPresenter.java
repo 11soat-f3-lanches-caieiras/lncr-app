@@ -24,6 +24,9 @@ public class FoodItemPresenter {
     public FoodItemDTO getById(FoodItem foodItem, String imageLocationPrefix) {
         return formatFoodItemDTO(foodItemMapper.domainToDto(foodItem), imageLocationPrefix);
     }
+    public List<FoodItemDTO> getByIdList(List<FoodItem> foodItemList){
+        return foodItemList.stream().map(foodItemMapper::domainToDto).toList();
+    }
 
     public FoodItemDTO patialUpdateById(FoodItem foodItem, String imageLocationPrefix) {
         return formatFoodItemDTO(foodItemMapper.domainToDto(foodItem), imageLocationPrefix);

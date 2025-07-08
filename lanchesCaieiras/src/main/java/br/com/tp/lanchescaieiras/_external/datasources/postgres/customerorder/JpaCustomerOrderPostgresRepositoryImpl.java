@@ -5,6 +5,8 @@ import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderD
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class JpaCustomerOrderPostgresRepositoryImpl{
 
@@ -22,4 +24,15 @@ public class JpaCustomerOrderPostgresRepositoryImpl{
     }
 
 
+    public CustomerOrderDTO findById(Integer customerOrderId) {
+        return this.jpaCustomerOrderPostgresRepository.findById(customerOrderId)
+                .map(jpaCustomerOrderPostgresMapper::jpaCustomerOrderToDTO)
+                .orElse(null);
+    }
+
+    public List<CustomerOrderDTO> findByStatusList(List<Integer> statusList) {
+       List<JpaCustomerOrderPostgresEntity> jpaCustomerOrderList =  jpaCustomerOrderPostgresRepository.findByStatusListIds(statusList);
+       return jpaCustomerOrderList.stream().map(jpaCustomerOrderPostgresMapper::jpaCustomerOrderToDTO).toList();
+
+    }
 }

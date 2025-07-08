@@ -2,8 +2,10 @@ package br.com.tp.lanchescaieiras._external.integrations.fooditem;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderFoodItemDTO;
 
+import java.util.List;
+
 public interface FoodItemIntegration {
 
-    CustomerOrderFoodItemDTO getFoodItemDetailsFromCustomerOrder(Integer foodItemId);
+    List<CustomerOrderFoodItemDTO> getFoodItemDetailList(List<Integer> foodItemIdList);
 
 }

@@ -48,17 +48,19 @@ public class CustomerOrder {
 
     }
 
+    public void setTotalCost(Double totalCost){
+        this.totalCost = totalCost;
+    }
+
     public void setTotalCost() {
         this.totalCost = 0.0;
-        if (this.foodItems != null){
+        if (this.foodItems != null) {
             for (CustomerOrderFoodItem foodItem : foodItems) {
                 this.totalCost += foodItem.getPrice() == null ? 0.00 : foodItem.getPrice();
             }
         }
         this.totalCost = Double.parseDouble(new DecimalFormat("#.00").format(this.totalCost).replace(",", "."));
     }
-
-
 
     public Integer getId() {
         return id;
@@ -94,7 +96,9 @@ public class CustomerOrder {
 
     public void setFoodItems(List<CustomerOrderFoodItem> foodItems) {
         this.foodItems = foodItems;
-        setTotalCost();
+        if (this.foodItems != null) {
+            setTotalCost();
+        }
     }
 
     public void setStatus(CustomerOrderStatus status) {

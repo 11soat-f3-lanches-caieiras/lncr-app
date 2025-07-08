@@ -7,63 +7,66 @@ import br.com.tp.lanchescaieiras._core.applications.customer.PartialUpdateCustom
 import br.com.tp.lanchescaieiras._core.commons.dtos.customer.CustomerDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customer.CustomerController;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customer.CustomerDatabase;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.customer.CustomerGateway;
 import br.com.tp.lanchescaieiras._core.domain.customer.Customer;
+import br.com.tp.lanchescaieiras._external.datasources.postgres.customer.JpaCustomerPostgresReposityImpl;
 
 import java.util.List;
 import java.util.Optional;
 
 public class CustomerControllerImpl implements CustomerController {
 
-    public CustomerControllerImpl() {
+        private final CustomerDatabase customerDatabase;
+        private final CustomerMapper customerMapper;
+
+    public CustomerControllerImpl(CustomerDatabase customerDatabase) {
+        this.customerDatabase = customerDatabase;
+        this.customerMapper = new CustomerMapper();
     }
 
     @Override
     public CustomerDTO create(CustomerDTO customerDto, CustomerDatabase customerDatabase) {
-        CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
-
-        CreateCustomerUseCase createCustomerUseCase = new CreateCustomerUseCase(customerGateway);
-        CustomerMapper customerMapper = new CustomerMapper();
-        Customer customer = createCustomerUseCase.execute(customerDto);
+        Customer customer = new CreateCustomerUseCase(createCustomerGateway()).execute(customerDto);
         return new CustomerPresenter(customerMapper).created(customer);
 
     }
 
     @Override
     public List<CustomerDTO> getAll(Optional<Integer> _limit, CustomerDatabase customerDatabase) {
-        CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
-        CustomerMapper customerMapper = new CustomerMapper();
-        List<Customer> customerList = new GetCustomerUseCase(customerGateway).getAll(_limit);
+        List<Customer> customerList = new GetCustomerUseCase(createCustomerGateway()).getAll(_limit);
         return new CustomerPresenter(customerMapper).getAll(customerList);
     }
 
     @Override
     public CustomerDTO getById(Integer id, CustomerDatabase customerDatabase) {
-        CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
-        CustomerMapper customerMapper = new CustomerMapper();
-        Customer customer = new GetCustomerUseCase(customerGateway).getById(id);
+        Customer customer = new GetCustomerUseCase(createCustomerGateway()).getById(id);
         return new CustomerPresenter(customerMapper).getbyId(customer);
     }
 
     @Override
     public CustomerDTO getByDocumentNumber(String documentNumber, CustomerDatabase customerDatabase) {
-        CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
-        CustomerMapper customerMapper = new CustomerMapper();
-        Customer customer = new GetCustomerUseCase(customerGateway).getByDocumentNumber(documentNumber);
+        Customer customer = new GetCustomerUseCase(createCustomerGateway()).getByDocumentNumber(documentNumber);
         return new CustomerPresenter(customerMapper).getByDocumentNumber(customer);
     }
 
     @Override
     public CustomerDTO partialUpdateById(Integer id, CustomerDTO customerDTO, CustomerDatabase customerDatabase) {
-        CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
-        Customer customer = new PartialUpdateCustomerUseCase(customerGateway).execute(id, customerDTO);
-        CustomerMapper customerMapper = new CustomerMapper();
+        Customer customer = new PartialUpdateCustomerUseCase(createCustomerGateway()).execute(id, customerDTO);
         return new CustomerPresenter(customerMapper).partialUpdatedById(customer);
     }
 
     @Override
     public void delete(Integer id, CustomerDatabase customerDatabase) {
-        CustomerGatewayImpl customerGateway = new CustomerGatewayImpl(customerDatabase);
-        CustomerMapper customerMapper = new CustomerMapper();
-        new DeleteCustomerUseCase(customerGateway).execute(id);
+        new DeleteCustomerUseCase(createCustomerGateway()).execute(id);
+    }
+
+    @Override
+    public List<CustomerDTO> getByIdList(List<Integer> customerIdList, JpaCustomerPostgresReposityImpl jpaCustomerPostgresReposity) {
+        List<Customer> customerList = new GetCustomerUseCase(createCustomerGateway()).getByIdList(customerIdList);
+        return new CustomerPresenter(customerMapper).getByIdList(customerList);
+     }
+
+    private CustomerGateway createCustomerGateway(){
+        return new CustomerGatewayImpl(customerDatabase);
     }
 }

@@ -14,6 +14,8 @@ public interface FoodItemController {
 
     FoodItemDTO getById(Integer foodItemId, Boolean includeImages, FoodItemDatabase foodItemDatabase, FoodItemImageRules foodItemImageRules);
 
+    List<FoodItemDTO> getByIdList(List<Integer> foodItemIdList, FoodItemDatabase foodItemDatabase);
+
     FoodItemDTO partialUpdateById(Integer id, FoodItemDTO foodItemDTO, FoodItemDatabase foodItemDatabase, FoodItemImageRules foodItemImageRules);
 
     void deleteById(Integer foodItemId, FoodItemDatabase foodItemDatabase);

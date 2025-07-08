@@ -61,13 +61,19 @@ public class FoodItemGatewayImpl implements FoodItemGateway {
     }
 
     @Override
+    public FoodItem getFoodItemById(Integer foodItemId, Boolean includeImages) {
+        return this.foodItemMapper.dtoToDomain(this.foodItemDatabase.findFoodItemById(foodItemId,includeImages));
+    }
+
+    @Override
     public FoodItem getFoodItemById(Integer foodItemId) {
         return getFoodItemById(foodItemId, false);
     }
 
     @Override
-    public FoodItem getFoodItemById(Integer foodItemId, Boolean includeImages) {
-        return this.foodItemMapper.dtoToDomain(this.foodItemDatabase.findFoodItemById(foodItemId, includeImages));
+    public List<FoodItem> getFoodItemByIdList(List<Integer> foodItemIds) {
+        List<FoodItemDTO> foodItemDTOList =  this.foodItemDatabase.findFoodItemByIdList(foodItemIds);
+        return foodItemDTOList.stream().map(foodItemMapper::dtoToDomain).toList();
     }
 
     @Override

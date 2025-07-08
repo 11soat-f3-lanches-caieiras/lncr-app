@@ -32,4 +32,8 @@ public class CustomerPresenter {
     public CustomerDTO partialUpdatedById(Customer customer) {
         return customerMapper.domainToDto(customer);
     }
+
+    public List<CustomerDTO> getByIdList(List<Customer> customerList) {
+        return customerList.stream().map(customerMapper::domainToDto).toList();
+    }
 }

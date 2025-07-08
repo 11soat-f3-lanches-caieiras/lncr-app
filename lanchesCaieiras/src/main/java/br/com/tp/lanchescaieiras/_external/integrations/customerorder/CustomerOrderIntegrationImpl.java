@@ -44,7 +44,7 @@ public class CustomerOrderIntegrationImpl implements CustomerOrderIntegration {
     }
 
     private String getUrl(Integer customerOrderId, String newStatus) {
-        return integrationConfig.getCustomerOrderUrl() + "/" + customerOrderId + "/updateStatus/" + newStatus;
+        return integrationConfig.getCustomerOrdersUrl() + "/" + customerOrderId + "/updateStatus/" + newStatus;
     }
 
     private HttpHeaders getHeaders() {

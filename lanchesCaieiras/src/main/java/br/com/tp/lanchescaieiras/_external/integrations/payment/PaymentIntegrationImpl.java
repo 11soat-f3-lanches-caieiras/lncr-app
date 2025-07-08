@@ -23,7 +23,7 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
 
     @Override
     public void createPayment(String payment) {
-        String url = integrationConfig.getPaymentUrl() + "/charge";
+        String url = integrationConfig.getPaymentsUrl() + "/charge";
         log.info("Enviando pedido de preparo para cozinha. {}\n{}", payment);
         RestTemplate restTemplate = new RestTemplate();
         CompletableFuture.runAsync(() -> {

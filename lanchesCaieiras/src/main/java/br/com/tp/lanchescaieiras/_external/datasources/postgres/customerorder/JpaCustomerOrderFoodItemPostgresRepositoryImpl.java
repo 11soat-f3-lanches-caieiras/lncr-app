@@ -22,4 +22,16 @@ public class JpaCustomerOrderFoodItemPostgresRepositoryImpl {
         jpaItemList = this.jpaCustomerOrderFoodItemPostgresRepository.saveAll(jpaItemList);
         return jpaItemList.stream().map(jpaCustomerOrderPostgresMapper::jpaCustomerOrderFoodItemToDTO).toList();
     }
+
+    public List<CustomerOrderFoodItemDTO> findByCustomerOrderId(Integer customerOrderId) {
+        return this.jpaCustomerOrderFoodItemPostgresRepository.findByCustomerOrderId(customerOrderId)
+                .stream()
+                .map(jpaCustomerOrderPostgresMapper::jpaCustomerOrderFoodItemToDTO)
+                .toList();
+    }
+
+    public List<CustomerOrderFoodItemDTO> findByCustomerOrderIdList(List<Integer> customerOrdersIdsList) {
+        List<JpaCustomerOrderFoodItemPostgresEntity> jpaCustomerOrderFoodItemList = this.jpaCustomerOrderFoodItemPostgresRepository.findByCustomerOrderIdList(customerOrdersIdsList);
+        return jpaCustomerOrderFoodItemList.stream().map(jpaCustomerOrderPostgresMapper::jpaCustomerOrderFoodItemToDTO).toList();
+    }
 }

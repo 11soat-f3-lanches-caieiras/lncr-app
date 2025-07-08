@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface JpaCustomerPostgresRepository extends JpaRepository<JpaCustomerPostgresEntity, Integer> {
@@ -17,4 +18,6 @@ public interface JpaCustomerPostgresRepository extends JpaRepository<JpaCustomer
     @Query(value = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM customer WHERE email = :email", nativeQuery = true)
     Boolean existsByEmail(@Param("email") String documentNumber);
 
+    @Query(value = "SELECT * FROM customer WHERE id in(:customerIdList)", nativeQuery = true)
+    List<JpaCustomerPostgresEntity> findByCustomerIdList(@Param("customerIdList") List<Integer> customerIdList);
 }

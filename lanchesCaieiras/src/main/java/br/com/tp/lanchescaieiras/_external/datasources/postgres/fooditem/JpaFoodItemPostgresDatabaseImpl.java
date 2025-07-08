@@ -53,6 +53,11 @@ public class JpaFoodItemPostgresDatabaseImpl {
                         .orElse(null));
     }
 
+    public List<FoodItemDTO> findByIdList(List<Integer> foodItemIds) {
+        List<JpaFoodItemPostgresEntity> jpaFoodItemList = this.jpaFoodItemPostgresReposity.findByIdList(foodItemIds);
+        return jpaFoodItemList.stream().map(jpaFoodItemPostgresMapper::toFoodItemDTO).toList();
+    }
+
     public void deleteById(Integer foodItemId) {
         this.jpaFoodItemPostgresReposity.deleteById(foodItemId);
     }

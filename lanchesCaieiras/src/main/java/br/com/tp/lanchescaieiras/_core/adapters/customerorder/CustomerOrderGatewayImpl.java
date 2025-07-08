@@ -1,5 +1,6 @@
 package br.com.tp.lanchescaieiras._core.adapters.customerorder;
 
+import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderCustomerDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderDatabase;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderGateway;
@@ -27,13 +28,19 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
     }
 
     @Override
+    public List<CustomerOrderCustomer> getCustomerDetailsList(List<Integer> customerIdList) {
+        return this.customerOrderDatabase.getCustomerDetailsList(customerIdList).stream().map(customerOrderMapper::customerInOrderToDomain).toList();
+    }
+
+    @Override
     public CustomerOrderCustomer getCustomerDetails(Integer customerId) {
-        return this.customerOrderMapper.customerIrOrderToDomain(this.customerOrderDatabase.getCustomerDetails(customerId));
+        CustomerOrderCustomerDTO customerOrderCustomerDTO = this.customerOrderDatabase.getCustomerDetails(customerId);
+        return this.customerOrderMapper.customerInOrderToDomain(customerOrderCustomerDTO);
     }
 
     @Override
     public List<CustomerOrderFoodItem> getFoodItemsDetails(List<Integer> foodItemListIds) {
-        return this.customerOrderDatabase.getFoodItemsDetails(foodItemListIds)
+        return this.customerOrderDatabase.getFoodItemsDetailsList(foodItemListIds)
                 .stream()
                 .map(customerOrderMapper::foodItemInOrderToDomain)
                 .toList();
@@ -47,6 +54,18 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
     @Override
     public void sendNotification(String notificationSource, Integer artefactId, String message) {
         this.customerOrderDatabase.sendNotification(notificationSource,artefactId,message);
+    }
+
+    @Override
+    public CustomerOrder getCustomerOrderById(Integer customerOrderId, Boolean includFoodItems) {
+        CustomerOrderDTO customerOrderDTO = this.customerOrderDatabase.getCustomerOrderById(customerOrderId,includFoodItems);
+        return this.customerOrderMapper.customerOrderToDomain(customerOrderDTO);
+    }
+
+    @Override
+    public List<CustomerOrder> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems) {
+        List<CustomerOrderDTO> customerOrderDTOList = this.customerOrderDatabase.getCustomerOrderByStatusList(statusListIds,includeFoodItems);
+        return customerOrderDTOList.stream().map(customerOrderMapper::customerOrderToDomain).toList();
     }
 }
 

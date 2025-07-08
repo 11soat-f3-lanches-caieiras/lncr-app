@@ -14,5 +14,7 @@ public interface JpaCustomerOrderPostgresRepository extends JpaRepository<JpaCus
     @Query(value = "select * from customer_order where status_id = :statusId", nativeQuery = true)
     List<JpaCustomerOrderPostgresEntity> findByStatusId(@Param("statusId") Integer statusId);
 
+    @Query(value = "select * from customer_order where status_id in(:statusListIds)", nativeQuery = true)
+    List<JpaCustomerOrderPostgresEntity> findByStatusListIds(@Param("statusListIds") List<Integer> statusListIds);
 
 }

@@ -38,6 +38,14 @@ public class GetFoodItemUseCase {
         return foodItem;
     }
 
+    public List<FoodItem> getByIdList(List<Integer> foodItemIds) {
+        List<FoodItem> foodItemList = foodItemGateway.getFoodItemByIdList(foodItemIds);
+        if (foodItemList == null) {
+            throw new FoodItemException("Item de Alimentação não encontrado com ids: " + foodItemIds, 404);
+        }
+        return foodItemList;
+    }
+
     public List<FoodItemImage> getAllImages(Integer foodItemId, Boolean includeData, FoodItemGatewayImpl foodItemGateway, FoodItemMapper foodItemMapper) {
         List<FoodItemImage> foodItemList = foodItemGateway.getAllImagesByFoodItemId(foodItemId, includeData);
         if (foodItemList.isEmpty()) {

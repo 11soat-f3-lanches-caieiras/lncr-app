@@ -49,6 +49,13 @@ public class JpaCustomerPostgresReposityImpl implements CustomerDatabase {
         this.jpaCustomerRepository.deleteById(id);
     }
 
+    @Override
+    public List<CustomerDTO> findByIdList(List<Integer> customerIdList) {
+        List<JpaCustomerPostgresEntity> jpaCustomerList = this.jpaCustomerRepository.findByCustomerIdList(customerIdList);
+        return jpaCustomerList.stream().map(jpaCustomerPostgresMapper::toCustomerDTO).toList();
+
+    }
+
     public boolean existsByDocumentNumber(String documentNumber) {
         return this.jpaCustomerRepository.existsByDocumentNumber(documentNumber);
     }

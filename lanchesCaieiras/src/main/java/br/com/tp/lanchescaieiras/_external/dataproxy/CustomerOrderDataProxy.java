@@ -10,8 +10,8 @@ import br.com.tp.lanchescaieiras._external.integrations.customer.CustomerIntegra
 import br.com.tp.lanchescaieiras._external.integrations.fooditem.FoodItemIntegrationImpl;
 import br.com.tp.lanchescaieiras._external.integrations.payment.PaymentIntegrationImpl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomerOrderDataProxy implements CustomerOrderDatabase {
 
@@ -50,15 +50,13 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
     }
 
     @Override
-    public List<CustomerOrderFoodItemDTO> getFoodItemsDetails(List<Integer> foodItemListIds) {
-        List<CustomerOrderFoodItemDTO> foodItemsDetailList = new ArrayList<>();
-        for (Integer fooditemId : foodItemListIds){
-            CustomerOrderFoodItemDTO customerOrderFoodItemDTO = this.foodItemIntegration.getFoodItemDetailsFromCustomerOrder(fooditemId);
-            if(customerOrderFoodItemDTO != null) {
-                foodItemsDetailList.add(customerOrderFoodItemDTO);
-            }
-        }
-        return foodItemsDetailList;
+    public List<CustomerOrderCustomerDTO> getCustomerDetailsList(List<Integer> customerIdList) {
+        return this.customerIntegration.getCustomerDetailsList(customerIdList);
+    }
+
+    @Override
+    public List<CustomerOrderFoodItemDTO> getFoodItemsDetailsList(List<Integer> foodItemListIds) {
+        return this.foodItemIntegration.getFoodItemDetailList(foodItemListIds);
     }
 
     @Override
@@ -71,5 +69,38 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
         //implementar envio de notificação
     }
 
+    @Override
+    public CustomerOrderDTO getCustomerOrderById(Integer customerOrderId, Boolean includFoodItems) {
+        CustomerOrderDTO customerOrderDTO = this.jpaCustomerOrderPostgresRepository.findById(customerOrderId);
+        if (customerOrderDTO != null && includFoodItems == true)
+            customerOrderDTO.setFoodItems(this.jpaCustomerOrderFoodItemPostgresRepository.findByCustomerOrderId(customerOrderDTO.getId()));
+        return customerOrderDTO;
+    }
 
+    @Override
+    public List<CustomerOrderDTO> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems) {
+        List<CustomerOrderDTO> customerOrderDTOList = this.jpaCustomerOrderPostgresRepository.findByStatusList(statusListIds);
+        if (customerOrderDTOList != null && includeFoodItems == true){
+            List<CustomerOrderFoodItemDTO> customerOrderFoodItemDTOList = getFoodItemsInCustomerOrdersIdList(customerOrderDTOList,includeFoodItems);
+            customerOrderDTOList = setFoodItemsInCustomerOrder(customerOrderDTOList,customerOrderFoodItemDTOList);
+        }
+        return customerOrderDTOList;
+    }
+
+    private List<CustomerOrderFoodItemDTO> getFoodItemsInCustomerOrdersIdList(List<CustomerOrderDTO> customerOrderDTOList, Boolean includeFoodItems){
+            List<Integer> customerOrdersIdsList = customerOrderDTOList.stream()
+                    .map(CustomerOrderDTO::getId)
+                    .collect(Collectors.toList());
+            return this.jpaCustomerOrderFoodItemPostgresRepository.findByCustomerOrderIdList(customerOrdersIdsList);
+    }
+
+    private List<CustomerOrderDTO> setFoodItemsInCustomerOrder(List<CustomerOrderDTO> customerOrderDTOList, List<CustomerOrderFoodItemDTO> customerOrderFoodItemDTOList){
+        for (CustomerOrderDTO customerOrder : customerOrderDTOList){
+            customerOrder.setFoodItems(customerOrderFoodItemDTOList.stream()
+                    .filter(fooditem -> fooditem.getOrderId().equals(customerOrder.getId()))
+                    .collect(Collectors.toList())
+            );
+        }
+        return customerOrderDTOList;
+    }
 }

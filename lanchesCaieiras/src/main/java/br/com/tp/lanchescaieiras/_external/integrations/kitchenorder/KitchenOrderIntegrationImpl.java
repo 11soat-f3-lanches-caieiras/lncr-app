@@ -25,7 +25,7 @@ public class KitchenOrderIntegrationImpl implements KitchenOrderIntegration {
     @Override
     public void sendKitchenOrder(String kitchenOrder) {
 
-        String url = integrationConfig.getKitchenOrderUrl();
+        String url = integrationConfig.getKitchenOrdersUrl();
         log.info("Enviando pedido de preparo para cozinha. {}\n{}", kitchenOrder);
         RestTemplate restTemplate = new RestTemplate();
         CompletableFuture.runAsync(() -> {

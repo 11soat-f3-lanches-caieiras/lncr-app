@@ -59,6 +59,12 @@ public class CustomerGatewayImpl implements CustomerGateway {
     }
 
     @Override
+    public List<Customer> getCustomerByIdList(List<Integer> customerIdList) {
+        List<CustomerDTO> customerDTOList = this.customerDatabase.findByIdList(customerIdList);
+        return customerDTOList.stream().map(customerMapper::dtoToDomain).toList();
+    }
+
+    @Override
     public void deleteById(Integer id) {
         Customer customer = this.findById(id);
         if (customer == null) {

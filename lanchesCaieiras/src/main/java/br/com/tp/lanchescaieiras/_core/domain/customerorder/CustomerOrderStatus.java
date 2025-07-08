@@ -11,7 +11,7 @@ public enum CustomerOrderStatus implements EnumWithIdDescription {
     PREPARING(3, "Preparing"),
     READY(4, "Ready"),
     FINISHED(5, "Finished"),
-    CANCELED(6, "Canceled");
+    CANCELLED(6, "Cancelled");
 
     @Id
     private final int id;

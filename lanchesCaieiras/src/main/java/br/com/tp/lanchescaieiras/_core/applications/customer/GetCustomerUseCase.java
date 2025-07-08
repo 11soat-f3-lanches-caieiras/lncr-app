@@ -40,5 +40,11 @@ public class GetCustomerUseCase {
         return customer;
     }
 
-
+    public List<Customer> getByIdList(List<Integer> customerIdList) {
+        List<Customer> customer = customerGateway.getCustomerByIdList(customerIdList);
+        if (customer == null){
+            throw new CustomerException("Não foram encontrados clientes com os id: " + customerIdList, 404);
+        }
+        return customer;
+    }
 }

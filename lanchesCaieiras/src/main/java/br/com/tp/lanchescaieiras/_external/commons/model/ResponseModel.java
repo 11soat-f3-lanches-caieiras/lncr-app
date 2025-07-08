@@ -4,18 +4,18 @@ import br.com.tp.lanchescaieiras._core.commons.model.ResponseMetadata;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Response<T> {
+public class ResponseModel<T> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final ResponseMetadata _response;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final T _content;
 
-    public Response(ResponseMetadata response, T content) {
+    public ResponseModel(ResponseMetadata response, T content) {
         this._response = response;
         this._content = content;
     }
 
-    public Response(T content) {
+    public ResponseModel(T content) {
         this._response = new ResponseMetadata();
         this._content = content;
     }

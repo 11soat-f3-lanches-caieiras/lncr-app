@@ -10,13 +10,19 @@ public interface CustomerOrderGateway {
 
     CustomerOrder createCustomerOrder(CustomerOrder customerOrder);
 
-    CustomerOrderCustomer getCustomerDetails(Integer customerId);
+    CustomerOrderCustomer getCustomerDetails(Integer customerIdList);
+
+    List<CustomerOrderCustomer> getCustomerDetailsList(List<Integer> customerIdList);
 
     List<CustomerOrderFoodItem> getFoodItemsDetails(List<Integer> foodItemListIds);
 
     void createPaymentCharge(CustomerOrder customerOrder);
 
     void sendNotification(String notificationSource, Integer artefactId, String message);
+
+    CustomerOrder getCustomerOrderById(Integer customerOrderId, Boolean includFoodItems);
+
+    List<CustomerOrder> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems);
 
     /*CustomerOrder getCustomerOrderById(Integer id, Boolean includeFoodItems);
 

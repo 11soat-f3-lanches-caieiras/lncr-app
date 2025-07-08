@@ -85,6 +85,11 @@ public class FoodItemDataProxy implements FoodItemDatabase {
     }
 
     @Override
+    public List<FoodItemDTO> findFoodItemByIdList(List<Integer> foodItemIds) {
+        return this.jpaFoodItemDatabase.findByIdList(foodItemIds);
+    }
+
+    @Override
     public FoodItemImageDTO findFoodItemImageById(Integer foodItemImageId) {
         return jpaFoodItemImageDatabase.findById(foodItemImageId);
     }

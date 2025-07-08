@@ -1,25 +1,28 @@
 package br.com.tp.lanchescaieiras._external.apis.customer;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.customer.CustomerDTO;
-import br.com.tp.lanchescaieiras._external.commons.model.Response;
-import br.com.tp.lanchescaieiras._external.commons.model.ResponseList;
+import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
+import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CustomerRestController {
 
-    ResponseEntity<Response<CustomerDTO>> createCustomer(@RequestBody CustomerDTO customerDto);
+    ResponseEntity<ResponseModel<CustomerDTO>> createCustomer(@RequestBody CustomerDTO customerDto);
 
-    ResponseEntity<ResponseList<CustomerDTO>> getAllCustomers(Optional<Integer> _limit);
+    ResponseEntity<ResponseListModel<CustomerDTO>> getAllCustomers(Optional<Integer> _limit);
 
-    ResponseEntity<Response<CustomerDTO>> getCustomerById(@PathVariable Integer id);
+    ResponseEntity<ResponseModel<CustomerDTO>> getCustomerById(@PathVariable Integer id);
 
-    ResponseEntity<Response<CustomerDTO>> getCustomerByDocumentNumber(@PathVariable String documentNumber);
+    ResponseEntity<ResponseListModel<CustomerDTO>> getCustomerByIdList(@PathVariable List<Integer> customerIdList);
 
-    ResponseEntity<Response<CustomerDTO>> partialUpdateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable Integer id);
+    ResponseEntity<ResponseModel<CustomerDTO>> getCustomerByDocumentNumber(@PathVariable String documentNumber);
 
-    ResponseEntity<Response<CustomerDTO>> deleteCustomer(@PathVariable Integer id);
+    ResponseEntity<ResponseModel<CustomerDTO>> partialUpdateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable Integer id);
+
+    ResponseEntity<ResponseModel<CustomerDTO>> deleteCustomer(@PathVariable Integer id);
 }

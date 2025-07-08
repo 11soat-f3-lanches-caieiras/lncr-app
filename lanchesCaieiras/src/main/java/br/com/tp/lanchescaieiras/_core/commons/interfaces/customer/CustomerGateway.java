@@ -20,4 +20,5 @@ public interface CustomerGateway {
 
     boolean existsByEmail(String email);
 
+    List<Customer> getCustomerByIdList(List<Integer> customerIdList);
 }

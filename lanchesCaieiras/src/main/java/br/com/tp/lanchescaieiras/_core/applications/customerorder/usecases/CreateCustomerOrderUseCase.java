@@ -4,6 +4,7 @@ import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderD
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderGateway;
 import br.com.tp.lanchescaieiras._core.commons.utils.CustomerOrderUseCaseUtils;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
+import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderStatus;
 
 public class CreateCustomerOrderUseCase {
 
@@ -14,7 +15,7 @@ public class CreateCustomerOrderUseCase {
     }
 
     public CustomerOrder execute(CustomerOrderDTO customerOrderDTO) {
-        customerOrderDTO.setStatus("Checkout");
+        customerOrderDTO.setStatus(CustomerOrderStatus.CHECKOUT.getDescription());
         CustomerOrder customerOrder = new CustomerOrder(customerOrderDTO);
         //Obtendo informações do cliente
         CustomerOrderUseCaseUtils.getCustomerDetails(customerOrder,customerOrderGateway);

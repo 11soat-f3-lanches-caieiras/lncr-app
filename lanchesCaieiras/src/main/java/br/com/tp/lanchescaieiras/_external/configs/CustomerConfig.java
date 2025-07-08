@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras._external.configs;
 
 import br.com.tp.lanchescaieiras._core.adapters.customer.CustomerControllerImpl;
 import br.com.tp.lanchescaieiras._core.applications.payment.mappers.PaymentMapper;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.customer.CustomerDatabase;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.customer.JpaCustomerPostgresMapper;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.customer.JpaCustomerPostgresRepository;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.customer.JpaCustomerPostgresReposityImpl;
@@ -28,8 +29,8 @@ public class CustomerConfig {
     }
 
     @Bean
-    public CustomerControllerImpl customerControllerImpl() {
-        return new CustomerControllerImpl();
+    public CustomerControllerImpl customerControllerImpl(CustomerDatabase customerDatabase) {
+        return new CustomerControllerImpl(customerDatabase);
     }
 
     @Bean

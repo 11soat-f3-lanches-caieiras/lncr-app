@@ -33,13 +33,15 @@ public class CustomerOrderMapper {
         order.setStatus(dto.getStatus());
         order.set_created(dto.get_created());
         if (dto.getCustomer() != null) {
-            order.setCustomer(customerIrOrderToDomain(dto.getCustomer()));
+            order.setCustomer(customerInOrderToDomain(dto.getCustomer()));
         }
         if (dto.getFoodItems() != null) {
             order.setFoodItems(dto.getFoodItems().stream().map(this::foodItemInOrderToDomain).collect(Collectors.toList()));
             order.setTotalCost();
         }
-
+        if (dto.getTotalCost() != null || order.getTotalCost() != null){
+            order.setTotalCost(dto.getTotalCost());
+        }
         return order;
     }
 
@@ -51,7 +53,7 @@ public class CustomerOrderMapper {
         return dto;
     }
 
-    public CustomerOrderCustomer customerIrOrderToDomain(CustomerOrderCustomerDTO dto) {
+    public CustomerOrderCustomer customerInOrderToDomain(CustomerOrderCustomerDTO dto) {
         if (dto == null) return null;
         CustomerOrderCustomer customer = new CustomerOrderCustomer();
         customer.setId(dto.getId());

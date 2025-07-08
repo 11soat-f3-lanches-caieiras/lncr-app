@@ -17,8 +17,10 @@ public interface FoodItemGateway {
     List<FoodItem> getAllFoodItems(Integer _limit, String category, Boolean includeImages);
     List<FoodItemImage> getAllImagesByFoodItemId(Integer foodItemId, Boolean includeData);
 
+
     FoodItem getFoodItemById(Integer foodItemId, Boolean includeImages);
     FoodItem getFoodItemById(Integer foodItemId);
+    List<FoodItem> getFoodItemByIdList(List<Integer> foodItemIds);
     FoodItemImage getFoodItemImageById(Integer foodItemImageId);
 
     FoodItem save(FoodItem foodItem);

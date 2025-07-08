@@ -6,19 +6,13 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "lncr.integration")
 public class IntegrationConfig {
-    private String foodItemsUrl;
     private String customersUrl;
-    private String customerOrderUrl;
-    private String kitchenOrderUrl;
-    private String paymentUrl;
-
-    public String getFoodItemsUrl() {
-        return foodItemsUrl;
-    }
-
-    public void setFoodItemsUrl(String foodItemsUrl) {
-        this.foodItemsUrl = foodItemsUrl;
-    }
+    private String customersListUrl;
+    private String customerOrdersUrl;
+    private String foodItemsUrl;
+    private String foodItemsListUrl;
+    private String kitchenOrdersUrl;
+    private String paymentsUrl;
 
     public String getCustomersUrl() {
         return customersUrl;
@@ -28,27 +22,51 @@ public class IntegrationConfig {
         this.customersUrl = customersUrl;
     }
 
-    public String getCustomerOrderUrl() {
-        return customerOrderUrl;
+    public String getCustomersListUrl() {
+        return customersListUrl;
     }
 
-    public void setCustomerOrderUrl(String customerOrderUrl) {
-        this.customerOrderUrl = customerOrderUrl;
+    public void setCustomersListUrl(String customersListUrl) {
+        this.customersListUrl = customersListUrl;
     }
 
-    public String getKitchenOrderUrl() {
-        return kitchenOrderUrl;
+    public String getCustomerOrdersUrl() {
+        return customerOrdersUrl;
     }
 
-    public void setKitchenOrderUrl(String kitchenOrderUrl) {
-        this.kitchenOrderUrl = kitchenOrderUrl;
+    public void setCustomerOrdersUrl(String customerOrdersUrl) {
+        this.customerOrdersUrl = customerOrdersUrl;
     }
 
-    public String getPaymentUrl() {
-        return paymentUrl;
+    public String getFoodItemsUrl() {
+        return foodItemsUrl;
     }
 
-    public void setPaymentUrl(String paymentUrl) {
-        this.paymentUrl = paymentUrl;
+    public void setFoodItemsUrl(String foodItemsUrl) {
+        this.foodItemsUrl = foodItemsUrl;
+    }
+
+    public String getFoodItemsListUrl() {
+        return foodItemsListUrl;
+    }
+
+    public void setFoodItemsListUrl(String foodItemsListUrl) {
+        this.foodItemsListUrl = foodItemsListUrl;
+    }
+
+    public String getKitchenOrdersUrl() {
+        return kitchenOrdersUrl;
+    }
+
+    public void setKitchenOrdersUrl(String kitchenOrdersUrl) {
+        this.kitchenOrdersUrl = kitchenOrdersUrl;
+    }
+
+    public String getPaymentsUrl() {
+        return paymentsUrl;
+    }
+
+    public void setPaymentsUrl(String paymentsUrl) {
+        this.paymentsUrl = paymentsUrl;
     }
 }

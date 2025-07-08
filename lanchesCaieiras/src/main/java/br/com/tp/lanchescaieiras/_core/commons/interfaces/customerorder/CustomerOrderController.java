@@ -1,11 +1,16 @@
 package br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
-import br.com.tp.lanchescaieiras._external.dataproxy.CustomerOrderDataProxy;
+
+import java.util.List;
 
 public interface CustomerOrderController {
 
-    CustomerOrderDTO create(CustomerOrderDataProxy customerOrderDataProxy, CustomerOrderDTO customerOrderDTO);
+    CustomerOrderDTO create(CustomerOrderDatabase customerOrderDatabase, CustomerOrderDTO customerOrderDTO);
+
+    CustomerOrderDTO getById(CustomerOrderDatabase customerOrderDatabase, Integer customerOrderId, Boolean includeFoodItems);
+
+    List<CustomerOrderDTO> getByStatusList(CustomerOrderDatabase customerOrderDatabase, List<String> statusList, Boolean includeFoodItems);
 
     /*CustomerOrderDTO getCustomerOrderById(Integer id, Boolean includeFoodItems);
 

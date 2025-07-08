@@ -20,4 +20,6 @@ public interface CustomerDatabase {
     Optional<CustomerDTO> findByDocumentNumber(String documentNumber);
 
     void deleteById(Integer id);
+
+    List<CustomerDTO> findByIdList(List<Integer> customerIdList);
 }

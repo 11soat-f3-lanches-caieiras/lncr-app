@@ -3,9 +3,9 @@ package br.com.tp.lanchescaieiras._external.apis.fooditem;
 import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemImageControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemDatabase;
-import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityUtil;
+import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImageRules;
-import br.com.tp.lanchescaieiras._external.commons.model.Response;
+import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import br.com.tp.lanchescaieiras._external.configs.FoodItemConfig;
 import br.com.tp.lanchescaieiras._external.dataproxy.FoodItemDataProxy;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem.JpaFoodItemImagePostgresDatabaseImpl;
@@ -35,24 +35,24 @@ public class FoodItemImageRestControllerImpl implements FoodItemImageRestControl
 
     @Override
     @GetMapping("/{foodItemImageId}")
-    public ResponseEntity<Response<FoodItemImageDTO>> getFoodItemImageById(@PathVariable(name = "foodItemImageId") Integer foodItemImageId) {
+    public ResponseEntity<ResponseModel<FoodItemImageDTO>> getFoodItemImageById(@PathVariable(name = "foodItemImageId") Integer foodItemImageId) {
         FoodItemImageDTO foodItemImageDTO = this.foodItemImageController.getImageById(foodItemImageId, newFoodItemDatabase(), foodItemConfig.getImage().getLocationPrefix());
-        return ResponseEntityUtil.OK(foodItemImageDTO);
+        return ResponseEntityModelUtil.OK(foodItemImageDTO);
     }
 
     @Override
     @PutMapping("/{foodItemImageId}")
-    public ResponseEntity<Response<FoodItemImageDTO>> updateFoodItemImageById(@PathVariable(name = "foodItemImageId") Integer foodItemImageId, @RequestBody FoodItemImageDTO foodItemImageDTO) {
+    public ResponseEntity<ResponseModel<FoodItemImageDTO>> updateFoodItemImageById(@PathVariable(name = "foodItemImageId") Integer foodItemImageId, @RequestBody FoodItemImageDTO foodItemImageDTO) {
         foodItemImageDTO = this.foodItemImageController.updateImageById(foodItemImageId, foodItemImageDTO, newFoodItemDatabase(), newFoodItemImageRule());
-        return ResponseEntityUtil.OK(foodItemImageDTO);
+        return ResponseEntityModelUtil.OK(foodItemImageDTO);
     }
 
 
     @Override
     @DeleteMapping("{foodItemImageId}")
-    public ResponseEntity<Response<FoodItemImageDTO>> deleteFoodItemImageById(Integer foodItemImageId) {
+    public ResponseEntity<ResponseModel<FoodItemImageDTO>> deleteFoodItemImageById(Integer foodItemImageId) {
         this.foodItemImageController.deleteImageById(foodItemImageId, newFoodItemDatabase());
-        return ResponseEntityUtil.OK(null);
+        return ResponseEntityModelUtil.OK(null);
     }
 
     private FoodItemImageRules newFoodItemImageRule() {

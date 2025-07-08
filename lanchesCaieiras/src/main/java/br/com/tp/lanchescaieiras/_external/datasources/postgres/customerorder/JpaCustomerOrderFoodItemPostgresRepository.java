@@ -12,4 +12,7 @@ public interface JpaCustomerOrderFoodItemPostgresRepository extends JpaRepositor
 
     @Query(value = "select * from customer_order_food_item where order_id = :orderId", nativeQuery = true)
     List<JpaCustomerOrderFoodItemPostgresEntity> findByCustomerOrderId(@Param("orderId") Integer orderId);
+
+    @Query(value = "select * from customer_order_food_item where order_id in(:customerOrderIdsList)", nativeQuery = true)
+    List<JpaCustomerOrderFoodItemPostgresEntity> findByCustomerOrderIdList(@Param("customerOrderIdsList") List<Integer> customerOrderIdsList);
 }
