@@ -1,43 +1,50 @@
 package br.com.tp.lanchescaieiras._core.domain.payment;
 
 
-public enum PaymentStatus {
+import br.com.tp.lanchescaieiras._core.commons.interfaces.EnumWithIdDescription;
+import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
+import br.com.tp.lanchescaieiras._core.domain.exceptions.PaymentException;
+import jakarta.persistence.Id;
+
+public enum PaymentStatus implements EnumWithIdDescription {
+    CANCELLED(0, "Cancelled"),
     CHARGED(1, "Charged"),
     PAID(2, "Paid");
 
+    @Id
     private final int id;
     private final String description;
 
-    PaymentStatus(int id, String description) {
+    PaymentStatus(Integer id, String description) {
         this.id = id;
         this.description = description;
     }
 
-    public int getId() {
+    @Override
+    public Integer getId() {
         return id;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }
 
-    public static PaymentStatus fromId(int code) {
-        for (PaymentStatus status : PaymentStatus.values()) {
-            if (status.getId() == code) {
-                return status;
-            }
-        }
-        throw new IllegalArgumentException("Invalid code: " + code);
+    public static PaymentStatus fromId(Integer id) {
+        return EnumUtils.fromId(PaymentStatus.class, id,
+                new PaymentException("Id do status de pagamento inválido: " + id + ". Os ids válidos são: " + listOfAllowIds(), 400));
     }
 
     public static PaymentStatus fromDescription(String description) {
-        for (PaymentStatus status : PaymentStatus.values()) {
-            if (status.getDescription().equalsIgnoreCase(description)) {
-                return status;
-            }
-        }
-        throw new IllegalArgumentException("Invalid description: " + description);
+        return EnumUtils.fromDescription(PaymentStatus.class, description,
+                new PaymentException("Status de pagamento inválido: " + description + ". Os status válidos são: " + listOfAllowDescriptions(), 400));
     }
 
+    public static String listOfAllowDescriptions() {
+        return EnumUtils.listOfAllowDescriptions(PaymentStatus.class);
+    }
 
+    public static String listOfAllowIds() {
+        return EnumUtils.listOfAllowIds(PaymentStatus.class);
+    }
 }

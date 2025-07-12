@@ -1,28 +1,17 @@
 package br.com.tp.lanchescaieiras._core.applications.payment.services;
 
-import br.com.tp.lanchescaieiras._core.applications.payment.usercases.PaymentUserCases;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.PaymentException;
-import br.com.tp.lanchescaieiras._core.domain.notification.Notification;
-import br.com.tp.lanchescaieiras._core.domain.payment.Payment;
-import br.com.tp.lanchescaieiras._core.domain.payment.PaymentStatus;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.payment.JpaPaymentsRepositoryImpl;
-import br.com.tp.lanchescaieiras._external.integrations.customerorder.CustomerOrderIntegrationImpl;
-import br.com.tp.lanchescaieiras._external.integrations.payment.mercadopago.MercadoPagoIntegrationImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PaymentServiceImpl implements PaymentUserCases {
+public class PaymentServiceImpl {
 
-    private static final Logger log = LoggerFactory.getLogger(PaymentServiceImpl.class);
-    private final JpaPaymentsRepositoryImpl jpaPaymentsRepository;
+    /*private static final Logger log = LoggerFactory.getLogger(PaymentServiceImpl.class);
+    private final JpaPaymentsPostgresRepositoryImpl jpaPaymentsRepository;
     private final MercadoPagoIntegrationImpl mercadoPagoIntegration;
     private final CustomerOrderIntegrationImpl customerOrderIntegration;
     private final ApplicationEventPublisher eventPublisher;
 
-    public PaymentServiceImpl(JpaPaymentsRepositoryImpl jpaPaymentsRepository, MercadoPagoIntegrationImpl mercadoPagoIntegration,
+    public PaymentServiceImpl(JpaPaymentsPostgresRepositoryImpl jpaPaymentsRepository, MercadoPagoIntegrationImpl mercadoPagoIntegration,
                               CustomerOrderIntegrationImpl customerOrderIntegration,
                               ApplicationEventPublisher eventPublisher) {
         this.jpaPaymentsRepository = jpaPaymentsRepository;
@@ -74,7 +63,7 @@ public class PaymentServiceImpl implements PaymentUserCases {
 
         if (payment.getStatus() == PaymentStatus.CHARGED.getDescription()) {
             payment.setStatus(PaymentStatus.PAID.getDescription());
-            payment.setPaymentId(paymentId);
+            payment.setExternalPaymentId(paymentId);
             payment = jpaPaymentsRepository.update(payment);
             log.info("Atualizando pedido do cliente para Received");
             customerOrderIntegration.updateCustomerOrderStatus(payment.getOrderId(), "Received");
@@ -101,5 +90,5 @@ public class PaymentServiceImpl implements PaymentUserCases {
 
     private void publishNotification(Integer artifactId, String message) {
         eventPublisher.publishEvent(new Notification(this, null, "PAYMENT", artifactId, message));
-    }
+    }*/
 }

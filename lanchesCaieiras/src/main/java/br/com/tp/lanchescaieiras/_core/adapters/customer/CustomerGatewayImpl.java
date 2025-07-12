@@ -11,10 +11,11 @@ import java.util.Optional;
 public class CustomerGatewayImpl implements CustomerGateway {
 
     private final CustomerDatabase customerDatabase;
-    private final CustomerMapper customerMapper = new CustomerMapper();
+    private final CustomerMapper customerMapper;
 
-    public CustomerGatewayImpl(CustomerDatabase customerDatabase) {
+    public CustomerGatewayImpl(CustomerDatabase customerDatabase, CustomerMapper customerMapper) {
         this.customerDatabase = customerDatabase;
+        this.customerMapper = customerMapper;
     }
 
     @Override

@@ -1,0 +1,38 @@
+package br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago;
+
+import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public class JpaMercadoPagoQrPostgresDatabaseImpl {
+
+    public final JpaMercadoPagoQrPostgresDatabase jpaMercadoPagoQrPostgresRepository;
+    public final JpaPaymentMercadopagoQRMapper jpamercadopagoQRMapper;
+
+    public JpaMercadoPagoQrPostgresDatabaseImpl(@Lazy JpaMercadoPagoQrPostgresDatabase jpaMercadoPagoQrPostgresRepository, JpaPaymentMercadopagoQRMapper jpamercadopagoQRMapper) {
+        this.jpaMercadoPagoQrPostgresRepository = jpaMercadoPagoQrPostgresRepository;
+        this.jpamercadopagoQRMapper = jpamercadopagoQRMapper;
+    }
+
+    public PaymentMercadopagoQrDTO save(PaymentMercadopagoQrDTO paymentDTO) {
+        JpaMercadopagoQrPostgresEntity jpaMercadopagoQr = this.jpamercadopagoQRMapper.mercadopagoQrDtoToJpa(paymentDTO);
+        jpaMercadopagoQr = this.jpaMercadoPagoQrPostgresRepository.save(jpaMercadopagoQr);
+        return this.jpamercadopagoQRMapper.jpaMercadopagoQrToDTO(jpaMercadopagoQr);
+    }
+
+    public PaymentMercadopagoQrDTO findById(Integer paymentId) {
+        return this.jpamercadopagoQRMapper.jpaMercadopagoQrToDTO(this.jpaMercadoPagoQrPostgresRepository.findById(paymentId).orElse(null));
+    }
+
+    public PaymentMercadopagoQrDTO findByCustomerOrderId(Integer customerOrderId) {
+        return this.jpamercadopagoQRMapper.jpaMercadopagoQrToDTO(this.jpaMercadoPagoQrPostgresRepository.findByCustomerOrderId(customerOrderId).orElse(null));
+    }
+
+    public List<PaymentMercadopagoQrDTO> findByStatusList(List<Integer> paymentStatusIdList) {
+        List<JpaMercadopagoQrPostgresEntity> jpaMercadopagoQrList = jpaMercadoPagoQrPostgresRepository.findByStatusList(paymentStatusIdList);
+        return jpaMercadopagoQrList.stream().map(jpamercadopagoQRMapper::jpaMercadopagoQrToDTO).toList();
+    }
+}

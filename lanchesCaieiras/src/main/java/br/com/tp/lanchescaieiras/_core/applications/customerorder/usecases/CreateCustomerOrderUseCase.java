@@ -24,7 +24,7 @@ public class CreateCustomerOrderUseCase {
         customerOrder = this.customerOrderGateway.createCustomerOrder(customerOrder);
 
         //TODO - implementar integrações com pagamento e notificações
-        //this.customerOrderGateway.createPaymentCharge(customerOrder);
+        this.customerOrderGateway.createPaymentCharge(customerOrder);
         //this.customerOrderGateway.sendNotification("CustomerOrder",1,"mensagem");
 
         return customerOrder;

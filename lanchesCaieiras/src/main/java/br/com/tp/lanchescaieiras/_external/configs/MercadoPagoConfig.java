@@ -1,6 +1,14 @@
 package br.com.tp.lanchescaieiras._external.configs;
 
+import br.com.tp.lanchescaieiras._core.adapters.payment.mercadopago.PaymentMercadoPagoQrControllerImpl;
+import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQRMapper;
+import br.com.tp.lanchescaieiras._external.dataproxy.PaymentMercadoPagoQrDataProxy;
+import br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago.JpaMercadoPagoQrPostgresDatabaseImpl;
+import br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago.JpaPaymentMercadopagoQRMapper;
+import br.com.tp.lanchescaieiras._external.integrations.customerorder.CustomerOrderIntegrationImpl;
+import br.com.tp.lanchescaieiras._external.integrations.payment.mercadopago.MercadoPagoIntegrationImpl;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -87,4 +95,26 @@ public class MercadoPagoConfig {
     public void setMercadoPagoMockCustomerOrderId(Integer mercadoPagoMockCustomerOrderId) {
         this.mercadoPagoMockCustomerOrderId = mercadoPagoMockCustomerOrderId;
     }
+    @Bean
+    public PaymentMercadopagoQRMapper paymentMercadopagoQRMapper(){
+        return new PaymentMercadopagoQRMapper();
+    }
+
+    @Bean
+    public PaymentMercadoPagoQrControllerImpl paymentMercadoPagoQrController(PaymentMercadopagoQRMapper paymentMercadopagoQRMapper){
+        return new PaymentMercadoPagoQrControllerImpl(paymentMercadopagoQRMapper);
+    }
+
+    @Bean
+    public PaymentMercadoPagoQrDataProxy paymentMercadoPagoQrDataProxy(JpaMercadoPagoQrPostgresDatabaseImpl jpaMercadoPagoQrPostgresDatabase, MercadoPagoIntegrationImpl mercadoPagoIntegration, CustomerOrderIntegrationImpl customerOrderIntegration){
+        return new PaymentMercadoPagoQrDataProxy(jpaMercadoPagoQrPostgresDatabase,mercadoPagoIntegration,customerOrderIntegration);
+    }
+
+    @Bean
+    public JpaPaymentMercadopagoQRMapper jpaPaymentMercadopagoQRMapper(){
+        return new JpaPaymentMercadopagoQRMapper();
+    }
+
+
+
 }

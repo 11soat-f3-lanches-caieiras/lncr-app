@@ -1,30 +1,25 @@
 package br.com.tp.lanchescaieiras._core.domain.payment;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import java.time.LocalDateTime;
 
-import java.util.UUID;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class Payment {
+public abstract class Payment {
     private Integer id;
     private Integer orderId;
-    private Double amount;
-    private UUID storeOrderId;
-    private String qrData;
     private String status;
-    private String paymentId;
+    private Double amount;
+    private String externalPaymentId;
+    private LocalDateTime _created;
+    private LocalDateTime _updated;
 
-    public Payment(Integer id, Integer orderId, Double amount, UUID storeOrderId, String qrData, String status, String paymentId) {
+
+    public Payment(Integer id, Integer orderId, String status, Double amount, String externalPaymentId, LocalDateTime _created, LocalDateTime _updated) {
         this.id = id;
         this.orderId = orderId;
-        this.amount = amount;
-        this.storeOrderId = storeOrderId;
-        this.qrData = qrData;
         this.status = status;
-        this.paymentId = paymentId;
-    }
-
-    public Payment() {
+        this.amount = amount;
+        this.externalPaymentId = externalPaymentId;
+        this._created = _created;
+        this._updated = _updated;
     }
 
     public Integer getId() {
@@ -43,6 +38,14 @@ public class Payment {
         this.orderId = orderId;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = PaymentStatus.fromDescription(status).getDescription();
+    }
+
     public Double getAmount() {
         return amount;
     }
@@ -51,35 +54,30 @@ public class Payment {
         this.amount = amount;
     }
 
-    public UUID getStoreOrderId() {
-        return storeOrderId;
+    public LocalDateTime get_created() {
+        return _created;
     }
 
-    public void setStoreOrderId(UUID storeOrderId) {
-        this.storeOrderId = storeOrderId;
+    public void set_created(LocalDateTime _created) {
+        this._created = _created;
     }
 
-    public String getQrData() {
-        return qrData;
+    public LocalDateTime get_updated() {
+        return _updated;
     }
 
-    public void setQrData(String qrData) {
-        this.qrData = qrData;
+    public void set_updated(LocalDateTime _updated) {
+        this._updated = _updated;
     }
 
-    public String getStatus() {
-        return status;
+    public String getExternalPaymentId() {
+        return externalPaymentId;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setExternalPaymentId(String externalPaymentId) {
+        this.externalPaymentId = externalPaymentId;
     }
 
-    public String getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
-    }
+    public abstract String getPaymentProvider();
+    public abstract String getPaymentMethod();
 }

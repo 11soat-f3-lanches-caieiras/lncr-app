@@ -9,13 +9,13 @@ import br.com.tp.lanchescaieiras._external.integrations.IntegrationMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 public class FoodItemIntegrationImpl implements FoodItemIntegration {
 
     public final IntegrationConfig integrationConfig;

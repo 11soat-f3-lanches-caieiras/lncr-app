@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras._external.datasources.postgres.customer;
+package br.com.tp.lanchescaieiras._external.datasources.postgres.payment;
 
 import br.com.tp.lanchescaieiras._external.configs.JpaHibernateConfig;
 import jakarta.persistence.EntityManagerFactory;
@@ -9,7 +9,6 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -21,48 +20,39 @@ import java.util.HashMap;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = {
-                "br.com.tp.lanchescaieiras._external.datasources.postgres.customer",
-                "br.com.tp.lanchescaieiras._external.datasources.postgres.kitichenorder",
-                "br.com.tp.lanchescaieiras._external.datasources.postgres.notification"
-        },
-        entityManagerFactoryRef = "postgresCustomerEntityManagerFactory",
-        transactionManagerRef = "postgresCustomerTransactionManager"
+        basePackages = "br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago",
+        entityManagerFactoryRef = "postgresPaymentEntityManagerFactory",
+        transactionManagerRef = "postgresPaymentTransactionManager"
 )
-public class CustomerPostgresDatabaseConfig {
+public class PaymentPostgresDatabaseConfig {
 
     @Autowired
     private JpaHibernateConfig jpaHibernateConfig;
 
 
-    @Primary
-    @Bean(name = "postgresCustomerDataSource")
+    @Bean(name = "paymentPostgresDataSource")
     @ConfigurationProperties(prefix = "spring.datasources.postgres")
-    public DataSource postgresCustomerDataSource() {
+    public DataSource paymentPostgresDataSource() {
         return DataSourceBuilder.create().build();
     }
 
-    @Primary
-    @Bean(name = "postgresCustomerEntityManagerFactory")
+    @Bean(name = "postgresPaymentEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean postgresEntityManagerFactory(
             EntityManagerFactoryBuilder builder,
-            @Qualifier("postgresCustomerDataSource") DataSource dataSource) {
+            @Qualifier("paymentPostgresDataSource") DataSource dataSource) {
         HashMap<String, Object> properties = jpaHibernateConfig.hibernateProperties();
         properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         return builder
-                .dataSource(postgresCustomerDataSource())
+                .dataSource(paymentPostgresDataSource())
                 .properties(properties)
-                .packages("br.com.tp.lanchescaieiras._external.datasources.postgres.customer",
-                        "br.com.tp.lanchescaieiras._external.datasources.postgres.kitichenorder",
-                        "br.com.tp.lanchescaieiras._external.datasources.postgres.notification")
-                .persistenceUnit("CustomerPostgres")
+                .packages("br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago")
+                .persistenceUnit("PaymentPostgres")
                 .build();
     }
 
-    @Primary
-    @Bean(name = "postgresCustomerTransactionManager")
+    @Bean(name = "postgresPaymentTransactionManager")
     public PlatformTransactionManager postgresTransactionManager(
-            @Qualifier("postgresCustomerEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+            @Qualifier("postgresPaymentEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 }

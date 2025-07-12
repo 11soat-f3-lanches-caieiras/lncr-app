@@ -60,8 +60,8 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
     }
 
     @Override
-    public void createPaymentCharge(Integer id, Double totalCost) {
-        //this.paymentIntegration.createPayment();
+    public void createPaymentCharge(Integer customerOrderId, Double totalCost) {
+        this.paymentIntegration.createPayment(customerOrderId,totalCost);
     }
 
     @Override

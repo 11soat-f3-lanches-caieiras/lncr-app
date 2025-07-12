@@ -67,5 +67,5 @@ lncr:
     accessToken: "${MERCADOPAGO_ACCESS_TOKEN}" #.env
     userId: "${MERCADOPAGO_USER_ID}" #.env
     posId: "${MERCADOPAGO_POS_ID}" #.env
-    mercado-pago-mock: false
-    mercado-pago-mock-customer-order-id: 1
+    #mercado-pago-mock: false
+    #mercado-pago-mock-customer-order-id: 1

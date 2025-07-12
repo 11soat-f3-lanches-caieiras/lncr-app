@@ -1,11 +1,11 @@
 package br.com.tp.lanchescaieiras._external.integrations.payment.mercadopago;
 
-import br.com.tp.lanchescaieiras._core.domain.payment.Payment;
+import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 
 
 public interface MercadoPagoIntegration {
 
-    Payment createQRCode(Payment payment);
+    PaymentMercadopagoQrDTO createQRCode(PaymentMercadopagoQrDTO payment);
 
     Integer getPaymentId(String paymentId);
 
