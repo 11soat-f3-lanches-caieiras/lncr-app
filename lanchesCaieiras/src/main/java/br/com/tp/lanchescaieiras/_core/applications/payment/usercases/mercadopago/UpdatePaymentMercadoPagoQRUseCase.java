@@ -28,17 +28,21 @@ public class UpdatePaymentMercadoPagoQRUseCase {
         }
     }
 
-    public PaymentMercadopagoQR processPaymentReceived(String dataId) {
-        Integer externalReferenceId = paymentGateway.getPaymentId(dataId);
+    public PaymentMercadopagoQR processPaymentReceived(String id) {
+        Integer externalReferenceId = paymentGateway.getPaymentId(id);
         if (externalReferenceId !=null){
             PaymentMercadopagoQR paymentMercadopagoQR = (PaymentMercadopagoQR) this.paymentGateway.getPaymentByCustomerOrderId(externalReferenceId);
-            if (paymentMercadopagoQR != null && paymentMercadopagoQR.getStatus().equals(PaymentStatus.CHARGED.getDescription())){
-                paymentMercadopagoQR.setStatus(PaymentStatus.PAID.getDescription());
-                paymentMercadopagoQR = (PaymentMercadopagoQR) this.paymentGateway.save(paymentMercadopagoQR);
-                this.paymentGateway.updateCustomerOrderStatus(externalReferenceId,"Received");
-                return paymentMercadopagoQR;
+            if (paymentMercadopagoQR != null){
+                if (paymentMercadopagoQR.getStatus().equals(PaymentStatus.CHARGED.getDescription())) {
+                    paymentMercadopagoQR.setStatus(PaymentStatus.PAID.getDescription());
+                    paymentMercadopagoQR = (PaymentMercadopagoQR) this.paymentGateway.save(paymentMercadopagoQR);
+                    this.paymentGateway.updateCustomerOrderStatus(externalReferenceId, "Received");
+                    return paymentMercadopagoQR;
+                }
+                throw new PaymentException("Status do pagamento inválido: "+paymentMercadopagoQR.getStatus(),400);
             }
+            throw new PaymentException("Não encontrado pedido com o id: " +externalReferenceId,404);
         }
-        throw new PaymentException("Não encontrado pedido no pagamento informado: " + dataId,404);
+        throw new PaymentException("Não encontrado pedido no pagamento informado: " + id,404);
     }
 }

@@ -11,7 +11,7 @@ public interface PaymentController<T> {
 
     T cancelPaymentByOrderId(PaymentDatabase paymentDatabase, Integer customerOrderId);
 
-    T processPaymentReceived(PaymentDatabase paymentDatabase, String dataId);
+    T processPaymentReceived(PaymentDatabase paymentDatabase, String id);
 
     List<T> getPaymentByStatusList(PaymentDatabase paymentDatabase, List<String> paymentStatusList);
 }

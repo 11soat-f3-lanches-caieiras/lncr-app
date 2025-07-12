@@ -45,8 +45,8 @@ public class PaymentMercadoPagoQrControllerImpl implements PaymentController<Pay
     }
 
     @Override
-    public PaymentMercadopagoQrDTO processPaymentReceived(PaymentDatabase paymentDatabase, String dataId) {
-        PaymentMercadopagoQR paymentMercadopagoQR = new UpdatePaymentMercadoPagoQRUseCase(createPaymentMercadoPagoQrGateway(paymentDatabase)).processPaymentReceived(dataId);
+    public PaymentMercadopagoQrDTO processPaymentReceived(PaymentDatabase paymentDatabase, String id) {
+        PaymentMercadopagoQR paymentMercadopagoQR = new UpdatePaymentMercadoPagoQRUseCase(createPaymentMercadoPagoQrGateway(paymentDatabase)).processPaymentReceived(id);
         return new PaymentMercadoPagoQrPresenter(paymentMercadopagoQRMapper).cancelByCustomerOrderId(paymentMercadopagoQR);
     }
 

@@ -58,9 +58,9 @@ public class PaymentMercadoPagoQrRestRestControllerImpl implements PaymentRestCo
 
     @Override
     @PatchMapping("/paymentReceived")
-    public ResponseEntity<ResponseModel<PaymentMercadopagoQrDTO>> processPaymentReceived(@RequestParam(name = "data.id") String dataId,
+    public ResponseEntity<ResponseModel<PaymentMercadopagoQrDTO>> processPaymentReceived(@RequestParam(name = "id") String id,
                                                                                          @RequestParam(name = "type", defaultValue = "payment") String type) {
-        PaymentMercadopagoQrDTO paymentMercadopagoQrDTO = this.paymentMercadoPagoQrController.processPaymentReceived(this.paymentMercadoPagoQrDataProxy,dataId);
+        PaymentMercadopagoQrDTO paymentMercadopagoQrDTO = this.paymentMercadoPagoQrController.processPaymentReceived(this.paymentMercadoPagoQrDataProxy,id);
         return ResponseEntityModelUtil.OK(paymentMercadopagoQrDTO);
     }
 
@@ -70,6 +70,5 @@ public class PaymentMercadoPagoQrRestRestControllerImpl implements PaymentRestCo
         List<PaymentMercadopagoQrDTO> paymentMercadopagoQrDTO = this.paymentMercadoPagoQrController.getPaymentByStatusList(this.paymentMercadoPagoQrDataProxy,paymentStatusList);
         return ResponseEntityModelUtil.listOK(paymentMercadopagoQrDTO);
     }
-
 
 }

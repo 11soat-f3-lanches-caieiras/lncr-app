@@ -14,7 +14,7 @@ public interface PaymentRestController<T> {
 
     ResponseEntity<ResponseModel<T>> createPaymentCharge(@RequestBody PaymentMercadopagoQrDTO paymentMercadopagoQrDTO);
 
-    ResponseEntity<ResponseModel<T>> processPaymentReceived(@RequestParam(name = "data.id") String dataId,
+    ResponseEntity<ResponseModel<T>> processPaymentReceived(@RequestParam(name = "id") String id,
                                                                              @RequestParam(name = "type") String type);
     ResponseEntity<ResponseModel<T>> getPaymentById(@PathVariable(name = "paymentId") Integer paymentId);
 

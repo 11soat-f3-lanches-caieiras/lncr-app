@@ -20,6 +20,10 @@ public class ResponseEntityModelUtil {
         return response(body, HttpStatus.OK, null);
     }
 
+    public static <T> ResponseEntity<ResponseModel<T>> Accepted(T body) {
+        return response(body, HttpStatus.ACCEPTED, null);
+    }
+
     public static <T> ResponseEntity<ResponseModel<T>> created(T body, String location) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", location);
