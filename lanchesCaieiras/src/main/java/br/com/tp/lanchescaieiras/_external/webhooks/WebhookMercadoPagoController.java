@@ -1,7 +1,6 @@
 package br.com.tp.lanchescaieiras._external.webhooks;
 
 import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityModelUtil;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.PaymentException;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import br.com.tp.lanchescaieiras._external.configs.IntegrationConfig;
 import org.springframework.core.ParameterizedTypeReference;
@@ -32,7 +31,7 @@ public class WebhookMercadoPagoController {
     }
 
     @PostMapping("/payments/mercadoPago/callback")
-    public ResponseEntity<ResponseModel<String>> callback(@RequestParam(name = "id") String id,
+    public ResponseEntity<ResponseModel<String>> paymentMercadoPagoCallback(@RequestParam(name = "id") String id,
                      @RequestParam(name = "topic", defaultValue = "payment") String topic) {
         CompletableFuture.runAsync(() -> {
             HttpEntity<Map<String, Object>> requestEntity = createHttpEntity(id, topic);
