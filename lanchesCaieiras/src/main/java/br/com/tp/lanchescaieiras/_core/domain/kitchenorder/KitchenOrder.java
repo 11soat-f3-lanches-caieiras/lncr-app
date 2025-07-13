@@ -1,25 +1,46 @@
 package br.com.tp.lanchescaieiras._core.domain.kitchenorder;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class KitchenOrder {
     private Integer id;
     private Integer customerOrderId;
     private String status;
     private List<KitchenOrderFoodItem> foodItems;
+    private LocalDateTime _created;
+    private LocalDateTime _updated;
 
-    public KitchenOrder(Integer id, Integer customerOrderId, KitchenOrderStatus status, List<KitchenOrderFoodItem> foodItems) {
+    public KitchenOrder(Integer id, Integer customerOrderId, String status, List<KitchenOrderFoodItem> foodItems, LocalDateTime _created, LocalDateTime _updated) {
         this.id = id;
         this.customerOrderId = customerOrderId;
-        this.status = fromKitchenOrderStatus(status);
+        this.status = status;
         this.foodItems = foodItems;
+        this._created = _created;
+        this._updated = _updated;
     }
 
     public KitchenOrder() {
+    }
+
+    public KitchenOrder(KitchenOrderDTO dto) {
+        this.id = dto.getId();
+        this.customerOrderId = dto.getCustomerOrderId();
+        this.status = dto.getStatus();
+        if (dto.getFoodItems() != null) {
+            this.foodItems = dto.getFoodItems().stream()
+                .map(KitchenOrderFoodItem::new)
+                .toList();
+        }
+        if (dto.getCreated() != null) {
+            this._created = dto.getCreated();
+        }
+        if (dto.getUpdated() != null) {
+            this._updated = dto.getUpdated();
+        }
     }
 
     public Integer getId() {
@@ -43,7 +64,7 @@ public class KitchenOrder {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status = KitchenOrderStatus.fromDescription(status).getDescription();
     }
 
     public List<KitchenOrderFoodItem> getFoodItems() {
@@ -54,13 +75,20 @@ public class KitchenOrder {
         this.foodItems = foodItems;
     }
 
-    public void setStatus(KitchenOrderStatus status) {
-        this.status = fromKitchenOrderStatus(status);
+    public LocalDateTime get_created() {
+        return _created;
     }
 
-    public String fromKitchenOrderStatus(KitchenOrderStatus status) {
-        return status.getDescription();
+    public void set_created(LocalDateTime _created) {
+        this._created = _created;
     }
 
+    public LocalDateTime get_updated() {
+        return _updated;
+    }
 
+    public void set_updated(LocalDateTime _updated) {
+        this._updated = _updated;
+    }
 }
+

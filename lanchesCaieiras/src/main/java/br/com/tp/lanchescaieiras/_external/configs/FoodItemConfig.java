@@ -3,8 +3,7 @@ package br.com.tp.lanchescaieiras._external.configs;
 import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemControllerImpl;
 import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemImageControllerImpl;
 import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemMapper;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem.*;
-import br.com.tp.lanchescaieiras._external.datasources.storage.fooditem.FoodItemImageStorageImpl;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemDatabase;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.context.annotation.Bean;
@@ -86,13 +85,13 @@ public class FoodItemConfig {
     }
 
     @Bean
-    public FoodItemControllerImpl foodItemControllerImpl() {
-        return new FoodItemControllerImpl();
+    public FoodItemImageControllerImpl foodItemImageController(FoodItemDatabase foodItemDatabase){
+        return new FoodItemImageControllerImpl(foodItemDatabase);
     }
 
     @Bean
-    public FoodItemImageControllerImpl foodItemImageController() {
-        return new FoodItemImageControllerImpl();
+    public FoodItemControllerImpl foodItemController(FoodItemDatabase foodItemDatabase) {
+        return new FoodItemControllerImpl(foodItemDatabase);
     }
 
     @Bean
@@ -100,32 +99,7 @@ public class FoodItemConfig {
         return new FoodItemMapper();
     }
 
-    @Bean
-    public JpaFoodItemPostgresMapper jpaFoodItemPostgresMapper() {
-        return new JpaFoodItemPostgresMapper();
-    }
-
-    @Bean
-    public JpaFoodItemPostgresDatabaseImpl jpaFoodItemPostgresDatabaseImpl(
-            JpaFoodItemPostgresReposity jpaFoodItemPostgresReposity,
-            FoodItemImageStorageImpl foodItemImageStorage,
-            JpaFoodItemPostgresMapper jpaFoodItemPostgresMapper,
-            FoodItemConfig foodItemConfig) {
-        return new JpaFoodItemPostgresDatabaseImpl(jpaFoodItemPostgresReposity, foodItemImageStorage, jpaFoodItemPostgresMapper, foodItemConfig);
-    }
-
-    @Bean
-    public JpaFoodItemImagePostgresDatabaseImpl jpaFoodItemImagePostgresDatabaseImpl(
-            JpaFoodItemImagePostgresRepository jpaFoodItemImagePostgresRepository,
-            FoodItemImageStorageImpl foodItemImageStorage,
-            JpaFoodItemPostgresMapper foodItemMapper) {
-        return new JpaFoodItemImagePostgresDatabaseImpl(jpaFoodItemImagePostgresRepository, foodItemImageStorage, foodItemMapper);
-    }
 
 
-    @Bean
-    public FoodItemImageStorageImpl foodItemImageStorageImpl(FoodItemConfig foodItemConfig) {
-        return new FoodItemImageStorageImpl(foodItemConfig);
-    }
 
 }

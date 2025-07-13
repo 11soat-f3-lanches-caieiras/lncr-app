@@ -1,0 +1,65 @@
+package br.com.tp.lanchescaieiras._external.datasources.postgres.kitchenorder;
+
+import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
+import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderFoodItemDTO;
+import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrderStatus;
+import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
+
+@Component
+public class JpaKitchenOrderMapper {
+    public KitchenOrderDTO jpaKitchenOrderToDTO(JpaKitchenOrderEntity entity) {
+        if (entity == null) return null;
+        KitchenOrderDTO dto = new KitchenOrderDTO();
+        dto.setId(entity.getId());
+        dto.setCustomerOrderId(entity.getCustomerOrderId());
+        dto.setStatus(KitchenOrderStatus.fromId(entity.getStatusId()).getDescription());
+        dto.setCreated(entity.get_created());
+        dto.setUpdated(entity.get_updated());
+        if (entity.getFoodItems() != null) {
+            dto.setFoodItems(entity.getFoodItems().stream()
+                .map(this::jpaKitchenOrderFoodItemToDTO)
+                .collect(Collectors.toList()));
+        }
+        return dto;
+    }
+
+    public JpaKitchenOrderEntity kitchenOrderDTOtoJpa(KitchenOrderDTO dto) {
+        if (dto == null) return null;
+        JpaKitchenOrderEntity entity = new JpaKitchenOrderEntity();
+        entity.setId(dto.getId());
+        entity.setCustomerOrderId(dto.getCustomerOrderId());
+        entity.setStatusId(KitchenOrderStatus.fromDescription(dto.getStatus()).getId());
+        entity.set_created(dto.getCreated());
+        entity.set_updated(dto.getUpdated());
+        if (dto.getFoodItems() != null) {
+            entity.setFoodItems(dto.getFoodItems().stream()
+                .map(this::kitchenOrderFoodItemDtoToJpa)
+                .collect(Collectors.toList()));
+        }
+        return entity;
+    }
+
+    public KitchenOrderFoodItemDTO jpaKitchenOrderFoodItemToDTO(JpaKitchenOrderFoodItemEntity entity) {
+        if (entity == null) return null;
+        return new KitchenOrderFoodItemDTO(
+            entity.getId(),
+            entity.getKitchenOrderId(),
+            entity.getName(),
+            entity.getDescription(),
+            entity.getNotes()
+        );
+    }
+
+    public JpaKitchenOrderFoodItemEntity kitchenOrderFoodItemDtoToJpa(KitchenOrderFoodItemDTO dto) {
+        if (dto == null) return null;
+        return new JpaKitchenOrderFoodItemEntity(
+            dto.getId(),
+            dto.getKitchenOrderId(),
+            dto.getName(),
+            dto.getDescription(),
+            dto.getNotes()
+        );
+    }
+}

@@ -6,7 +6,7 @@ import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import br.com.tp.lanchescaieiras._external.configs.CustomerConfig;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.customer.JpaCustomerPostgresReposityImpl;
+import br.com.tp.lanchescaieiras._external.datasources.postgres.customer.JpaCustomerReposityImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +19,11 @@ import java.util.Optional;
 public class CustomerRestControllerImpl implements CustomerRestController {
 
     public final CustomerControllerImpl customerController;
-    public final JpaCustomerPostgresReposityImpl jpaCustomerPostgresReposity;
+    public final JpaCustomerReposityImpl jpaCustomerPostgresReposity;
     public final CustomerConfig customerConfig;
 
     public CustomerRestControllerImpl(CustomerControllerImpl customerController,
-                                      JpaCustomerPostgresReposityImpl jpaCustomerPostgresReposity,
+                                      JpaCustomerReposityImpl jpaCustomerPostgresReposity,
                                       CustomerConfig customerConfig) {
         this.customerController = customerController;
         this.jpaCustomerPostgresReposity = jpaCustomerPostgresReposity;

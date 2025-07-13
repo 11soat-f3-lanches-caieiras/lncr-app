@@ -3,16 +3,12 @@ package br.com.tp.lanchescaieiras._external.apis.fooditem;
 import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
-import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemDatabase;
 import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImageRules;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import br.com.tp.lanchescaieiras._external.configs.FoodItemConfig;
 import br.com.tp.lanchescaieiras._external.dataproxy.FoodItemDataProxy;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem.JpaFoodItemImagePostgresDatabaseImpl;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem.JpaFoodItemPostgresDatabaseImpl;
-import br.com.tp.lanchescaieiras._external.datasources.storage.fooditem.FoodItemImageStorageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,25 +18,21 @@ import java.util.List;
 @RequestMapping("/foodItems")
 public class FoodItemRestControllerImpl implements FoodItemRestController {
 
-    private final FoodItemConfig foodItemConfig;
+    private final FoodItemDataProxy foodItemDataProxy;
     private final FoodItemControllerImpl foodItemController;
-    private final JpaFoodItemPostgresDatabaseImpl jpaFoodItemDatabase;
-    private final JpaFoodItemImagePostgresDatabaseImpl jpaFoodItemImageDatabase;
-    private final FoodItemImageStorageImpl foodItemImageStorage;
+    private final FoodItemConfig foodItemConfig;
 
 
-    public FoodItemRestControllerImpl(FoodItemConfig foodItemConfig, FoodItemControllerImpl foodItemController, JpaFoodItemPostgresDatabaseImpl jpaFoodItemDatabase, JpaFoodItemImagePostgresDatabaseImpl jpaFoodItemImageDatabase, FoodItemImageStorageImpl foodItemImageStorage) {
-        this.foodItemConfig = foodItemConfig;
+    public FoodItemRestControllerImpl(FoodItemDataProxy foodItemDataProxy, FoodItemControllerImpl foodItemController, FoodItemConfig foodItemConfig) {
+        this.foodItemDataProxy = foodItemDataProxy;
         this.foodItemController = foodItemController;
-        this.jpaFoodItemDatabase = jpaFoodItemDatabase;
-        this.jpaFoodItemImageDatabase = jpaFoodItemImageDatabase;
-        this.foodItemImageStorage = foodItemImageStorage;
+        this.foodItemConfig = foodItemConfig;
     }
 
     @Override
     @PostMapping
     public ResponseEntity<ResponseModel<FoodItemDTO>> createFoodItem(@RequestBody FoodItemDTO foodItemDTO) {
-        foodItemDTO = this.foodItemController.create(foodItemDTO, newFoodItemDatabase(), newFoodItemImageRule());
+        foodItemDTO = this.foodItemController.create(foodItemDTO, foodItemDataProxy, newFoodItemImageRule());
         return ResponseEntityModelUtil.created(foodItemDTO, foodItemConfig.getLocationPrefix() + "/" + foodItemDTO.getId());
     }
 
@@ -49,7 +41,7 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
     public ResponseEntity<ResponseListModel<FoodItemDTO>> getAllFoodItems(@RequestParam(name = "_limit", required = false) Integer _limit,
                                                                           @RequestParam(name = "category", required = false) String category,
                                                                           @RequestParam(name = "includeImages", required = false, defaultValue = "false") Boolean includeImages) {
-        List<FoodItemDTO> getAllFoodItemsList = this.foodItemController.getAll(_limit, category, includeImages, newFoodItemDatabase(), newFoodItemImageRule());
+        List<FoodItemDTO> getAllFoodItemsList = this.foodItemController.getAll(_limit, category, includeImages, foodItemDataProxy, newFoodItemImageRule());
         return ResponseEntityModelUtil.listOK(getAllFoodItemsList);
     }
 
@@ -58,28 +50,28 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
     @GetMapping("/{foodItemId}")
     public ResponseEntity<ResponseModel<FoodItemDTO>> getFoodItemById(@PathVariable(name = "foodItemId") Integer foodItemId,
                                                                       @RequestParam(name = "includeImages", required = false, defaultValue = "false") Boolean includeImages) {
-        FoodItemDTO foodItemDTO = this.foodItemController.getById(foodItemId, includeImages, newFoodItemDatabase(), newFoodItemImageRule());
+        FoodItemDTO foodItemDTO = this.foodItemController.getById(foodItemId, includeImages, foodItemDataProxy, newFoodItemImageRule());
         return ResponseEntityModelUtil.OK(foodItemDTO);
 
     }
     @Override
     @GetMapping("/foodItemListIds/{foodItemIdList}")
     public ResponseEntity<ResponseListModel<FoodItemDTO>> getFoodItemByIdList(@PathVariable(name = "foodItemIdList") List<Integer> foodItemIdList) {
-        List<FoodItemDTO> foodItemDTOList = this.foodItemController.getByIdList(foodItemIdList,newFoodItemDatabase());
+        List<FoodItemDTO> foodItemDTOList = this.foodItemController.getByIdList(foodItemIdList,foodItemDataProxy);
         return ResponseEntityModelUtil.listOK(foodItemDTOList);
     }
 
     @Override
     @PatchMapping("/{id}")
     public ResponseEntity<ResponseModel<FoodItemDTO>> partialUpdateFoodItemById(@PathVariable(name = "id") Integer foodItemId, @RequestBody FoodItemDTO foodItemDTO) {
-        foodItemDTO = this.foodItemController.partialUpdateById(foodItemId, foodItemDTO, newFoodItemDatabase(), newFoodItemImageRule());
+        foodItemDTO = this.foodItemController.partialUpdateById(foodItemId, foodItemDTO, foodItemDataProxy, newFoodItemImageRule());
         return ResponseEntityModelUtil.OK(foodItemDTO);
     }
 
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseModel<FoodItemDTO>> deleteFoodItemById(@PathVariable(name = "id") Integer foodItemId) {
-        this.foodItemController.deleteById(foodItemId, newFoodItemDatabase());
+        this.foodItemController.deleteById(foodItemId, foodItemDataProxy);
         return ResponseEntityModelUtil.OK(null);
     }
 
@@ -88,7 +80,7 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
     @PostMapping("/{foodItemId}/images")
     public ResponseEntity<ResponseModel<FoodItemImageDTO>> createFoodItemImage(@PathVariable("foodItemId") Integer foodItemId,
                                                                                @RequestBody FoodItemImageDTO foodItemImageDTO) {
-        foodItemImageDTO = this.foodItemController.create(foodItemId, foodItemImageDTO, newFoodItemDatabase(), newFoodItemImageRule());
+        foodItemImageDTO = this.foodItemController.create(foodItemId, foodItemImageDTO, foodItemDataProxy, newFoodItemImageRule());
         return ResponseEntityModelUtil.OK(foodItemImageDTO);
     }
 
@@ -96,7 +88,7 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
     @GetMapping("/{foodItemId}/images")
     public ResponseEntity<ResponseListModel<FoodItemImageDTO>> getFoodItemImagesByFoodItemId(@PathVariable Integer foodItemId,
                                                                                              @RequestParam(name = "includeData", required = false, defaultValue = "false") Boolean includeData) {
-        List<FoodItemImageDTO> foodItemImageDTOList = this.foodItemController.getFoodItemImagesByFoodItemId(foodItemId, includeData, newFoodItemDatabase(), newFoodItemImageRule());
+        List<FoodItemImageDTO> foodItemImageDTOList = this.foodItemController.getFoodItemImagesByFoodItemId(foodItemId, includeData, foodItemDataProxy, newFoodItemImageRule());
         return ResponseEntityModelUtil.listOK(foodItemImageDTOList);
     }
 
@@ -104,7 +96,7 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
     @Override
     @DeleteMapping("/{foodItemId}/images")
     public ResponseEntity<ResponseModel<FoodItemImageDTO>> deleteFoodItemImageByFoodItemId(@PathVariable(name = "foodItemId") Integer foodItemId) {
-        this.foodItemController.deleteImagesByFoodItemId(foodItemId, newFoodItemDatabase());
+        this.foodItemController.deleteImagesByFoodItemId(foodItemId, foodItemDataProxy);
         return ResponseEntityModelUtil.OK(null);
     }
 
@@ -112,8 +104,6 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
         return new FoodItemImageRules(foodItemConfig.getImage().getLocationPrefix(), foodItemConfig.getMaxImages(), foodItemConfig.getImage().getMaxSize(), foodItemConfig.getImage().getAllowedExtensions());
     }
 
-    private FoodItemDatabase newFoodItemDatabase() {
-        return new FoodItemDataProxy(this.jpaFoodItemDatabase, this.jpaFoodItemImageDatabase, this.foodItemImageStorage);
-    }
+ 
 
 }

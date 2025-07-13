@@ -1,7 +1,5 @@
 package br.com.tp.lanchescaieiras._core.applications.fooditem;
 
-import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemGatewayImpl;
-import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemMapper;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemGateway;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItem;
@@ -46,7 +44,7 @@ public class GetFoodItemUseCase {
         return foodItemList;
     }
 
-    public List<FoodItemImage> getAllImages(Integer foodItemId, Boolean includeData, FoodItemGatewayImpl foodItemGateway, FoodItemMapper foodItemMapper) {
+    public List<FoodItemImage> getAllImages(Integer foodItemId, Boolean includeData) {
         List<FoodItemImage> foodItemList = foodItemGateway.getAllImagesByFoodItemId(foodItemId, includeData);
         if (foodItemList.isEmpty()) {
             throw new FoodItemException("Não encontrada imagens para o item de alimentação com id: " + foodItemId, 404);

@@ -1,35 +1,19 @@
 package br.com.tp.lanchescaieiras._external.datasources.postgres.kitchenorder;
 
-import br.com.tp.lanchescaieiras._core.applications.kitchenorder.mappers.KitchenOrderFoodItemMapper;
-import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrderFoodItem;
-import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrderFoodItemRepository;
-import org.springframework.context.annotation.Lazy;
+import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderFoodItemDTO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class JpaKitchenOrderFoodItemRepositoryImpl implements KitchenOrderFoodItemRepository {
+public class JpaKitchenOrderFoodItemRepositoryImpl {
 
-    public final JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository;
-    public final KitchenOrderFoodItemMapper kitchenOrderFoodItemMapper;
-
-    public JpaKitchenOrderFoodItemRepositoryImpl(@Lazy JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository, KitchenOrderFoodItemMapper kitchenOrderFoodItemMapper) {
-        this.jpaKitchenOrderFoodItemRepository = jpaKitchenOrderFoodItemRepository;
-        this.kitchenOrderFoodItemMapper = kitchenOrderFoodItemMapper;
-    }
-
-    @Override
-    public KitchenOrderFoodItem save(KitchenOrderFoodItem foodItem, Integer kitchenOrderId) {
-        JpaKitchenOrderFoodItemEntity jpaKitchenOrderFoodItemEntity = kitchenOrderFoodItemMapper.domainToJpa(foodItem, kitchenOrderId);
-        return kitchenOrderFoodItemMapper.jpaToDomain(this.jpaKitchenOrderFoodItemRepository.save(jpaKitchenOrderFoodItemEntity));
-    }
-
-    @Override
-    public List<KitchenOrderFoodItem> findByKitchenOrderId(Integer kitchenOrderId) {
-        List<JpaKitchenOrderFoodItemEntity> jpaKitchenOrderFoodItemEntities = this.jpaKitchenOrderFoodItemRepository.findByKitchenOrderId(kitchenOrderId);
-        return jpaKitchenOrderFoodItemEntities.stream()
-                .map(kitchenOrderFoodItemMapper::jpaToDomain)
+    public List<KitchenOrderFoodItemDTO> saveAll(List<KitchenOrderFoodItemDTO> foodItemsDTOList, JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository, JpaKitchenOrderMapper jpaKitchenOrderMapper) {
+        List<JpaKitchenOrderFoodItemEntity> jpaKitchenOrderFoodItemList = foodItemsDTOList.stream()
+                .map(jpaKitchenOrderMapper::kitchenOrderFoodItemDtoToJpa)
                 .toList();
+        jpaKitchenOrderFoodItemList = jpaKitchenOrderFoodItemRepository.saveAll(jpaKitchenOrderFoodItemList);
+        return jpaKitchenOrderFoodItemList.stream().map(jpaKitchenOrderMapper::jpaKitchenOrderFoodItemToDTO).toList();
+
     }
 }

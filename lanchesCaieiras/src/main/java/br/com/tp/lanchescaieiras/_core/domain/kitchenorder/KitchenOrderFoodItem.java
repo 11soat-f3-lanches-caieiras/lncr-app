@@ -1,5 +1,6 @@
 package br.com.tp.lanchescaieiras._core.domain.kitchenorder;
 
+import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderFoodItemDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -16,6 +17,14 @@ public class KitchenOrderFoodItem {
         this.name = name;
         this.description = description;
         this.notes = notes;
+    }
+
+    public KitchenOrderFoodItem(KitchenOrderFoodItemDTO dto) {
+        this.id = dto.getId();
+        this.kitchenOrderId = dto.getKitchenOrderId();
+        this.name = dto.getName();
+        this.description = dto.getDescription();
+        this.notes = dto.getNotes();
     }
 
     public KitchenOrderFoodItem() {

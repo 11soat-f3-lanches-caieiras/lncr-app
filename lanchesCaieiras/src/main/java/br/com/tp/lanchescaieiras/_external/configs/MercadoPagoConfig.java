@@ -3,7 +3,7 @@ package br.com.tp.lanchescaieiras._external.configs;
 import br.com.tp.lanchescaieiras._core.adapters.payment.mercadopago.PaymentMercadoPagoQrControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQRMapper;
 import br.com.tp.lanchescaieiras._external.dataproxy.PaymentMercadoPagoQrDataProxy;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago.JpaMercadoPagoQrPostgresDatabaseImpl;
+import br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago.JpaMercadoPagoQrPostgresRepositoryImpl;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago.JpaPaymentMercadopagoQRMapper;
 import br.com.tp.lanchescaieiras._external.integrations.customerorder.CustomerOrderIntegrationImpl;
 import br.com.tp.lanchescaieiras._external.integrations.payment.mercadopago.MercadoPagoIntegrationImpl;
@@ -106,7 +106,7 @@ public class MercadoPagoConfig {
     }
 
     @Bean
-    public PaymentMercadoPagoQrDataProxy paymentMercadoPagoQrDataProxy(JpaMercadoPagoQrPostgresDatabaseImpl jpaMercadoPagoQrPostgresDatabase, MercadoPagoIntegrationImpl mercadoPagoIntegration, CustomerOrderIntegrationImpl customerOrderIntegration){
+    public PaymentMercadoPagoQrDataProxy paymentMercadoPagoQrDataProxy(JpaMercadoPagoQrPostgresRepositoryImpl jpaMercadoPagoQrPostgresDatabase, MercadoPagoIntegrationImpl mercadoPagoIntegration, CustomerOrderIntegrationImpl customerOrderIntegration){
         return new PaymentMercadoPagoQrDataProxy(jpaMercadoPagoQrPostgresDatabase,mercadoPagoIntegration,customerOrderIntegration);
     }
 

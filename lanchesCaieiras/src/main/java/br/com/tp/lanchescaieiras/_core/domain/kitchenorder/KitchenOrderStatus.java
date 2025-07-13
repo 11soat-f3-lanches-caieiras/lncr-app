@@ -1,16 +1,19 @@
 package br.com.tp.lanchescaieiras._core.domain.kitchenorder;
 
-import br.com.tp.lanchescaieiras._core.domain.exceptions.KitchenOrderException;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.EnumWithIdDescription;
+import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
+import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
 import jakarta.persistence.Id;
 
-public enum KitchenOrderStatus {
+public enum KitchenOrderStatus implements EnumWithIdDescription {
+    CANCELLED(0,"Cancelled"),
     RECEIVED(1, "Received"),
     PREPARING(2, "Preparing"),
     READY(3, "Ready"),
     FINISHED(4, "Finished");
 
     @Id
-    private final int id;
+    private final Integer id;
     private final String description;
 
     KitchenOrderStatus(int id, String description) {
@@ -18,54 +21,31 @@ public enum KitchenOrderStatus {
         this.description = description;
     }
 
-    public int getId() {
+    @Override
+    public Integer getId() {
         return id;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }
 
-    public static KitchenOrderStatus fromId(int id) {
-        for (KitchenOrderStatus status : values()) {
-            if (status.id == id) {
-                return status;
-            }
-        }
-        throw new KitchenOrderException("Id do status inválido: " + id + ". Os ids de status válidos são: " + KitchenOrderStatus.listOfAllowIds(), 400);
+    public static KitchenOrderStatus fromId(Integer id) {
+        return EnumUtils.fromId(KitchenOrderStatus.class, id,
+                new CustomerOrderException("Id do status inválido: " + id + ". Os ids de status válidos são: " + listOfAllowIds(), 400));
     }
 
     public static KitchenOrderStatus fromDescription(String description) {
-        for (KitchenOrderStatus status : values()) {
-            if (status.description.equalsIgnoreCase(description)) {
-                return status;
-            }
-        }
-        throw new KitchenOrderException("Status inválidos: " + description + ". Os status válidos são: " + KitchenOrderStatus.listOfAllowDescriptions(), 400);
+        return EnumUtils.fromDescription(KitchenOrderStatus.class, description,
+                new CustomerOrderException("Status inválidos: " + description + ". Os status válidos são: " + listOfAllowDescriptions(), 400));
     }
 
     public static String listOfAllowDescriptions() {
-        String listOfAllowDescriptions = "";
-        for (KitchenOrderStatus status : values()) {
-            if (!listOfAllowDescriptions.isEmpty()) {
-                listOfAllowDescriptions = listOfAllowDescriptions + ", ";
-            }
-            listOfAllowDescriptions = listOfAllowDescriptions + status.getDescription();
-        }
-        return listOfAllowDescriptions;
+        return EnumUtils.listOfAllowDescriptions(KitchenOrderStatus.class);
     }
 
     public static String listOfAllowIds() {
-        String listOfAllowIds = "";
-
-        for (KitchenOrderStatus status : values()) {
-            if (!listOfAllowIds.isEmpty()) {
-                listOfAllowIds = listOfAllowIds + ",";
-            }
-            listOfAllowIds = listOfAllowIds + status.getId();
-        }
-        return listOfAllowIds;
+        return EnumUtils.listOfAllowIds(KitchenOrderStatus.class);
     }
-
-
 }

@@ -1,7 +1,6 @@
 package br.com.tp.lanchescaieiras._external.integrations.kitchenorder;
 
 import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
-import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrderResponse;
 import br.com.tp.lanchescaieiras._external.configs.IntegrationConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +33,7 @@ public class KitchenOrderIntegrationImpl implements KitchenOrderIntegration {
                 HttpHeaders headers = new HttpHeaders();
                 headers.set("Content-Type", "application/json");
                 HttpEntity<String> request = new HttpEntity<>(kitchenOrder, headers);
-                restTemplate.postForObject(url, request, KitchenOrderResponse.class);
+               // restTemplate.postForObject(url, request, KitchenOrderResponse.class);
             } catch (Exception e) {
                 throw new CustomerOrderException("Erro ao enviar pedido para a cozinha", 500);
             }

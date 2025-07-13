@@ -4,7 +4,7 @@ import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQr
 import br.com.tp.lanchescaieiras._core.domain.payment.PaymentStatus;
 
 public class JpaPaymentMercadopagoQRMapper {
-    public  PaymentMercadopagoQrDTO jpaMercadopagoQrToDTO(JpaMercadopagoQrPostgresEntity entity) {
+    public  PaymentMercadopagoQrDTO jpaMercadopagoQrToDTO(JpaMercadopagoQrEntity entity) {
         if (entity == null) return null;
         return new PaymentMercadopagoQrDTO(
                 entity.getId(),
@@ -21,9 +21,9 @@ public class JpaPaymentMercadopagoQRMapper {
         );
     }
 
-    public  JpaMercadopagoQrPostgresEntity mercadopagoQrDtoToJpa(PaymentMercadopagoQrDTO dto) {
+    public JpaMercadopagoQrEntity mercadopagoQrDtoToJpa(PaymentMercadopagoQrDTO dto) {
         if (dto == null) return null;
-        return new JpaMercadopagoQrPostgresEntity(
+        return new JpaMercadopagoQrEntity(
                 dto.getId(),
                 dto.getOrderId(),
                 PaymentStatus.fromDescription(dto.getStatus()).getId(),

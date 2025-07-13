@@ -3,33 +3,38 @@ package br.com.tp.lanchescaieiras._external.dataproxy;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemDatabase;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem.JpaFoodItemImagePostgresDatabaseImpl;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem.JpaFoodItemPostgresDatabaseImpl;
+import br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem.*;
 import br.com.tp.lanchescaieiras._external.datasources.storage.fooditem.FoodItemImageStorageImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class FoodItemDataProxy implements FoodItemDatabase {
 
     private static final Logger log = LoggerFactory.getLogger(FoodItemDataProxy.class);
 
-    private final JpaFoodItemPostgresDatabaseImpl jpaFoodItemDatabase;
-    private final JpaFoodItemImagePostgresDatabaseImpl jpaFoodItemImageDatabase;
-    private final FoodItemImageStorageImpl foodItemImageStorage;
+    private final JpaFoodItemRepositoryImpl jpaFoodItemRepositoryImpl;
+    private final JpaFoodItemReposity jpaFoodItemRepository;
+    private final JpaFoodItemImageRepositoryImpl jpaFoodItemImageRepositoryImpl;
+    private final JpaFoodItemImageRepository jpaFoodItemImageRepository;
+    private final FoodItemImageStorageImpl foodItemImageStorageImpl;
+    private final JpaFoodItemMapper jpaFoodItemMapper;
 
-    public FoodItemDataProxy(JpaFoodItemPostgresDatabaseImpl jpaFoodItemDatabase,
-                             JpaFoodItemImagePostgresDatabaseImpl jpaFoodItemImageDatabase,
-                             FoodItemImageStorageImpl foodItemImageStorage) {
-        this.jpaFoodItemDatabase = jpaFoodItemDatabase;
-        this.jpaFoodItemImageDatabase = jpaFoodItemImageDatabase;
-        this.foodItemImageStorage = foodItemImageStorage;
+    public FoodItemDataProxy(JpaFoodItemRepositoryImpl jpaFoodItemRepositoryImpl, JpaFoodItemReposity jpaFoodItemRepository, JpaFoodItemImageRepositoryImpl jpaFoodItemImageRepositoryImpl, JpaFoodItemImageRepository jpaFoodItemImageRepository, FoodItemImageStorageImpl foodItemImageStorageImpl, JpaFoodItemMapper jpaFoodItemMapper) {
+        this.jpaFoodItemRepositoryImpl = jpaFoodItemRepositoryImpl;
+        this.jpaFoodItemRepository = jpaFoodItemRepository;
+        this.jpaFoodItemImageRepositoryImpl = jpaFoodItemImageRepositoryImpl;
+        this.jpaFoodItemImageRepository = jpaFoodItemImageRepository;
+        this.foodItemImageStorageImpl = foodItemImageStorageImpl;
+        this.jpaFoodItemMapper = jpaFoodItemMapper;
     }
 
     @Override
     public FoodItemDTO create(FoodItemDTO foodItemDTO) {
-        FoodItemDTO savedFoodItemDTO = jpaFoodItemDatabase.save(foodItemDTO);
+        FoodItemDTO savedFoodItemDTO = jpaFoodItemRepositoryImpl.save(foodItemDTO,jpaFoodItemRepository,jpaFoodItemMapper);
         savedFoodItemDTO.setImages(foodItemDTO.getImages());
         if (savedFoodItemDTO.getImages() != null && !savedFoodItemDTO.getImages().isEmpty()) {
             for (int i = 0; i < savedFoodItemDTO.getImages().size(); i++) {
@@ -39,8 +44,8 @@ public class FoodItemDataProxy implements FoodItemDatabase {
                 savedFoodItemDTO.getImages().get(i).setId(Integer.parseInt(imageId));
                 savedFoodItemDTO.getImages().get(i).setFileName(imageId + "." + savedFoodItemDTO.getImages().get(i).getFileExtension());
             }
-            jpaFoodItemImageDatabase.saveAll(savedFoodItemDTO.getImages());
-            foodItemImageStorage.saveImagesFiles(savedFoodItemDTO.getImages());
+            jpaFoodItemImageRepositoryImpl.saveAll(savedFoodItemDTO.getImages(),jpaFoodItemImageRepository,jpaFoodItemMapper);
+            foodItemImageStorageImpl.saveImagesFiles(savedFoodItemDTO.getImages());
             return savedFoodItemDTO;
         }
         return savedFoodItemDTO;
@@ -48,7 +53,7 @@ public class FoodItemDataProxy implements FoodItemDatabase {
 
     @Override
     public boolean existsByName(String foodItemName) {
-        return jpaFoodItemDatabase.existsByName(foodItemName);
+        return jpaFoodItemRepositoryImpl.existsByName(foodItemName, jpaFoodItemRepository,jpaFoodItemMapper);
     }
 
     @Override
@@ -56,14 +61,14 @@ public class FoodItemDataProxy implements FoodItemDatabase {
         List<FoodItemDTO> foodItemsDTOList;
 
         if (categoryId == null) {
-            foodItemsDTOList = jpaFoodItemDatabase.getAllFoodItems(_limit);
+            foodItemsDTOList = jpaFoodItemRepositoryImpl.getAllFoodItems(_limit,jpaFoodItemRepository,jpaFoodItemMapper);
         } else {
-            foodItemsDTOList = jpaFoodItemDatabase.getAllFoodItemsByCategory(_limit, categoryId);
+            foodItemsDTOList = jpaFoodItemRepositoryImpl.getAllFoodItemsByCategory(_limit, categoryId,jpaFoodItemRepository,jpaFoodItemMapper);
         }
 
         if (includeImages != null && includeImages) {
             for (FoodItemDTO foodItemDTO : foodItemsDTOList) {
-                List<FoodItemImageDTO> foodItemImages = jpaFoodItemImageDatabase.findAllByFoodItemId(foodItemDTO.getId());
+                List<FoodItemImageDTO> foodItemImages = jpaFoodItemImageRepositoryImpl.findAllByFoodItemId(foodItemDTO.getId(),jpaFoodItemImageRepository,jpaFoodItemMapper);
                 foodItemDTO.setImages(foodItemImages);
             }
         } else {
@@ -76,9 +81,9 @@ public class FoodItemDataProxy implements FoodItemDatabase {
 
     @Override
     public FoodItemDTO findFoodItemById(Integer foodItemId, Boolean includeImages) {
-        FoodItemDTO foodItemDTO = this.jpaFoodItemDatabase.findById(foodItemId);
+        FoodItemDTO foodItemDTO = this.jpaFoodItemRepositoryImpl.findById(foodItemId,jpaFoodItemRepository,jpaFoodItemMapper);
         if (includeImages != false && foodItemDTO != null) {
-            foodItemDTO.setImages(this.jpaFoodItemImageDatabase.findAllByFoodItemId(foodItemId));
+            foodItemDTO.setImages(this.jpaFoodItemImageRepositoryImpl.findAllByFoodItemId(foodItemId, jpaFoodItemImageRepository, jpaFoodItemMapper));
             return foodItemDTO;
         }
         return foodItemDTO;
@@ -86,64 +91,64 @@ public class FoodItemDataProxy implements FoodItemDatabase {
 
     @Override
     public List<FoodItemDTO> findFoodItemByIdList(List<Integer> foodItemIds) {
-        return this.jpaFoodItemDatabase.findByIdList(foodItemIds);
+        return this.jpaFoodItemRepositoryImpl.findByIdList(foodItemIds, jpaFoodItemRepository, jpaFoodItemMapper);
     }
 
     @Override
     public FoodItemImageDTO findFoodItemImageById(Integer foodItemImageId) {
-        return jpaFoodItemImageDatabase.findById(foodItemImageId);
+        return jpaFoodItemImageRepositoryImpl.findById(foodItemImageId,jpaFoodItemImageRepository,jpaFoodItemMapper);
     }
 
     @Override
     public List<FoodItemImageDTO> findAllFoodItemImagesByFoodItemId(Integer foodItemId, Boolean includeData) {
-        return jpaFoodItemImageDatabase.findAllByFoodItemId(foodItemId);
+        return jpaFoodItemImageRepositoryImpl.findAllByFoodItemId(foodItemId, jpaFoodItemImageRepository, jpaFoodItemMapper);
     }
 
     @Override
     public FoodItemDTO save(FoodItemDTO foodItemDTO) {
-        return this.jpaFoodItemDatabase.save(foodItemDTO);
+        return this.jpaFoodItemRepositoryImpl.save(foodItemDTO, jpaFoodItemRepository, jpaFoodItemMapper);
     }
 
     @Override
     public FoodItemImageDTO save(FoodItemImageDTO foodItemImageDTO) {
-        FoodItemImageDTO newFoodItemImageDTO = this.jpaFoodItemImageDatabase.save(foodItemImageDTO);
+        FoodItemImageDTO newFoodItemImageDTO = this.jpaFoodItemImageRepositoryImpl.save(foodItemImageDTO,jpaFoodItemImageRepository,jpaFoodItemMapper);
         if (newFoodItemImageDTO != null) {
-            this.foodItemImageStorage.saveImageFile(foodItemImageDTO);
+            this.foodItemImageStorageImpl.saveImageFile(foodItemImageDTO);
         }
         return foodItemImageDTO;
     }
 
     @Override
     public void delete(FoodItemDTO foodItemDTO) {
-        this.jpaFoodItemDatabase.deleteById(foodItemDTO.getId());
+        this.jpaFoodItemRepositoryImpl.deleteById(foodItemDTO.getId(),jpaFoodItemRepository);
         if (!foodItemDTO.getImages().isEmpty()) {
-            this.jpaFoodItemImageDatabase.deleteByFoodItemId(foodItemDTO.getImages());
-            this.foodItemImageStorage.deleteImagesFiles(foodItemDTO.getImages());
+            this.jpaFoodItemImageRepositoryImpl.deleteByFoodItemId(foodItemDTO.getImages(),jpaFoodItemImageRepository,jpaFoodItemMapper);
+            this.foodItemImageStorageImpl.deleteImagesFiles(foodItemDTO.getImages());
         }
     }
 
     @Override
     public void delete(FoodItemImageDTO foodItemImageDTO) {
-        this.jpaFoodItemImageDatabase.delete(foodItemImageDTO);
-        this.foodItemImageStorage.deleteImageFile(foodItemImageDTO.getFileName());
+        this.jpaFoodItemImageRepositoryImpl.delete(foodItemImageDTO,jpaFoodItemImageRepository,jpaFoodItemMapper);
+        this.foodItemImageStorageImpl.deleteImageFile(foodItemImageDTO.getFileName());
     }
 
     @Override
     public void deleteImageFile(String fileName) {
-        this.foodItemImageStorage.deleteImageFile(fileName);
+        this.foodItemImageStorageImpl.deleteImageFile(fileName);
     }
 
     @Override
     public void create(FoodItemImageDTO foodItemImageDTO) {
-        this.jpaFoodItemImageDatabase.save(foodItemImageDTO);
-        this.foodItemImageStorage.saveImageFile(foodItemImageDTO);
+        this.jpaFoodItemImageRepositoryImpl.save(foodItemImageDTO, jpaFoodItemImageRepository, jpaFoodItemMapper);
+        this.foodItemImageStorageImpl.saveImageFile(foodItemImageDTO);
     }
 
     @Override
     public void deleteImagesByFoodItemId(Integer foodItemId) {
-        List<FoodItemImageDTO> listImagesToDelete = this.jpaFoodItemImageDatabase.deleteImagesByFoodItemId(foodItemId);
+        List<FoodItemImageDTO> listImagesToDelete = this.jpaFoodItemImageRepositoryImpl.deleteImagesByFoodItemId(foodItemId, jpaFoodItemImageRepository, jpaFoodItemMapper);
         if (listImagesToDelete != null) {
-            this.foodItemImageStorage.deleteImagesFiles(listImagesToDelete);
+            this.foodItemImageStorageImpl.deleteImagesFiles(listImagesToDelete);
         }
     }
 }

@@ -2,7 +2,7 @@ package br.com.tp.lanchescaieiras._external.dataproxy;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.payment.PaymentDatabase;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago.JpaMercadoPagoQrPostgresDatabaseImpl;
+import br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago.JpaMercadoPagoQrPostgresRepositoryImpl;
 import br.com.tp.lanchescaieiras._external.integrations.customerorder.CustomerOrderIntegration;
 import br.com.tp.lanchescaieiras._external.integrations.payment.mercadopago.MercadoPagoIntegrationImpl;
 
@@ -10,11 +10,11 @@ import java.util.List;
 
 public class PaymentMercadoPagoQrDataProxy implements PaymentDatabase<PaymentMercadopagoQrDTO> {
 
-    private final JpaMercadoPagoQrPostgresDatabaseImpl jpaMercadoPagoQrPostgresDatabase;
+    private final JpaMercadoPagoQrPostgresRepositoryImpl jpaMercadoPagoQrPostgresDatabase;
     private final MercadoPagoIntegrationImpl mercadoPagoIntegration;
     private final CustomerOrderIntegration customerOrderIntegration;
 
-    public PaymentMercadoPagoQrDataProxy(JpaMercadoPagoQrPostgresDatabaseImpl jpaMercadoPagoQrPostgresDatabase, MercadoPagoIntegrationImpl mercadoPagoIntegration, CustomerOrderIntegration customerOrderIntegration) {
+    public PaymentMercadoPagoQrDataProxy(JpaMercadoPagoQrPostgresRepositoryImpl jpaMercadoPagoQrPostgresDatabase, MercadoPagoIntegrationImpl mercadoPagoIntegration, CustomerOrderIntegration customerOrderIntegration) {
         this.jpaMercadoPagoQrPostgresDatabase = jpaMercadoPagoQrPostgresDatabase;
         this.mercadoPagoIntegration = mercadoPagoIntegration;
         this.customerOrderIntegration = customerOrderIntegration;

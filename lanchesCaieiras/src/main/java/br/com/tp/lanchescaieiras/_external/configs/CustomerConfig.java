@@ -1,9 +1,8 @@
 package br.com.tp.lanchescaieiras._external.configs;
 
 import br.com.tp.lanchescaieiras._core.adapters.customer.CustomerControllerImpl;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.customer.JpaCustomerPostgresMapper;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.customer.JpaCustomerPostgresRepository;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.customer.JpaCustomerPostgresReposityImpl;
+import br.com.tp.lanchescaieiras._core.adapters.customer.CustomerMapper;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.customer.CustomerDatabase;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -25,19 +24,16 @@ public class CustomerConfig {
     }
 
     @Bean
-    public CustomerControllerImpl customerControllerImpl() {
-        return new CustomerControllerImpl();
+    public CustomerControllerImpl customerControllerImpl(CustomerDatabase customerDatabase) {
+        return new CustomerControllerImpl(customerDatabase);
     }
 
     @Bean
-    JpaCustomerPostgresMapper jpaCustomerPostgresMapper() {
-        return new JpaCustomerPostgresMapper();
+    public CustomerMapper customerMapper(){
+        return new CustomerMapper();
     }
 
-    @Bean
-    public JpaCustomerPostgresReposityImpl jpaCustomerPostgresReposityImpl(JpaCustomerPostgresRepository repository, JpaCustomerPostgresMapper mapper) {
-        return new JpaCustomerPostgresReposityImpl(repository, mapper);
-    }
+
 
 
 }

@@ -1,27 +1,8 @@
 package br.com.tp.lanchescaieiras._core.applications.kitchenorder.services;
 
-import br.com.tp.lanchescaieiras._core.applications.kitchenorder.usecases.KitchenOrderUseCases;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.KitchenOrderException;
-import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrder;
-import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrderFoodItem;
-import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrderStatus;
-import br.com.tp.lanchescaieiras._core.domain.notification.Notification;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.kitchenorder.JpaKitchenOrderFoodItemRepositoryImpl;
-import br.com.tp.lanchescaieiras._external.datasources.postgres.kitchenorder.JpaKitchenOrderRepositoryImpl;
-import br.com.tp.lanchescaieiras._external.integrations.customerorder.CustomerOrderIntegrationImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Service;
+public class KitchenOrderServicesImpl{
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-@Service
-public class KitchenOrderServicesImpl implements KitchenOrderUseCases {
-
-    private static final Logger log = LoggerFactory.getLogger(KitchenOrderServicesImpl.class);
+    /*private static final Logger log = LoggerFactory.getLogger(KitchenOrderServicesImpl.class);
     private final JpaKitchenOrderRepositoryImpl jpaKitchenOrderRepositoryImpl;
     private final JpaKitchenOrderFoodItemRepositoryImpl jpaKitchenOrderFoodItemRepository;
     private final CustomerOrderIntegrationImpl customerOrderIntegration;
@@ -35,9 +16,9 @@ public class KitchenOrderServicesImpl implements KitchenOrderUseCases {
         this.jpaKitchenOrderFoodItemRepository = jpaKitchenOrderFoodItemRepository;
         this.customerOrderIntegration = customerOrderIntegration;
         this.eventPublisher = eventPublisher;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public KitchenOrder createKitchenOrder(KitchenOrder kitchenOrder) {
         KitchenOrder createdKitchenOrder = jpaKitchenOrderRepositoryImpl.findByCustomerOrderId(kitchenOrder.getCustomerOrderId());
 
@@ -142,7 +123,7 @@ public class KitchenOrderServicesImpl implements KitchenOrderUseCases {
 
     private void publishNotification(String artetefactType, Integer artifactId, String message) {
         eventPublisher.publishEvent(new Notification(this, null, artetefactType, artifactId, message));
-    }
+    }*/
 
 }
 
