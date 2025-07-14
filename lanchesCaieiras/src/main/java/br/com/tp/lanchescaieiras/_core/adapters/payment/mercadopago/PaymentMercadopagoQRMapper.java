@@ -1,5 +1,6 @@
-package br.com.tp.lanchescaieiras._core.commons.dtos.payment;
+package br.com.tp.lanchescaieiras._core.adapters.payment.mercadopago;
 
+import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 import br.com.tp.lanchescaieiras._core.domain.payment.PaymentMercadopagoQR;
 
 public class PaymentMercadopagoQRMapper {

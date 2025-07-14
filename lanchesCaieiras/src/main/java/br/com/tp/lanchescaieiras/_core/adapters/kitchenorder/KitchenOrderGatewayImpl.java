@@ -58,4 +58,9 @@ public class KitchenOrderGatewayImpl implements KitchenOrderGateway {
     public void updateCustomerOrderStatus(Integer customerOrderId, String status) {
         this.kitchenOrderDatabase.updateCustomerOrderStatus(customerOrderId, status);
     }
+
+    @Override
+    public void sendNotification(String notificationType, Integer artefactId, String message) {
+        this.kitchenOrderDatabase.sendNotification(notificationType, artefactId, message);
+    }
 }

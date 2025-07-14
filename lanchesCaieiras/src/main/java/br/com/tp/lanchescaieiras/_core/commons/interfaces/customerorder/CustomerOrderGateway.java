@@ -18,7 +18,7 @@ public interface CustomerOrderGateway {
 
     void createPaymentCharge(CustomerOrder customerOrder);
 
-    void sendNotification(String notificationSource, Integer artefactId, String message);
+    void sendNotification(String notificationType, Integer artefactId, String message);
 
     CustomerOrder getCustomerOrderById(Integer customerOrderId);
 

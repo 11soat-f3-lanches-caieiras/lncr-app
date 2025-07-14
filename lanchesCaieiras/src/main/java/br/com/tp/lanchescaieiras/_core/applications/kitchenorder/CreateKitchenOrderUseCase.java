@@ -22,6 +22,7 @@ public class CreateKitchenOrderUseCase {
         kitchenOrderDTO.setStatus(KitchenOrderStatus.RECEIVED.getDescription()); // Default status for new kitchen orders
         KitchenOrder newKitchenOrder = new KitchenOrder(kitchenOrderDTO);
         newKitchenOrder = kitchenOrderGateway.save(newKitchenOrder);
+        this.kitchenOrderGateway.sendNotification("KITCHEN_ORDER_RECEIVED", newKitchenOrder.getId(), "Novo preparo com id: " + newKitchenOrder.getId() + ". Aguardando início do preparo.");
         return newKitchenOrder;
     }
 }

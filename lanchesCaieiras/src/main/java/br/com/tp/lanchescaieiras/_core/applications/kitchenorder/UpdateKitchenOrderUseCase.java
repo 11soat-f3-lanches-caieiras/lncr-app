@@ -19,6 +19,7 @@ public class UpdateKitchenOrderUseCase {
             kitchenOrder.setStatus(newStatus, forceUpdate);
             kitchenOrder = this.kitchenOrderGateway.save(kitchenOrder);
             updateCustomerOrder(kitchenOrder, updateCustomerOrder);
+            sendNotification(kitchenOrder);
             return kitchenOrder;
         }
          throw new KitchenOrderException("Não encontrado preparo para o id:" + kitchenOrderId, 404);
@@ -28,5 +29,33 @@ public class UpdateKitchenOrderUseCase {
             if (kitchenOrder.getStatus().equals(KitchenOrderStatus.PREPARING.getDescription()) ||
                 kitchenOrder.getStatus().equals(KitchenOrderStatus.READY.getDescription()))
                    this.kitchenOrderGateway.updateCustomerOrderStatus(kitchenOrder.getCustomerOrderId(), kitchenOrder.getStatus());
+    }
+
+    private void sendNotification(KitchenOrder kitchenOrder) {
+        if (kitchenOrder == null) return;
+        Integer customerOrderId = kitchenOrder.getId();
+        String  notificationType = null;
+        String  message = null;
+        switch (kitchenOrder.getStatus().toUpperCase()) {
+            case "PREPARING":
+                notificationType = "KITCHEN_ORDER_PREPARING";
+                message = "Preparo com id: " + customerOrderId + " iniciado.";
+                break;
+            case "READY":
+                notificationType = "KITCHEN_ORDER_READY";
+                message = "Preparo com id: " + customerOrderId + " pronto.";
+                break;
+            case "FINISEHD":
+                notificationType = "KITCHEN_ORDER_FINISHED";
+                message = "Preparo com id: " + customerOrderId + " finalizado.";
+                break;
+            case "CANCELLED":
+                notificationType = "KITCHEN_ORDER_CANCELLED";
+                message = "Preparo com id: " + customerOrderId + " cancelado.";
+            default:
+                break;
+        }
+        if (notificationType!= null  && message != null)
+            this.kitchenOrderGateway.sendNotification(notificationType,customerOrderId,message);
     }
 }

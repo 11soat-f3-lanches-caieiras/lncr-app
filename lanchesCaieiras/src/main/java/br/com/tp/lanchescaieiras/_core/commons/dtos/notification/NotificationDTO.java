@@ -1,30 +1,22 @@
-package br.com.tp.lanchescaieiras._external.datasources.postgres.notification;
-
-import jakarta.persistence.*;
+package br.com.tp.lanchescaieiras._core.commons.dtos.notification;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "notifications")
-public class JpaNotificationEntity {
-
-    @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+public class NotificationDTO {
     private Integer id;
     private String notificationType;
     private Integer artefactId;
     private String message;
     private LocalDateTime created;
 
-    public JpaNotificationEntity() {
-        // Default constructor for JPA
-    }
+    public NotificationDTO() {}
 
-    public JpaNotificationEntity(String notificationType, Integer artefactId, String message) {
+    public NotificationDTO(Integer id, String notificationType, Integer artefactId, String message, LocalDateTime created) {
+        this.id = id;
         this.notificationType = notificationType;
         this.artefactId = artefactId;
         this.message = message;
-        this.created = LocalDateTime.now();
+        this.created = created;
     }
 
     public Integer getId() {
@@ -66,9 +58,5 @@ public class JpaNotificationEntity {
     public void setCreated(LocalDateTime created) {
         this.created = created;
     }
-
-    @PrePersist
-    public void prePersist() {
-        this.created = LocalDateTime.now();
-    }
 }
+

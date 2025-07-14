@@ -1,0 +1,44 @@
+package br.com.tp.lanchescaieiras._external.apis.notification;
+
+import br.com.tp.lanchescaieiras._core.adapters.notification.NotificationControllerImpl;
+import br.com.tp.lanchescaieiras._core.commons.dtos.notification.NotificationDTO;
+import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityModelUtil;
+import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
+import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
+import br.com.tp.lanchescaieiras._external.configs.NotificationConfig;
+import br.com.tp.lanchescaieiras._external.datasources.postgres.notification.JpaNotificationRepositoryImpl;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/notifications")
+public class NotificationRestControllerImpl implements NotificationRestController {
+
+    private final NotificationControllerImpl notificationController;
+    private final JpaNotificationRepositoryImpl jpaNotificationRepository;
+    private final NotificationConfig notificationConfig;
+
+    public NotificationRestControllerImpl(NotificationControllerImpl notificationController,
+                                          JpaNotificationRepositoryImpl jpaNotificationRepository,
+                                          NotificationConfig notificationConfig) {
+        this.notificationController = notificationController;
+        this.jpaNotificationRepository = jpaNotificationRepository;
+        this.notificationConfig = notificationConfig;
+    }
+
+    @Override
+    @PostMapping
+    public ResponseEntity<ResponseModel<NotificationDTO>> createNotification(NotificationDTO notificationDTO) {
+        this.notificationController.createNotification(notificationDTO);
+        return ResponseEntityModelUtil.Accepted(null);
+    }
+
+    @Override
+    @GetMapping("/{notificationType}")
+    public ResponseEntity<ResponseListModel<NotificationDTO>> getNotificationByType(@PathVariable(name = "notificationType") String notificationType) {
+        List<NotificationDTO> notificationList = this.notificationController.getNotificationByType(notificationType);
+        return ResponseEntityModelUtil.listOK(notificationList);
+    }
+}

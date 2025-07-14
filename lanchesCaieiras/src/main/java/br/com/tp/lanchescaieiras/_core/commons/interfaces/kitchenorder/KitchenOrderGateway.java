@@ -19,4 +19,6 @@ public interface KitchenOrderGateway {
     KitchenOrder getKitchenOrderById(Integer kitchenOrderId);
 
     void updateCustomerOrderStatus(Integer customerOrderId, String status);
+
+    void sendNotification(String notificationType, Integer artefactId, String message);
 }

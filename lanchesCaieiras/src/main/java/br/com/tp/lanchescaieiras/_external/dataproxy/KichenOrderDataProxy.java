@@ -3,9 +3,9 @@ package br.com.tp.lanchescaieiras._external.dataproxy;
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderFoodItemDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.kitchenorder.KitchenOrderDatabase;
-import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrderFoodItem;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.kitchenorder.*;
 import br.com.tp.lanchescaieiras._external.integrations.customerorder.CustomerOrderIntegrationImpl;
+import br.com.tp.lanchescaieiras._external.integrations.notifcation.NotificationIntegraionImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,14 +18,22 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
     private final JpaKitchenOrderFoodItemRepositoryImpl jpaKitchenOrderFoodItemRepositoryImpl;
     private final JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository;
     private final CustomerOrderIntegrationImpl customerOrderIntegrationImpl;
+    private final NotificationIntegraionImpl notificationIntegraion;
     private final JpaKitchenOrderMapper jpaKitchenOrderMapper;
 
-    public KichenOrderDataProxy(JpaKitchenOrderRepositoryImpl jpaKitchenOrderRepositoryImpl, JpaKitchenOrderRepository jpaKitchenOrderRepository, JpaKitchenOrderFoodItemRepositoryImpl jpaKitchenOrderFoodItemRepositoryImpl, JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository, CustomerOrderIntegrationImpl customerOrderIntegrationImpl, JpaKitchenOrderMapper jpaKitchenOrderMapper) {
+    public KichenOrderDataProxy(JpaKitchenOrderRepositoryImpl jpaKitchenOrderRepositoryImpl,
+                                JpaKitchenOrderRepository jpaKitchenOrderRepository,
+                                JpaKitchenOrderFoodItemRepositoryImpl jpaKitchenOrderFoodItemRepositoryImpl,
+                                JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository,
+                                CustomerOrderIntegrationImpl customerOrderIntegrationImpl,
+                                NotificationIntegraionImpl notificationIntegraion,
+                                JpaKitchenOrderMapper jpaKitchenOrderMapper) {
         this.jpaKitchenOrderRepositoryImpl = jpaKitchenOrderRepositoryImpl;
         this.jpaKitchenOrderRepository = jpaKitchenOrderRepository;
         this.jpaKitchenOrderFoodItemRepositoryImpl = jpaKitchenOrderFoodItemRepositoryImpl;
         this.jpaKitchenOrderFoodItemRepository = jpaKitchenOrderFoodItemRepository;
         this.customerOrderIntegrationImpl = customerOrderIntegrationImpl;
+        this.notificationIntegraion = notificationIntegraion;
         this.jpaKitchenOrderMapper = jpaKitchenOrderMapper;
     }
 
@@ -75,26 +83,9 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
     }
 
     @Override
-    public List<KitchenOrderDTO> findByStatusId(Integer statusId) {
-        return List.of();
+    public void sendNotification(String notificationType, Integer artefactId, String message) {
+        this.notificationIntegraion.sendNotification(notificationType,artefactId,message);
     }
-
-    @Override
-    public KitchenOrderDTO updateStatusByCustomerOrderId(Integer customerOrderId, String newStatus) {
-        return null;
-    }
-
-    @Override
-    public List<KitchenOrderFoodItemDTO> saveAll(List<KitchenOrderFoodItem> kitchenOrderFoodItemList) {
-        return List.of();
-    }
-
-    @Override
-    public List<KitchenOrderFoodItemDTO> getFoodItemsByKitchenOrderId(Integer kitchenOrderId) {
-        return List.of();
-    }
-
-
 
     private void setKitchenOrderIdOnFoodItems(KitchenOrderDTO kitchenOrderDto) {
         Integer kitchenOrderId = kitchenOrderDto.getId();
@@ -106,7 +97,6 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
     private void includeFoodItems(KitchenOrderDTO kitchenOrderDto, Boolean includeFoodItems) {
         if (includeFoodItems && kitchenOrderDto != null) {
             kitchenOrderDto.setFoodItems(findByKitchenOrderId(kitchenOrderDto.getId()));
-
         }
     }
 }

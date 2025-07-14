@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras._external.datasources.postgres.customer;
+package br.com.tp.lanchescaieiras._external.datasources.postgres.notification;
 
 import br.com.tp.lanchescaieiras._external.configs.JpaHibernateConfig;
 import jakarta.persistence.EntityManagerFactory;
@@ -9,7 +9,6 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -21,42 +20,40 @@ import java.util.HashMap;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = "br.com.tp.lanchescaieiras._external.datasources.postgres.customer",
-        entityManagerFactoryRef = "postgresCustomerEntityManagerFactory",
-        transactionManagerRef = "postgresCustomerTransactionManager"
+        basePackages = "br.com.tp.lanchescaieiras._external.datasources.postgres.notification",
+        entityManagerFactoryRef = "postgresNotificationEntityMan" +
+                "agerFactory",
+        transactionManagerRef = "postgresNotificationTransactionManager"
 )
-public class JpaCustomerConfig {
+public class NotificationDatabaseConfig {
 
     @Autowired
     private JpaHibernateConfig jpaHibernateConfig;
 
 
-    @Primary
-    @Bean(name = "postgresCustomerDataSource")
+    @Bean(name = "postgresNotificationDataSource")
     @ConfigurationProperties(prefix = "spring.datasources.postgres")
-    public DataSource postgresCustomerDataSource() {
+    public DataSource notificationPostgresDataSource() {
         return DataSourceBuilder.create().build();
     }
 
-    @Primary
-    @Bean(name = "postgresCustomerEntityManagerFactory")
+    @Bean(name = "postgresNotificationEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean postgresEntityManagerFactory(
             EntityManagerFactoryBuilder builder,
-            @Qualifier("postgresCustomerDataSource") DataSource dataSource) {
+            @Qualifier("postgresNotificationDataSource") DataSource dataSource) {
         HashMap<String, Object> properties = jpaHibernateConfig.hibernateProperties();
         properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         return builder
-                .dataSource(postgresCustomerDataSource())
+                .dataSource(notificationPostgresDataSource())
                 .properties(properties)
-                .packages("br.com.tp.lanchescaieiras._external.datasources.postgres.customer")
-                .persistenceUnit("CustomerPostgres")
+                .packages("br.com.tp.lanchescaieiras._external.datasources.postgres.notification")
+                .persistenceUnit("NotificationPostgres")
                 .build();
     }
 
-    @Primary
-    @Bean(name = "postgresCustomerTransactionManager")
+    @Bean(name = "postgresNotificationTransactionManager")
     public PlatformTransactionManager postgresTransactionManager(
-            @Qualifier("postgresCustomerEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+            @Qualifier("postgresNotificationEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 }

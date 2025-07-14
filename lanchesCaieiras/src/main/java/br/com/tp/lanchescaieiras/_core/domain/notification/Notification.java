@@ -1,25 +1,30 @@
 package br.com.tp.lanchescaieiras._core.domain.notification;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.context.ApplicationEvent;
+import br.com.tp.lanchescaieiras._core.commons.dtos.notification.NotificationDTO;
 
 import java.time.LocalDateTime;
 
-@JsonIgnoreProperties({"timestamp"})
-public class Notification extends ApplicationEvent {
+public class Notification {
     private Integer id;
     private String notificationType;
     private Integer artefactId;
     private String message;
-    private LocalDateTime createdAt;
+    private LocalDateTime _created;
 
-    public Notification(Object source, Integer id, String notificationType, Integer artefactId, String message) {
-        super(source);
+    public Notification(Integer id, String notificationType, Integer artefactId, String message, LocalDateTime _created) {
         this.id = id;
         this.notificationType = notificationType;
         this.artefactId = artefactId;
         this.message = message;
+        this._created = _created;
+    }
+
+    public Notification(NotificationDTO dto) {
+        this.id = dto.getId();
+        this.notificationType = dto.getNotificationType();
+        this.artefactId = dto.getArtefactId();
+        this.message = dto.getMessage();
+        this._created = dto.getCreated();
     }
 
     public Integer getId() {
@@ -54,17 +59,12 @@ public class Notification extends ApplicationEvent {
         this.message = message;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public LocalDateTime get_created() {
+        return _created;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    @JsonIgnore
-    public Object getSource() {
-        return source;
+    public void set_created(LocalDateTime _created) {
+        this._created = _created;
     }
 
 }

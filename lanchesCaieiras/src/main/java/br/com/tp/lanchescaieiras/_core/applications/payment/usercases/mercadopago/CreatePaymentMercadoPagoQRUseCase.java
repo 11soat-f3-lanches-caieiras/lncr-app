@@ -18,7 +18,9 @@ public class CreatePaymentMercadoPagoQRUseCase {
         if (this.paymentGateway.getPaymentByCustomerOrderId(paymentMercadopagoQrDTO.getOrderId()) == null) {
             paymentMercadopagoQrDTO.setStatus(PaymentStatus.CHARGED.getDescription());
             PaymentMercadopagoQR paymentMercadopagoQR = new PaymentMercadopagoQR(paymentMercadopagoQrDTO);
-            return (PaymentMercadopagoQR) this.paymentGateway.createCharge(paymentMercadopagoQR);
+            paymentMercadopagoQR = (PaymentMercadopagoQR) this.paymentGateway.createCharge(paymentMercadopagoQR);
+            this.paymentGateway.sendNotification("PAYMENT_MERCADOPAGO_QR_CHECKOUT", paymentMercadopagoQR.getOrderId(), "Nova cobrança criada com id: " + paymentMercadopagoQR.getOrderId() + " Aguardando pagamento");
+            return paymentMercadopagoQR;
         }
         throw new PaymentException("Já existe uma cobrança para o pedido id "+ paymentMercadopagoQrDTO.getOrderId(),409);
     }

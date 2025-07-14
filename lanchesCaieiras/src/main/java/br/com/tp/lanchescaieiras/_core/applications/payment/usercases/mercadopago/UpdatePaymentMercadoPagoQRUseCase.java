@@ -21,6 +21,7 @@ public class UpdatePaymentMercadoPagoQRUseCase {
         if (paymentMercadopagoQR.getStatus().equals(PaymentStatus.CHARGED.getDescription())){
             paymentMercadopagoQR.setStatus(PaymentStatus.CANCELLED.getDescription());
             paymentMercadopagoQR = (PaymentMercadopagoQR) this.paymentGateway.save(paymentMercadopagoQR);
+            this.paymentGateway.sendNotification("PAYMENT_MERCADOPAGO_QR_CANCELLED", paymentMercadopagoQR.getOrderId(), "Cobrança criada com id: " + paymentMercadopagoQR.getOrderId() + " cancelada");
             return paymentMercadopagoQR;
         }
         else{
@@ -37,6 +38,7 @@ public class UpdatePaymentMercadoPagoQRUseCase {
                     paymentMercadopagoQR.setStatus(PaymentStatus.PAID.getDescription());
                     paymentMercadopagoQR = (PaymentMercadopagoQR) this.paymentGateway.save(paymentMercadopagoQR);
                     this.paymentGateway.updateCustomerOrderStatus(externalReferenceId, "Received");
+                    this.paymentGateway.sendNotification("PAYMENT_MERCADOPAGO_QR_PAID", paymentMercadopagoQR.getOrderId(), "Pagamento com id: " + paymentMercadopagoQR.getOrderId() + " finalizado.");
                     return paymentMercadopagoQR;
                 }
                 throw new PaymentException("Status do pagamento inválido: "+paymentMercadopagoQR.getStatus(),400);

@@ -23,9 +23,8 @@ public class CreateCustomerOrderUseCase {
         CustomerOrderUseCaseUtils.getFoodItemsDetails(customerOrder, customerOrderGateway);
         customerOrder = this.customerOrderGateway.createCustomerOrder(customerOrder);
 
-        //TODO - implementar integrações com pagamento e notificações
         this.customerOrderGateway.createPaymentCharge(customerOrder);
-        //this.customerOrderGateway.sendNotification("CustomerOrder",1,"mensagem");
+        this.customerOrderGateway.sendNotification("CUSTOMER_ORDER_CHECKOUT",customerOrder.getId(),"Novo pedido realizado com id: " + customerOrder.getId() +"Aguardando pagamento");
 
         return customerOrder;
     }

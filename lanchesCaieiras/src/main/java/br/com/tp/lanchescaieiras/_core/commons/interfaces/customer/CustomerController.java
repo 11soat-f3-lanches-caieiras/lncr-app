@@ -7,17 +7,17 @@ import java.util.Optional;
 
 public interface CustomerController {
 
-    CustomerDTO create(CustomerDTO customerDto, CustomerDatabase customerDatabase);
+    CustomerDTO create(CustomerDTO customerDto);
 
-    List<CustomerDTO> getAll(Optional<Integer> _limit, CustomerDatabase customerDatabase);
+    List<CustomerDTO> getAll(Optional<Integer> _limit);
 
-    CustomerDTO getById(Integer id, CustomerDatabase customerDatabase);
+    CustomerDTO getById(Integer id);
 
-    CustomerDTO getByDocumentNumber(String documentNumber, CustomerDatabase customerDatabase);
+    CustomerDTO getByDocumentNumber(String documentNumber);
 
-    CustomerDTO partialUpdateById(Integer id, CustomerDTO CustomerDTO, CustomerDatabase customerDatabase);
+    CustomerDTO partialUpdateById(Integer id, CustomerDTO CustomerDTO);
 
-    void delete(Integer id, CustomerDatabase customerDatabase);
+    void delete(Integer id);
 
-    List<CustomerDTO> getByIdList(List<Integer> customerIdList, CustomerDatabase customerDatabase);
+    List<CustomerDTO> getByIdList(List<Integer> customerIdList);
 }

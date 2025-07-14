@@ -13,6 +13,7 @@ public class IntegrationConfig {
     private String foodItemsListUrl;
     private String kitchenOrdersUrl;
     private String paymentsUrl;
+    private String notificationUrl;
 
     public String getCustomersUrl() {
         return customersUrl;
@@ -68,5 +69,13 @@ public class IntegrationConfig {
 
     public void setPaymentsUrl(String paymentsUrl) {
         this.paymentsUrl = paymentsUrl;
+    }
+
+    public String getNotificationUrl() {
+        return notificationUrl;
+    }
+
+    public void setNotificationUrl(String notificationUrl) {
+        this.notificationUrl = notificationUrl;
     }
 }

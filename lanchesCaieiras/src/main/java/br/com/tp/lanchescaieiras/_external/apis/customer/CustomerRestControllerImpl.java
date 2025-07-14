@@ -19,35 +19,35 @@ import java.util.Optional;
 public class CustomerRestControllerImpl implements CustomerRestController {
 
     public final CustomerControllerImpl customerController;
-    public final JpaCustomerReposityImpl jpaCustomerPostgresReposity;
+    public final JpaCustomerReposityImpl jpaCustomerRepository;
     public final CustomerConfig customerConfig;
 
     public CustomerRestControllerImpl(CustomerControllerImpl customerController,
-                                      JpaCustomerReposityImpl jpaCustomerPostgresReposity,
+                                      JpaCustomerReposityImpl jpaCustomerRepository,
                                       CustomerConfig customerConfig) {
         this.customerController = customerController;
-        this.jpaCustomerPostgresReposity = jpaCustomerPostgresReposity;
+        this.jpaCustomerRepository = jpaCustomerRepository;
         this.customerConfig = customerConfig;
     }
 
     @Override
     @PostMapping
     public ResponseEntity<ResponseModel<CustomerDTO>> createCustomer(@RequestBody CustomerDTO customerDto) {
-        customerDto = this.customerController.create(customerDto, this.jpaCustomerPostgresReposity);
+        customerDto = this.customerController.create(customerDto);
         return ResponseEntityModelUtil.created(customerDto, customerConfig.getLocationPrefix());
     }
 
     @Override
     @GetMapping
     public ResponseEntity<ResponseListModel<CustomerDTO>> getAllCustomers(@RequestParam("_limit") Optional<Integer> _limit) {
-        List<CustomerDTO> listCustomerDTO = this.customerController.getAll(_limit, this.jpaCustomerPostgresReposity);
+        List<CustomerDTO> listCustomerDTO = this.customerController.getAll(_limit);
         return ResponseEntityModelUtil.listOK(listCustomerDTO);
     }
 
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<ResponseModel<CustomerDTO>> getCustomerById(@PathVariable("id") Integer id) {
-        CustomerDTO customerDTO = this.customerController.getById(id, this.jpaCustomerPostgresReposity);
+        CustomerDTO customerDTO = this.customerController.getById(id);
         return ResponseEntityModelUtil.OK(customerDTO);
     }
 
@@ -56,28 +56,28 @@ public class CustomerRestControllerImpl implements CustomerRestController {
     @Override
     @GetMapping("/documentNumber/{documentNumber}")
     public ResponseEntity<ResponseModel<CustomerDTO>> getCustomerByDocumentNumber(@PathVariable("documentNumber") String documentNumber) {
-        CustomerDTO customerDTO = this.customerController.getByDocumentNumber(documentNumber, this.jpaCustomerPostgresReposity);
+        CustomerDTO customerDTO = this.customerController.getByDocumentNumber(documentNumber);
         return ResponseEntityModelUtil.OK(customerDTO);
     }
 
     @Override
     @GetMapping("/customerIdList/{customerIdList}")
     public ResponseEntity<ResponseListModel<CustomerDTO>> getCustomerByIdList(@PathVariable(name="customerIdList") List<Integer> customerIdList) {
-        List<CustomerDTO> customerDTOList = this.customerController.getByIdList(customerIdList,this.jpaCustomerPostgresReposity);
+        List<CustomerDTO> customerDTOList = this.customerController.getByIdList(customerIdList);
         return ResponseEntityModelUtil.listOK(customerDTOList);
     }
 
     @Override
     @PatchMapping("/{id}")
     public ResponseEntity<ResponseModel<CustomerDTO>> partialUpdateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable Integer id) {
-        customerDTO = this.customerController.partialUpdateById(id, customerDTO, this.jpaCustomerPostgresReposity);
+        customerDTO = this.customerController.partialUpdateById(id, customerDTO);
         return ResponseEntityModelUtil.OK(customerDTO);
     }
 
     @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseModel<CustomerDTO>> deleteCustomer(@PathVariable("id") Integer id) {
-        this.customerController.delete(id, this.jpaCustomerPostgresReposity);
+        this.customerController.delete(id);
         return ResponseEntityModelUtil.OK(null);
     }
 }

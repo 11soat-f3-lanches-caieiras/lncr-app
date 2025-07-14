@@ -18,6 +18,8 @@ public interface PaymentDatabase<T> {
 
     List<T> findByStatusList(List<Integer> paymentStatusList);
 
+    void sendNotification(String notificationType, Integer artefactId, String message);
+
     /*
 
     <T> T findByCustomerOrderId(Integer customerOrderId);

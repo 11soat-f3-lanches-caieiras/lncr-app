@@ -50,7 +50,7 @@ public class PaymentMercadoPagoQrRestRestControllerImpl implements PaymentRestCo
     }
 
     @Override
-    @PatchMapping("/cancelPaymentByCustomerOrderId/{customerOrderId}")
+    @PatchMapping("/cancel/{customerOrderId}")
     public ResponseEntity<ResponseModel<PaymentMercadopagoQrDTO>> cancelPaymentByCustomerOrderId(@PathVariable(name = "customerOrderId") Integer customerOrderId) {
         PaymentMercadopagoQrDTO paymentMercadopagoQrDTO = this.paymentMercadoPagoQrController.cancelPaymentByOrderId(this.paymentMercadoPagoQrDataProxy,customerOrderId);
         return ResponseEntityModelUtil.OK(paymentMercadopagoQrDTO);

@@ -4,7 +4,7 @@ import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemDatabase;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem.*;
-import br.com.tp.lanchescaieiras._external.datasources.storage.fooditem.FoodItemImageStorageImpl;
+import br.com.tp.lanchescaieiras._external.datasources.storage.FoodItemImageStorageImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

@@ -3,11 +3,11 @@ package br.com.tp.lanchescaieiras._external.datasources.postgres.notification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Repository
+@Component
 public interface JpaNotificationsRepository extends JpaRepository<JpaNotificationEntity, Integer> {
 
     @Query(value = "SELECT * FROM notifications n WHERE n.notification_type = :notificationType order by created_at desc", nativeQuery = true)

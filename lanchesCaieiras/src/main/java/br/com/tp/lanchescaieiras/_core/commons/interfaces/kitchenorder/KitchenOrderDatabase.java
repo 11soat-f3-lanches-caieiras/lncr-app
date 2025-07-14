@@ -2,7 +2,6 @@ package br.com.tp.lanchescaieiras._core.commons.interfaces.kitchenorder;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderFoodItemDTO;
-import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrderFoodItem;
 
 import java.util.List;
 
@@ -22,13 +21,5 @@ public interface KitchenOrderDatabase {
 
     void updateCustomerOrderStatus(Integer customerOrderId, String status);
 
-    List<KitchenOrderDTO> findByStatusId(Integer statusId);
-
-    KitchenOrderDTO updateStatusByCustomerOrderId(Integer customerOrderId, String newStatus);
-
-    List<KitchenOrderFoodItemDTO> saveAll(List<KitchenOrderFoodItem> kitchenOrderFoodItemList);
-
-    List<KitchenOrderFoodItemDTO> getFoodItemsByKitchenOrderId(Integer kitchenOrderId);
-
-
+    void sendNotification(String notificationType, Integer artefactId, String message);
 }

@@ -3,7 +3,6 @@ package br.com.tp.lanchescaieiras._core.adapters.payment.mercadopago;
 import br.com.tp.lanchescaieiras._core.applications.payment.usercases.mercadopago.CreatePaymentMercadoPagoQRUseCase;
 import br.com.tp.lanchescaieiras._core.applications.payment.usercases.mercadopago.GetPaymentMercadoPagoQRUseCase;
 import br.com.tp.lanchescaieiras._core.applications.payment.usercases.mercadopago.UpdatePaymentMercadoPagoQRUseCase;
-import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQRMapper;
 import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.payment.PaymentController;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.payment.PaymentDatabase;

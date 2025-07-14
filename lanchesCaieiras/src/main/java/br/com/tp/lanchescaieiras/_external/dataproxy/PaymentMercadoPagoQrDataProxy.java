@@ -4,6 +4,7 @@ import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQr
 import br.com.tp.lanchescaieiras._core.commons.interfaces.payment.PaymentDatabase;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago.JpaMercadoPagoQrPostgresRepositoryImpl;
 import br.com.tp.lanchescaieiras._external.integrations.customerorder.CustomerOrderIntegration;
+import br.com.tp.lanchescaieiras._external.integrations.notifcation.NotificationIntegraionImpl;
 import br.com.tp.lanchescaieiras._external.integrations.payment.mercadopago.MercadoPagoIntegrationImpl;
 
 import java.util.List;
@@ -13,11 +14,13 @@ public class PaymentMercadoPagoQrDataProxy implements PaymentDatabase<PaymentMer
     private final JpaMercadoPagoQrPostgresRepositoryImpl jpaMercadoPagoQrPostgresDatabase;
     private final MercadoPagoIntegrationImpl mercadoPagoIntegration;
     private final CustomerOrderIntegration customerOrderIntegration;
+    private final NotificationIntegraionImpl notificationIntegration;
 
-    public PaymentMercadoPagoQrDataProxy(JpaMercadoPagoQrPostgresRepositoryImpl jpaMercadoPagoQrPostgresDatabase, MercadoPagoIntegrationImpl mercadoPagoIntegration, CustomerOrderIntegration customerOrderIntegration) {
+    public PaymentMercadoPagoQrDataProxy(JpaMercadoPagoQrPostgresRepositoryImpl jpaMercadoPagoQrPostgresDatabase, MercadoPagoIntegrationImpl mercadoPagoIntegration, CustomerOrderIntegration customerOrderIntegration, NotificationIntegraionImpl notificationIntegration) {
         this.jpaMercadoPagoQrPostgresDatabase = jpaMercadoPagoQrPostgresDatabase;
         this.mercadoPagoIntegration = mercadoPagoIntegration;
         this.customerOrderIntegration = customerOrderIntegration;
+        this.notificationIntegration = notificationIntegration;
     }
 
     @Override
@@ -59,5 +62,10 @@ public class PaymentMercadoPagoQrDataProxy implements PaymentDatabase<PaymentMer
     @Override
     public List<PaymentMercadopagoQrDTO> findByStatusList(List<Integer> paymentStatusIdList) {
         return this.jpaMercadoPagoQrPostgresDatabase.findByStatusList(paymentStatusIdList);
+    }
+
+    @Override
+    public void sendNotification(String notificationType, Integer artefactId, String message) {
+        this.notificationIntegration.sendNotification(notificationType, artefactId, message);
     }
 }

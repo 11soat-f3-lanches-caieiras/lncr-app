@@ -37,6 +37,7 @@ lncr:
     food-items-list-url: "${lncr.base-url}/foodItems/foodItemListIds"
     kitchen-orders-url: "${lncr.base-url}/kitchenOrders"
     payments-url: "${lncr.base-url}/payments/mercadoPago"
+    notification-url: "${lncr.base-url}/notifications"
 
 
   customer:
@@ -69,3 +70,6 @@ lncr:
     posId: "${MERCADOPAGO_POS_ID}" #.env
     #mercado-pago-mock: false
     #mercado-pago-mock-customer-order-id: 1
+
+  notification:
+    location-prefix: "${lncr.base-url}/notifications"

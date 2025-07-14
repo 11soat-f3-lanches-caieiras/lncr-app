@@ -1,6 +1,5 @@
 package br.com.tp.lanchescaieiras._core.adapters.payment.mercadopago;
 
-import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQRMapper;
 import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.payment.PaymentDatabase;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.payment.PaymentGateway;
@@ -59,5 +58,10 @@ public class PaymentGatewayImpl implements PaymentGateway<PaymentMercadopagoQR> 
     public List<PaymentMercadopagoQR> getPaymentMercadoPagoQRList(List<Integer> paymentStatusIdList) {
         List<PaymentMercadopagoQrDTO> mercadopagoQrDTOList = this.paymentDatabase.findByStatusList(paymentStatusIdList);
         return mercadopagoQrDTOList.stream().map(paymentMercadopagoQRMapper::paymentMercadopagoQrToDomain).toList();
+    }
+
+    @Override
+    public void sendNotification(String notificationType, Integer artefactId, String message) {
+        this.paymentDatabase.sendNotification(notificationType, artefactId, message);
     }
 }

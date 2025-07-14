@@ -52,8 +52,8 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
     }
 
     @Override
-    public void sendNotification(String notificationSource, Integer artefactId, String message) {
-        this.customerOrderDatabase.sendNotification(notificationSource,artefactId,message);
+    public void sendNotification(String notificationType, Integer artefactId, String message) {
+        this.customerOrderDatabase.sendNotification(notificationType,artefactId,message);
     }
 
     @Override
