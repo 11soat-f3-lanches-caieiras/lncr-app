@@ -2,9 +2,9 @@ package br.com.tp.lanchescaieiras._external.apis.payment;
 
 import br.com.tp.lanchescaieiras._core.adapters.payment.mercadopago.PaymentMercadoPagoQrControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
-import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
+import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.configs.MercadoPagoConfig;
 import br.com.tp.lanchescaieiras._external.dataproxy.PaymentMercadoPagoQrDataProxy;
 import org.springframework.http.ResponseEntity;

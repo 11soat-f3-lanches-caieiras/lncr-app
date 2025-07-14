@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras._core.commons.utils;
+package br.com.tp.lanchescaieiras._external.commons.utils;
 
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;

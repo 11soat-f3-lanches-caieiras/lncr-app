@@ -3,7 +3,6 @@ package br.com.tp.lanchescaieiras._core.domain.fooditem;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.EnumWithIdDescription;
 import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.FoodItemException;
-import jakarta.persistence.Id;
 
 public enum FoodItemCategory implements EnumWithIdDescription {
     SANDWICH(1, "Sandwich"),
@@ -11,7 +10,6 @@ public enum FoodItemCategory implements EnumWithIdDescription {
     DESSERT(3, "Dessert"),
     SNACK(4, "Snack");
 
-    @Id
     private final Integer id;
     private final String description;
 

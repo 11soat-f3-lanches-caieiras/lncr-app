@@ -2,9 +2,9 @@ package br.com.tp.lanchescaieiras._external.apis.fooditem;
 
 import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemImageControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
-import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImageRules;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
+import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.configs.FoodItemConfig;
 import br.com.tp.lanchescaieiras._external.dataproxy.FoodItemDataProxy;
 import org.springframework.http.ResponseEntity;

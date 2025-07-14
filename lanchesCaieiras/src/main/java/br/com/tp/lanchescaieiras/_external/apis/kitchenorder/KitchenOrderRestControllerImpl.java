@@ -2,9 +2,9 @@ package br.com.tp.lanchescaieiras._external.apis.kitchenorder;
 
 import br.com.tp.lanchescaieiras._core.adapters.kitchenorder.KitchenOrderControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
-import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
+import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.configs.KitchenOrderConfig;
 import br.com.tp.lanchescaieiras._external.dataproxy.KichenOrderDataProxy;
 import org.springframework.http.ResponseEntity;

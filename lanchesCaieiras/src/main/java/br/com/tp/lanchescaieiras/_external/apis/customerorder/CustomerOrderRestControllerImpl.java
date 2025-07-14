@@ -2,9 +2,9 @@ package br.com.tp.lanchescaieiras._external.apis.customerorder;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderController;
-import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
+import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.configs.CustomerOrderConfig;
 import br.com.tp.lanchescaieiras._external.dataproxy.CustomerOrderDataProxy;
 import org.springframework.http.ResponseEntity;

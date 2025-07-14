@@ -1,11 +1,8 @@
 package br.com.tp.lanchescaieiras._core.commons.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.time.Instant;
 import java.util.UUID;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseMetadata {
     private String _traceId;
     private String _timestamp;

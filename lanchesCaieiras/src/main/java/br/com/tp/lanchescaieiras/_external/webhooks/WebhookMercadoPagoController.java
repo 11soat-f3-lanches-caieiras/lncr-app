@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras._external.webhooks;
 
-import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
+import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.configs.IntegrationConfig;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;

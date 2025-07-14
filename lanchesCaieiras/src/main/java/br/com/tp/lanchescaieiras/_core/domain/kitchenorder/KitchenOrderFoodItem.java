@@ -1,9 +1,7 @@
 package br.com.tp.lanchescaieiras._core.domain.kitchenorder;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderFoodItemDTO;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class KitchenOrderFoodItem {
     public Integer id;
     public Integer kitchenOrderId;

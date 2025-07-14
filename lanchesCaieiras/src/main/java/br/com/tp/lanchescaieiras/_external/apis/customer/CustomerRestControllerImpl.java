@@ -2,9 +2,9 @@ package br.com.tp.lanchescaieiras._external.apis.customer;
 
 import br.com.tp.lanchescaieiras._core.adapters.customer.CustomerControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customer.CustomerDTO;
-import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
+import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.configs.CustomerConfig;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.customer.JpaCustomerReposityImpl;
 import org.springframework.http.ResponseEntity;

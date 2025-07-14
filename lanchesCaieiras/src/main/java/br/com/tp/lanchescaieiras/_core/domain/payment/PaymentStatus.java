@@ -4,14 +4,12 @@ package br.com.tp.lanchescaieiras._core.domain.payment;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.EnumWithIdDescription;
 import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.PaymentException;
-import jakarta.persistence.Id;
 
 public enum PaymentStatus implements EnumWithIdDescription {
     CANCELLED(0, "Cancelled"),
     CHARGED(1, "Charged"),
     PAID(2, "Paid");
 
-    @Id
     private final int id;
     private final String description;
 

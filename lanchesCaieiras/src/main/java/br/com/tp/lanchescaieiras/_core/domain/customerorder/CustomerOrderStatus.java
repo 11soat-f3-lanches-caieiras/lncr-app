@@ -3,7 +3,7 @@ package br.com.tp.lanchescaieiras._core.domain.customerorder;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.EnumWithIdDescription;
 import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
-import jakarta.persistence.Id;
+
 
 public enum CustomerOrderStatus implements EnumWithIdDescription {
     CHECKOUT(1, "Checkout"),
@@ -13,7 +13,6 @@ public enum CustomerOrderStatus implements EnumWithIdDescription {
     FINISHED(5, "Finished"),
     CANCELLED(6, "Cancelled");
 
-    @Id
     private final int id;
     private final String description;
 

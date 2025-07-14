@@ -2,15 +2,13 @@ package br.com.tp.lanchescaieiras._core.domain.fooditem;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.FoodItemException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Base64;
 import java.util.Map;
 
 
 public class FoodItemImage {
-    private static final Logger log = LoggerFactory.getLogger(FoodItemImage.class);
+
     public Integer id;
     public Integer foodItemId;
     public String _data;
@@ -127,7 +125,7 @@ public class FoodItemImage {
 
     public void validateImageSize(String _base64, Integer maxSizeInBytes) {
         if (getDecodeImageData(_base64).length > maxSizeInBytes) {
-            log.info("Tamanho da imagem excede o limite de {} bytes", maxSizeInBytes);
+            //log.info("Tamanho da imagem excede o limite de {} bytes", maxSizeInBytes);
             this.imageError = "Encontrada imagem que excede o limite de " + maxSizeInBytes + "bytes"; //Adiciona mensagem de erro de tamanho inválid para o usuário
             throw new FoodItemException("Encontrada imagem que excede o limite de " + maxSizeInBytes + "bytes", 404);
         }
@@ -141,7 +139,7 @@ public class FoodItemImage {
             }
         }
         if (this.fileExtension == null) {
-            log.info("Imagens inválidas. Extensões permitidas: {}", allowedExtensions);
+            //log.info("Imagens inválidas. Extensões permitidas: {}", allowedExtensions);
             this.imageError = "Encontrada uma imagem inválida. Extensões permitidas:" + allowedExtensions; //Adiciona mensagem de erro de extensão não permitida
             throw new FoodItemException("Encontrada uma imagem inválida. Extensões permitidas:" + allowedExtensions, 404);
         }

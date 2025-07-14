@@ -3,7 +3,6 @@ package br.com.tp.lanchescaieiras._core.domain.kitchenorder;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.EnumWithIdDescription;
 import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
-import jakarta.persistence.Id;
 
 public enum KitchenOrderStatus implements EnumWithIdDescription {
     CANCELLED(0,"Cancelled"),
@@ -12,7 +11,6 @@ public enum KitchenOrderStatus implements EnumWithIdDescription {
     READY(3, "Ready"),
     FINISHED(4, "Finished");
 
-    @Id
     private final Integer id;
     private final String description;
 

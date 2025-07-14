@@ -2,9 +2,9 @@ package br.com.tp.lanchescaieiras._external.apis.notification;
 
 import br.com.tp.lanchescaieiras._core.adapters.notification.NotificationControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.notification.NotificationDTO;
-import br.com.tp.lanchescaieiras._core.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
+import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.configs.NotificationConfig;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.notification.JpaNotificationRepositoryImpl;
 import org.springframework.http.ResponseEntity;
