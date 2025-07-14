@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras._core.adapters.payment.mercadopago;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQRMapper;
 import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
+import br.com.tp.lanchescaieiras._core.commons.utils.StatusOrderUtils;
 import br.com.tp.lanchescaieiras._core.domain.payment.PaymentMercadopagoQR;
 
 import java.util.List;
@@ -30,7 +31,10 @@ public class PaymentMercadoPagoQrPresenter {
         return this.paymentMercadopagoQRMapper.paymentMercadopagoQrToDTO(paymentMercadopagoQR);
     }
 
-    public List<PaymentMercadopagoQrDTO> getByStatusList(List<PaymentMercadopagoQR> paymentMercadopagoQRList) {
-        return paymentMercadopagoQRList.stream().map(paymentMercadopagoQRMapper::paymentMercadopagoQrToDTO).toList();
+    public List<PaymentMercadopagoQrDTO> getByStatusList(List<PaymentMercadopagoQR> paymentMercadopagoQRList, List<String> paymentStatusList) {
+        return StatusOrderUtils.sortByStatusOrder(paymentMercadopagoQRList,paymentStatusList)
+                .stream()
+                .map(paymentMercadopagoQRMapper::paymentMercadopagoQrToDTO)
+                .toList();
     }
 }

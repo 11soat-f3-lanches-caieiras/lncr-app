@@ -2,11 +2,12 @@ package br.com.tp.lanchescaieiras._core.domain.kitchenorder;
 
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.SortInterface;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class KitchenOrder {
+public class KitchenSort implements SortInterface {
     private Integer id;
     private LocalDateTime _created;
     private LocalDateTime _updated;
@@ -15,7 +16,7 @@ public class KitchenOrder {
     private List<KitchenOrderFoodItem> foodItems;
 
 
-    public KitchenOrder(Integer id, Integer customerOrderId, String status, List<KitchenOrderFoodItem> foodItems, LocalDateTime _created, LocalDateTime _updated) {
+    public KitchenSort(Integer id, Integer customerOrderId, String status, List<KitchenOrderFoodItem> foodItems, LocalDateTime _created, LocalDateTime _updated) {
         this.id = id;
         this.customerOrderId = customerOrderId;
         this.status = status;
@@ -24,10 +25,10 @@ public class KitchenOrder {
         this._updated = _updated;
     }
 
-    public KitchenOrder() {
+    public KitchenSort() {
     }
 
-    public KitchenOrder(KitchenOrderDTO dto) {
+    public KitchenSort(KitchenOrderDTO dto) {
         this.id = dto.getId();
         this.customerOrderId = dto.getCustomerOrderId();
         this.status = dto.getStatus();

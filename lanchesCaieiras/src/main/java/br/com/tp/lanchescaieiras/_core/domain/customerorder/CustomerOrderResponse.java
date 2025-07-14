@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerOrderResponse {
     private ResponseMetadata _response;
-    private CustomerOrder _content;
+    private CustomerSort _content;
 
-    public CustomerOrderResponse(ResponseMetadata _response, CustomerOrder customerOrder) {
+    public CustomerOrderResponse(ResponseMetadata _response, CustomerSort customerOrder) {
         this._response = _response;
         this._content = customerOrder;
     }
@@ -17,7 +17,7 @@ public class CustomerOrderResponse {
         this._response = new ResponseMetadata();
     }
 
-    public CustomerOrderResponse(CustomerOrder customerOrder) {
+    public CustomerOrderResponse(CustomerSort customerOrder) {
         this._content = customerOrder;
         this._response = new ResponseMetadata();
     }
@@ -30,11 +30,11 @@ public class CustomerOrderResponse {
         this._response = _response;
     }
 
-    public CustomerOrder get_content() {
+    public CustomerSort get_content() {
         return _content;
     }
 
-    public void set_content(CustomerOrder _content) {
+    public void set_content(CustomerSort _content) {
         this._content = _content;
     }
 }

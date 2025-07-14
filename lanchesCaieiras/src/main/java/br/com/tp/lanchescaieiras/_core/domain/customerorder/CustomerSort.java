@@ -1,13 +1,14 @@
 package br.com.tp.lanchescaieiras._core.domain.customerorder;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.SortInterface;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class CustomerOrder {
+public class CustomerSort implements SortInterface {
     private Integer id;
     private LocalDateTime _created;
     private LocalDateTime _updated;
@@ -16,7 +17,7 @@ public class CustomerOrder {
     private CustomerOrderCustomer customer;
     private List<CustomerOrderFoodItem> foodItems;
 
-    public CustomerOrder(Integer id, String status, Double totalCost, LocalDateTime _created, LocalDateTime _updated, CustomerOrderCustomer customer, List<CustomerOrderFoodItem> foodItems) {
+    public CustomerSort(Integer id, String status, Double totalCost, LocalDateTime _created, LocalDateTime _updated, CustomerOrderCustomer customer, List<CustomerOrderFoodItem> foodItems) {
         this.id = id;
         this.status = status;
         this.totalCost = totalCost;
@@ -27,7 +28,7 @@ public class CustomerOrder {
         setTotalCost();
     }
 
-    public CustomerOrder(CustomerOrderDTO dto) {
+    public CustomerSort(CustomerOrderDTO dto) {
         this.id = dto.getId();
         this.status = dto.getStatus();
         this.totalCost = dto.getTotalCost();
@@ -47,7 +48,7 @@ public class CustomerOrder {
         setTotalCost();
     }
 
-    public CustomerOrder() {
+    public CustomerSort() {
 
     }
 

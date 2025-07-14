@@ -1,17 +1,18 @@
 package br.com.tp.lanchescaieiras._core.commons.utils;
 
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderGateway;
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
+import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerSort;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderCustomer;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderFoodItem;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class CustomerOrderUseCaseUtils {
 
-    public static void getCustomerDetails(CustomerOrder customerOrder, CustomerOrderGateway customerOrderGateway){
+    public static void getCustomerDetails(CustomerSort customerOrder, CustomerOrderGateway customerOrderGateway){
         //Validação somente quando é informado id do cliente. Requer um id válido
         if (customerOrder != null && customerOrder.getCustomer() != null && customerOrder.getCustomer().getId() != null) {
             Integer customerId = customerOrder.getCustomer().getId();
@@ -22,13 +23,13 @@ public class CustomerOrderUseCaseUtils {
         }
     }
 
-    public static void getCustomerDetailsList(List<CustomerOrder> customerOrderList, CustomerOrderGateway customerOrderGateway){
+    public static void getCustomerDetailsList(List<CustomerSort> customerOrderList, CustomerOrderGateway customerOrderGateway){
         if (customerOrderList != null && !customerOrderList.isEmpty()) {
             List<Integer> customerIds = getCustomerIds(customerOrderList);
             if (customerIds != null) {
                 {
                     List<CustomerOrderCustomer> customerDetailsList = customerOrderGateway.getCustomerDetailsList(customerIds);
-                    for (CustomerOrder customerOrder : customerOrderList) {
+                    for (CustomerSort customerOrder : customerOrderList) {
                         if (customerOrder.getCustomer() != null && customerOrder.getCustomer().getId() != null)
                             customerOrder.setCustomer(mergeCustomerDetails(customerOrder.getCustomer().getId(),customerDetailsList));
                     }
@@ -37,13 +38,13 @@ public class CustomerOrderUseCaseUtils {
         }
     }
 
-    public static void getFoodItemsDetailsList(List<CustomerOrder> customerOrderList, CustomerOrderGateway customerOrderGateway){
+    public static void getFoodItemsDetailsList(List<CustomerSort> customerOrderList, CustomerOrderGateway customerOrderGateway){
         if (customerOrderList != null && !customerOrderList.isEmpty()) {
             List<Integer> foodItemIdList = getFoodItemsIds(customerOrderList);
             if (foodItemIdList != null) {
                 {
                     List<CustomerOrderFoodItem> foodItemDetails = customerOrderGateway.getFoodItemsDetails(foodItemIdList);
-                    for (CustomerOrder customerOrder : customerOrderList) {
+                    for (CustomerSort customerOrder : customerOrderList) {
                         if (customerOrder.getFoodItems() != null || !customerOrder.getFoodItems().isEmpty())
                             customerOrder.setFoodItems(mergeFoodItemsDetails(customerOrder.getFoodItems(), foodItemDetails));
                     }
@@ -52,7 +53,7 @@ public class CustomerOrderUseCaseUtils {
         }
     }
 
-    public static void getFoodItemsDetails(CustomerOrder customerOrder, CustomerOrderGateway customerOrderGateway){
+    public static void getFoodItemsDetails(CustomerSort customerOrder, CustomerOrderGateway customerOrderGateway){
         if (customerOrder != null) {
             List<Integer> foodItemIdList = getFoodItemsIds(customerOrder);
             if (foodItemIdList != null) {
@@ -65,20 +66,20 @@ public class CustomerOrderUseCaseUtils {
         }
     }
 
-    private static List<Integer> getCustomerIds(List<CustomerOrder> customerOrderList){
+    private static List<Integer> getCustomerIds(List<CustomerSort> customerOrderList){
         if (customerOrderList != null && !customerOrderList.isEmpty()) {
             return customerOrderList.stream()
-                    .map(CustomerOrder::getCustomer)
-                    .filter(customer -> customer != null)
+                    .map(CustomerSort::getCustomer)
+                    .filter(Objects::nonNull)
                     .map(CustomerOrderCustomer::getId)
-                    .filter(id -> id != null)
+                    .filter(Objects::nonNull)
                     .distinct()
                     .collect(Collectors.toList());
         }
         return null;
     }
 
-    private static List<Integer> getFoodItemsIds(List<CustomerOrder> customerOrderList){
+    private static List<Integer> getFoodItemsIds(List<CustomerSort> customerOrderList){
         if (customerOrderList != null && !customerOrderList.isEmpty()) {
             return customerOrderList.stream()
                     .flatMap(order -> order.getFoodItems().stream())
@@ -89,7 +90,7 @@ public class CustomerOrderUseCaseUtils {
 
 
 
-    private static List<Integer> getFoodItemsIds(CustomerOrder customerOrder){
+    private static List<Integer> getFoodItemsIds(CustomerSort customerOrder){
         if (customerOrder.getFoodItems()!= null && !customerOrder.getFoodItems().isEmpty()) {
             return customerOrder.getFoodItems().stream()
                     .map(CustomerOrderFoodItem::getId).distinct().collect(Collectors.toList());

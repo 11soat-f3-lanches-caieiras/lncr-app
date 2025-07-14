@@ -52,8 +52,8 @@ public class PaymentMercadoPagoQrControllerImpl implements PaymentController<Pay
 
     @Override
     public List<PaymentMercadopagoQrDTO> getPaymentByStatusList(PaymentDatabase paymentDatabase, List<String> paymentStatusList) {
-        List<PaymentMercadopagoQR> paymentMercadopagoQR = new GetPaymentMercadoPagoQRUseCase(createPaymentMercadoPagoQrGateway(paymentDatabase)).getByStatusList(paymentStatusList);
-        return new PaymentMercadoPagoQrPresenter(paymentMercadopagoQRMapper).getByStatusList(paymentMercadopagoQR);
+        List<PaymentMercadopagoQR> paymentMercadopagoQRList = new GetPaymentMercadoPagoQRUseCase(createPaymentMercadoPagoQrGateway(paymentDatabase)).getByStatusList(paymentStatusList);
+        return new PaymentMercadoPagoQrPresenter(paymentMercadopagoQRMapper).getByStatusList(paymentMercadopagoQRList,paymentStatusList);
     }
 
     private PaymentGateway createPaymentMercadoPagoQrGateway(PaymentDatabase paymentDatabase){

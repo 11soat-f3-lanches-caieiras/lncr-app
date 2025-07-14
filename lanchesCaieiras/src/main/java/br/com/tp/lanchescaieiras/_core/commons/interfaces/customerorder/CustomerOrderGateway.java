@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder;
 
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
+import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerSort;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderCustomer;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderFoodItem;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CustomerOrderGateway {
 
-    CustomerOrder createCustomerOrder(CustomerOrder customerOrder);
+    CustomerSort createCustomerOrder(CustomerSort customerOrder);
 
     CustomerOrderCustomer getCustomerDetails(Integer customerIdList);
 
@@ -16,19 +16,19 @@ public interface CustomerOrderGateway {
 
     List<CustomerOrderFoodItem> getFoodItemsDetails(List<Integer> foodItemListIds);
 
-    void createPaymentCharge(CustomerOrder customerOrder);
+    void createPaymentCharge(CustomerSort customerOrder);
 
     void sendNotification(String notificationSource, Integer artefactId, String message);
 
-    CustomerOrder getCustomerOrderById(Integer customerOrderId);
+    CustomerSort getCustomerOrderById(Integer customerOrderId);
 
-    CustomerOrder getCustomerOrderById(Integer customerOrderId, Boolean includFoodItems);
+    CustomerSort getCustomerOrderById(Integer customerOrderId, Boolean includFoodItems);
 
-    List<CustomerOrder> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems);
+    List<CustomerSort> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems);
 
-    CustomerOrder updateCustomerOrder(CustomerOrder updateCustomerOrder);
+    CustomerSort updateCustomerOrder(CustomerSort updateCustomerOrder);
 
-    void createKitchenOrder(CustomerOrder updateCustomerOrder);
+    void createKitchenOrder(CustomerSort updateCustomerOrder);
 
 
 

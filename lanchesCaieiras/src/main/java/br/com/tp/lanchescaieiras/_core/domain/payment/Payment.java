@@ -1,8 +1,10 @@
 package br.com.tp.lanchescaieiras._core.domain.payment;
 
+import br.com.tp.lanchescaieiras._core.commons.interfaces.SortInterface;
+
 import java.time.LocalDateTime;
 
-public abstract class Payment {
+public abstract class Payment implements SortInterface {
     private Integer id;
     private Integer orderId;
     private String status;

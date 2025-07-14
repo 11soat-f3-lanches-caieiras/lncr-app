@@ -1,20 +1,20 @@
 package br.com.tp.lanchescaieiras._core.commons.interfaces.kitchenorder;
 
-import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrder;
+import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenSort;
 
 import java.util.List;
 
 public interface KitchenOrderGateway {
 
-    KitchenOrder save(KitchenOrder kitchenOrder);
+    KitchenSort save(KitchenSort kitchenOrder);
 
-    KitchenOrder getKitchenOrderByCustomerOrderId(Integer customerOrderId);
+    KitchenSort getKitchenOrderByCustomerOrderId(Integer customerOrderId);
 
-    KitchenOrder getKitchenOrderByCustomerOrderId(Integer customerOrderId, Boolean includeFoodItems);
+    KitchenSort getKitchenOrderByCustomerOrderId(Integer customerOrderId, Boolean includeFoodItems);
 
-    List<KitchenOrder> getKitchenOrderByStatusList(List<Integer> statusList, Boolean includeFoodItems);
+    List<KitchenSort> getKitchenOrderByStatusList(List<Integer> statusList, Boolean includeFoodItems);
 
-    KitchenOrder getKitchenOrderById(Integer kitchenOrderId, Boolean includeFoodItems);
+    KitchenSort getKitchenOrderById(Integer kitchenOrderId, Boolean includeFoodItems);
 
 
 }
