@@ -2,12 +2,14 @@ package br.com.tp.lanchescaieiras._core.domain.kitchenorder;
 
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
-import br.com.tp.lanchescaieiras._core.commons.interfaces.SortInterface;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.SortedByStatusCreated;
+import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
+import br.com.tp.lanchescaieiras._core.domain.exceptions.KitchenOrderException;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class KitchenSort implements SortInterface {
+public class KitchenOrder implements SortedByStatusCreated {
     private Integer id;
     private LocalDateTime _created;
     private LocalDateTime _updated;
@@ -16,7 +18,7 @@ public class KitchenSort implements SortInterface {
     private List<KitchenOrderFoodItem> foodItems;
 
 
-    public KitchenSort(Integer id, Integer customerOrderId, String status, List<KitchenOrderFoodItem> foodItems, LocalDateTime _created, LocalDateTime _updated) {
+    public KitchenOrder(Integer id, Integer customerOrderId, String status, List<KitchenOrderFoodItem> foodItems, LocalDateTime _created, LocalDateTime _updated) {
         this.id = id;
         this.customerOrderId = customerOrderId;
         this.status = status;
@@ -25,10 +27,10 @@ public class KitchenSort implements SortInterface {
         this._updated = _updated;
     }
 
-    public KitchenSort() {
+    public KitchenOrder() {
     }
 
-    public KitchenSort(KitchenOrderDTO dto) {
+    public KitchenOrder(KitchenOrderDTO dto) {
         this.id = dto.getId();
         this.customerOrderId = dto.getCustomerOrderId();
         this.status = dto.getStatus();
@@ -81,8 +83,12 @@ public class KitchenSort implements SortInterface {
         return status;
     }
 
+    public void setStatus(String status, Boolean forceUpdate) {
+        this.status = validateNewStatusRules(status,forceUpdate);
+    }
+
     public void setStatus(String status) {
-        this.status = KitchenOrderStatus.fromDescription(status).getDescription();
+        this.status = validateNewStatusRules(status,true);
     }
 
     public List<KitchenOrderFoodItem> getFoodItems() {
@@ -92,5 +98,11 @@ public class KitchenSort implements SortInterface {
     public void setFoodItems(List<KitchenOrderFoodItem> foodItems) {
         this.foodItems = foodItems;
     }
+
+    private String validateNewStatusRules(String newStatus, Boolean forceUpdate) {
+        return EnumUtils.validateNewStatusRules(KitchenOrderStatus.class, this.getStatus(), newStatus, forceUpdate,
+                (message) -> new KitchenOrderException(message, 400));
+    }
+
 }
 

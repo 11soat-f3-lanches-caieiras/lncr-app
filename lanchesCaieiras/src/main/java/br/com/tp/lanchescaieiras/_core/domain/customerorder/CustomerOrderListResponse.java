@@ -9,10 +9,10 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerOrderListResponse {
     private ResponseMetadata _response;
-    private List<CustomerSort> _content;
+    private List<CustomerOrder> _content;
 
 
-    public CustomerOrderListResponse(ResponseMetadata _response, List<CustomerSort> _content) {
+    public CustomerOrderListResponse(ResponseMetadata _response, List<CustomerOrder> _content) {
         this._response = _response;
         this._content = _content;
     }
@@ -20,7 +20,7 @@ public class CustomerOrderListResponse {
     public CustomerOrderListResponse() {
     }
 
-    public CustomerOrderListResponse(List<CustomerSort> _content) {
+    public CustomerOrderListResponse(List<CustomerOrder> _content) {
         this._content = _content;
         this._response = new ResponseMetadata();
     }
@@ -33,11 +33,11 @@ public class CustomerOrderListResponse {
         this._response = _response;
     }
 
-    public List<CustomerSort> get_content() {
+    public List<CustomerOrder> get_content() {
         return _content;
     }
 
-    public void set_content(List<CustomerSort> _content) {
+    public void set_content(List<CustomerOrder> _content) {
         this._content = _content;
     }
 }

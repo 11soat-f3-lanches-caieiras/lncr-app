@@ -2,7 +2,7 @@ package br.com.tp.lanchescaieiras._core.applications.customerorder;
 
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderGateway;
 import br.com.tp.lanchescaieiras._core.commons.utils.CustomerOrderUseCaseUtils;
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerSort;
+import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderStatus;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
 
@@ -14,8 +14,8 @@ public class UpdateCustomerOrderUseCase {
         this.customerOrderGateway = customerOrderGateway;
     }
 
-    public CustomerSort updateStatusById(Integer customerOrderId, String newStatus, Boolean forceUpdate) {
-        CustomerSort updateCustomerOrder= this.customerOrderGateway.getCustomerOrderById(customerOrderId);
+    public CustomerOrder updateStatusById(Integer customerOrderId, String newStatus, Boolean forceUpdate) {
+        CustomerOrder updateCustomerOrder= this.customerOrderGateway.getCustomerOrderById(customerOrderId);
 
         if (updateCustomerOrder != null) {
             updateCustomerOrder.setStatus(newStatus, forceUpdate);

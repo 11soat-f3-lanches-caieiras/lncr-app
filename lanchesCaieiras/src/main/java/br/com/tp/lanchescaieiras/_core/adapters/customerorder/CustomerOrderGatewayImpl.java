@@ -4,7 +4,7 @@ import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderC
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderDatabase;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderGateway;
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerSort;
+import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderCustomer;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderFoodItem;
 
@@ -21,7 +21,7 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
     }
 
     @Override
-    public CustomerSort createCustomerOrder(CustomerSort customerOrder) {
+    public CustomerOrder createCustomerOrder(CustomerOrder customerOrder) {
         CustomerOrderDTO customerOrderDTO = this.customerOrderMapper.customerOrderToDTO(customerOrder);
         customerOrderDTO = this.customerOrderDatabase.save(customerOrderDTO);
         return this.customerOrderMapper.customerOrderToDomain(customerOrderDTO);
@@ -47,7 +47,7 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
     }
 
     @Override
-    public void createPaymentCharge(CustomerSort customerOrder) {
+    public void createPaymentCharge(CustomerOrder customerOrder) {
         this.customerOrderDatabase.createPaymentCharge(customerOrder.getId(),customerOrder.getTotalCost());
     }
 
@@ -57,24 +57,24 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
     }
 
     @Override
-    public CustomerSort getCustomerOrderById(Integer customerOrderId) {
+    public CustomerOrder getCustomerOrderById(Integer customerOrderId) {
         return getCustomerOrderById(customerOrderId,false);
     }
 
     @Override
-    public CustomerSort getCustomerOrderById(Integer customerOrderId, Boolean includFoodItems) {
+    public CustomerOrder getCustomerOrderById(Integer customerOrderId, Boolean includFoodItems) {
         CustomerOrderDTO customerOrderDTO = this.customerOrderDatabase.getCustomerOrderById(customerOrderId,includFoodItems);
         return this.customerOrderMapper.customerOrderToDomain(customerOrderDTO);
     }
 
     @Override
-    public List<CustomerSort> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems) {
+    public List<CustomerOrder> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems) {
         List<CustomerOrderDTO> customerOrderDTOList = this.customerOrderDatabase.getCustomerOrderByStatusList(statusListIds,includeFoodItems);
         return customerOrderDTOList.stream().map(customerOrderMapper::customerOrderToDomain).toList();
     }
 
     @Override
-    public CustomerSort updateCustomerOrder(CustomerSort updatedCustomerOrder) {
+    public CustomerOrder updateCustomerOrder(CustomerOrder updatedCustomerOrder) {
 
         CustomerOrderDTO updatedCustomerOrderDTO = this.customerOrderMapper.customerOrderToDTO(updatedCustomerOrder);
         updatedCustomerOrderDTO = this.customerOrderDatabase.updateCustomerOrder(updatedCustomerOrderDTO);
@@ -82,7 +82,7 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
     }
 
     @Override
-    public void createKitchenOrder(CustomerSort updateCustomerOrder) {
+    public void createKitchenOrder(CustomerOrder updateCustomerOrder) {
         this.customerOrderDatabase.createKitchenOrder(this.customerOrderMapper.customerOrderToDTO(updateCustomerOrder));
     }
 }

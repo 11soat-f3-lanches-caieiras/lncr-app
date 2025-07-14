@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface CustomerOrderRepositoy {
 
-    CustomerSort save(CustomerSort customerOrder);
+    CustomerOrder save(CustomerOrder customerOrder);
 
-    CustomerSort findById(Integer id);
+    CustomerOrder findById(Integer id);
 
-    List<CustomerSort> findByStatusId(Integer statusId);
+    List<CustomerOrder> findByStatusId(Integer statusId);
 
-    CustomerSort updateStatusById(Integer id, Integer statusId);
+    CustomerOrder updateStatusById(Integer id, Integer statusId);
 }

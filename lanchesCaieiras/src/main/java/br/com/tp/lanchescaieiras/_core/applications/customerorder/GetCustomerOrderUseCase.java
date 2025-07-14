@@ -2,7 +2,7 @@ package br.com.tp.lanchescaieiras._core.applications.customerorder;
 
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderGateway;
 import br.com.tp.lanchescaieiras._core.commons.utils.CustomerOrderUseCaseUtils;
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerSort;
+import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderStatus;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
 
@@ -17,8 +17,8 @@ public class GetCustomerOrderUseCase {
         this.customerOrderGateway = customerOrderGateway;
     }
 
-    public CustomerSort getById(Integer customerOrderId, Boolean includFoodItems) {
-        CustomerSort customerOrder = this.customerOrderGateway.getCustomerOrderById(customerOrderId,includFoodItems);
+    public CustomerOrder getById(Integer customerOrderId, Boolean includFoodItems) {
+        CustomerOrder customerOrder = this.customerOrderGateway.getCustomerOrderById(customerOrderId,includFoodItems);
         if (customerOrder == null) {
             throw new CustomerOrderException("Não encontrado pedido com id: " + customerOrderId,404);
         }
@@ -27,9 +27,9 @@ public class GetCustomerOrderUseCase {
         return customerOrder;
     }
 
-    public List<CustomerSort>  getByStatusList(List<String> statusList, Boolean includeFoodItems) {
+    public List<CustomerOrder>  getByStatusList(List<String> statusList, Boolean includeFoodItems) {
         List<Integer> statusListIds = getStatusListIds(statusList);
-        List<CustomerSort> customerOrderList = this.customerOrderGateway.getCustomerOrderByStatusList(statusListIds, includeFoodItems);
+        List<CustomerOrder> customerOrderList = this.customerOrderGateway.getCustomerOrderByStatusList(statusListIds, includeFoodItems);
         if (customerOrderList == null || customerOrderList.isEmpty()){
             throw new CustomerOrderException("Não existe pedidos com os status: " + String.join(", ", statusList) ,404);
         }

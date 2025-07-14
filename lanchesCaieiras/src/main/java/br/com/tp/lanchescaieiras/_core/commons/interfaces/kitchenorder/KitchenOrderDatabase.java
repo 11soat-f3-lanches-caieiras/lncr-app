@@ -20,15 +20,13 @@ public interface KitchenOrderDatabase {
 
     List<KitchenOrderFoodItemDTO> findByKitchenOrderId(Integer kitchenOrderId);
 
+    void updateCustomerOrderStatus(Integer customerOrderId, String status);
 
     List<KitchenOrderDTO> findByStatusId(Integer statusId);
 
     KitchenOrderDTO updateStatusByCustomerOrderId(Integer customerOrderId, String newStatus);
 
-
     List<KitchenOrderFoodItemDTO> saveAll(List<KitchenOrderFoodItem> kitchenOrderFoodItemList);
-
-
 
     List<KitchenOrderFoodItemDTO> getFoodItemsByKitchenOrderId(Integer kitchenOrderId);
 

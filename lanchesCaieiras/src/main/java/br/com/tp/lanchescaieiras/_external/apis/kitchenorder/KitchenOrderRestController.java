@@ -24,7 +24,7 @@ public interface KitchenOrderRestController {
     ResponseEntity<ResponseListModel<KitchenOrderDTO>> getKitchenOrderByStatusList(@PathVariable List<String> statusList,
                                                                                @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems);
 
-    ResponseEntity<ResponseModel<KitchenOrderDTO>> updateOrderStatusById(@PathVariable(name="customerOrderId") Integer kitchenOrderId,
+    ResponseEntity<ResponseModel<KitchenOrderDTO>> updateOrderStatusById(@PathVariable(name="kitchenOrderId") Integer kitchenOrderId,
                                                                @PathVariable(name="newStatus") String newStatus,
                                                                @RequestParam(name="forceUpdate",required = false,defaultValue = "false") Boolean forceUpdate,
                                                                @RequestParam(name = "updateCustomerOrder", required = false, defaultValue = "true") Boolean updateCustomerOrder);

@@ -3,14 +3,14 @@ package br.com.tp.lanchescaieiras._core.adapters.customerorder;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderCustomerDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderFoodItemDTO;
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerSort;
+import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderCustomer;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderFoodItem;
 
 import java.util.stream.Collectors;
 
 public class CustomerOrderMapper {
-    public  CustomerOrderDTO customerOrderToDTO(CustomerSort order) {
+    public  CustomerOrderDTO customerOrderToDTO(CustomerOrder order) {
         if (order == null) return null;
         CustomerOrderDTO dto = new CustomerOrderDTO();
         dto.setId(order.getId());
@@ -27,9 +27,9 @@ public class CustomerOrderMapper {
         return dto;
     }
 
-    public CustomerSort customerOrderToDomain(CustomerOrderDTO dto) {
+    public CustomerOrder customerOrderToDomain(CustomerOrderDTO dto) {
         if (dto == null) return null;
-        CustomerSort order = new CustomerSort();
+        CustomerOrder order = new CustomerOrder();
         order.setId(dto.getId());
         order.setStatus(dto.getStatus());
         order.set_created(dto.get_created());

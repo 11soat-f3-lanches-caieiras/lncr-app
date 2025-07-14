@@ -2,7 +2,7 @@ package br.com.tp.lanchescaieiras._core.adapters.kitchenorder;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.utils.StatusOrderUtils;
-import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenSort;
+import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrder;
 
 import java.util.List;
 
@@ -14,29 +14,29 @@ public class KitchenOrderPresenter {
         this.kitchenOrderMapper = kitchenOrderMapper;
     }
 
-    public KitchenOrderDTO created(KitchenSort kitchenOrder) {
+    public KitchenOrderDTO created(KitchenOrder kitchenOrder) {
         clearKitchenOrderIdInFoodItem(kitchenOrder);
         return kitchenOrderMapper.kitchenOrderToDTO(kitchenOrder);
     }
 
-    public KitchenOrderDTO getById(KitchenSort kitchenOrder) {
+    public KitchenOrderDTO getById(KitchenOrder kitchenOrder) {
         clearKitchenOrderIdInFoodItem(kitchenOrder);
         return kitchenOrderMapper.kitchenOrderToDTO(kitchenOrder);
     }
 
-    public KitchenOrderDTO getByCustomerOrderId(KitchenSort kitchenOrder) {
+    public KitchenOrderDTO getByCustomerOrderId(KitchenOrder kitchenOrder) {
         clearKitchenOrderIdInFoodItem(kitchenOrder);
         return kitchenOrderMapper.kitchenOrderToDTO(kitchenOrder);
     }
 
-    public List<KitchenOrderDTO> getByStatusList(List<KitchenSort> kitchenOrderList, List<String> statusList) {
+    public List<KitchenOrderDTO> getByStatusList(List<KitchenOrder> kitchenOrderList, List<String> statusList) {
         kitchenOrderList.forEach(this::clearKitchenOrderIdInFoodItem);
         return StatusOrderUtils.sortByStatusOrder(kitchenOrderList, statusList)
                 .stream()
                 .map(kitchenOrderMapper::kitchenOrderToDTO).toList();
     }
 
-    private void clearKitchenOrderIdInFoodItem(KitchenSort kitchenOrder) {
+    private void clearKitchenOrderIdInFoodItem(KitchenOrder kitchenOrder) {
         if (kitchenOrder.getFoodItems() != null && !kitchenOrder.getFoodItems().isEmpty()) {
             kitchenOrder.getFoodItems().forEach(foodItem -> {
                 foodItem.setKitchenOrderId(null);

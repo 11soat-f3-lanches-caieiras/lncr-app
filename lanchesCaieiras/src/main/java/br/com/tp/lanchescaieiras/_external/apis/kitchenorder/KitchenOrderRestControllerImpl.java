@@ -58,8 +58,13 @@ public class KitchenOrderRestControllerImpl implements KitchenOrderRestControlle
     }
 
     @Override
-    public ResponseEntity<ResponseModel<KitchenOrderDTO>> updateOrderStatusById(Integer kitchenOrderId, String newStatus, Boolean forceUpdate, Boolean updateCustomerOrder) {
-        return null;
+    @PatchMapping("/{kitchenOrderId}/updateStatus/{newStatus}")
+    public ResponseEntity<ResponseModel<KitchenOrderDTO>> updateOrderStatusById(@PathVariable(name="kitchenOrderId") Integer kitchenOrderId,
+                                                                                @PathVariable(name="newStatus") String newStatus,
+                                                                                @RequestParam(name="forceUpdate",required = false,defaultValue = "false") Boolean forceUpdate,
+                                                                                @RequestParam(name = "updateCustomerOrder", required = false, defaultValue = "true") Boolean updateCustomerOrder) {
+        KitchenOrderDTO kitchenOrderDTO  = this.kichenOrderController.updateOrderStatusById(kitchenOrderId, newStatus, forceUpdate, updateCustomerOrder);
+        return ResponseEntityModelUtil.OK(kitchenOrderDTO);
     }
 
 

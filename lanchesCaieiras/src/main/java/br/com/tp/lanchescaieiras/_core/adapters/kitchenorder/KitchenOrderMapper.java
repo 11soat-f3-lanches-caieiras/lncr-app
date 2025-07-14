@@ -2,13 +2,13 @@ package br.com.tp.lanchescaieiras._core.adapters.kitchenorder;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderFoodItemDTO;
-import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenSort;
+import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrder;
 import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrderFoodItem;
 
 import java.util.stream.Collectors;
 
 public class KitchenOrderMapper {
-    public KitchenOrderDTO kitchenOrderToDTO(KitchenSort order) {
+    public KitchenOrderDTO kitchenOrderToDTO(KitchenOrder order) {
         if (order == null) return null;
         KitchenOrderDTO dto = new KitchenOrderDTO();
         dto.setId(order.getId());
@@ -24,9 +24,9 @@ public class KitchenOrderMapper {
         return dto;
     }
 
-    public KitchenSort kichenOrderToDomain(KitchenOrderDTO dto) {
+    public KitchenOrder kichenOrderToDomain(KitchenOrderDTO dto) {
         if (dto == null) return null;
-        KitchenSort order = new KitchenSort();
+        KitchenOrder order = new KitchenOrder();
         order.setId(dto.getId());
         order.setCustomerOrderId(dto.getCustomerOrderId());
         order.setStatus(dto.getStatus());

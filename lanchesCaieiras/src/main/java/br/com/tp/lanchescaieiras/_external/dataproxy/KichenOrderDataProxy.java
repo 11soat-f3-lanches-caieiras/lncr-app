@@ -34,7 +34,8 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
         kitchenOrderDto = this.jpaKitchenOrderRepositoryImpl.save(kitchenOrderDto, jpaKitchenOrderRepository, jpaKitchenOrderMapper);
         Integer kitchenOrderId = kitchenOrderDto.getId();
         setKitchenOrderIdOnFoodItems(kitchenOrderDto);
-        kitchenOrderDto.setFoodItems(this.jpaKitchenOrderFoodItemRepositoryImpl.saveAll(kitchenOrderDto.getFoodItems(),jpaKitchenOrderFoodItemRepository,jpaKitchenOrderMapper));
+        if (kitchenOrderDto.getFoodItems() != null && kitchenOrderDto.getFoodItems().isEmpty())
+                kitchenOrderDto.setFoodItems(this.jpaKitchenOrderFoodItemRepositoryImpl.saveAll(kitchenOrderDto.getFoodItems(),jpaKitchenOrderFoodItemRepository,jpaKitchenOrderMapper));
         return kitchenOrderDto;
     }
 
@@ -69,6 +70,11 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
     }
 
     @Override
+    public void updateCustomerOrderStatus(Integer customerOrderId, String status) {
+        this.customerOrderIntegrationImpl.updateCustomerOrderStatus(customerOrderId, status);
+    }
+
+    @Override
     public List<KitchenOrderDTO> findByStatusId(Integer statusId) {
         return List.of();
     }
@@ -92,9 +98,9 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
 
     private void setKitchenOrderIdOnFoodItems(KitchenOrderDTO kitchenOrderDto) {
         Integer kitchenOrderId = kitchenOrderDto.getId();
-        kitchenOrderDto.getFoodItems().forEach(
-                foodItem -> foodItem.setKitchenOrderId(kitchenOrderId)
-        );
+        if (kitchenOrderDto.getFoodItems() != null && !kitchenOrderDto.getFoodItems().isEmpty())
+            kitchenOrderDto.getFoodItems().forEach(
+                foodItem -> foodItem.setKitchenOrderId(kitchenOrderId));
     }
 
     private void includeFoodItems(KitchenOrderDTO kitchenOrderDto, Boolean includeFoodItems) {

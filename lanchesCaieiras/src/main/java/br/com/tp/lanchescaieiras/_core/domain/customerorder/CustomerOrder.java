@@ -1,14 +1,15 @@
 package br.com.tp.lanchescaieiras._core.domain.customerorder;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
-import br.com.tp.lanchescaieiras._core.commons.interfaces.SortInterface;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.SortedByStatusCreated;
+import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
 import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class CustomerSort implements SortInterface {
+public class CustomerOrder implements SortedByStatusCreated {
     private Integer id;
     private LocalDateTime _created;
     private LocalDateTime _updated;
@@ -17,7 +18,7 @@ public class CustomerSort implements SortInterface {
     private CustomerOrderCustomer customer;
     private List<CustomerOrderFoodItem> foodItems;
 
-    public CustomerSort(Integer id, String status, Double totalCost, LocalDateTime _created, LocalDateTime _updated, CustomerOrderCustomer customer, List<CustomerOrderFoodItem> foodItems) {
+    public CustomerOrder(Integer id, String status, Double totalCost, LocalDateTime _created, LocalDateTime _updated, CustomerOrderCustomer customer, List<CustomerOrderFoodItem> foodItems) {
         this.id = id;
         this.status = status;
         this.totalCost = totalCost;
@@ -28,7 +29,7 @@ public class CustomerSort implements SortInterface {
         setTotalCost();
     }
 
-    public CustomerSort(CustomerOrderDTO dto) {
+    public CustomerOrder(CustomerOrderDTO dto) {
         this.id = dto.getId();
         this.status = dto.getStatus();
         this.totalCost = dto.getTotalCost();
@@ -48,7 +49,7 @@ public class CustomerSort implements SortInterface {
         setTotalCost();
     }
 
-    public CustomerSort() {
+    public CustomerOrder() {
 
     }
 
@@ -79,11 +80,11 @@ public class CustomerSort implements SortInterface {
     }
 
     public void setStatus(String status, Boolean forceUpdate) {
-        this.status = validateNewStatusRules(this.status,status,forceUpdate);
+        this.status = validateNewStatusRules(status,forceUpdate);
     }
 
     public void setStatus(String status) {
-        this.status = validateNewStatusRules(this.status,status,true);
+        this.status = validateNewStatusRules(status,true);
     }
 
     public Double getTotalCost() {
@@ -133,19 +134,9 @@ public class CustomerSort implements SortInterface {
         this._updated = _updated;
     }
 
-    private String validateNewStatusRules(String actualStatus, String newStatus, Boolean forceUpdate) {
-        newStatus = CustomerOrderStatus.fromDescription(newStatus).getDescription();
-        if (forceUpdate == true) {
-            return newStatus;
-        } else {
-            Integer actualStatusId = CustomerOrderStatus.fromDescription(actualStatus).getId();
-            Integer newStatusId = CustomerOrderStatus.fromDescription(newStatus).getId();
-            if (actualStatusId + 1 == newStatusId) {
-                return newStatus;
-            } else {
-                throw new CustomerOrderException("Erro na atualização no status do pedido. Não é permitido atualizar o status de: " + actualStatus + " para: " + newStatus, 400);
-            }
-        }
+    private String validateNewStatusRules(String newStatus, Boolean forceUpdate) {
+        return EnumUtils.validateNewStatusRules(CustomerOrderStatus.class, this.getStatus(), newStatus, forceUpdate,
+                (message) -> new CustomerOrderException(message, 400));
     }
 
 }
