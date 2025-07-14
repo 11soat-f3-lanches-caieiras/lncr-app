@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras._core.applications.customerorder.usecases;
+package br.com.tp.lanchescaieiras._core.applications.customerorder;
 
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderGateway;
 import br.com.tp.lanchescaieiras._core.commons.utils.CustomerOrderUseCaseUtils;

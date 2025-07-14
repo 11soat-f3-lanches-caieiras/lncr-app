@@ -15,8 +15,8 @@ public class JpaKitchenOrderMapper {
         dto.setId(entity.getId());
         dto.setCustomerOrderId(entity.getCustomerOrderId());
         dto.setStatus(KitchenOrderStatus.fromId(entity.getStatusId()).getDescription());
-        dto.setCreated(entity.get_created());
-        dto.setUpdated(entity.get_updated());
+        dto.set_created(entity.getCreated());
+        dto.set_updated(entity.getUpdated());
         if (entity.getFoodItems() != null) {
             dto.setFoodItems(entity.getFoodItems().stream()
                 .map(this::jpaKitchenOrderFoodItemToDTO)
@@ -31,8 +31,6 @@ public class JpaKitchenOrderMapper {
         entity.setId(dto.getId());
         entity.setCustomerOrderId(dto.getCustomerOrderId());
         entity.setStatusId(KitchenOrderStatus.fromDescription(dto.getStatus()).getId());
-        entity.set_created(dto.getCreated());
-        entity.set_updated(dto.getUpdated());
         if (dto.getFoodItems() != null) {
             entity.setFoodItems(dto.getFoodItems().stream()
                 .map(this::kitchenOrderFoodItemDtoToJpa)

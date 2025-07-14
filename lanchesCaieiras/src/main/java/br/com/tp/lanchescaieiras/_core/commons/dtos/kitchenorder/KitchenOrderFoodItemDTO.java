@@ -56,5 +56,16 @@ public class KitchenOrderFoodItemDTO {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+    @Override
+    public String toString() {
+        return "KitchenOrderFoodItemDTO{" +
+                "id=" + id +
+                ", kitchenOrderId=" + kitchenOrderId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", notes='" + notes + '\'' +
+                '}';
+    }
 }
 

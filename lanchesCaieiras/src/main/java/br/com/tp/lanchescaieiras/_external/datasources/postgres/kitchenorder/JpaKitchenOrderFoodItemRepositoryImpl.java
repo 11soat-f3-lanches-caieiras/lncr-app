@@ -16,4 +16,11 @@ public class JpaKitchenOrderFoodItemRepositoryImpl {
         return jpaKitchenOrderFoodItemList.stream().map(jpaKitchenOrderMapper::jpaKitchenOrderFoodItemToDTO).toList();
 
     }
+
+    public List<KitchenOrderFoodItemDTO> findByKitchenOrderId(Integer kitchenOrderId, JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository, JpaKitchenOrderMapper jpaKitchenOrderMapper) {
+        List<JpaKitchenOrderFoodItemEntity> jpaKitchenOrderFoodItemList = jpaKitchenOrderFoodItemRepository.findByKitchenOrderId(kitchenOrderId);
+        return jpaKitchenOrderFoodItemList.stream()
+                .map(jpaKitchenOrderMapper::jpaKitchenOrderFoodItemToDTO)
+                .toList();
+    }
 }

@@ -10,16 +10,27 @@ public interface KitchenOrderDatabase {
 
     KitchenOrderDTO save(KitchenOrderDTO kitchenOrderDto);
 
+    KitchenOrderDTO findById(Integer kitchenOrderId, Boolean includeFoodItems);
+
     KitchenOrderDTO findById(Integer kitchenOrderId);
+
+    KitchenOrderDTO findByCustomerOrderId(Integer customerOrderId, Boolean includeFoodItems);
+
+    List<KitchenOrderDTO> findByStatusList(List<Integer> statusIdsList, Boolean includeFoodItems);
+
+    List<KitchenOrderFoodItemDTO> findByKitchenOrderId(Integer kitchenOrderId);
+
 
     List<KitchenOrderDTO> findByStatusId(Integer statusId);
 
     KitchenOrderDTO updateStatusByCustomerOrderId(Integer customerOrderId, String newStatus);
 
-    KitchenOrderDTO findByCustomerOrderId(Integer customerOrderId);
 
     List<KitchenOrderFoodItemDTO> saveAll(List<KitchenOrderFoodItem> kitchenOrderFoodItemList);
 
-    List<KitchenOrderFoodItemDTO> findByKitchenOrderId(Integer kitchenOrderId);
+
+
+    List<KitchenOrderFoodItemDTO> getFoodItemsByKitchenOrderId(Integer kitchenOrderId);
+
 
 }

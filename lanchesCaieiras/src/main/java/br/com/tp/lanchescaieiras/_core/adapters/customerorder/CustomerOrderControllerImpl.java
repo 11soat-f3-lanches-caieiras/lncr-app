@@ -1,8 +1,8 @@
 package br.com.tp.lanchescaieiras._core.adapters.customerorder;
 
-import br.com.tp.lanchescaieiras._core.applications.customerorder.usecases.CreateCustomerOrderUseCase;
-import br.com.tp.lanchescaieiras._core.applications.customerorder.usecases.GetCustomerOrderUseCase;
-import br.com.tp.lanchescaieiras._core.applications.customerorder.usecases.UpdateCustomerOrderUseCase;
+import br.com.tp.lanchescaieiras._core.applications.customerorder.CreateCustomerOrderUseCase;
+import br.com.tp.lanchescaieiras._core.applications.customerorder.GetCustomerOrderUseCase;
+import br.com.tp.lanchescaieiras._core.applications.customerorder.UpdateCustomerOrderUseCase;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderController;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderDatabase;

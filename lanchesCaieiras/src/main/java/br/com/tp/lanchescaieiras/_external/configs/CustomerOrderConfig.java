@@ -3,8 +3,6 @@ package br.com.tp.lanchescaieiras._external.configs;
 import br.com.tp.lanchescaieiras._core.adapters.customerorder.CustomerOrderControllerImpl;
 import br.com.tp.lanchescaieiras._core.adapters.customerorder.CustomerOrderMapper;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderDatabase;
-import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -33,9 +31,6 @@ public class CustomerOrderConfig {
         return new CustomerOrderMapper();
     }
 
-    @Bean
-    public Module javaTimeModule() {
-        return new JavaTimeModule();
-    }
+
 
 }

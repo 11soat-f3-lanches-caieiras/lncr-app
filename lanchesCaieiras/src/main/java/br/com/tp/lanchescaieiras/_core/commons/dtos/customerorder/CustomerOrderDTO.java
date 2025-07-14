@@ -5,13 +5,24 @@ import java.util.List;
 
 public class CustomerOrderDTO {
     private Integer id;
+    private LocalDateTime _created;
+    private LocalDateTime _updated;
     private String status;
     private Double totalCost;
-    private LocalDateTime _created;
     private CustomerOrderCustomerDTO customer;
     private List<CustomerOrderFoodItemDTO> foodItems;
 
     public CustomerOrderDTO() {}
+
+    public CustomerOrderDTO(Integer id, String status, Double totalCost, LocalDateTime _created, LocalDateTime _updated, CustomerOrderCustomerDTO customer, List<CustomerOrderFoodItemDTO> foodItems) {
+        this.id = id;
+        this.status = status;
+        this.totalCost = totalCost;
+        this._created = _created;
+        this._updated = _updated;
+        this.customer = customer;
+        this.foodItems = foodItems;
+    }
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -24,6 +35,14 @@ public class CustomerOrderDTO {
 
     public LocalDateTime get_created() { return _created; }
     public void set_created(LocalDateTime _created) { this._created = _created; }
+
+    public LocalDateTime get_updated() {
+        return _updated;
+    }
+
+    public void set_updated(LocalDateTime _updated) {
+        this._updated = _updated;
+    }
 
     public CustomerOrderCustomerDTO getCustomer() {return customer;}
     public void setCustomer(CustomerOrderCustomerDTO customer) {this.customer = customer;}

@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras._core.applications.kitchenorder.usecases;
+package br.com.tp.lanchescaieiras._core.applications.kitchenorder;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.kitchenorder.KitchenOrderGateway;

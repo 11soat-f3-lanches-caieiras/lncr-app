@@ -28,6 +28,8 @@ public interface CustomerOrderGateway {
 
     CustomerOrder updateCustomerOrder(CustomerOrder updateCustomerOrder);
 
+    void createKitchenOrder(CustomerOrder updateCustomerOrder);
+
 
 
     /*CustomerOrder getCustomerOrderById(Integer id, Boolean includeFoodItems);

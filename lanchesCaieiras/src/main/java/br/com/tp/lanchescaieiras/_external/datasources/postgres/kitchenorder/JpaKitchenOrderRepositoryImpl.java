@@ -8,17 +8,15 @@ import java.util.List;
 @Repository
 public class JpaKitchenOrderRepositoryImpl {
 
-        public KitchenOrderDTO save(KitchenOrderDTO kitchenOrderDTO, JpaKitchenOrderRepository jpaKitchenOrderRepository, JpaKitchenOrderMapper jpaKitchenOrderMapper) {
+       public KitchenOrderDTO save(KitchenOrderDTO kitchenOrderDTO, JpaKitchenOrderRepository jpaKitchenOrderRepository, JpaKitchenOrderMapper jpaKitchenOrderMapper) {
         JpaKitchenOrderEntity jpaKitchenOrderEntity = jpaKitchenOrderMapper.kitchenOrderDTOtoJpa(kitchenOrderDTO);
         return jpaKitchenOrderMapper.jpaKitchenOrderToDTO(jpaKitchenOrderRepository.save(jpaKitchenOrderEntity));
     }
 
     public KitchenOrderDTO findById(Integer id, JpaKitchenOrderRepository jpaKitchenOrderRepository, JpaKitchenOrderMapper jpaKitchenOrderMapper) {
         JpaKitchenOrderEntity jpaKitchenOrderEntity =jpaKitchenOrderRepository.findById(id).orElse(null);
-        if (jpaKitchenOrderEntity != null) {
-            return jpaKitchenOrderMapper.jpaKitchenOrderToDTO(jpaKitchenOrderEntity);
-        }
-        return null;
+        return jpaKitchenOrderMapper.jpaKitchenOrderToDTO(jpaKitchenOrderEntity);
+
     }
 
     public List<KitchenOrderDTO> findByStatusId(List<Integer> statusIdList, JpaKitchenOrderRepository jpaKitchenOrderRepository, JpaKitchenOrderMapper jpaKitchenOrderMapper) {

@@ -26,4 +26,5 @@ public interface CustomerOrderDatabase {
 
     CustomerOrderDTO updateCustomerOrder(CustomerOrderDTO updatedCustomerOrderDTO);
 
+    void createKitchenOrder(CustomerOrderDTO customerOrderDTO);
 }

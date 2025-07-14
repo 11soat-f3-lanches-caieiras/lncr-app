@@ -8,11 +8,12 @@ import java.util.List;
 
 public class KitchenOrder {
     private Integer id;
+    private LocalDateTime _created;
+    private LocalDateTime _updated;
     private Integer customerOrderId;
     private String status;
     private List<KitchenOrderFoodItem> foodItems;
-    private LocalDateTime _created;
-    private LocalDateTime _updated;
+
 
     public KitchenOrder(Integer id, Integer customerOrderId, String status, List<KitchenOrderFoodItem> foodItems, LocalDateTime _created, LocalDateTime _updated) {
         this.id = id;
@@ -35,11 +36,11 @@ public class KitchenOrder {
                 .map(KitchenOrderFoodItem::new)
                 .toList();
         }
-        if (dto.getCreated() != null) {
-            this._created = dto.getCreated();
+        if (dto.get_created() != null) {
+            this._created = dto.get_created();
         }
-        if (dto.getUpdated() != null) {
-            this._updated = dto.getUpdated();
+        if (dto.get_updated() != null) {
+            this._updated = dto.get_updated();
         }
     }
 
@@ -49,6 +50,22 @@ public class KitchenOrder {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public LocalDateTime get_created() {
+        return _created;
+    }
+
+    public void set_created(LocalDateTime _created) {
+        this._created = _created;
+    }
+
+    public LocalDateTime get_updated() {
+        return _updated;
+    }
+
+    public void set_updated(LocalDateTime _updated) {
+        this._updated = _updated;
     }
 
     public Integer getCustomerOrderId() {
@@ -73,22 +90,6 @@ public class KitchenOrder {
 
     public void setFoodItems(List<KitchenOrderFoodItem> foodItems) {
         this.foodItems = foodItems;
-    }
-
-    public LocalDateTime get_created() {
-        return _created;
-    }
-
-    public void set_created(LocalDateTime _created) {
-        this._created = _created;
-    }
-
-    public LocalDateTime get_updated() {
-        return _updated;
-    }
-
-    public void set_updated(LocalDateTime _updated) {
-        this._updated = _updated;
     }
 }
 

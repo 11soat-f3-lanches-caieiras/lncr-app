@@ -3,6 +3,8 @@ package br.com.tp.lanchescaieiras._core.adapters.kitchenorder;
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
 import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrder;
 
+import java.util.List;
+
 public class KitchenOrderPresenter {
 
     private final KitchenOrderMapper kitchenOrderMapper;
@@ -16,11 +18,30 @@ public class KitchenOrderPresenter {
         return kitchenOrderMapper.kitchenOrderToDTO(kitchenOrder);
     }
 
+    public KitchenOrderDTO getById(KitchenOrder kitchenOrder) {
+        clearKitchenOrderIdInFoodItem(kitchenOrder);
+        return kitchenOrderMapper.kitchenOrderToDTO(kitchenOrder);
+    }
+
+    public KitchenOrderDTO getByCustomerOrderId(KitchenOrder kitchenOrder) {
+        clearKitchenOrderIdInFoodItem(kitchenOrder);
+        return kitchenOrderMapper.kitchenOrderToDTO(kitchenOrder);
+    }
+
+    public List<KitchenOrderDTO> getByStatusList(List<KitchenOrder> kitchenOrderList) {
+        kitchenOrderList.forEach(this::clearKitchenOrderIdInFoodItem);
+        return kitchenOrderList.stream()
+                .map(kitchenOrderMapper::kitchenOrderToDTO)
+                .toList();
+
+    }
+
     private void clearKitchenOrderIdInFoodItem(KitchenOrder kitchenOrder) {
         if (kitchenOrder.getFoodItems() != null && !kitchenOrder.getFoodItems().isEmpty()) {
-        kitchenOrder.getFoodItems().stream().forEach(foodItem -> {
+            kitchenOrder.getFoodItems().stream().forEach(foodItem -> {
                 foodItem.setKitchenOrderId(null);
             });
         }
     }
 }
+

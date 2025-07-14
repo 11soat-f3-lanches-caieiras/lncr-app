@@ -17,6 +17,7 @@ public class JpaCustomerOrderMapper {
         dto.setStatus(CustomerOrderStatus.fromId(entity.getStatusId()).getDescription());
         dto.setCustomer(new CustomerOrderCustomerDTO(entity.getCustomerId(), entity.getCustomerName()));
         dto.set_created(entity.getCreated());
+        dto.set_updated(entity.getUpdated());
         return dto;
     }
 
@@ -38,6 +39,8 @@ public class JpaCustomerOrderMapper {
         entity.setId(dto.getId());
         entity.setTotalCost(dto.getTotalCost());
         entity.setStatusId(CustomerOrderStatus.fromDescription(dto.getStatus()).getId());
+        entity.setCreated(dto.get_created());
+        entity.setUpdated(dto.get_updated());
         if (dto.getCustomer() != null){
             entity.setCustomerId(dto.getCustomer().getId());
             entity.setCustomerName(dto.getCustomer().getName());

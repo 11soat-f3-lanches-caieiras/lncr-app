@@ -1,8 +1,8 @@
 package br.com.tp.lanchescaieiras._external.integrations.customerorder;
 
 
-import br.com.tp.lanchescaieiras._core.domain.exceptions.PaymentException;
 import br.com.tp.lanchescaieiras._external.configs.IntegrationConfig;
+import br.com.tp.lanchescaieiras._external.integrations.IntegrationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -38,7 +38,7 @@ public class CustomerOrderIntegrationImpl implements CustomerOrderIntegration {
 
             } catch (Exception e) {
                 log.error(e.toString());
-                throw new PaymentException("Erro ao atualizar o status do pedido de cliente: " + customerOrderId, 500);
+                throw new IntegrationException("Erro ao atualizar o status do pedido de cliente: " + customerOrderId, 500);
             }
         });
     }

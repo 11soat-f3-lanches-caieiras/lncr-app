@@ -80,5 +80,10 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
         updatedCustomerOrderDTO = this.customerOrderDatabase.updateCustomerOrder(updatedCustomerOrderDTO);
         return this.customerOrderMapper.customerOrderToDomain(updatedCustomerOrderDTO);
     }
+
+    @Override
+    public void createKitchenOrder(CustomerOrder updateCustomerOrder) {
+        this.customerOrderDatabase.createKitchenOrder(this.customerOrderMapper.customerOrderToDTO(updateCustomerOrder));
+    }
 }
 

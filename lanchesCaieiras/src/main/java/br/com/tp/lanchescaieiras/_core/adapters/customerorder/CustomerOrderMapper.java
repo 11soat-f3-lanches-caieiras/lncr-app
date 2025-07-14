@@ -17,6 +17,7 @@ public class CustomerOrderMapper {
         dto.setStatus(order.getStatus());
         dto.setTotalCost(order.getTotalCost());
         dto.set_created(order.get_created());
+        dto.set_updated(order.get_updated());
         if (order.getCustomer() != null) {
             dto.setCustomer(customerInOrderToDTO(order.getCustomer()));
         }
@@ -32,6 +33,7 @@ public class CustomerOrderMapper {
         order.setId(dto.getId());
         order.setStatus(dto.getStatus());
         order.set_created(dto.get_created());
+        order.set_updated(dto.get_updated());
         if (dto.getCustomer() != null) {
             order.setCustomer(customerInOrderToDomain(dto.getCustomer()));
         }

@@ -8,9 +8,7 @@ import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import br.com.tp.lanchescaieiras._external.configs.KitchenOrderConfig;
 import br.com.tp.lanchescaieiras._external.dataproxy.KichenOrderDataProxy;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,24 +28,33 @@ public class KitchenOrderRestControllerImpl implements KitchenOrderRestControlle
 
     @Override
     @PostMapping
-    public ResponseEntity<ResponseModel<KitchenOrderDTO>> createKitchenOrder(KitchenOrderDTO kitchenOrderDTO) {
+    public ResponseEntity<ResponseModel<KitchenOrderDTO>> createKitchenOrder(@RequestBody KitchenOrderDTO kitchenOrderDTO) {
         kitchenOrderDTO = this.kichenOrderController.createKitchenOrder(kitchenOrderDTO);
         return ResponseEntityModelUtil.created(null, kitchenOrderConfig.getLocationPrefix() + "/" + kitchenOrderDTO.getId());
     }
 
     @Override
-    public ResponseEntity<ResponseModel<KitchenOrderDTO>> getKitchenOrderById(Integer kitchenOrderId, Boolean includeFoodItems) {
-        return null;
+    @GetMapping("/{kitchenOrderId}")
+    public ResponseEntity<ResponseModel<KitchenOrderDTO>> getKitchenOrderById(@PathVariable(name="kitchenOrderId") Integer kitchenOrderId,
+                                                                              @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems) {
+        KitchenOrderDTO kitchenOrderDTO = this.kichenOrderController.getKitchenOrderById(kitchenOrderId, includeFoodItems);
+        return ResponseEntityModelUtil.OK(kitchenOrderDTO);
     }
 
     @Override
-    public ResponseEntity<ResponseModel<KitchenOrderDTO>> getKitchenOrderByCustomerOrderId(Integer customerOrderId, Boolean includeFoodItems) {
-        return null;
+    @GetMapping("/customerOrder/{customerOrderId}")
+    public ResponseEntity<ResponseModel<KitchenOrderDTO>> getKitchenOrderByCustomerOrderId(@PathVariable(name = "customerOrderId") Integer customerOrderId,
+                                                                                           @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems) {
+        KitchenOrderDTO kitchenOrderDTO = this.kichenOrderController.getKitchenOrderByCustomerOrderId(customerOrderId, includeFoodItems);
+        return ResponseEntityModelUtil.OK(kitchenOrderDTO);
     }
 
     @Override
-    public ResponseEntity<ResponseListModel<KitchenOrderDTO>> getKitchenOrderByStatusList(List<String> statusList, Boolean includeFoodItems) {
-        return null;
+    @GetMapping("/status/{statusList}")
+    public ResponseEntity<ResponseListModel<KitchenOrderDTO>> getKitchenOrderByStatusList(@PathVariable(name = "statusList") List<String> statusList,
+                                                                                          @RequestParam(name = "includeFoodItems", required = false, defaultValue = "false") Boolean includeFoodItems) {
+        List<KitchenOrderDTO> kitchenOrderDTO = this.kichenOrderController.getKitchenOrderByStatusList(statusList, includeFoodItems);
+        return ResponseEntityModelUtil.listOK(kitchenOrderDTO);
     }
 
     @Override

@@ -9,19 +9,21 @@ import java.util.List;
 
 public class CustomerOrder {
     private Integer id;
+    private LocalDateTime _created;
+    private LocalDateTime _updated;
     private String status;
     private Double totalCost;
-    private LocalDateTime _created;
     private CustomerOrderCustomer customer;
     private List<CustomerOrderFoodItem> foodItems;
 
-    public CustomerOrder(Integer id, CustomerOrderStatus status, CustomerOrderCustomer customer, List<CustomerOrderFoodItem> foodItems, Double totalCost) {
+    public CustomerOrder(Integer id, String status, Double totalCost, LocalDateTime _created, LocalDateTime _updated, CustomerOrderCustomer customer, List<CustomerOrderFoodItem> foodItems) {
         this.id = id;
-        this.status = fromCustomerOrderStatus(status);
+        this.status = status;
+        this.totalCost = totalCost;
+        this._created = _created;
+        this._updated = _updated;
         this.customer = customer;
         this.foodItems = foodItems;
-        this.totalCost = totalCost;
-        this._created = LocalDateTime.now();
         setTotalCost();
     }
 
@@ -30,6 +32,7 @@ public class CustomerOrder {
         this.status = dto.getStatus();
         this.totalCost = dto.getTotalCost();
         this._created = dto.get_created();
+        this._updated = dto.get_updated();
         this.customer = null;
         if (dto.getCustomer() != null) {
             this.customer = new CustomerOrderCustomer(dto.getCustomer());
@@ -119,6 +122,14 @@ public class CustomerOrder {
 
     public void set_created(LocalDateTime _created) {
         this._created = _created;
+    }
+
+    public LocalDateTime get_updated() {
+        return _updated;
+    }
+
+    public void set_updated(LocalDateTime _updated) {
+        this._updated = _updated;
     }
 
     private String validateNewStatusRules(String actualStatus, String newStatus, Boolean forceUpdate) {

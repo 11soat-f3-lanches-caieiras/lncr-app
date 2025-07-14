@@ -14,18 +14,19 @@ public class JpaKitchenOrderEntity {
     private Integer id;
     private Integer customerOrderId;
     private Integer statusId;
-    private LocalDateTime _created;
-    private LocalDateTime _updated;
+    private LocalDateTime created;
+    private LocalDateTime updated;
+
 
     @Transient
     private List<JpaKitchenOrderFoodItemEntity> foodItems;
 
-    public JpaKitchenOrderEntity(Integer id, Integer customerOrderId, Integer statusId, LocalDateTime _created, LocalDateTime _updated, List<JpaKitchenOrderFoodItemEntity> foodItems) {
+    public JpaKitchenOrderEntity(Integer id, Integer customerOrderId, Integer statusId, LocalDateTime created, LocalDateTime updated, List<JpaKitchenOrderFoodItemEntity> foodItems) {
         this.id = id;
         this.customerOrderId = customerOrderId;
         this.statusId = statusId;
-        this._created = _created;
-        this._updated = _updated;
+        this.created = created;
+        this.updated = updated;
         this.foodItems = foodItems;
     }
 
@@ -56,20 +57,22 @@ public class JpaKitchenOrderEntity {
         this.statusId = statusId;
     }
 
-    public LocalDateTime get_created() {
-        return _created;
+    public LocalDateTime getCreated() {
+        return created;
     }
 
-    public void set_created(LocalDateTime _created) {
-        this._created = _created;
+    @PrePersist
+    public void prePersist() {
+        this.created = LocalDateTime.now();
     }
 
-    public LocalDateTime get_updated() {
-        return _updated;
+    public LocalDateTime getUpdated() {
+        return updated;
     }
 
-    public void set_updated(LocalDateTime _updated) {
-        this._updated = _updated;
+    @PreUpdate
+    public void preUpdate() {
+        this.updated = LocalDateTime.now();
     }
 
     public List<JpaKitchenOrderFoodItemEntity> getFoodItems() {

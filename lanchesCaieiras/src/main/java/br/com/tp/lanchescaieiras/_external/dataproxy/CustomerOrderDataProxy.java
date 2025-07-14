@@ -7,6 +7,7 @@ import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.Customer
 import br.com.tp.lanchescaieiras._external.datasources.postgres.customerorder.*;
 import br.com.tp.lanchescaieiras._external.integrations.customer.CustomerIntegrationImpl;
 import br.com.tp.lanchescaieiras._external.integrations.fooditem.FoodItemIntegrationImpl;
+import br.com.tp.lanchescaieiras._external.integrations.kitchenorder.KitchenOrderIntegrationImpl;
 import br.com.tp.lanchescaieiras._external.integrations.payment.PaymentIntegrationImpl;
 import org.springframework.stereotype.Component;
 
@@ -23,23 +24,18 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
     private final CustomerIntegrationImpl customerIntegration;
     private final FoodItemIntegrationImpl foodItemIntegration;
     private final PaymentIntegrationImpl paymentIntegration;
+    private final KitchenOrderIntegrationImpl kitchenOrderIntegrationImpl;
     private final JpaCustomerOrderMapper jpaCustomerOrderMapper;
 
-    public CustomerOrderDataProxy(JpaCustomerOrderRepositoryImpl jpaCustomerOrderRepositoryImpl,
-                                  JpaCustomerOrderRepository jpaCustomerOrderRepository,
-                                  JpaCustomerOrderFoodItemRepositoryImpl jpaCustomerOrderFoodItemPostgresRepository,
-                                  JpaCustomerOrderFoodItemRepository jpaCustomerOrderFoodItemRepository,
-                                  CustomerIntegrationImpl customerIntegration,
-                                  FoodItemIntegrationImpl foodItemIntegration,
-                                  PaymentIntegrationImpl paymentIntegration,
-                                  JpaCustomerOrderMapper jpaCustomerOrderMapper) {
+    public CustomerOrderDataProxy(JpaCustomerOrderRepositoryImpl jpaCustomerOrderRepositoryImpl, JpaCustomerOrderRepository jpaCustomerOrderRepository, JpaCustomerOrderFoodItemRepositoryImpl jpaCustomerOrderFoodItemRepositoryImpl, JpaCustomerOrderFoodItemRepository jpaCustomerOrderFoodItemRepository, CustomerIntegrationImpl customerIntegration, FoodItemIntegrationImpl foodItemIntegration, PaymentIntegrationImpl paymentIntegration, KitchenOrderIntegrationImpl kitchenOrderIntegrationImpl, JpaCustomerOrderMapper jpaCustomerOrderMapper) {
         this.jpaCustomerOrderRepositoryImpl = jpaCustomerOrderRepositoryImpl;
         this.jpaCustomerOrderRepository = jpaCustomerOrderRepository;
-        this.jpaCustomerOrderFoodItemRepositoryImpl = jpaCustomerOrderFoodItemPostgresRepository;
+        this.jpaCustomerOrderFoodItemRepositoryImpl = jpaCustomerOrderFoodItemRepositoryImpl;
         this.jpaCustomerOrderFoodItemRepository = jpaCustomerOrderFoodItemRepository;
         this.customerIntegration = customerIntegration;
         this.foodItemIntegration = foodItemIntegration;
         this.paymentIntegration = paymentIntegration;
+        this.kitchenOrderIntegrationImpl = kitchenOrderIntegrationImpl;
         this.jpaCustomerOrderMapper = jpaCustomerOrderMapper;
     }
 
@@ -100,6 +96,11 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
     @Override
     public CustomerOrderDTO updateCustomerOrder(CustomerOrderDTO updateCustomerOrderDTO) {
         return this.jpaCustomerOrderRepositoryImpl.save(updateCustomerOrderDTO, jpaCustomerOrderRepository, jpaCustomerOrderMapper);
+    }
+
+    @Override
+    public void createKitchenOrder(CustomerOrderDTO customerOrderDTO) {
+        this.kitchenOrderIntegrationImpl.createKitchenOrder(customerOrderDTO);
     }
 
     private List<CustomerOrderFoodItemDTO> getFoodItemsInCustomerOrdersIdList(List<CustomerOrderDTO> customerOrderDTOList, Boolean includeFoodItems){

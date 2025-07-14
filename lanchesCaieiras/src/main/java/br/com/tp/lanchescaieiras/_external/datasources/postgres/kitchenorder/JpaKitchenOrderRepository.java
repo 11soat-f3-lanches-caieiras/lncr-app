@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface JpaKitchenOrderRepository extends JpaRepository<JpaKitchenOrderEntity, Integer> {
 
-    @Query(value = "select * from kitchen_order where status_id in(:statusId)", nativeQuery = true)
+    @Query(value = "select * from kitchen_order where status_id in(:statusIdList)", nativeQuery = true)
     List<JpaKitchenOrderEntity> findByStatusIdList(@Param("statusIdList") List<Integer> statusIdList);
 
     @Query(value = "select * from kitchen_order where customer_order_id =:customerOrderId", nativeQuery = true)

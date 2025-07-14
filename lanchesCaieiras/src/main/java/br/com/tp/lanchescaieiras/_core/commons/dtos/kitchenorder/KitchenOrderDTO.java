@@ -5,21 +5,21 @@ import java.util.List;
 
 public class KitchenOrderDTO {
     private Integer id;
+    private LocalDateTime _created;
+    private LocalDateTime _updated;
     private Integer customerOrderId;
     private String status;
     private List<KitchenOrderFoodItemDTO> foodItems;
-    private LocalDateTime created;
-    private LocalDateTime updated;
 
     public KitchenOrderDTO() {}
 
-    public KitchenOrderDTO(Integer id, Integer customerOrderId, String status, List<KitchenOrderFoodItemDTO> foodItems, LocalDateTime created, LocalDateTime updated) {
+    public KitchenOrderDTO(Integer id, Integer customerOrderId, String status, List<KitchenOrderFoodItemDTO> foodItems, LocalDateTime _created, LocalDateTime _updated) {
         this.id = id;
         this.customerOrderId = customerOrderId;
         this.status = status;
         this.foodItems = foodItems;
-        this.created = created;
-        this.updated = updated;
+        this._created = _created;
+        this._updated = _updated;
     }
 
     public Integer getId() {
@@ -28,6 +28,22 @@ public class KitchenOrderDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public LocalDateTime get_created() {
+        return _created;
+    }
+
+    public void set_created(LocalDateTime _created) {
+        this._created = _created;
+    }
+
+    public LocalDateTime get_updated() {
+        return _updated;
+    }
+
+    public void set_updated(LocalDateTime _updated) {
+        this._updated = _updated;
     }
 
     public Integer getCustomerOrderId() {
@@ -54,20 +70,16 @@ public class KitchenOrderDTO {
         this.foodItems = foodItems;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(LocalDateTime updated) {
-        this.updated = updated;
+    @Override
+    public String toString() {
+        return "KitchenOrderDTO{" +
+                "id=" + id +
+                ", customerOrderId=" + customerOrderId +
+                ", status='" + status + '\'' +
+                ", created=" + _created +
+                ", updated=" + _updated +
+                ", foodItems=" + foodItems.stream().toString() +
+                '}';
     }
 }
 

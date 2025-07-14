@@ -1,15 +1,11 @@
 package br.com.tp.lanchescaieiras._external.commons.model;
 
 import br.com.tp.lanchescaieiras._core.commons.model.ResponseMetadata;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseListModel<T> {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private final ResponseMetadata _response;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private final List<T> _content;
 
     public ResponseListModel(ResponseMetadata response, List<T> _content) {

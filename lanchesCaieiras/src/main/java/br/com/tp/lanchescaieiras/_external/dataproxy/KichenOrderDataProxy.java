@@ -20,12 +20,7 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
     private final CustomerOrderIntegrationImpl customerOrderIntegrationImpl;
     private final JpaKitchenOrderMapper jpaKitchenOrderMapper;
 
-    public KichenOrderDataProxy(JpaKitchenOrderRepositoryImpl jpaKitchenOrderRepositoryImpl,
-                                JpaKitchenOrderRepository jpaKitchenOrderRepository,
-                                JpaKitchenOrderFoodItemRepositoryImpl jpaKitchenOrderFoodItemRepositoryImpl,
-                                JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository,
-                                CustomerOrderIntegrationImpl customerOrderIntegrationImpl,
-                                JpaKitchenOrderMapper jpaKitchenOrderMapper) {
+    public KichenOrderDataProxy(JpaKitchenOrderRepositoryImpl jpaKitchenOrderRepositoryImpl, JpaKitchenOrderRepository jpaKitchenOrderRepository, JpaKitchenOrderFoodItemRepositoryImpl jpaKitchenOrderFoodItemRepositoryImpl, JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository, CustomerOrderIntegrationImpl customerOrderIntegrationImpl, JpaKitchenOrderMapper jpaKitchenOrderMapper) {
         this.jpaKitchenOrderRepositoryImpl = jpaKitchenOrderRepositoryImpl;
         this.jpaKitchenOrderRepository = jpaKitchenOrderRepository;
         this.jpaKitchenOrderFoodItemRepositoryImpl = jpaKitchenOrderFoodItemRepositoryImpl;
@@ -45,7 +40,32 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
 
     @Override
     public KitchenOrderDTO findById(Integer kitchenOrderId) {
-        return null;
+        return findById(kitchenOrderId, false);
+    }
+
+    @Override
+    public KitchenOrderDTO findById(Integer kitchenOrderId, Boolean includeFoodItems) {
+        KitchenOrderDTO kitchenOrderDto = this.jpaKitchenOrderRepositoryImpl.findById(kitchenOrderId, jpaKitchenOrderRepository, jpaKitchenOrderMapper);
+        includeFoodItems(kitchenOrderDto,includeFoodItems);
+        return kitchenOrderDto;
+    }
+
+    @Override
+    public KitchenOrderDTO findByCustomerOrderId(Integer customerOrderId, Boolean includeFoodItems) {
+        KitchenOrderDTO kitchenOrderDto = this.jpaKitchenOrderRepositoryImpl.findByCustomerOrderId(customerOrderId, jpaKitchenOrderRepository, jpaKitchenOrderMapper);
+        includeFoodItems(kitchenOrderDto,includeFoodItems);
+        return kitchenOrderDto;
+    }
+    @Override
+    public List<KitchenOrderDTO> findByStatusList(List<Integer> statusIdsList, Boolean includeFoodItems) {
+        List<KitchenOrderDTO> kitchenOrderDTOList = this.jpaKitchenOrderRepositoryImpl.findByStatusId(statusIdsList,jpaKitchenOrderRepository,jpaKitchenOrderMapper);
+        kitchenOrderDTOList.forEach(kitchenOrderDto -> includeFoodItems(kitchenOrderDto, includeFoodItems));
+        return kitchenOrderDTOList;
+    }
+
+    @Override
+    public List<KitchenOrderFoodItemDTO> findByKitchenOrderId(Integer kitchenOrderId) {
+        return this.jpaKitchenOrderFoodItemRepositoryImpl.findByKitchenOrderId(kitchenOrderId,jpaKitchenOrderFoodItemRepository,jpaKitchenOrderMapper);
     }
 
     @Override
@@ -59,24 +79,28 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
     }
 
     @Override
-    public KitchenOrderDTO findByCustomerOrderId(Integer customerOrderId) {
-        return this.jpaKitchenOrderRepositoryImpl.findByCustomerOrderId(customerOrderId, jpaKitchenOrderRepository, jpaKitchenOrderMapper);
-    }
-
-    @Override
     public List<KitchenOrderFoodItemDTO> saveAll(List<KitchenOrderFoodItem> kitchenOrderFoodItemList) {
         return List.of();
     }
 
     @Override
-    public List<KitchenOrderFoodItemDTO> findByKitchenOrderId(Integer kitchenOrderId) {
+    public List<KitchenOrderFoodItemDTO> getFoodItemsByKitchenOrderId(Integer kitchenOrderId) {
         return List.of();
     }
+
+
 
     private void setKitchenOrderIdOnFoodItems(KitchenOrderDTO kitchenOrderDto) {
         Integer kitchenOrderId = kitchenOrderDto.getId();
         kitchenOrderDto.getFoodItems().forEach(
                 foodItem -> foodItem.setKitchenOrderId(kitchenOrderId)
         );
+    }
+
+    private void includeFoodItems(KitchenOrderDTO kitchenOrderDto, Boolean includeFoodItems) {
+        if (includeFoodItems && kitchenOrderDto != null) {
+            kitchenOrderDto.setFoodItems(findByKitchenOrderId(kitchenOrderDto.getId()));
+
+        }
     }
 }
