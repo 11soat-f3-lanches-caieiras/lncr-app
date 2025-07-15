@@ -1,9 +1,10 @@
 package br.com.tp.lanchescaieiras._core.domain.customerorder;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
+import br.com.tp.lanchescaieiras._core.commons.enums.CustomerOrderStatus;
+import br.com.tp.lanchescaieiras._core.commons.exceptions.CustomerOrderException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.SortedByStatusCreated;
 import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;

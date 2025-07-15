@@ -3,7 +3,8 @@ package br.com.tp.lanchescaieiras._external.apis.fooditem;
 import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
-import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImageRules;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemController;
+import br.com.tp.lanchescaieiras._core.commons.utils.FoodItemImageRules;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
@@ -19,11 +20,11 @@ import java.util.List;
 public class FoodItemRestControllerImpl implements FoodItemRestController {
 
     private final FoodItemDataProxy foodItemDataProxy;
-    private final FoodItemControllerImpl foodItemController;
+    private final FoodItemController foodItemController;
     private final FoodItemConfig foodItemConfig;
 
 
-    public FoodItemRestControllerImpl(FoodItemDataProxy foodItemDataProxy, FoodItemControllerImpl foodItemController, FoodItemConfig foodItemConfig) {
+    public FoodItemRestControllerImpl(FoodItemDataProxy foodItemDataProxy, FoodItemController foodItemController, FoodItemConfig foodItemConfig) {
         this.foodItemDataProxy = foodItemDataProxy;
         this.foodItemController = foodItemController;
         this.foodItemConfig = foodItemConfig;

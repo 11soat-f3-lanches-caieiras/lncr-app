@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras._external.apis.kitchenorder;
 
 import br.com.tp.lanchescaieiras._core.adapters.kitchenorder.KitchenOrderControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.kitchenorder.KitchenOrderController;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
@@ -16,12 +17,12 @@ import java.util.List;
 @RequestMapping("/kitchenOrders")
 public class KitchenOrderRestControllerImpl implements KitchenOrderRestController {
 
-    public final KitchenOrderControllerImpl kichenOrderController;
+    public final KitchenOrderController kichenOrderController;
     public final KichenOrderDataProxy kichenOrderDataProxy;
     public final KitchenOrderConfig kitchenOrderConfig;
 
-    public KitchenOrderRestControllerImpl(KitchenOrderControllerImpl kichenOrderController, KichenOrderDataProxy kichenOrderDataProxy, KitchenOrderConfig kitchenOrderConfig) {
-        this.kichenOrderController = new KitchenOrderControllerImpl(kichenOrderDataProxy);
+    public KitchenOrderRestControllerImpl(KitchenOrderController kichenOrderController, KichenOrderDataProxy kichenOrderDataProxy, KitchenOrderConfig kitchenOrderConfig) {
+        this.kichenOrderController = kichenOrderController;
         this.kichenOrderDataProxy = kichenOrderDataProxy;
         this.kitchenOrderConfig = kitchenOrderConfig;
     }

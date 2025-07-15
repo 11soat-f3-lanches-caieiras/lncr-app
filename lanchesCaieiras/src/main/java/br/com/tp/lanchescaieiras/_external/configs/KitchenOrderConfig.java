@@ -1,6 +1,7 @@
 package br.com.tp.lanchescaieiras._external.configs;
 
 import br.com.tp.lanchescaieiras._core.adapters.kitchenorder.KitchenOrderControllerImpl;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.kitchenorder.KitchenOrderController;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.kitchenorder.KitchenOrderDatabase;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +22,7 @@ public class KitchenOrderConfig {
     }
 
     @Bean
-    KitchenOrderControllerImpl kitchenOrderControllerImpl(KitchenOrderDatabase kitchenOrderDatabase){
+    public KitchenOrderController kitchenOrderController(KitchenOrderDatabase kitchenOrderDatabase){
         return new KitchenOrderControllerImpl(kitchenOrderDatabase);
     }
 

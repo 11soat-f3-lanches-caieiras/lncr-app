@@ -2,7 +2,7 @@ package br.com.tp.lanchescaieiras._external.datasources.postgres.fooditem;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
-import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemCategory;
+import br.com.tp.lanchescaieiras._core.commons.enums.FoodItemCategory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

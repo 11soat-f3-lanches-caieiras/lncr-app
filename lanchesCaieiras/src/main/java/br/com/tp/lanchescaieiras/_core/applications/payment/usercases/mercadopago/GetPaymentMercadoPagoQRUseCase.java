@@ -1,9 +1,9 @@
 package br.com.tp.lanchescaieiras._core.applications.payment.usercases.mercadopago;
 
+import br.com.tp.lanchescaieiras._core.commons.exceptions.PaymentException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.payment.PaymentGateway;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.PaymentException;
 import br.com.tp.lanchescaieiras._core.domain.payment.PaymentMercadopagoQR;
-import br.com.tp.lanchescaieiras._core.domain.payment.PaymentStatus;
+import br.com.tp.lanchescaieiras._core.commons.enums.PaymentStatus;
 
 import java.util.ArrayList;
 import java.util.List;

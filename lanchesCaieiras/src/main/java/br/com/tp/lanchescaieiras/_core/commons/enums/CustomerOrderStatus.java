@@ -1,8 +1,9 @@
-package br.com.tp.lanchescaieiras._core.domain.customerorder;
+package br.com.tp.lanchescaieiras._core.commons.enums;
 
+import br.com.tp.lanchescaieiras._core.commons.exceptions.CustomerOrderException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.EnumWithIdDescription;
 import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
+
 
 
 public enum CustomerOrderStatus implements EnumWithIdDescription {

@@ -3,7 +3,7 @@ package br.com.tp.lanchescaieiras._external.datasources.postgres.customerorder;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderCustomerDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderFoodItemDTO;
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderStatus;
+import br.com.tp.lanchescaieiras._core.commons.enums.CustomerOrderStatus;
 import org.springframework.stereotype.Component;
 
 @Component

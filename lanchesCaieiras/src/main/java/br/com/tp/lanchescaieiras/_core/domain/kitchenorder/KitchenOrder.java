@@ -2,9 +2,10 @@ package br.com.tp.lanchescaieiras._core.domain.kitchenorder;
 
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
+import br.com.tp.lanchescaieiras._core.commons.enums.KitchenOrderStatus;
+import br.com.tp.lanchescaieiras._core.commons.exceptions.KitchenOrderException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.SortedByStatusCreated;
 import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.KitchenOrderException;
 
 import java.time.LocalDateTime;
 import java.util.List;

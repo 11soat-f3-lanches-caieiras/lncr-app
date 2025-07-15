@@ -3,7 +3,9 @@ package br.com.tp.lanchescaieiras._external.configs;
 import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemControllerImpl;
 import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemImageControllerImpl;
 import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemMapper;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemController;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemDatabase;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemImageController;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.context.annotation.Bean;
@@ -85,12 +87,12 @@ public class FoodItemConfig {
     }
 
     @Bean
-    public FoodItemImageControllerImpl foodItemImageController(FoodItemDatabase foodItemDatabase){
+    public FoodItemImageController foodItemImageController(FoodItemDatabase foodItemDatabase){
         return new FoodItemImageControllerImpl(foodItemDatabase);
     }
 
     @Bean
-    public FoodItemControllerImpl foodItemController(FoodItemDatabase foodItemDatabase) {
+    public FoodItemController foodItemController(FoodItemDatabase foodItemDatabase) {
         return new FoodItemControllerImpl(foodItemDatabase);
     }
 

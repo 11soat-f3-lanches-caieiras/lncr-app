@@ -1,5 +1,6 @@
 package br.com.tp.lanchescaieiras._core.domain.payment;
 
+import br.com.tp.lanchescaieiras._core.commons.enums.PaymentStatus;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.SortedByStatusCreated;
 
 import java.time.LocalDateTime;

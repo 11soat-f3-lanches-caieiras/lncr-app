@@ -1,10 +1,10 @@
 package br.com.tp.lanchescaieiras._core.commons.utils;
 
+import br.com.tp.lanchescaieiras._core.commons.exceptions.CustomerOrderException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderGateway;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderCustomer;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderFoodItem;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
 
 import java.util.List;
 import java.util.Objects;

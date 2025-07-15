@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class JpaMercadoPagoQrPostgresRepositoryImpl {
+public class JpaMercadoPagoQrRepositoryImpl {
 
     public final JpaMercadoPagoQrRepository jpaMercadoPagoQrPostgresRepository;
     public final JpaPaymentMercadopagoQRMapper jpamercadopagoQRMapper;
 
-    public JpaMercadoPagoQrPostgresRepositoryImpl(@Lazy JpaMercadoPagoQrRepository jpaMercadoPagoQrPostgresRepository, JpaPaymentMercadopagoQRMapper jpamercadopagoQRMapper) {
+    public JpaMercadoPagoQrRepositoryImpl(@Lazy JpaMercadoPagoQrRepository jpaMercadoPagoQrPostgresRepository, JpaPaymentMercadopagoQRMapper jpamercadopagoQRMapper) {
         this.jpaMercadoPagoQrPostgresRepository = jpaMercadoPagoQrPostgresRepository;
         this.jpamercadopagoQRMapper = jpamercadopagoQRMapper;
     }

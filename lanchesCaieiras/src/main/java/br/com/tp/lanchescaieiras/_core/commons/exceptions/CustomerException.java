@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras._core.domain.exceptions;
+package br.com.tp.lanchescaieiras._core.commons.exceptions;
 
 public class CustomerException extends RuntimeException {
     private final Integer code;

@@ -1,8 +1,8 @@
 package br.com.tp.lanchescaieiras._core.applications.customer;
 
+import br.com.tp.lanchescaieiras._core.commons.exceptions.CustomerException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customer.CustomerGateway;
 import br.com.tp.lanchescaieiras._core.domain.customer.Customer;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerException;
 
 import java.util.List;
 import java.util.Optional;

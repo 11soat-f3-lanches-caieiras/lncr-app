@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras._external.configs;
 
 import br.com.tp.lanchescaieiras._core.adapters.customer.CustomerControllerImpl;
 import br.com.tp.lanchescaieiras._core.adapters.customer.CustomerMapper;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.customer.CustomerController;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customer.CustomerDatabase;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +22,7 @@ public class CustomerConfig {
     }
 
     @Bean
-    public CustomerControllerImpl customerControllerImpl(CustomerDatabase customerDatabase) {
+    public CustomerController customerController(CustomerDatabase customerDatabase) {
         return new CustomerControllerImpl(customerDatabase);
     }
 

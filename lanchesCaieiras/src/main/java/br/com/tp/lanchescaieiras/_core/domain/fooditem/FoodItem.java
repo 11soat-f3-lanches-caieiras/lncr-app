@@ -1,6 +1,7 @@
 package br.com.tp.lanchescaieiras._core.domain.fooditem;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
+import br.com.tp.lanchescaieiras._core.commons.enums.FoodItemCategory;
 
 import java.util.ArrayList;
 import java.util.List;

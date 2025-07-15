@@ -1,7 +1,8 @@
 package br.com.tp.lanchescaieiras._core.domain.fooditem;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.FoodItemException;
+import br.com.tp.lanchescaieiras._core.commons.exceptions.FoodItemException;
+import br.com.tp.lanchescaieiras._core.commons.utils.FoodItemImageRules;
 
 import java.util.Base64;
 import java.util.Map;

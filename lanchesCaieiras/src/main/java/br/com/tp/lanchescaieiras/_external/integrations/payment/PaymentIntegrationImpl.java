@@ -1,6 +1,6 @@
 package br.com.tp.lanchescaieiras._external.integrations.payment;
 
-import br.com.tp.lanchescaieiras._core.domain.exceptions.CustomerOrderException;
+import br.com.tp.lanchescaieiras._core.commons.exceptions.CustomerOrderException;
 import br.com.tp.lanchescaieiras._external.configs.IntegrationConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

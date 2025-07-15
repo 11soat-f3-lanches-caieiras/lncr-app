@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras._core.domain.fooditem;
+package br.com.tp.lanchescaieiras._core.commons.utils;
 
 import java.util.Map;
 

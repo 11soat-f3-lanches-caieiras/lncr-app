@@ -1,4 +1,4 @@
-package br.com.tp.lanchescaieiras._core.domain.exceptions;
+package br.com.tp.lanchescaieiras._core.commons.exceptions;
 
 public class FoodItemException extends RuntimeException {
 

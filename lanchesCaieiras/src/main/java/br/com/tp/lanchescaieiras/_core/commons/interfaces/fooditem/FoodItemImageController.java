@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
-import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImageRules;
+import br.com.tp.lanchescaieiras._core.commons.utils.FoodItemImageRules;
 
 public interface FoodItemImageController {
 

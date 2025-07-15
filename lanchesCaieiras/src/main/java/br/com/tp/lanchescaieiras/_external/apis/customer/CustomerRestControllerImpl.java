@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras._external.apis.customer;
 
 import br.com.tp.lanchescaieiras._core.adapters.customer.CustomerControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customer.CustomerDTO;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.customer.CustomerController;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
@@ -18,11 +19,11 @@ import java.util.Optional;
 @RequestMapping("/customers")
 public class CustomerRestControllerImpl implements CustomerRestController {
 
-    public final CustomerControllerImpl customerController;
+    public final CustomerController customerController;
     public final JpaCustomerReposityImpl jpaCustomerRepository;
     public final CustomerConfig customerConfig;
 
-    public CustomerRestControllerImpl(CustomerControllerImpl customerController,
+    public CustomerRestControllerImpl(CustomerController customerController,
                                       JpaCustomerReposityImpl jpaCustomerRepository,
                                       CustomerConfig customerConfig) {
         this.customerController = customerController;

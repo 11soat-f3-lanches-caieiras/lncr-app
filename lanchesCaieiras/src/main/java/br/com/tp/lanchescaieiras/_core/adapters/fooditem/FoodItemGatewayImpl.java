@@ -5,7 +5,7 @@ import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemDatabase;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemGateway;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItem;
-import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemCategory;
+import br.com.tp.lanchescaieiras._core.commons.enums.FoodItemCategory;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImage;
 
 import java.util.List;

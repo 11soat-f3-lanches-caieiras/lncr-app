@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras._external.apis.notification;
 
-import br.com.tp.lanchescaieiras._core.adapters.notification.NotificationControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.notification.NotificationDTO;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.notification.NotificationController;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
@@ -16,11 +16,11 @@ import java.util.List;
 @RequestMapping("/notifications")
 public class NotificationRestControllerImpl implements NotificationRestController {
 
-    private final NotificationControllerImpl notificationController;
+    private final NotificationController notificationController;
     private final JpaNotificationRepositoryImpl jpaNotificationRepository;
     private final NotificationConfig notificationConfig;
 
-    public NotificationRestControllerImpl(NotificationControllerImpl notificationController,
+    public NotificationRestControllerImpl(NotificationController notificationController,
                                           JpaNotificationRepositoryImpl jpaNotificationRepository,
                                           NotificationConfig notificationConfig) {
         this.notificationController = notificationController;

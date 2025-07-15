@@ -1,8 +1,8 @@
 package br.com.tp.lanchescaieiras._core.applications.fooditem;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
+import br.com.tp.lanchescaieiras._core.commons.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemGateway;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItem;
 
 public class UpdateFoodItemUseCase {

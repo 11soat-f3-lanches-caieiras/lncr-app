@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras._external.apis.payment;
 
 import br.com.tp.lanchescaieiras._core.adapters.payment.mercadopago.PaymentMercadoPagoQrControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.payment.PaymentController;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
@@ -17,12 +18,12 @@ import java.util.List;
 public class PaymentMercadoPagoQrRestRestControllerImpl implements PaymentRestController<PaymentMercadopagoQrDTO> {
 
 
-    public final PaymentMercadoPagoQrControllerImpl paymentMercadoPagoQrController;
+    public final PaymentController<PaymentMercadopagoQrDTO> paymentMercadoPagoQrController;
     public final PaymentMercadoPagoQrDataProxy paymentMercadoPagoQrDataProxy;
     public final MercadoPagoConfig mercadoPagoConfig;
 
 
-    public PaymentMercadoPagoQrRestRestControllerImpl(PaymentMercadoPagoQrControllerImpl paymentMercadoPagoQrController, PaymentMercadoPagoQrDataProxy paymentMercadoPagoQrDataProxy, MercadoPagoConfig mercadoPagoConfig) {
+    public PaymentMercadoPagoQrRestRestControllerImpl(PaymentController paymentMercadoPagoQrController, PaymentMercadoPagoQrDataProxy paymentMercadoPagoQrDataProxy, MercadoPagoConfig mercadoPagoConfig) {
         this.paymentMercadoPagoQrController = paymentMercadoPagoQrController;
         this.paymentMercadoPagoQrDataProxy = paymentMercadoPagoQrDataProxy;
         this.mercadoPagoConfig = mercadoPagoConfig;

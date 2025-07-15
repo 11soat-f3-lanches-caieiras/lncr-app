@@ -4,7 +4,7 @@ import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderD
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderGateway;
 import br.com.tp.lanchescaieiras._core.commons.utils.CustomerOrderUseCaseUtils;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
-import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderStatus;
+import br.com.tp.lanchescaieiras._core.commons.enums.CustomerOrderStatus;
 
 public class CreateCustomerOrderUseCase {
 

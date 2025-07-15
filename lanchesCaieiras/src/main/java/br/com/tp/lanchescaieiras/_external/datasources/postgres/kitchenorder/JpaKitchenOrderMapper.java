@@ -2,7 +2,7 @@ package br.com.tp.lanchescaieiras._external.datasources.postgres.kitchenorder;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderFoodItemDTO;
-import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrderStatus;
+import br.com.tp.lanchescaieiras._core.commons.enums.KitchenOrderStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;

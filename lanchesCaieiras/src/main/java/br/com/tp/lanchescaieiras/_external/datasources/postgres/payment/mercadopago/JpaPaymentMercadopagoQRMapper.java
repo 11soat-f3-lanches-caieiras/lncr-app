@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
-import br.com.tp.lanchescaieiras._core.domain.payment.PaymentStatus;
+import br.com.tp.lanchescaieiras._core.commons.enums.PaymentStatus;
 
 public class JpaPaymentMercadopagoQRMapper {
     public  PaymentMercadopagoQrDTO jpaMercadopagoQrToDTO(JpaMercadopagoQrEntity entity) {

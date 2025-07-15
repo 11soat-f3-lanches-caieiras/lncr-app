@@ -2,7 +2,8 @@ package br.com.tp.lanchescaieiras._external.apis.fooditem;
 
 import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemImageControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
-import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImageRules;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemImageController;
+import br.com.tp.lanchescaieiras._core.commons.utils.FoodItemImageRules;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.configs.FoodItemConfig;
@@ -15,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 public class FoodItemImageRestControllerImpl implements FoodItemImageRestController {
 
     private final FoodItemDataProxy foodItemDataProxy;
-    private final FoodItemImageControllerImpl foodItemImageController;
+    private final FoodItemImageController foodItemImageController;
     private final FoodItemConfig foodItemConfig;
 
-    public FoodItemImageRestControllerImpl(FoodItemDataProxy foodItemDataProxy, FoodItemImageControllerImpl foodItemImageController, FoodItemConfig foodItemConfig) {
+    public FoodItemImageRestControllerImpl(FoodItemDataProxy foodItemDataProxy, FoodItemImageController foodItemImageController, FoodItemConfig foodItemConfig) {
         this.foodItemDataProxy = foodItemDataProxy;
         this.foodItemImageController = foodItemImageController;
         this.foodItemConfig = foodItemConfig;

@@ -1,6 +1,5 @@
 package br.com.tp.lanchescaieiras._external.datasources.postgres.customer;
 
-import br.com.tp.lanchescaieiras._core.domain.customer.Customer;
 import jakarta.persistence.*;
 
 
@@ -29,12 +28,6 @@ public class JpaCustomerEntity {
         this.email = email;
     }
 
-    public JpaCustomerEntity(Customer customer) {
-        this.id = customer.getId();
-        this.name = customer.getName();
-        this.documentNumber = customer.getDocumentNumber();
-        this.email = customer.getEmail();
-    }
 
     public Integer getId() {
         return id;

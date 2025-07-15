@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras._external.datasources.storage;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.FoodItemException;
+import br.com.tp.lanchescaieiras._core.commons.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras._external.configs.FoodItemConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

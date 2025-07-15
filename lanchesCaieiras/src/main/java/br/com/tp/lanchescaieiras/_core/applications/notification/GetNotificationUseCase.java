@@ -1,7 +1,7 @@
 package br.com.tp.lanchescaieiras._core.applications.notification;
 
+import br.com.tp.lanchescaieiras._core.commons.exceptions.NotificationException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.notification.NotificationGateway;
-import br.com.tp.lanchescaieiras._core.domain.exceptions.NotificationException;
 import br.com.tp.lanchescaieiras._core.domain.notification.Notification;
 
 import java.util.List;
