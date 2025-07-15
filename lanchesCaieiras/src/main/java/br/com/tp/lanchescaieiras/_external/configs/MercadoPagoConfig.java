@@ -2,13 +2,13 @@ package br.com.tp.lanchescaieiras._external.configs;
 
 import br.com.tp.lanchescaieiras._core.adapters.payment.mercadopago.PaymentMercadoPagoQrControllerImpl;
 import br.com.tp.lanchescaieiras._core.adapters.payment.mercadopago.PaymentMercadopagoQRMapper;
+import br.com.tp.lanchescaieiras._core.commons.interfaces.payment.PaymentController;
 import br.com.tp.lanchescaieiras._external.dataproxy.PaymentMercadoPagoQrDataProxy;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago.JpaMercadoPagoQrRepositoryImpl;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.payment.mercadopago.JpaPaymentMercadopagoQRMapper;
 import br.com.tp.lanchescaieiras._external.integrations.customerorder.CustomerOrderIntegrationImpl;
 import br.com.tp.lanchescaieiras._external.integrations.notifcation.NotificationIntegraionImpl;
 import br.com.tp.lanchescaieiras._external.integrations.payment.mercadopago.MercadoPagoIntegrationImpl;
-import br.com.tp.lanchescaieiras._core.commons.interfaces.payment.PaymentController;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;

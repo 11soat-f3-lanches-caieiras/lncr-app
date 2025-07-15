@@ -1,8 +1,8 @@
 package br.com.tp.lanchescaieiras._core.commons.enums;
 
+import br.com.tp.lanchescaieiras._core.commons.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.EnumWithIdDescription;
 import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
-import br.com.tp.lanchescaieiras._core.commons.exceptions.FoodItemException;
 
 public enum FoodItemCategory implements EnumWithIdDescription {
     SANDWICH(1, "Sandwich"),

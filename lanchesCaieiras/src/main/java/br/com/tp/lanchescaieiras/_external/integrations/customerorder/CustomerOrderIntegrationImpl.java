@@ -1,13 +1,11 @@
 package br.com.tp.lanchescaieiras._external.integrations.customerorder;
 
 
+import br.com.tp.lanchescaieiras._external.commons.utils.IntegrationUtil;
 import br.com.tp.lanchescaieiras._external.configs.IntegrationConfig;
-import br.com.tp.lanchescaieiras._external.integrations.IntegrationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -29,35 +27,13 @@ public class CustomerOrderIntegrationImpl implements CustomerOrderIntegration {
 
     @Override
     public void updateCustomerOrderStatus(Integer customerOrderId, String newStatus) {
-        // Corpo vazio, pois o método PUT não requer corpo na atualização de status
-        executorService.submit(() -> {
-            try {
-                log.info("Atualizando status da CustomeOrder " + getUrl(customerOrderId, newStatus));
-                String response = restTemplate.exchange(createHttpEntity(customerOrderId, newStatus), String.class).getBody();
-                log.info("Resposta da atualização do status do pedido de cliente: " + response);
-
-            } catch (Exception e) {
-                log.error(e.toString());
-                throw new IntegrationException("Erro ao atualizar o status do pedido de cliente: " + customerOrderId, 500);
-            }
-        });
+        String url = getUrl(customerOrderId, newStatus);
+        log.info("Atualizando status da CustomeOrder " + getUrl(customerOrderId, newStatus));
+        ResponseEntity<String> response = IntegrationUtil.patchForObject(url, null);
+        log.info("Resposta da atualização do status do pedido de cliente: " + response);
     }
 
     private String getUrl(Integer customerOrderId, String newStatus) {
         return integrationConfig.getCustomerOrdersUrl() + "/" + customerOrderId + "/updateStatus/" + newStatus;
-    }
-
-    private HttpHeaders getHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        return headers;
-    }
-
-    private RequestEntity<String> createHttpEntity(Integer customerOrderId, String newStatus) {
-        RequestEntity<String> request = RequestEntity.
-                method(HttpMethod.PATCH, getUrl(customerOrderId, newStatus))
-                .headers(getHeaders())
-                .body("{}");
-        return request;
     }
 }

@@ -1,5 +1,7 @@
 package br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder;
 
+import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
+import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderCustomer;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrderFoodItem;
@@ -30,13 +32,11 @@ public interface CustomerOrderGateway {
 
     void createKitchenOrder(CustomerOrder updateCustomerOrder);
 
+    void cancelPaymentChargeByCustomerOrderId(Integer customerOrderId);
 
+    PaymentMercadopagoQrDTO getPaymentByCustomerOrderId(Integer id);
 
-    /*CustomerOrder getCustomerOrderById(Integer id, Boolean includeFoodItems);
+    void cancelKitchenOrderById(Integer kitchenOrderOrderId);
 
-    List<CustomerOrder> getCustomerOrderByStatus(String status, Boolean includeFoodItems);
-
-    List<CustomerOrder> getAllCustomerOrders(String status, Boolean includeFoodItems);
-
-    CustomerOrder updateOrderStatusById(Integer id, String newStatus, Boolean forceUpdate);*/
+    KitchenOrderDTO getKitchenOrderByCustomerOrderId(Integer id);
 }

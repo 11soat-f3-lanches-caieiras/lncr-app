@@ -1,9 +1,9 @@
 package br.com.tp.lanchescaieiras._core.applications.payment.usercases.mercadopago;
 
+import br.com.tp.lanchescaieiras._core.commons.enums.PaymentStatus;
 import br.com.tp.lanchescaieiras._core.commons.exceptions.PaymentException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.payment.PaymentGateway;
 import br.com.tp.lanchescaieiras._core.domain.payment.PaymentMercadopagoQR;
-import br.com.tp.lanchescaieiras._core.commons.enums.PaymentStatus;
 
 public class UpdatePaymentMercadoPagoQRUseCase {
 

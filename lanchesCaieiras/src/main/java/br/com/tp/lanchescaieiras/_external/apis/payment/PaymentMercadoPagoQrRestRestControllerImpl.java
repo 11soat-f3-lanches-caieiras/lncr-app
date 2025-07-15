@@ -1,6 +1,5 @@
 package br.com.tp.lanchescaieiras._external.apis.payment;
 
-import br.com.tp.lanchescaieiras._core.adapters.payment.mercadopago.PaymentMercadoPagoQrControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.payment.PaymentController;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;

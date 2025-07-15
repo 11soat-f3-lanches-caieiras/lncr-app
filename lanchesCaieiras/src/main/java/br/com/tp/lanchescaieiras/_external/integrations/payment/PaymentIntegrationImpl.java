@@ -1,15 +1,13 @@
 package br.com.tp.lanchescaieiras._external.integrations.payment;
 
-import br.com.tp.lanchescaieiras._core.commons.exceptions.CustomerOrderException;
+import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
+import br.com.tp.lanchescaieiras._external.commons.utils.IntegrationUtil;
 import br.com.tp.lanchescaieiras._external.configs.IntegrationConfig;
+import br.com.tp.lanchescaieiras._external.integrations.IntegrationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.concurrent.CompletableFuture;
 
 @Component
 public class PaymentIntegrationImpl implements PaymentIntegration {
@@ -24,23 +22,36 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
     @Override
     public void createPayment(Integer customerOrderId, Double totalCost) {
         String url = integrationConfig.getPaymentsUrl() + "/charge";
-        String createChargeBody = buildPaymentJson(customerOrderId, totalCost);
-        log.info("Criando cobrança{}\n{}", createChargeBody);
-        RestTemplate restTemplate = new RestTemplate();
-        CompletableFuture.runAsync(() -> {
-            try {
-                log.info("Iniciando envio assíncrono para {}", url);
-                HttpHeaders headers = new HttpHeaders();
-                headers.set("Content-Type", "application/json");
-                HttpEntity<String> request = new HttpEntity<>(createChargeBody, headers);
-                restTemplate.postForObject(url, request, Void.class);
-            } catch (Exception e) {
-                throw new CustomerOrderException("Erro ao criar cobrança para o pedido", 500);
-            }
-        });
+        PaymentMercadopagoQrDTO createChargeBody = new PaymentMercadopagoQrDTO(customerOrderId,totalCost);
+        log.info("Criando cobrança. Url:{}\n Request Body:{}", url,IntegrationUtil.toJson(createChargeBody) );
+        IntegrationUtil.postForObject(url,createChargeBody);
     }
 
-    private String buildPaymentJson(Integer customerOrderId, Double totalCost) {
-        return String.format("{\"orderId\": "+customerOrderId +", \"amount\": "+ totalCost +"}");
+    @Override
+    public PaymentMercadopagoQrDTO getPaymentByOrderId(Integer customerOrderId) {
+        String url = integrationConfig.getPaymentsUrl() + "/customerOrder/" + customerOrderId;
+        log.info("Buscando pagamento por ID do pedido. Url:{}", url);
+        PaymentMercadopagoQrDTO payment = IntegrationUtil.getForObject(url, PaymentMercadopagoQrDTO.class);
+        if (payment == null) {
+            throw new IntegrationException("Pagamento não encontrado para o pedido: " + customerOrderId, 404);
+        }
+        return payment;
     }
+
+    @Override
+    public void cancelPaymentChargeByCustomerOrderId(Integer customerOrderId) {
+        String url = integrationConfig.getPaymentsUrl() + "/cancel/" + customerOrderId ;
+        log.info("Cancelando pagamento por ID do pedido. Url:{}", url);
+        ResponseEntity<String> payment = IntegrationUtil.patchForObject(url, null);
+        log.info("StatusCode {}",payment.getStatusCode());
+        log.info("Response:{}", payment.getBody());
+    }
+
+    @Override
+    public PaymentMercadopagoQrDTO getPaymentByCustomerOrderId(Integer id) {
+        String url = integrationConfig.getPaymentsUrl() + "/customerOrder/" + id;
+        return IntegrationUtil.getForObject(url, PaymentMercadopagoQrDTO.class);
+    }
+
+
 }

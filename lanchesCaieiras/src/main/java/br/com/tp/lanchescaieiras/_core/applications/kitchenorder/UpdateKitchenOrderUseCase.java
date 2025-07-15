@@ -1,9 +1,9 @@
 package br.com.tp.lanchescaieiras._core.applications.kitchenorder;
 
+import br.com.tp.lanchescaieiras._core.commons.enums.KitchenOrderStatus;
 import br.com.tp.lanchescaieiras._core.commons.exceptions.KitchenOrderException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.kitchenorder.KitchenOrderGateway;
 import br.com.tp.lanchescaieiras._core.domain.kitchenorder.KitchenOrder;
-import br.com.tp.lanchescaieiras._core.commons.enums.KitchenOrderStatus;
 
 public class UpdateKitchenOrderUseCase {
 

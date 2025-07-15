@@ -3,6 +3,8 @@ package br.com.tp.lanchescaieiras._external.dataproxy;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderCustomerDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderFoodItemDTO;
+import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
+import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderDatabase;
 import br.com.tp.lanchescaieiras._external.datasources.postgres.customerorder.*;
 import br.com.tp.lanchescaieiras._external.integrations.customer.CustomerIntegrationImpl;
@@ -113,6 +115,26 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
     @Override
     public void createKitchenOrder(CustomerOrderDTO customerOrderDTO) {
         this.kitchenOrderIntegration.createKitchenOrder(customerOrderDTO);
+    }
+
+    @Override
+    public void cancelPaymentChargeByCustomerOrderId(Integer customerOrderId) {
+        this.paymentIntegration.cancelPaymentChargeByCustomerOrderId(customerOrderId);
+    }
+
+    @Override
+    public PaymentMercadopagoQrDTO getPaymentByCustomerOrderId(Integer id) {
+        return this.paymentIntegration.getPaymentByCustomerOrderId(id);
+    }
+
+    @Override
+    public KitchenOrderDTO getKitchenOrderByCustomerOrderId(Integer customerOrderId) {
+        return this.kitchenOrderIntegration.getKitchenOrderByCustomerOrderId(customerOrderId);
+    }
+
+    @Override
+    public void cancelKitchenOrderById(Integer kitchenOrderOrderId) {
+        this.kitchenOrderIntegration.cancelKitchenOrderById(kitchenOrderOrderId);
     }
 
     private List<CustomerOrderFoodItemDTO> getFoodItemsInCustomerOrdersIdList(List<CustomerOrderDTO> customerOrderDTOList, Boolean includeFoodItems){

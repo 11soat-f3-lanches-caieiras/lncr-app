@@ -16,6 +16,11 @@ public abstract class PaymentDTO {
 
     public PaymentDTO() {}
 
+    public PaymentDTO(Integer orderId, Double amount) {
+        this.orderId = orderId;
+        this.amount = amount;
+    }
+
     public PaymentDTO(Integer id, Integer orderId, String status, Double amount, String paymentProvider, String paymentMethod, LocalDateTime _created, LocalDateTime _updated, String externalPaymentId) {
         this.id = id;
         this.orderId = orderId;

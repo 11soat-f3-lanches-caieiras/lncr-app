@@ -2,8 +2,8 @@ package br.com.tp.lanchescaieiras._core.adapters.fooditem;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
-import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItem;
 import br.com.tp.lanchescaieiras._core.commons.enums.FoodItemCategory;
+import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItem;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImage;
 
 import java.util.List;

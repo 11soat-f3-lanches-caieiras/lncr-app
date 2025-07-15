@@ -1,6 +1,5 @@
 package br.com.tp.lanchescaieiras._external.apis.fooditem;
 
-import br.com.tp.lanchescaieiras._core.adapters.fooditem.FoodItemImageControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemImageController;
 import br.com.tp.lanchescaieiras._core.commons.utils.FoodItemImageRules;

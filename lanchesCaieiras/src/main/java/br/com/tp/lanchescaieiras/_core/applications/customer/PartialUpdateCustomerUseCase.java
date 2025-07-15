@@ -3,6 +3,7 @@ package br.com.tp.lanchescaieiras._core.applications.customer;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customer.CustomerDTO;
 import br.com.tp.lanchescaieiras._core.commons.exceptions.CustomerException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customer.CustomerGateway;
+import br.com.tp.lanchescaieiras._core.commons.utils.Logger;
 import br.com.tp.lanchescaieiras._core.domain.customer.Customer;
 
 import java.lang.reflect.Field;
@@ -16,11 +17,13 @@ public class PartialUpdateCustomerUseCase {
     }
 
     public Customer execute(Integer id, CustomerDTO customerDto) {
+        Logger.info("Iniciando atualização parcial do cliente com ID: " + id);
         Customer updatedCustomer = new Customer(customerDto);
         validateExistsCustomerByDocumentNumberAndEmail(updatedCustomer);
         Customer actualCustomer = getById(id);
-        actualCustomer = mergeCustomerDto(actualCustomer, customerDto);
+        mergeCustomerDto(actualCustomer, customerDto);
         updatedCustomer = customerGateway.save(actualCustomer);
+        Logger.info("Finalizando atualização parcial do cliente com ID: " + id);
         return updatedCustomer;
     }
 
@@ -38,12 +41,14 @@ public class PartialUpdateCustomerUseCase {
     }
 
     private void existsByDocumentNumber(Customer updatedCustomer) {
+        Logger.debug("Verificando se já existe cliente com o mesmo número de documento: " + updatedCustomer.getDocumentNumber());
         if (customerGateway.existsByDocumentNumber(updatedCustomer.getDocumentNumber())) {
             throw new CustomerException("Cliente já cadastrado com o mesmo número de documento: " + updatedCustomer.getDocumentNumber(), 409);
         }
     }
 
     private void existsByEmail(Customer updatedCustomer) {
+        Logger.debug("Verificando se já existe cliente com o mesmo número de documento: " + updatedCustomer.getDocumentNumber());
         if (customerGateway.existsByEmail(updatedCustomer.getEmail())) {
             throw new CustomerException("Cliente já cadastrado com o mesmo e-mail: " + updatedCustomer.getEmail(), 409);
         }
@@ -51,7 +56,6 @@ public class PartialUpdateCustomerUseCase {
 
     private Customer mergeCustomerDto(Customer actualCustomer, CustomerDTO updatedCustomerDto) {
         updatedCustomerDto.setId(null);
-
         try {
             for (Field field : Customer.class.getDeclaredFields()) {
                 field.setAccessible(true);

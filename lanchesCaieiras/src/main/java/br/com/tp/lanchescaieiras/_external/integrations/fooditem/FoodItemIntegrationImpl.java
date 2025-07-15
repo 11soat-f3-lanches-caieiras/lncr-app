@@ -2,7 +2,7 @@ package br.com.tp.lanchescaieiras._external.integrations.fooditem;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderFoodItemDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemDTO;
-import br.com.tp.lanchescaieiras._external.commons.utils.IntegrationUtils;
+import br.com.tp.lanchescaieiras._external.commons.utils.IntegrationUtil;
 import br.com.tp.lanchescaieiras._external.configs.IntegrationConfig;
 import br.com.tp.lanchescaieiras._external.integrations.IntegrationException;
 import br.com.tp.lanchescaieiras._external.integrations.IntegrationMapper;
@@ -40,7 +40,7 @@ public class FoodItemIntegrationImpl implements FoodItemIntegration {
                 throw  new IntegrationException("Erro ao obter os dados dos items de alimentação ids: " + ids ,500);
             }
         }
-        List<FoodItemDTO> foodItemDTOList = IntegrationUtils.getIntegrationContentList(getFoodItemDetails.getBody(),new TypeReference<List<FoodItemDTO>>() {});
+        List<FoodItemDTO> foodItemDTOList = IntegrationUtil.getIntegrationContentList(getFoodItemDetails.getBody(),new TypeReference<List<FoodItemDTO>>() {});
         return foodItemDTOList.stream().map(integrationMapper::toCustomerOrderFoodItemDTO).toList();
     }
 

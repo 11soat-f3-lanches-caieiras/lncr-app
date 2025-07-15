@@ -81,6 +81,9 @@ public class CustomerOrder implements SortedByStatusCreated {
     }
 
     public void setStatus(String status, Boolean forceUpdate) {
+        if (forceUpdate == false) {
+            cancelCustomerOrderRule(status);
+        }
         this.status = validateNewStatusRules(status,forceUpdate);
     }
 
@@ -139,5 +142,26 @@ public class CustomerOrder implements SortedByStatusCreated {
         return EnumUtils.validateNewStatusRules(CustomerOrderStatus.class, this.getStatus(), newStatus, forceUpdate,
                 (message) -> new CustomerOrderException(message, 400));
     }
+    private void cancelCustomerOrderRule(String newStatus) {
+        if (newStatus.equalsIgnoreCase(CustomerOrderStatus.CANCELLED.getDescription())) {
+            if (this.status.equals(CustomerOrderStatus.CHECKOUT.getDescription()) || this.status.equals(CustomerOrderStatus.RECEIVED.getDescription())) {
+                this.status = newStatus;
+            }else {
+                throw new CustomerOrderException("Não é possível cancelar o pedido com status: " + this.status, 400);
+            }
+        }
+    }
 
+    @Override
+    public String toString() {
+        return "CustomerOrder{" +
+                "id=" + id +
+                ", _created=" + _created +
+                ", _updated=" + _updated +
+                ", status='" + status + '\'' +
+                ", totalCost=" + totalCost +
+                ", customer=" + customer +
+                ", foodItems=" + foodItems +
+                '}';
+    }
 }

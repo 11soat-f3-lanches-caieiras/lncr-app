@@ -1,6 +1,5 @@
 package br.com.tp.lanchescaieiras._external.apis.kitchenorder;
 
-import br.com.tp.lanchescaieiras._core.adapters.kitchenorder.KitchenOrderControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.kitchenorder.KitchenOrderController;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;

@@ -1,6 +1,5 @@
 package br.com.tp.lanchescaieiras._external.apis.customer;
 
-import br.com.tp.lanchescaieiras._core.adapters.customer.CustomerControllerImpl;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customer.CustomerDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customer.CustomerController;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;

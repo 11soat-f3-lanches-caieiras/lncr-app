@@ -1,6 +1,5 @@
 package br.com.tp.lanchescaieiras._external.handlers;
 
-import br.com.tp.lanchescaieiras._core.commons.exceptions.CustomerException;
 import br.com.tp.lanchescaieiras._external.commons.utils.ExceptionHandlerUtil;
 import br.com.tp.lanchescaieiras._external.integrations.IntegrationException;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class IntegrationInboundHandler {
 
     @ExceptionHandler(IntegrationException.class)
-    public ResponseEntity<Object> handlerIntegrationException(CustomerException ex) {
+    public ResponseEntity<Object> handlerIntegrationException(IntegrationException ex) {
         return ExceptionHandlerUtil.handleException(ex.getMessage(), ex.getCode(), ex);
     }
 }

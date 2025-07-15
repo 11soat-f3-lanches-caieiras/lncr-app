@@ -2,18 +2,26 @@ package br.com.tp.lanchescaieiras._external.commons.utils;
 
 import br.com.tp.lanchescaieiras._external.integrations.IntegrationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.*;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class IntegrationUtil {
 
     private static final Logger log = LoggerFactory.getLogger(IntegrationUtil.class);
+
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private static <T> HttpEntity<T> setRequestEntity(T dto){
         return new HttpEntity<T>(dto, setHeaders());
@@ -27,6 +35,7 @@ public class IntegrationUtil {
 
     public static <T> String toJson(T dto) {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.findAndRegisterModules();
         try {
             return objectMapper.writeValueAsString(dto);
         } catch (JsonProcessingException e) {
@@ -44,5 +53,63 @@ public class IntegrationUtil {
                 throw new IntegrationException("Erro na integração com", 500);
             }
         });
+    }
+
+    public static <T> T getForObject(String url, Class<T> response){
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> getObject = new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+        try {
+            getObject = restTemplate.getForEntity(url, String.class);
+        } catch (Exception e) {
+            if (e instanceof HttpClientErrorException.NotFound) {
+                throw new IntegrationException("Não encontrado registro para "+url, 404);
+            }
+        }
+        if (getObject.getStatusCode() == HttpStatus.OK) {
+            return getIntegrationContent(getObject.getBody(), response);
+        } else {
+            throw new IntegrationException("Erro na integração com " + url + " - Status: " + getObject.getStatusCode(), getObject.getStatusCode().value());
+        }
+    }
+
+
+    public static <T> T getIntegrationContent(String body, Class<T> classType){
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.findAndRegisterModules();
+        try {
+            JsonNode root = mapper.readTree(body);
+            JsonNode contentNode = root.path("_content");
+            return mapper.treeToValue(contentNode, classType);
+        } catch (JsonProcessingException e) {
+            throw new IntegrationException("Erro ao mapear conteúdo na integração: " + classType.getSimpleName(),500);
+        }
+    }
+
+    public static <T> T getIntegrationContentList(String body, TypeReference<T> typeReference){
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.findAndRegisterModules();
+        try {
+            JsonNode root = mapper.readTree(body);
+            JsonNode contentNode = root.path("_content");
+            return mapper.readValue(contentNode.traverse(), typeReference);
+        } catch (Exception e) {
+            throw new IntegrationException("Erro ao mapear conteúdo na integração: " + typeReference.getType(), 500);
+        }
+    }
+
+    public static <T> ResponseEntity<String> patchForObject(String url, T requestBody ) {
+        RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+        try {
+            return restTemplate.exchange(patchHttpEntity(url, requestBody), String.class);
+        } catch (Exception e) {
+            throw new IntegrationException("Erro na integração com " + url+"\n"+ e.getMessage(), 500);
+        }
+    }
+
+    public static <T> RequestEntity<String> patchHttpEntity(String url, T requestBody) {
+        return RequestEntity
+                .method(HttpMethod.PATCH, URI.create(url))
+                .headers(setHeaders())
+                .body(toJson(requestBody));
     }
 }

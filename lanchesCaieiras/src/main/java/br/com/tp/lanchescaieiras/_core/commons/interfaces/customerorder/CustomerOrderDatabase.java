@@ -3,6 +3,8 @@ package br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderCustomerDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderFoodItemDTO;
+import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
+import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 
 import java.util.List;
 
@@ -27,4 +29,12 @@ public interface CustomerOrderDatabase {
     CustomerOrderDTO updateCustomerOrder(CustomerOrderDTO updatedCustomerOrderDTO);
 
     void createKitchenOrder(CustomerOrderDTO customerOrderDTO);
+
+    void cancelPaymentChargeByCustomerOrderId(Integer customerOrderId);
+
+    PaymentMercadopagoQrDTO getPaymentByCustomerOrderId(Integer id);
+
+    KitchenOrderDTO getKitchenOrderByCustomerOrderId(Integer customerOrderId);
+
+    void cancelKitchenOrderById(Integer kitchenOrderOrderId);
 }

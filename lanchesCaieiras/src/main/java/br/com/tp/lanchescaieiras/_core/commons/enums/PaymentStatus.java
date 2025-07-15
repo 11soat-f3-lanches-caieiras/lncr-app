@@ -1,9 +1,9 @@
 package br.com.tp.lanchescaieiras._core.commons.enums;
 
 
+import br.com.tp.lanchescaieiras._core.commons.exceptions.PaymentException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.EnumWithIdDescription;
 import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
-import br.com.tp.lanchescaieiras._core.commons.exceptions.PaymentException;
 
 public enum PaymentStatus implements EnumWithIdDescription {
     CANCELLED(0, "Cancelled"),

@@ -2,6 +2,8 @@ package br.com.tp.lanchescaieiras._core.adapters.customerorder;
 
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderCustomerDTO;
 import br.com.tp.lanchescaieiras._core.commons.dtos.customerorder.CustomerOrderDTO;
+import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO;
+import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderDatabase;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.customerorder.CustomerOrderGateway;
 import br.com.tp.lanchescaieiras._core.domain.customerorder.CustomerOrder;
@@ -85,5 +87,27 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
     public void createKitchenOrder(CustomerOrder updateCustomerOrder) {
         this.customerOrderDatabase.createKitchenOrder(this.customerOrderMapper.customerOrderToDTO(updateCustomerOrder));
     }
+
+    @Override
+    public void cancelPaymentChargeByCustomerOrderId(Integer customerOrderId) {
+        this.customerOrderDatabase.cancelPaymentChargeByCustomerOrderId(customerOrderId);
+    }
+
+    @Override
+    public PaymentMercadopagoQrDTO getPaymentByCustomerOrderId(Integer id) {
+        return this.customerOrderDatabase.getPaymentByCustomerOrderId(id);
+    }
+
+    @Override
+    public void cancelKitchenOrderById(Integer kitchenOrderOrderId) {
+        this.customerOrderDatabase.cancelKitchenOrderById(kitchenOrderOrderId);
+
+    }
+
+    @Override
+    public KitchenOrderDTO getKitchenOrderByCustomerOrderId(Integer customerOrderId) {
+        return this.customerOrderDatabase.getKitchenOrderByCustomerOrderId(customerOrderId);
+    }
+
 }
 

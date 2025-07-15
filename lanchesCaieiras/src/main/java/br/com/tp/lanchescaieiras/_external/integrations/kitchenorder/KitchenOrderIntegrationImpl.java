@@ -8,6 +8,7 @@ import br.com.tp.lanchescaieiras._external.commons.utils.IntegrationUtil;
 import br.com.tp.lanchescaieiras._external.configs.IntegrationConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -28,6 +29,25 @@ public class KitchenOrderIntegrationImpl implements KitchenOrderIntegration {
         KitchenOrderDTO kitchenOrderDTO = toKitchenOrderDTO(customerOrderDTO);
         log.info("Criando pedido na cozinha:\nUrl: {}\n RequestBody:\n {}", kitchenOrderUrl, IntegrationUtil.toJson(kitchenOrderDTO));
         IntegrationUtil.postForObject(kitchenOrderUrl, kitchenOrderDTO);
+    }
+
+    @Override
+    public KitchenOrderDTO getKitchenOrderByCustomerOrderId(Integer customerOrderId) {
+        String url = integrationConfig.getKitchenOrdersUrl() + "/customerOrder/" + customerOrderId;
+        return IntegrationUtil.getForObject(url, KitchenOrderDTO.class);
+    }
+
+    @Override
+    public void cancelKitchenOrderById(Integer kitchenOrderOrderId) {
+        updateKitchenOrderById(kitchenOrderOrderId, "Cancelled", true);
+    }
+    @Override
+    public void updateKitchenOrderById(Integer kitchenOrderOrderId, String newStatus, Boolean forceUpdate) {
+        String url = integrationConfig.getKitchenOrdersUrl() +"/" + kitchenOrderOrderId + "/updateStatus/" + newStatus + "?forceUpdate="+forceUpdate;
+        log.info("Url: {}", url);
+        ResponseEntity<String> response = IntegrationUtil.patchForObject(url, null);
+        log.info("StatusCode {}",response.getStatusCode());
+        log.info("Response: {}",response.getBody());
     }
 
     private KitchenOrderDTO toKitchenOrderDTO(CustomerOrderDTO customerOrderDTO) {

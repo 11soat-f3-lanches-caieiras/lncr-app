@@ -6,11 +6,11 @@ import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
 
 
 public enum KitchenOrderStatus implements EnumWithIdDescription {
-    CANCELLED(0,"Cancelled"),
     RECEIVED(1, "Received"),
     PREPARING(2, "Preparing"),
     READY(3, "Ready"),
-    FINISHED(4, "Finished");
+    FINISHED(4, "Finished"),
+    CANCELLED(5, "Cancelled");
 
     private final Integer id;
     private final String description;
