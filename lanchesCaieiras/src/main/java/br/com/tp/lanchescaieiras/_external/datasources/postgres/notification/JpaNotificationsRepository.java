@@ -12,4 +12,7 @@ public interface JpaNotificationsRepository extends JpaRepository<JpaNotificatio
 
     @Query(value = "SELECT * FROM notifications n WHERE n.notification_type = :notificationType order by created_at desc", nativeQuery = true)
     List<JpaNotificationEntity> findByNotificationType(@Param("notificationType") String notificationType);
+
+    @Query(value = "SELECT DISTINCT n.notification_type FROM notifications n", nativeQuery = true)
+    List<String> findNotificationTypeList();
 }

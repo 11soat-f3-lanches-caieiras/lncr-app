@@ -41,4 +41,11 @@ public class NotificationRestControllerImpl implements NotificationRestControlle
         List<NotificationDTO> notificationList = this.notificationController.getNotificationByType(notificationType);
         return ResponseEntityModelUtil.listOK(notificationList);
     }
+
+    @Override
+    @GetMapping
+    public ResponseEntity<ResponseListModel<String>> getNotificationByType() {
+        List<String> notificationTypeList = this.notificationController.getNotificationTypeList();
+        return ResponseEntityModelUtil.listOK(notificationTypeList);
+    }
 }

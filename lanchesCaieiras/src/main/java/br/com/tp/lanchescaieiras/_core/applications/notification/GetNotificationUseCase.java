@@ -21,4 +21,8 @@ public class GetNotificationUseCase {
         }
         return notifications;
     }
+
+    public List<String> getTypeList() {
+        return notificationGateway.findNotificationTypeList();
+    }
 }

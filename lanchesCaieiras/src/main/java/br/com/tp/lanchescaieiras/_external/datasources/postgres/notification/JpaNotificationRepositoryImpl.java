@@ -25,6 +25,12 @@ public class JpaNotificationRepositoryImpl implements NotificationDatabase {
     }
 
     @Override
+    public List<String> findNotificationTypeList() {
+
+        return this.jpaNotificationsRepository.findNotificationTypeList();
+    }
+
+    @Override
     public List<NotificationDTO> findByNotificationType(String artefactType) {
         List<JpaNotificationEntity> list = jpaNotificationsRepository.findByNotificationType(artefactType).
                 stream().toList();

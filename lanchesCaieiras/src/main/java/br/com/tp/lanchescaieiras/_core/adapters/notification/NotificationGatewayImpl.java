@@ -29,4 +29,10 @@ public class NotificationGatewayImpl implements NotificationGateway {
         return notificationDTOList.stream().map(notificationMapper::notificationToDomain)
                 .toList();
     }
+
+    @Override
+    public List<String> findNotificationTypeList() {
+
+        return this.notificationDatabase.findNotificationTypeList();
+    }
 }

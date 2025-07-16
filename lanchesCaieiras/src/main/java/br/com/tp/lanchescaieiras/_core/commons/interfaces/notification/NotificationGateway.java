@@ -8,4 +8,6 @@ public interface NotificationGateway {
     void save(Notification notification);
 
     List<Notification> findByNotificationType(String notificationType);
+
+    List<String> findNotificationTypeList();
 }

@@ -12,4 +12,6 @@ public interface NotificationRestController {
     ResponseEntity<ResponseModel<NotificationDTO>> createNotification(@RequestBody NotificationDTO notificationDTO);
 
     ResponseEntity<ResponseListModel<NotificationDTO>> getNotificationByType(@PathVariable(name = "notificationType") String notificationType);
+
+    ResponseEntity<ResponseListModel<String>> getNotificationByType();
 }

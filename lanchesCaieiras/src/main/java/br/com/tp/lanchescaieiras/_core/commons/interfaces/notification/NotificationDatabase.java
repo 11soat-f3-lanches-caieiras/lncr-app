@@ -9,4 +9,8 @@ public interface NotificationDatabase {
     List<NotificationDTO> findByNotificationType(String artefactType);
 
     void save(NotificationDTO notificationDTO);
+
+    List<String> findNotificationTypeList();
+
+
 }

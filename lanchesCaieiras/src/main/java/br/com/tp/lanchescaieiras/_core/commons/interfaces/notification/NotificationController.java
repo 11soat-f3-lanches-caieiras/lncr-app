@@ -9,4 +9,6 @@ public interface NotificationController {
     void createNotification(NotificationDTO notificationDTO);
 
     List<NotificationDTO> getNotificationByType(String notificationType);
+
+    List<String> getNotificationTypeList();
 }

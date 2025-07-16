@@ -30,4 +30,11 @@ public class NotificationControllerImpl implements NotificationController {
         List<Notification> notificationsList = new GetNotificationUseCase(notificationGateway).getByType(notificationType);
         return new NotificationPresenter(notificationMapper).getByType(notificationsList);
     }
+
+    @Override
+    public List<String> getNotificationTypeList() {
+        return new GetNotificationUseCase(notificationGateway).getTypeList();
+
+
+    }
 }
