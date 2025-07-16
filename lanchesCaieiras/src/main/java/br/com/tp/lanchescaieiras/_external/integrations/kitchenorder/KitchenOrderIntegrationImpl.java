@@ -27,7 +27,9 @@ public class KitchenOrderIntegrationImpl implements KitchenOrderIntegration {
         RestTemplate restTemplate = new RestTemplate();
         String kitchenOrderUrl = integrationConfig.getKitchenOrdersUrl();
         KitchenOrderDTO kitchenOrderDTO = toKitchenOrderDTO(customerOrderDTO);
-        log.info("Criando pedido na cozinha:\nUrl: {}\n RequestBody:\n {}", kitchenOrderUrl, IntegrationUtil.toJson(kitchenOrderDTO));
+        log.info("Criando pedido na cozinha:");
+        log.info("Url: {}", kitchenOrderUrl);
+        log.info("RequestBody: {}", IntegrationUtil.toJson(kitchenOrderDTO));
         IntegrationUtil.postForObject(kitchenOrderUrl, kitchenOrderDTO);
     }
 

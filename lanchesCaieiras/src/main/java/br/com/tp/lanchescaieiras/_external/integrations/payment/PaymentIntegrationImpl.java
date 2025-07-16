@@ -23,7 +23,9 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
     public void createPayment(Integer customerOrderId, Double totalCost) {
         String url = integrationConfig.getPaymentsUrl() + "/charge";
         PaymentMercadopagoQrDTO createChargeBody = new PaymentMercadopagoQrDTO(customerOrderId,totalCost);
-        log.info("Criando cobrança. Url:{}\n Request Body:{}", url,IntegrationUtil.toJson(createChargeBody) );
+        log.info("Criando cobrança.");
+        log.info("Url:{}", url);
+        log.info("Request Body:{}", IntegrationUtil.toJson(createChargeBody) );
         IntegrationUtil.postForObject(url,createChargeBody);
     }
 
@@ -40,7 +42,7 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
 
     @Override
     public void cancelPaymentChargeByCustomerOrderId(Integer customerOrderId) {
-        String url = integrationConfig.getPaymentsUrl() + "/cancel/" + customerOrderId ;
+        String url = integrationConfig.getPaymentsUrl() + "/" + customerOrderId + "/cancel";
         log.info("Cancelando pagamento por ID do pedido. Url:{}", url);
         ResponseEntity<String> payment = IntegrationUtil.patchForObject(url, null);
         log.info("StatusCode {}",payment.getStatusCode());

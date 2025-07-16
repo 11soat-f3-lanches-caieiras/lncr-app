@@ -12,12 +12,13 @@ public interface PaymentGateway<T> {
 
     T getPaymentByCustomerOrderId(Integer customerOrderId);
 
-    Integer getPaymentId(String dataId);
-
     void updateCustomerOrderStatus(Integer customerOrderId, String newStatus);
 
     List<T> getPaymentMercadoPagoQRList(List<Integer> paymentStatusIdsList);
 
     void sendNotification(String notificationType, Integer artefactId, String message);
 
+    void cancelPaymentOrder(String meliId);
+
+    void refundPaymentOrder(String meliId);
 }

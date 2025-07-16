@@ -16,6 +16,13 @@ public class CustomerCPF implements DocumentNumber {
     }
 
     @Override
+    public String toString() {
+        return "CustomerCPF{" +
+                "value='" + value + '\'' +
+                '}';
+    }
+
+    @Override
     public final boolean documentNumberIsValid(String value) {
         if (value.length() != 11 || value.matches("(\\d)\\1{10}")) {
             return false;
@@ -40,6 +47,8 @@ public class CustomerCPF implements DocumentNumber {
         } catch (NumberFormatException e) {
             return false;
         }
+
+
 
     }
 }

@@ -9,26 +9,26 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name="payment_mercadopago")
 public class JpaMercadopagoQrEntity extends AbstractJpaPaymentEntity {
-    private String storeId;
+    private String meliId;
     private String qrData;
 
     public JpaMercadopagoQrEntity() {
         super();
     }
 
-    public JpaMercadopagoQrEntity(Integer id, Integer orderId, Integer status, Double amount, String paymentProvider, String paymentMethod, String externalPaymentId, LocalDateTime _created, LocalDateTime _updated, String storeId, String qrData) {
+    public JpaMercadopagoQrEntity(Integer id, Integer orderId, Integer status, Double amount, String paymentProvider, String paymentMethod, String externalPaymentId, LocalDateTime _created, LocalDateTime _updated, String meliId, String qrData) {
         super(id, orderId, status, amount, paymentProvider, paymentMethod, externalPaymentId, _created, _updated);
-        this.storeId = storeId;
+        this.meliId = meliId;
         this.qrData = qrData;
     }
 
 
-    public String getStoreId() {
-        return storeId;
+    public String getMeliId() {
+        return meliId;
     }
 
-    public void setStoreId(String storeId) {
-        this.storeId = storeId;
+    public void setMeliId(String meliId) {
+        this.meliId = meliId;
     }
 
     public String getQrData() {

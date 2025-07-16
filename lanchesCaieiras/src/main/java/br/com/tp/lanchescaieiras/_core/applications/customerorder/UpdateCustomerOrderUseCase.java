@@ -26,6 +26,7 @@ public class UpdateCustomerOrderUseCase {
             switch (updateCustomerOrder.getStatus().toUpperCase()) {
                 case "CANCELLED":
                     updateStatusToCancel(updateCustomerOrder,oldStatus);
+                    break;
                 case "RECEIVED":
                     updateStatusToReceived(updateCustomerOrder);
                     break;

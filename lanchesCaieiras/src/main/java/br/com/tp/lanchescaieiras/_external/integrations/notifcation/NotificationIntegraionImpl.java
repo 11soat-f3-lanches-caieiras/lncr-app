@@ -20,7 +20,8 @@ public class NotificationIntegraionImpl implements NotifcationIntegration {
     public void sendNotification(String notificationType, Integer ArtefactId, String message) {
         String notificationUrl = integrationConfig.getNotificationUrl();
         NotificationDTO notificationDTO = new NotificationDTO(null, notificationType, ArtefactId, message, null);
-        log.info("Enviando Notificação: {}\n RequestBody: {}", notificationUrl, IntegrationUtil.toJson(notificationDTO));
+        log.info("Enviando Notificação: {}", notificationUrl);
+        log.info("RequestBody: {}",IntegrationUtil.toJson(notificationDTO));
         IntegrationUtil.postForObject(notificationUrl,notificationDTO);
     }
 

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/payments/mercadoPago")
@@ -50,7 +51,7 @@ public class PaymentMercadoPagoQrRestRestControllerImpl implements PaymentRestCo
     }
 
     @Override
-    @PatchMapping("/cancel/{customerOrderId}")
+    @PatchMapping("{customerOrderId}/cancel")
     public ResponseEntity<ResponseModel<PaymentMercadopagoQrDTO>> cancelPaymentByCustomerOrderId(@PathVariable(name = "customerOrderId") Integer customerOrderId) {
         PaymentMercadopagoQrDTO paymentMercadopagoQrDTO = this.paymentMercadoPagoQrController.cancelPaymentByOrderId(this.paymentMercadoPagoQrDataProxy,customerOrderId);
         return ResponseEntityModelUtil.OK(paymentMercadopagoQrDTO);
@@ -58,9 +59,11 @@ public class PaymentMercadoPagoQrRestRestControllerImpl implements PaymentRestCo
 
     @Override
     @PatchMapping("/paymentReceived")
-    public ResponseEntity<ResponseModel<PaymentMercadopagoQrDTO>> processPaymentReceived(@RequestParam(name = "id") String id,
-                                                                                         @RequestParam(name = "type", defaultValue = "payment") String type) {
-        PaymentMercadopagoQrDTO paymentMercadopagoQrDTO = this.paymentMercadoPagoQrController.processPaymentReceived(this.paymentMercadoPagoQrDataProxy,id);
+    public ResponseEntity<ResponseModel<PaymentMercadopagoQrDTO>> processPaymentReceived(@RequestParam(name = "data.external_reference") String externalReference,
+                                                                                         @RequestParam(name = "data.id") String dataId,
+                                                                                         @RequestParam(name = "type", defaultValue = "order") String type,
+                                                                                         @RequestBody Map<String, Object> body) {
+        PaymentMercadopagoQrDTO paymentMercadopagoQrDTO = this.paymentMercadoPagoQrController.processPaymentReceived(this.paymentMercadoPagoQrDataProxy,externalReference,dataId,body);
         return ResponseEntityModelUtil.OK(paymentMercadopagoQrDTO);
     }
 

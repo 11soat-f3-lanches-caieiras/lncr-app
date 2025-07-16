@@ -12,18 +12,13 @@ public interface PaymentDatabase<T> {
 
     T save(T paymentDTO);
 
-    Integer getPaymentId(String dataId);
-
     void updateCustomerOrderStatus(Integer customerOrderId, String newStatus);
 
     List<T> findByStatusList(List<Integer> paymentStatusList);
 
     void sendNotification(String notificationType, Integer artefactId, String message);
 
-    /*
+    void cancelPaymentOrder(String meliId);
 
-    <T> T findByCustomerOrderId(Integer customerOrderId);
-
-    <T> T updatePayment(T paymentDTO);*/
-
+    void refundPaymentOrder(String meliId);
 }

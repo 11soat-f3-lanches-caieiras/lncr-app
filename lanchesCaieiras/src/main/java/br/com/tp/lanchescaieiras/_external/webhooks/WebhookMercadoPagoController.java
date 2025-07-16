@@ -9,10 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
@@ -31,17 +28,20 @@ public class WebhookMercadoPagoController {
     }
 
     @PostMapping("/payments/mercadoPago/callback")
-    public ResponseEntity<ResponseModel<String>> paymentMercadoPagoCallback(@RequestParam(name = "id") String id,
-                     @RequestParam(name = "topic", defaultValue = "payment") String topic) {
+    public ResponseEntity<ResponseModel<String>> paymentMercadoPagoCallback(
+                    @RequestParam(name = "data.external_reference") String externalReference,
+                    @RequestParam(name = "data.id") String dataId,
+                    @RequestParam(name = "type", defaultValue = "order") String type,
+                    @RequestBody Map<String, Object> body) {
         CompletableFuture.runAsync(() -> {
-            HttpEntity<Map<String, Object>> requestEntity = createHttpEntity(id, topic);
-            restTemplate.exchange(getUrl(id,topic), HttpMethod.PATCH, requestEntity, new ParameterizedTypeReference<ResponseModel<String>>() {});
+            HttpEntity<Map<String, Object>> requestEntity = createHttpEntity(body);
+            restTemplate.exchange(getUrl(externalReference,dataId,type), HttpMethod.PATCH, requestEntity, new ParameterizedTypeReference<ResponseModel<String>>() {});
         });
         return ResponseEntityModelUtil.Accepted(null);
     }
 
-    private String getUrl(String id, String topic) {
-        return integrationConfig.getPaymentsUrl() + "/paymentReceived?id="+ id +"&topic="+topic;
+    private String getUrl(String externalReference, String dataId, String type) {
+        return integrationConfig.getPaymentsUrl() + "/paymentReceived?data.external_reference="+ externalReference +"&data.id="+dataId+"&type="+type;
     }
 
     private HttpHeaders getHeaders() {
@@ -50,8 +50,8 @@ public class WebhookMercadoPagoController {
         return headers;
     }
 
-    private HttpEntity<Map<String, Object>> createHttpEntity(String id, String topic) {
-        return new HttpEntity<>(getHeaders());
+    private HttpEntity<Map<String, Object>> createHttpEntity(Map<String, Object> body) {
+        return new HttpEntity<>(body, getHeaders());
     }
 
 

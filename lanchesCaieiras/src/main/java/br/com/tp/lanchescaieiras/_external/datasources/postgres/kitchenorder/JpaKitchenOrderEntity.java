@@ -61,6 +61,10 @@ public class JpaKitchenOrderEntity {
         return created;
     }
 
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
     @PrePersist
     public void prePersist() {
         this.created = LocalDateTime.now();
@@ -70,6 +74,9 @@ public class JpaKitchenOrderEntity {
         return updated;
     }
 
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
+    }
     @PreUpdate
     public void preUpdate() {
         this.updated = LocalDateTime.now();

@@ -13,11 +13,11 @@ public class JpaPaymentMercadopagoQRMapper {
                 entity.getAmount(),
                 entity.getPaymentProvider(),
                 entity.getPaymentMethod(),
-                entity.get_created(),
-                entity.get_updated(),
+                entity.getCreated(),
+                entity.getUpdated(),
                 entity.getExternalPaymentId(),
                 entity.getQrData(),
-                entity.getStoreId()
+                entity.getMeliId()
         );
     }
 
@@ -33,7 +33,7 @@ public class JpaPaymentMercadopagoQRMapper {
                 dto.getExternalPaymentId(),
                 dto.get_created(),
                 dto.get_updated(),
-                dto.getStoreId(),
+                dto.getMeliId(),
                 dto.getQrData());
     }
 }

@@ -17,14 +17,12 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "lncr.mercado-pago")
 public class MercadoPagoConfig {
     public String locationPrefix;
-    public String callbackUrl;
-    public String chargeUrl;
-    public String paymentUrl;
-    public String accessToken;
-    public String userId;
+    public String oAuthUrl;
+    public String ordersUrl;
+    public String clientId;
+    public String secretId;
     public String posId;
-    public Boolean mercadoPagoMock;
-    public Integer mercadoPagoMockCustomerOrderId;
+    public String expirationTime;
 
     public String getLocationPrefix() {
         return locationPrefix;
@@ -34,36 +32,36 @@ public class MercadoPagoConfig {
         this.locationPrefix = locationPrefix;
     }
 
-    public String getCallbackUrl() {
-        return callbackUrl;
+    public String getoAuthUrl() {
+        return oAuthUrl;
     }
 
-    public void setCallbackUrl(String callbackUrl) {
-        this.callbackUrl = callbackUrl;
+    public void setoAuthUrl(String oAuthUrl) {
+        this.oAuthUrl = oAuthUrl;
     }
 
-    public String getChargeUrl() {
-        return chargeUrl;
+    public String getOrdersUrl() {
+        return ordersUrl;
     }
 
-    public void setChargeUrl(String chargeUrl) {
-        this.chargeUrl = chargeUrl;
+    public void setOrdersUrl(String ordersUrl) {
+        this.ordersUrl = ordersUrl;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getSecretId() {
+        return secretId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setSecretId(String secretId) {
+        this.secretId = secretId;
     }
 
     public String getPosId() {
@@ -74,29 +72,14 @@ public class MercadoPagoConfig {
         this.posId = posId;
     }
 
-    public String getPaymentUrl() {
-        return paymentUrl;
+    public String getExpirationTime() {
+        return expirationTime;
     }
 
-    public void setPaymentUrl(String paymentUrl) {
-        this.paymentUrl = paymentUrl;
+    public void setExpirationTime(String expirationTime) {
+        this.expirationTime = expirationTime;
     }
 
-    public Boolean getMercadoPagoMock() {
-        return mercadoPagoMock;
-    }
-
-    public void setMercadoPagoMock(Boolean mercadoPagoMock) {
-        this.mercadoPagoMock = mercadoPagoMock;
-    }
-
-    public Integer getMercadoPagoMockCustomerOrderId() {
-        return mercadoPagoMockCustomerOrderId;
-    }
-
-    public void setMercadoPagoMockCustomerOrderId(Integer mercadoPagoMockCustomerOrderId) {
-        this.mercadoPagoMockCustomerOrderId = mercadoPagoMockCustomerOrderId;
-    }
     @Bean
     public PaymentMercadopagoQRMapper paymentMercadopagoQRMapper(){
         return new PaymentMercadopagoQRMapper();

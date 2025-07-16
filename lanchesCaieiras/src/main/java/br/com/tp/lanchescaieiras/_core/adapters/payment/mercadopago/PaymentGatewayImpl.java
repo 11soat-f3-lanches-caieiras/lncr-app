@@ -44,10 +44,6 @@ public class PaymentGatewayImpl implements PaymentGateway<PaymentMercadopagoQR> 
         return this.paymentMercadopagoQRMapper.paymentMercadopagoQrToDomain(paymentMercadopagoQrDTO);
     }
 
-    @Override
-    public Integer getPaymentId(String dataId) {
-        return this.paymentDatabase.getPaymentId(dataId);
-    }
 
     @Override
     public void updateCustomerOrderStatus(Integer customerOrderId, String newStatus) {
@@ -63,5 +59,15 @@ public class PaymentGatewayImpl implements PaymentGateway<PaymentMercadopagoQR> 
     @Override
     public void sendNotification(String notificationType, Integer artefactId, String message) {
         this.paymentDatabase.sendNotification(notificationType, artefactId, message);
+    }
+
+    @Override
+    public void cancelPaymentOrder(String meliId) {
+        this.paymentDatabase.cancelPaymentOrder(meliId);
+    }
+
+    @Override
+    public void refundPaymentOrder(String meliId) {
+        this.paymentDatabase.refundPaymentOrder(meliId);
     }
 }

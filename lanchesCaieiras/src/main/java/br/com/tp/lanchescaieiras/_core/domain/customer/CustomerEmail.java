@@ -19,4 +19,10 @@ public class CustomerEmail {
         return value != null && value.matches(emailRegex);
     }
 
+    @Override
+    public String toString() {
+        return "CustomerEmail{" +
+                "value='" + value + '\'' +
+                '}';
+    }
 }

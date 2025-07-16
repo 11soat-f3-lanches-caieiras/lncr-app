@@ -20,10 +20,10 @@ public abstract class AbstractJpaPaymentEntity {
     private String paymentProvider;
     private String paymentMethod;
     private String externalPaymentId;
-    private LocalDateTime _created;
-    private LocalDateTime _updated;
+    private LocalDateTime created;
+    private LocalDateTime updated;
 
-    public AbstractJpaPaymentEntity(Integer id, Integer orderId, Integer status, Double amount, String paymentProvider, String paymentMethod, String externalPaymentId, LocalDateTime _created, LocalDateTime _updated) {
+    public AbstractJpaPaymentEntity(Integer id, Integer orderId, Integer status, Double amount, String paymentProvider, String paymentMethod, String externalPaymentId, LocalDateTime created, LocalDateTime updated) {
         this.id = id;
         this.orderId = orderId;
         this.statusId = status;
@@ -31,8 +31,8 @@ public abstract class AbstractJpaPaymentEntity {
         this.paymentProvider = paymentProvider;
         this.paymentMethod = paymentMethod;
         this.externalPaymentId = externalPaymentId;
-        this._created = _created;
-        this._updated = _updated;
+        this.created = created;
+        this.updated = updated;
     }
 
     public AbstractJpaPaymentEntity() {
@@ -94,30 +94,30 @@ public abstract class AbstractJpaPaymentEntity {
         this.externalPaymentId = externalPaymentId;
     }
 
-    public LocalDateTime get_created() {
-        return _created;
+    public LocalDateTime getCreated() {
+        return created;
     }
 
-    public void set_created(LocalDateTime _created) {
-        this._created = _created;
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 
     @PrePersist
     public void prePersist() {
-        this._created = LocalDateTime.now();
+        this.created = LocalDateTime.now();
     }
 
 
-    public LocalDateTime get_updated() {
-        return _updated;
+    public LocalDateTime getUpdated() {
+        return updated;
     }
 
-    public void set_updated(LocalDateTime _updated) {
-        this._updated = _updated;
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
     }
 
     @PreUpdate
     public void preUpdate() {
-        this._updated = LocalDateTime.now();
+        this.updated = LocalDateTime.now();
     }
 }

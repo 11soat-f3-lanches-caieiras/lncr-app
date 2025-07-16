@@ -62,14 +62,12 @@ lncr:
 
   mercadopago:
     location-prefix: "${lncr.base-url}/payments/mercadoPago"
-    callbackUrl: "${MERCADOPAGO_CALLBACK_URL}" #Webhook para notificação de pagamento
-    chargeUrl: "${MERCADOPAGO_QRCODE_URL}"
-    paymentUrl: "${MERCADOPAGO_PAYMENTS_URL}"
-    accessToken: "${MERCADOPAGO_ACCESS_TOKEN}" #.env
-    userId: "${MERCADOPAGO_USER_ID}" #.env
-    posId: "${MERCADOPAGO_POS_ID}" #.env
-    #mercado-pago-mock: false
-    #mercado-pago-mock-customer-order-id: 1
+    oauth-url: "${MERCADOPAGO_OAUTH_URL}"
+    orders-url: "${MERCADOPAGO_ORDERS_URL}"
+    client-id: "${MERCADOPAGO_CLIENT_ID}"
+    secret-id: "${MERCADOPAGO_SECRET_ID}"#.env
+    pos-id: "${MERCADOPAGO_POS_ID}" #.env
+    expiration-time: PT1H # 1 hora
 
   notification:
     location-prefix: "${lncr.base-url}/notifications"

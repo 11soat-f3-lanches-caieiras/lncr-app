@@ -40,11 +40,11 @@ public class KitchenOrder implements SortedByStatusCreated {
                 .map(KitchenOrderFoodItem::new)
                 .toList();
         }
-        if (dto.get_created() != null) {
-            this._created = dto.get_created();
+        if (dto.getCreated() != null) {
+            this._created = dto.getCreated();
         }
-        if (dto.get_updated() != null) {
-            this._updated = dto.get_updated();
+        if (dto.getUpdated() != null) {
+            this._updated = dto.getUpdated();
         }
     }
 

@@ -26,9 +26,7 @@ public class PaymentMercadoPagoQrDataProxy implements PaymentDatabase<PaymentMer
     @Override
     public PaymentMercadopagoQrDTO createPaymentCharge(PaymentMercadopagoQrDTO paymentDTO) {
         paymentDTO = this.jpaMercadoPagoQrPostgresDatabase.save(paymentDTO);
-        PaymentMercadopagoQrDTO newPaymentQrCode = this.mercadoPagoIntegration.createQRCode(paymentDTO);
-        paymentDTO.setStoreId(newPaymentQrCode.getStoreId());
-        paymentDTO.setQrData(newPaymentQrCode.getQrData());
+        paymentDTO = this.mercadoPagoIntegration.createOrder(paymentDTO);
         paymentDTO = this.jpaMercadoPagoQrPostgresDatabase.save(paymentDTO);
         return paymentDTO;
 
@@ -50,11 +48,6 @@ public class PaymentMercadoPagoQrDataProxy implements PaymentDatabase<PaymentMer
     }
 
     @Override
-    public Integer getPaymentId(String dataId) {
-        return this.mercadoPagoIntegration.getPaymentId(dataId);
-    }
-
-    @Override
     public void updateCustomerOrderStatus(Integer customerOrderId, String newStatus) {
         this.customerOrderIntegration.updateCustomerOrderStatus(customerOrderId,newStatus);
     }
@@ -67,5 +60,15 @@ public class PaymentMercadoPagoQrDataProxy implements PaymentDatabase<PaymentMer
     @Override
     public void sendNotification(String notificationType, Integer artefactId, String message) {
         this.notificationIntegration.sendNotification(notificationType, artefactId, message);
+    }
+
+    @Override
+    public void cancelPaymentOrder(String meliId) {
+        this.mercadoPagoIntegration.cancelOrder(meliId);
+    }
+
+    @Override
+    public void refundPaymentOrder(String meliId) {
+        this.mercadoPagoIntegration.refundOrder(meliId);
     }
 }

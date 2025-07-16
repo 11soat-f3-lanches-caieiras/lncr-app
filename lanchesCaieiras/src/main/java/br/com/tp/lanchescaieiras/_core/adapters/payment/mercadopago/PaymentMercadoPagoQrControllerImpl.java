@@ -10,6 +10,7 @@ import br.com.tp.lanchescaieiras._core.commons.interfaces.payment.PaymentGateway
 import br.com.tp.lanchescaieiras._core.domain.payment.PaymentMercadopagoQR;
 
 import java.util.List;
+import java.util.Map;
 
 public class PaymentMercadoPagoQrControllerImpl implements PaymentController<PaymentMercadopagoQrDTO> {
 
@@ -44,15 +45,15 @@ public class PaymentMercadoPagoQrControllerImpl implements PaymentController<Pay
     }
 
     @Override
-    public PaymentMercadopagoQrDTO processPaymentReceived(PaymentDatabase paymentDatabase, String id) {
-        PaymentMercadopagoQR paymentMercadopagoQR = new UpdatePaymentMercadoPagoQRUseCase(createPaymentMercadoPagoQrGateway(paymentDatabase)).processPaymentReceived(id);
-        return new PaymentMercadoPagoQrPresenter(paymentMercadopagoQRMapper).cancelByCustomerOrderId(paymentMercadopagoQR);
-    }
-
-    @Override
     public List<PaymentMercadopagoQrDTO> getPaymentByStatusList(PaymentDatabase paymentDatabase, List<String> paymentStatusList) {
         List<PaymentMercadopagoQR> paymentMercadopagoQRList = new GetPaymentMercadoPagoQRUseCase(createPaymentMercadoPagoQrGateway(paymentDatabase)).getByStatusList(paymentStatusList);
         return new PaymentMercadoPagoQrPresenter(paymentMercadopagoQRMapper).getByStatusList(paymentMercadopagoQRList,paymentStatusList);
+    }
+
+    @Override
+    public PaymentMercadopagoQrDTO processPaymentReceived(PaymentDatabase paymentDatabase, String externalReference, String dataId, Map<String, Object> body) {
+        PaymentMercadopagoQR paymentMercadopagoQR = new UpdatePaymentMercadoPagoQRUseCase(createPaymentMercadoPagoQrGateway(paymentDatabase)).processPaymentReceived(externalReference, dataId, body);
+        return new PaymentMercadoPagoQrPresenter(paymentMercadopagoQRMapper).cancelByCustomerOrderId(paymentMercadopagoQR);
     }
 
     private PaymentGateway createPaymentMercadoPagoQrGateway(PaymentDatabase paymentDatabase){

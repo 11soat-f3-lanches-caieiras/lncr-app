@@ -27,7 +27,11 @@ public class IntegrationUtil {
         return new HttpEntity<T>(dto, setHeaders());
     }
 
-    private static HttpHeaders setHeaders() {
+    private static <T> HttpEntity<T> setRequestEntity(T dto, HttpHeaders customHeaders){
+        return new HttpEntity<T>(dto, customHeaders);
+    }
+
+    public static HttpHeaders setHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
         return headers;
@@ -44,7 +48,7 @@ public class IntegrationUtil {
         }
     }
 
-    public static <T> void  postForObject(String url, T dto) {
+    public static <T> void postForObject(String url, T dto) {
         RestTemplate restTemplate = new RestTemplate();
         CompletableFuture.runAsync(() -> {
        try {
@@ -53,6 +57,19 @@ public class IntegrationUtil {
                 throw new IntegrationException("Erro na integração com", 500);
             }
         });
+    }
+
+    public static <T> String postForObjectWithReturn(String url, T dto, HttpHeaders header) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<T> requestEntity = IntegrationUtil.setRequestEntity(dto);
+        if (header != null){
+            requestEntity = IntegrationUtil.setRequestEntity(dto,header);
+        }
+        try {
+            return restTemplate.postForObject(url, requestEntity, String.class);
+        } catch (Exception e) {
+            throw new IntegrationException("Erro na integração" + e.getMessage(), 500);
+        }
     }
 
     public static <T> T getForObject(String url, Class<T> response){

@@ -14,8 +14,8 @@ public class KitchenOrderMapper {
         dto.setId(order.getId());
         dto.setCustomerOrderId(order.getCustomerOrderId());
         dto.setStatus(order.getStatus());
-        dto.set_created(order.get_created());
-        dto.set_updated(order.get_updated());
+        dto.setCreated(order.get_created());
+        dto.setUpdated(order.get_updated());
         if (order.getFoodItems() != null) {
             dto.setFoodItems(order.getFoodItems().stream()
                 .map(this::kitchenOrderFoodItemToDTO)
@@ -30,8 +30,8 @@ public class KitchenOrderMapper {
         order.setId(dto.getId());
         order.setCustomerOrderId(dto.getCustomerOrderId());
         order.setStatus(dto.getStatus());
-        order.set_created(dto.get_created());
-        order.set_updated(dto.get_updated());
+        order.set_created(dto.getCreated());
+        order.set_updated(dto.getUpdated());
         if (dto.getFoodItems() != null) {
             order.setFoodItems(dto.getFoodItems().stream()
                 .map(this::kichenOrderFoodItemToDomain)

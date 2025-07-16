@@ -3,17 +3,16 @@ package br.com.tp.lanchescaieiras._core.domain.payment;
 import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class PaymentMercadopagoQR extends Payment{
     private static final String PROVIDER = "mercadopago";
     private static final String METHOD = "qrcode";
-    private UUID storeID;
+    private String meliId;
     private String qrData;
 
-    public PaymentMercadopagoQR(Integer id, Integer orderId, String status, Double amount, String externalPaymentId, LocalDateTime _created, LocalDateTime _updated, UUID storeID, String qrData) {
+    public PaymentMercadopagoQR(Integer id, Integer orderId, String status, Double amount, String externalPaymentId, LocalDateTime _created, LocalDateTime _updated, String meliId, String qrData) {
         super(id, orderId, status, amount, externalPaymentId, _created, _updated);
-        this.storeID = storeID;
+        this.meliId = meliId;
         this.qrData = qrData;
     }
 
@@ -28,15 +27,15 @@ public class PaymentMercadopagoQR extends Payment{
             dto.get_updated()
         );
         this.qrData = dto.getQrData();
-        this.storeID = dto.getStoreId() != null ? UUID.fromString(dto.getStoreId()) : null;
+        this.meliId = dto.getMeliId();
     }
 
-    public UUID getStoreID() {
-        return storeID;
+    public String getMeliId() {
+        return meliId;
     }
 
-    public void setStoreID(UUID storeID) {
-        this.storeID = storeID;
+    public void setMeliId(String meliId) {
+        this.meliId = meliId;
     }
 
     public String getQrData() {
