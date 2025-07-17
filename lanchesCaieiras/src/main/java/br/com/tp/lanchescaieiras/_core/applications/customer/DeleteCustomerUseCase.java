@@ -15,7 +15,7 @@ public class DeleteCustomerUseCase {
 
     public void execute(Integer id) {
         Logger.info("Executando a exclusão do cliente com ID: " + id);
-        Customer customer = customerGateway.findById(id);
+        Customer customer = customerGateway.getCustomerById(id);
         if (customer == null) {
             throw new CustomerException("Cliente não encontrado com o ID: " + id, 404);
         }

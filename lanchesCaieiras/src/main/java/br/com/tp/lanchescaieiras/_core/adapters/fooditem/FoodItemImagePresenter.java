@@ -14,19 +14,19 @@ public class FoodItemImagePresenter {
     }
 
     public FoodItemImageDTO created(FoodItemImage foodItemImage, String imageLocationPrefix) {
-        return formatFoodItemImageDTO(foodItemMapper.imageDomainToDto(foodItemImage), imageLocationPrefix, false);
+        return formatFoodItemImageDTO(foodItemMapper.foodItemImageToDTO(foodItemImage), imageLocationPrefix, false);
     }
 
     public FoodItemImageDTO getById(FoodItemImage foodItemImage, String imageLocationPrefix) {
-        return formatFoodItemImageDTO(foodItemMapper.imageDomainToDto(foodItemImage), imageLocationPrefix, true);
+        return formatFoodItemImageDTO(foodItemMapper.foodItemImageToDTO(foodItemImage), imageLocationPrefix, true);
     }
 
     public FoodItemImageDTO updateById(FoodItemImage updateFoodItemImage, String imageLocationPrefix) {
-        return formatFoodItemImageDTO(foodItemMapper.imageDomainToDto(updateFoodItemImage), imageLocationPrefix, false);
+        return formatFoodItemImageDTO(foodItemMapper.foodItemImageToDTO(updateFoodItemImage), imageLocationPrefix, false);
     }
 
     public List<FoodItemImageDTO> getAllImagesByFoodItemId(List<FoodItemImage> foodItemImageList, String imageLocationPrefix, Boolean includeData) {
-        return foodItemImageDTOList(foodItemImageList.stream().map(foodItemMapper::imageDomainToDto).toList(), imageLocationPrefix, includeData);
+        return foodItemImageDTOList(foodItemImageList.stream().map(foodItemMapper::foodItemImageToDTO).toList(), imageLocationPrefix, includeData);
     }
 
     private FoodItemImageDTO formatFoodItemImageDTO(FoodItemImageDTO foodItemImageDTO, String imageLocationPrefix, Boolean includeData) {

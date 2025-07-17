@@ -18,7 +18,7 @@ public class KitchenOrderGatewayImpl implements KitchenOrderGateway {
     }
 
     @Override
-    public KitchenOrder save(KitchenOrder kitchenOrder) {
+    public KitchenOrder saveKitchenOrder(KitchenOrder kitchenOrder) {
         KitchenOrderDTO kitchenOrderDTO = kitchenOrderMapper.kitchenOrderToDTO(kitchenOrder);
         kitchenOrderDTO = this.kitchenOrderDatabase.save(kitchenOrderDTO);
         return kitchenOrderMapper.kichenOrderToDomain(kitchenOrderDTO);

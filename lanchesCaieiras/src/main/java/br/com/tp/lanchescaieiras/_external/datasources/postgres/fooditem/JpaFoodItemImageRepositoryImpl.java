@@ -9,40 +9,40 @@ import java.util.List;
 public class JpaFoodItemImageRepositoryImpl {
 
     public void saveAll(List<FoodItemImageDTO> foodItemImageDTOList, JpaFoodItemImageRepository jpaFoodItemImageRepository, JpaFoodItemMapper jpaFoodItemMapper) {
-        List<JpaFoodItemImageEntity> jpaFoodItemImageEntityList = jpaFoodItemMapper.toJpaFoodItemImageEntityList(foodItemImageDTOList);
+        List<JpaFoodItemImageEntity> jpaFoodItemImageEntityList = jpaFoodItemMapper.foodItemImageDtoToJpaList(foodItemImageDTOList);
         jpaFoodItemImageRepository.saveAll(jpaFoodItemImageEntityList);
     }
 
     public List<FoodItemImageDTO> findAllByFoodItemId(Integer id, JpaFoodItemImageRepository jpaFoodItemImageRepository, JpaFoodItemMapper jpaFoodItemMapper) {
         return jpaFoodItemImageRepository.findAllByFoodItemId(id)
                 .stream()
-                .map(jpaFoodItemMapper::toFoodItemImageDTO)
+                .map(jpaFoodItemMapper::jpaFoodItemImageToDTO)
                 .toList();
     }
 
     public void deleteByFoodItemId(List<FoodItemImageDTO> foodItemImageDTOList, JpaFoodItemImageRepository jpaFoodItemImageRepository, JpaFoodItemMapper jpaFoodItemMapper) {
-        jpaFoodItemImageRepository.deleteAll(jpaFoodItemMapper.toJpaFoodItemImageEntityList(foodItemImageDTOList));
+        jpaFoodItemImageRepository.deleteAll(jpaFoodItemMapper.foodItemImageDtoToJpaList(foodItemImageDTOList));
     }
 
     public FoodItemImageDTO save(FoodItemImageDTO foodItemImageDTO, JpaFoodItemImageRepository jpaFoodItemImageRepository, JpaFoodItemMapper jpaFoodItemMapper) {
-        JpaFoodItemImageEntity newJpaImage = jpaFoodItemMapper.toJpaFoodItemImageEntity(foodItemImageDTO);
+        JpaFoodItemImageEntity newJpaImage = jpaFoodItemMapper.foodItemImageDtoToJpa(foodItemImageDTO);
         newJpaImage = jpaFoodItemImageRepository.save(newJpaImage);
-        return jpaFoodItemMapper.toFoodItemImageDTO(newJpaImage);
+        return jpaFoodItemMapper.jpaFoodItemImageToDTO(newJpaImage);
     }
 
     public FoodItemImageDTO findById(Integer foodItemImageId, JpaFoodItemImageRepository jpaFoodItemImageRepository, JpaFoodItemMapper jpaFoodItemMapper) {
-        return jpaFoodItemMapper.toFoodItemImageDTO(
+        return jpaFoodItemMapper.jpaFoodItemImageToDTO(
                 jpaFoodItemImageRepository.findById(foodItemImageId)
                         .orElse(null));
     }
 
     public List<FoodItemImageDTO> deleteImagesByFoodItemId(Integer foodItemId, JpaFoodItemImageRepository jpaFoodItemImageRepository, JpaFoodItemMapper jpaFoodItemMapper) {
         List<FoodItemImageDTO> listImagestoDelete = findAllByFoodItemId(foodItemId, jpaFoodItemImageRepository, jpaFoodItemMapper);
-        jpaFoodItemImageRepository.deleteAll(jpaFoodItemMapper.toJpaFoodItemImageEntityList(listImagestoDelete));
+        jpaFoodItemImageRepository.deleteAll(jpaFoodItemMapper.foodItemImageDtoToJpaList(listImagestoDelete));
         return listImagestoDelete;
     }
 
     public void delete(FoodItemImageDTO foodItemImageDTO, JpaFoodItemImageRepository jpaFoodItemImageRepository, JpaFoodItemMapper jpaFoodItemMapper) {
-        jpaFoodItemImageRepository.delete(jpaFoodItemMapper.toJpaFoodItemImageEntity(foodItemImageDTO));
+        jpaFoodItemImageRepository.delete(jpaFoodItemMapper.foodItemImageDtoToJpa(foodItemImageDTO));
     }
 }

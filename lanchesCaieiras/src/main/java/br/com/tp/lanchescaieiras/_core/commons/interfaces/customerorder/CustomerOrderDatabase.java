@@ -10,31 +10,31 @@ import java.util.List;
 
 public interface CustomerOrderDatabase {
 
-    CustomerOrderDTO save(CustomerOrderDTO customerOrderDTO);
-
-    CustomerOrderCustomerDTO getCustomerDetails(Integer customerId);
-
-    List<CustomerOrderCustomerDTO> getCustomerDetailsList(List<Integer> customerIdList);
-
-    List<CustomerOrderFoodItemDTO> getFoodItemsDetailsList(List<Integer> foodItemListIds);
-
-    void createPaymentCharge(Integer customerOrderId, Double totalCost);
-
-    void sendNotification(String notificationSource, Integer artefactId, String message);
-
-    CustomerOrderDTO getCustomerOrderById(Integer customerOrderId, Boolean includFoodItems);
-
-    List<CustomerOrderDTO> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems);
-
-    CustomerOrderDTO updateCustomerOrder(CustomerOrderDTO updatedCustomerOrderDTO);
+    void cancelPaymentChargeByCustomerOrderId(Integer customerOrderId);
 
     void createKitchenOrder(CustomerOrderDTO customerOrderDTO);
 
-    void cancelPaymentChargeByCustomerOrderId(Integer customerOrderId);
+    void createPaymentCharge(Integer customerOrderId, Double totalCost);
 
-    PaymentMercadopagoQrDTO getPaymentByCustomerOrderId(Integer id);
+    CustomerOrderCustomerDTO findCustomerDetails(Integer customerId);
 
-    KitchenOrderDTO getKitchenOrderByCustomerOrderId(Integer customerOrderId);
+    List<CustomerOrderCustomerDTO> findCustomerDetailsList(List<Integer> customerIdList);
+
+    List<CustomerOrderFoodItemDTO> findFoodItemsDetailsList(List<Integer> foodItemListIds);
+
+    CustomerOrderDTO findCustomerOrderById(Integer customerOrderId, Boolean includFoodItems);
+
+    List<CustomerOrderDTO> findCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems);
+
+    CustomerOrderDTO save(CustomerOrderDTO customerOrderDTO);
+
+    void sendNotification(String notificationSource, Integer artefactId, String message);
+
+    CustomerOrderDTO updateCustomerOrder(CustomerOrderDTO updatedCustomerOrderDTO);
+
+    PaymentMercadopagoQrDTO findPaymentByCustomerOrderId(Integer id);
+
+    KitchenOrderDTO findKitchenOrderByCustomerOrderId(Integer customerOrderId);
 
     void cancelKitchenOrderById(Integer kitchenOrderOrderId);
 }

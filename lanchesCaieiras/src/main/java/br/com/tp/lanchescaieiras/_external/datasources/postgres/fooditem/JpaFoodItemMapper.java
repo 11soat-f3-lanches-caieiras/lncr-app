@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class JpaFoodItemMapper {
-    public JpaFoodItemEntity toJpaFoodItemPostgresEntity(FoodItemDTO foodItemDTO) {
+    public JpaFoodItemEntity foodItemDtoToJpa(FoodItemDTO foodItemDTO) {
         if (foodItemDTO == null) return null;
         JpaFoodItemEntity entity = new JpaFoodItemEntity();
         entity.setId(foodItemDTO.getId());
@@ -21,7 +21,7 @@ public class JpaFoodItemMapper {
         return entity;
     }
 
-    public FoodItemDTO toFoodItemDTO(JpaFoodItemEntity entity) {
+    public FoodItemDTO jpaFoodItemToDTO(JpaFoodItemEntity entity) {
         if (entity == null) return null;
         FoodItemDTO dto = new FoodItemDTO();
         dto.setId(entity.getId());
@@ -32,7 +32,7 @@ public class JpaFoodItemMapper {
         return dto;
     }
 
-    public JpaFoodItemImageEntity toJpaFoodItemImageEntity(FoodItemImageDTO dto) {
+    public JpaFoodItemImageEntity foodItemImageDtoToJpa(FoodItemImageDTO dto) {
         if (dto == null) return null;
         JpaFoodItemImageEntity entity = new JpaFoodItemImageEntity();
         entity.id = dto.getId();
@@ -46,7 +46,7 @@ public class JpaFoodItemMapper {
         return entity;
     }
 
-    public FoodItemImageDTO toFoodItemImageDTO(JpaFoodItemImageEntity entity) {
+    public FoodItemImageDTO jpaFoodItemImageToDTO(JpaFoodItemImageEntity entity) {
         if (entity == null) return null;
         FoodItemImageDTO dto = new FoodItemImageDTO();
         dto.setId(entity.getId());
@@ -58,13 +58,13 @@ public class JpaFoodItemMapper {
         return dto;
     }
 
-    public List<FoodItemImageDTO> toFoodItemImageDTOList(List<JpaFoodItemImageEntity> entities) {
+    public List<FoodItemImageDTO> jpaFoodItemImageToDtoList(List<JpaFoodItemImageEntity> entities) {
         if (entities == null) return null;
-        return entities.stream().map(this::toFoodItemImageDTO).collect(Collectors.toList());
+        return entities.stream().map(this::jpaFoodItemImageToDTO).collect(Collectors.toList());
     }
 
-    public List<JpaFoodItemImageEntity> toJpaFoodItemImageEntityList(List<FoodItemImageDTO> foodItemImageDTOS) {
+    public List<JpaFoodItemImageEntity> foodItemImageDtoToJpaList(List<FoodItemImageDTO> foodItemImageDTOS) {
         if (foodItemImageDTOS == null) return null;
-        return foodItemImageDTOS.stream().map(this::toJpaFoodItemImageEntity).collect(Collectors.toList());
+        return foodItemImageDTOS.stream().map(this::foodItemImageDtoToJpa).collect(Collectors.toList());
     }
 }

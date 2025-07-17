@@ -18,21 +18,20 @@ public class NotificationGatewayImpl implements NotificationGateway {
     }
 
     @Override
-    public void save(Notification notification) {
+    public void saveNotification(Notification notification) {
         this.notificationDatabase.save(this.notificationMapper.notificationToDTO(notification));
 
     }
 
     @Override
-    public List<Notification> findByNotificationType(String notificationType) {
+    public List<Notification> getNotificationsByType(String notificationType) {
         List<NotificationDTO> notificationDTOList = this.notificationDatabase.findByNotificationType(notificationType);
         return notificationDTOList.stream().map(notificationMapper::notificationToDomain)
                 .toList();
     }
 
     @Override
-    public List<String> findNotificationTypeList() {
-
+    public List<String> getNotificationTypesList() {
         return this.notificationDatabase.findNotificationTypeList();
     }
 }

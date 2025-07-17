@@ -11,9 +11,9 @@ public class JpaFoodItemRepositoryImpl {
 
 
     public FoodItemDTO save(FoodItemDTO foodItemDTO, JpaFoodItemReposity jpaFoodItemReposity, JpaFoodItemMapper jpaFoodItemMapper) {
-        JpaFoodItemEntity jpaFoodItemEntity = jpaFoodItemMapper.toJpaFoodItemPostgresEntity(foodItemDTO);
+        JpaFoodItemEntity jpaFoodItemEntity = jpaFoodItemMapper.foodItemDtoToJpa(foodItemDTO);
         jpaFoodItemEntity = jpaFoodItemReposity.save(jpaFoodItemEntity);
-        return jpaFoodItemMapper.toFoodItemDTO(jpaFoodItemEntity);
+        return jpaFoodItemMapper.jpaFoodItemToDTO(jpaFoodItemEntity);
     }
 
     public boolean existsByName(String foodItemName, JpaFoodItemReposity jpaFoodItemRepository, JpaFoodItemMapper jpaFoodItemMapper) {
@@ -23,26 +23,26 @@ public class JpaFoodItemRepositoryImpl {
     public List<FoodItemDTO> getAllFoodItems(Integer _limit, JpaFoodItemReposity jpaFoodItemReposity, JpaFoodItemMapper jpaFoodItemMapper) {
         return jpaFoodItemReposity.findAll(Pageable.ofSize(_limit))
                 .stream()
-                .map(jpaFoodItemMapper::toFoodItemDTO)
+                .map(jpaFoodItemMapper::jpaFoodItemToDTO)
                 .toList();
     }
 
     public List<FoodItemDTO> getAllFoodItemsByCategory(Integer _limit, Integer categoryId, JpaFoodItemReposity jpaFoodItemRepository, JpaFoodItemMapper jpaFoodItemMapper) {
         return jpaFoodItemRepository.findAllByCategory(_limit, categoryId)
                 .stream()
-                .map(jpaFoodItemMapper::toFoodItemDTO)
+                .map(jpaFoodItemMapper::jpaFoodItemToDTO)
                 .toList();
     }
 
     public FoodItemDTO findById(Integer foodItemId, JpaFoodItemReposity jpaFoodItemRepository, JpaFoodItemMapper jpaFoodItemMapper) {
-        return jpaFoodItemMapper.toFoodItemDTO(
+        return jpaFoodItemMapper.jpaFoodItemToDTO(
                 jpaFoodItemRepository.findById(foodItemId)
                         .orElse(null));
     }
 
     public List<FoodItemDTO> findByIdList(List<Integer> foodItemIds, JpaFoodItemReposity jpaFoodItemRepository, JpaFoodItemMapper jpaFoodItemMapper) {
         List<JpaFoodItemEntity> jpaFoodItemList = jpaFoodItemRepository.findByIdList(foodItemIds);
-        return jpaFoodItemList.stream().map(jpaFoodItemMapper::toFoodItemDTO).toList();
+        return jpaFoodItemList.stream().map(jpaFoodItemMapper::jpaFoodItemToDTO).toList();
     }
 
     public void deleteById(Integer foodItemId, JpaFoodItemReposity jpaFoodItemRepository) {

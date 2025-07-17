@@ -18,19 +18,19 @@ public class GetCustomerOrderUseCase {
     }
 
     public CustomerOrder getById(Integer customerOrderId, Boolean includFoodItems) {
-        Logger.info("GetCustomerOrderUseCase.getById - Iniciando busca por pedido com id: " + customerOrderId);
+        Logger.info("Iniciando busca por pedido com id: " + customerOrderId);
         CustomerOrder customerOrder = this.customerOrderGateway.getCustomerOrderById(customerOrderId,includFoodItems);
         if (customerOrder == null) {
             throw new CustomerOrderException("Não encontrado pedido com id: " + customerOrderId,404);
         }
         CustomerOrderUseCaseUtils.getCustomerDetails(customerOrder,customerOrderGateway);
         if (includFoodItems == true) CustomerOrderUseCaseUtils.getFoodItemsDetails(customerOrder, customerOrderGateway);
-        Logger.info("GetCustomerOrderUseCase.getById - Pedido encontrado: " + customerOrder.toString());
+        Logger.info("Pedido encontrado: " + customerOrder.toString());
         return customerOrder;
     }
 
     public List<CustomerOrder>  getByStatusList(List<String> statusList, Boolean includeFoodItems) {
-        Logger.info("GetCustomerOrderUseCase.getByStatusList - Iniciando busca por pedidos com status: " + String.join(", ", statusList));
+        Logger.info("Iniciando busca por pedidos com status: " + String.join(", ", statusList));
         List<Integer> statusListIds = getStatusListIds(statusList);
         List<CustomerOrder> customerOrderList = this.customerOrderGateway.getCustomerOrderByStatusList(statusListIds, includeFoodItems);
         if (customerOrderList == null || customerOrderList.isEmpty()){
@@ -38,12 +38,12 @@ public class GetCustomerOrderUseCase {
         }
         CustomerOrderUseCaseUtils.getCustomerDetailsList(customerOrderList, customerOrderGateway);
         if (includeFoodItems == true) CustomerOrderUseCaseUtils.getFoodItemsDetailsList(customerOrderList,customerOrderGateway);
-        Logger.info("GetCustomerOrderUseCase.getByStatusList - Pedidos encontrados: " + customerOrderList.size());
+        Logger.info("Pedidos encontrados: " + customerOrderList.size());
         return customerOrderList;
     }
     
     private List<Integer> getStatusListIds(List<String> statusList){
-        Logger.debug("GetCustomerOrderUseCase.getStatusListIds - Convertendo status de pedidos para IDs");
+        Logger.debug("Convertendo status de pedidos para IDs");
         List<Integer> statusListIds = new ArrayList<>();
         for(String status : statusList){
             statusListIds.add(CustomerOrderStatus.fromDescription(status).getId());

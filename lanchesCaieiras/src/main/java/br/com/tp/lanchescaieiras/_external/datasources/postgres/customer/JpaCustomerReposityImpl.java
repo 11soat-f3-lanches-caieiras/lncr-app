@@ -21,27 +21,27 @@ public class JpaCustomerReposityImpl implements CustomerDatabase {
 
     @Override
     public CustomerDTO save(CustomerDTO customerDto) {
-        JpaCustomerEntity jpaCustomerEntity = this.jpaCustomerRepository.save(jpaCustomerMapper.toJpaCustomerPostgresEntity(customerDto));
-        return jpaCustomerMapper.toCustomerDTO(jpaCustomerEntity);
+        JpaCustomerEntity jpaCustomerEntity = this.jpaCustomerRepository.save(jpaCustomerMapper.customerDtoToJpa(customerDto));
+        return jpaCustomerMapper.jpaCustomerToDTO(jpaCustomerEntity);
     }
 
     @Override
     public Optional<CustomerDTO> findById(Integer id) {
         return this.jpaCustomerRepository.findById(id)
-                .map(jpaCustomerMapper::toCustomerDTO);
+                .map(jpaCustomerMapper::jpaCustomerToDTO);
     }
 
     @Override
     public List<CustomerDTO> findAll(Integer _limit) {
         return jpaCustomerRepository.findAll(Pageable.ofSize(_limit))
                 .stream()
-                .map(jpaCustomerMapper::toCustomerDTO)
+                .map(jpaCustomerMapper::jpaCustomerToDTO)
                 .toList();
     }
 
     public Optional<CustomerDTO> findByDocumentNumber(String documentNumber) {
         return this.jpaCustomerRepository.findByDocumentNumber(documentNumber)
-                .map(jpaCustomerMapper::toCustomerDTO);
+                .map(jpaCustomerMapper::jpaCustomerToDTO);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class JpaCustomerReposityImpl implements CustomerDatabase {
     @Override
     public List<CustomerDTO> findByIdList(List<Integer> customerIdList) {
         List<JpaCustomerEntity> jpaCustomerList = this.jpaCustomerRepository.findByCustomerIdList(customerIdList);
-        return jpaCustomerList.stream().map(jpaCustomerMapper::toCustomerDTO).toList();
+        return jpaCustomerList.stream().map(jpaCustomerMapper::jpaCustomerToDTO).toList();
 
     }
 

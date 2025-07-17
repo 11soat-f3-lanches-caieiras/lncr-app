@@ -9,15 +9,15 @@ public interface CustomerController {
 
     CustomerDTO create(CustomerDTO customerDto);
 
+    void delete(Integer id);
+
     List<CustomerDTO> getAll(Optional<Integer> _limit);
 
-    CustomerDTO getById(Integer id);
+    List<CustomerDTO> getByIdList(List<Integer> customerIdList);
 
     CustomerDTO getByDocumentNumber(String documentNumber);
 
+    CustomerDTO getById(Integer id);
+
     CustomerDTO partialUpdateById(Integer id, CustomerDTO CustomerDTO);
-
-    void delete(Integer id);
-
-    List<CustomerDTO> getByIdList(List<Integer> customerIdList);
 }

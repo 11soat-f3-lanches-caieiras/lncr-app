@@ -54,6 +54,21 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
     }
 
     @Override
+    public List<CustomerOrderFoodItemDTO> findFoodItemsDetailsList(List<Integer> foodItemListIds) {
+        return this.foodItemIntegration.getFoodItemDetailList(foodItemListIds);
+    }
+
+    @Override
+    public List<CustomerOrderCustomerDTO> findCustomerDetailsList(List<Integer> customerIdList) {
+        return this.customerIntegration.getCustomerDetailsList(customerIdList);
+    }
+
+    @Override
+    public CustomerOrderCustomerDTO findCustomerDetails(Integer customerId) {
+        return this.customerIntegration.getCustomerDetails(customerId);
+    }
+
+    @Override
     public CustomerOrderDTO save(CustomerOrderDTO customerOrderDTO) {
         CustomerOrderDTO newCustomerDTO = this.jpaCustomerOrderRepositoryImpl.save(customerOrderDTO,jpaCustomerOrderRepository,jpaCustomerOrderMapper);
         newCustomerDTO.setFoodItems(customerOrderDTO.getFoodItems());
@@ -62,21 +77,6 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
         }
         newCustomerDTO.setFoodItems(this.jpaCustomerOrderFoodItemRepositoryImpl.saveAll(newCustomerDTO.getFoodItems(),jpaCustomerOrderFoodItemRepository,jpaCustomerOrderMapper));
         return newCustomerDTO;
-    }
-
-    @Override
-    public CustomerOrderCustomerDTO getCustomerDetails(Integer customerId) {
-        return this.customerIntegration.getCustomerDetails(customerId);
-    }
-
-    @Override
-    public List<CustomerOrderCustomerDTO> getCustomerDetailsList(List<Integer> customerIdList) {
-        return this.customerIntegration.getCustomerDetailsList(customerIdList);
-    }
-
-    @Override
-    public List<CustomerOrderFoodItemDTO> getFoodItemsDetailsList(List<Integer> foodItemListIds) {
-        return this.foodItemIntegration.getFoodItemDetailList(foodItemListIds);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
     }
 
     @Override
-    public CustomerOrderDTO getCustomerOrderById(Integer customerOrderId, Boolean includFoodItems) {
+    public CustomerOrderDTO findCustomerOrderById(Integer customerOrderId, Boolean includFoodItems) {
         CustomerOrderDTO customerOrderDTO = this.jpaCustomerOrderRepositoryImpl.findById(customerOrderId,jpaCustomerOrderRepository,jpaCustomerOrderMapper);
         if (customerOrderDTO != null && includFoodItems == true)
             customerOrderDTO.setFoodItems(this.jpaCustomerOrderFoodItemRepositoryImpl.findByCustomerOrderId(customerOrderDTO.getId(),jpaCustomerOrderFoodItemRepository,jpaCustomerOrderMapper));
@@ -98,7 +98,7 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
     }
 
     @Override
-    public List<CustomerOrderDTO> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems) {
+    public List<CustomerOrderDTO> findCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems) {
         List<CustomerOrderDTO> customerOrderDTOList = this.jpaCustomerOrderRepositoryImpl.findByStatusList(statusListIds,jpaCustomerOrderRepository,jpaCustomerOrderMapper);
         if (customerOrderDTOList != null && includeFoodItems == true){
             List<CustomerOrderFoodItemDTO> customerOrderFoodItemDTOList = getFoodItemsInCustomerOrdersIdList(customerOrderDTOList,includeFoodItems);
@@ -123,12 +123,12 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
     }
 
     @Override
-    public PaymentMercadopagoQrDTO getPaymentByCustomerOrderId(Integer id) {
+    public PaymentMercadopagoQrDTO findPaymentByCustomerOrderId(Integer id) {
         return this.paymentIntegration.getPaymentByCustomerOrderId(id);
     }
 
     @Override
-    public KitchenOrderDTO getKitchenOrderByCustomerOrderId(Integer customerOrderId) {
+    public KitchenOrderDTO findKitchenOrderByCustomerOrderId(Integer customerOrderId) {
         return this.kitchenOrderIntegration.getKitchenOrderByCustomerOrderId(customerOrderId);
     }
 

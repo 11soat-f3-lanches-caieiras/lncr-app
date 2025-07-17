@@ -5,7 +5,7 @@ import br.com.tp.lanchescaieiras._core.domain.customer.Customer;
 
 public class CustomerMapper {
 
-    public CustomerDTO domainToDto(Customer customer) {
+    public CustomerDTO customerToDomain(Customer customer) {
         return new CustomerDTO(
                 customer.getId(),
                 customer.getDocumentNumber(),
@@ -14,7 +14,7 @@ public class CustomerMapper {
         );
     }
 
-    public Customer dtoToDomain(CustomerDTO customerDTO) {
+    public Customer customerToDTO(CustomerDTO customerDTO) {
         return new Customer(
                 customerDTO.getId(),
                 customerDTO.getDocumentNumber(),

@@ -6,19 +6,19 @@ import java.util.List;
 
 public interface KitchenOrderGateway {
 
-    KitchenOrder save(KitchenOrder kitchenOrder);
-
     KitchenOrder getKitchenOrderByCustomerOrderId(Integer customerOrderId);
 
     KitchenOrder getKitchenOrderByCustomerOrderId(Integer customerOrderId, Boolean includeFoodItems);
 
-    List<KitchenOrder> getKitchenOrderByStatusList(List<Integer> statusList, Boolean includeFoodItems);
+    KitchenOrder getKitchenOrderById(Integer kitchenOrderId);
 
     KitchenOrder getKitchenOrderById(Integer kitchenOrderId, Boolean includeFoodItems);
 
-    KitchenOrder getKitchenOrderById(Integer kitchenOrderId);
-
-    void updateCustomerOrderStatus(Integer customerOrderId, String status);
+    List<KitchenOrder> getKitchenOrderByStatusList(List<Integer> statusList, Boolean includeFoodItems);
 
     void sendNotification(String notificationType, Integer artefactId, String message);
+
+    KitchenOrder saveKitchenOrder(KitchenOrder kitchenOrder);
+
+    void updateCustomerOrderStatus(Integer customerOrderId, String status);
 }

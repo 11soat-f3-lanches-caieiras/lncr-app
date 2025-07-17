@@ -15,7 +15,7 @@ public class Logger {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public static void log(Level level, String message) {
-        String logMessage = String.format("[%s] [%s] %s", LocalDateTime.now().format(FORMATTER), level, message);
+        String logMessage = String.format("%s [%s] %-5s %s", LocalDateTime.now().format(FORMATTER), Thread.currentThread().getName(), level, message);
         System.out.println(logMessage);
         writeToFile(logMessage);
     }
@@ -40,4 +40,3 @@ public class Logger {
         }
     }
 }
-

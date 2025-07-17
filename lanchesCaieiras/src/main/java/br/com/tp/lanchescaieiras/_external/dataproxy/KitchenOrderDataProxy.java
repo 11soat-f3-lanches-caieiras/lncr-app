@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class KichenOrderDataProxy implements KitchenOrderDatabase {
+public class KitchenOrderDataProxy implements KitchenOrderDatabase {
 
     private final JpaKitchenOrderRepositoryImpl jpaKitchenOrderRepositoryImpl;
     private final JpaKitchenOrderRepository jpaKitchenOrderRepository;
@@ -21,13 +21,13 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
     private final NotificationIntegraionImpl notificationIntegraion;
     private final JpaKitchenOrderMapper jpaKitchenOrderMapper;
 
-    public KichenOrderDataProxy(JpaKitchenOrderRepositoryImpl jpaKitchenOrderRepositoryImpl,
-                                JpaKitchenOrderRepository jpaKitchenOrderRepository,
-                                JpaKitchenOrderFoodItemRepositoryImpl jpaKitchenOrderFoodItemRepositoryImpl,
-                                JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository,
-                                CustomerOrderIntegrationImpl customerOrderIntegrationImpl,
-                                NotificationIntegraionImpl notificationIntegraion,
-                                JpaKitchenOrderMapper jpaKitchenOrderMapper) {
+    public KitchenOrderDataProxy(JpaKitchenOrderRepositoryImpl jpaKitchenOrderRepositoryImpl,
+                                 JpaKitchenOrderRepository jpaKitchenOrderRepository,
+                                 JpaKitchenOrderFoodItemRepositoryImpl jpaKitchenOrderFoodItemRepositoryImpl,
+                                 JpaKitchenOrderFoodItemRepository jpaKitchenOrderFoodItemRepository,
+                                 CustomerOrderIntegrationImpl customerOrderIntegrationImpl,
+                                 NotificationIntegraionImpl notificationIntegraion,
+                                 JpaKitchenOrderMapper jpaKitchenOrderMapper) {
         this.jpaKitchenOrderRepositoryImpl = jpaKitchenOrderRepositoryImpl;
         this.jpaKitchenOrderRepository = jpaKitchenOrderRepository;
         this.jpaKitchenOrderFoodItemRepositoryImpl = jpaKitchenOrderFoodItemRepositoryImpl;
@@ -37,15 +37,7 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
         this.jpaKitchenOrderMapper = jpaKitchenOrderMapper;
     }
 
-    @Override
-    public KitchenOrderDTO save(KitchenOrderDTO kitchenOrderDto) {
-        kitchenOrderDto = this.jpaKitchenOrderRepositoryImpl.save(kitchenOrderDto, jpaKitchenOrderRepository, jpaKitchenOrderMapper);
-        Integer kitchenOrderId = kitchenOrderDto.getId();
-        setKitchenOrderIdOnFoodItems(kitchenOrderDto);
-        if (kitchenOrderDto.getFoodItems() != null && kitchenOrderDto.getFoodItems().isEmpty())
-                kitchenOrderDto.setFoodItems(this.jpaKitchenOrderFoodItemRepositoryImpl.saveAll(kitchenOrderDto.getFoodItems(),jpaKitchenOrderFoodItemRepository,jpaKitchenOrderMapper));
-        return kitchenOrderDto;
-    }
+
 
     @Override
     public KitchenOrderDTO findById(Integer kitchenOrderId) {
@@ -65,6 +57,7 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
         includeFoodItems(kitchenOrderDto,includeFoodItems);
         return kitchenOrderDto;
     }
+
     @Override
     public List<KitchenOrderDTO> findByStatusList(List<Integer> statusIdsList, Boolean includeFoodItems) {
         List<KitchenOrderDTO> kitchenOrderDTOList = this.jpaKitchenOrderRepositoryImpl.findByStatusId(statusIdsList,jpaKitchenOrderRepository,jpaKitchenOrderMapper);
@@ -77,9 +70,20 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
         return this.jpaKitchenOrderFoodItemRepositoryImpl.findByKitchenOrderId(kitchenOrderId,jpaKitchenOrderFoodItemRepository,jpaKitchenOrderMapper);
     }
 
+    private void includeFoodItems(KitchenOrderDTO kitchenOrderDto, Boolean includeFoodItems) {
+        if (includeFoodItems && kitchenOrderDto != null) {
+            kitchenOrderDto.setFoodItems(findByKitchenOrderId(kitchenOrderDto.getId()));
+        }
+    }
+
     @Override
-    public void updateCustomerOrderStatus(Integer customerOrderId, String status) {
-        this.customerOrderIntegrationImpl.updateCustomerOrderStatus(customerOrderId, status);
+    public KitchenOrderDTO save(KitchenOrderDTO kitchenOrderDto) {
+        kitchenOrderDto = this.jpaKitchenOrderRepositoryImpl.save(kitchenOrderDto, jpaKitchenOrderRepository, jpaKitchenOrderMapper);
+        Integer kitchenOrderId = kitchenOrderDto.getId();
+        setKitchenOrderIdOnFoodItems(kitchenOrderDto);
+        if (kitchenOrderDto.getFoodItems() != null && kitchenOrderDto.getFoodItems().isEmpty())
+            kitchenOrderDto.setFoodItems(this.jpaKitchenOrderFoodItemRepositoryImpl.saveAll(kitchenOrderDto.getFoodItems(),jpaKitchenOrderFoodItemRepository,jpaKitchenOrderMapper));
+        return kitchenOrderDto;
     }
 
     @Override
@@ -94,9 +98,10 @@ public class KichenOrderDataProxy implements KitchenOrderDatabase {
                 foodItem -> foodItem.setKitchenOrderId(kitchenOrderId));
     }
 
-    private void includeFoodItems(KitchenOrderDTO kitchenOrderDto, Boolean includeFoodItems) {
-        if (includeFoodItems && kitchenOrderDto != null) {
-            kitchenOrderDto.setFoodItems(findByKitchenOrderId(kitchenOrderDto.getId()));
-        }
+    @Override
+    public void updateCustomerOrderStatus(Integer customerOrderId, String status) {
+        this.customerOrderIntegrationImpl.updateCustomerOrderStatus(customerOrderId, status);
     }
+
+
 }

@@ -5,6 +5,7 @@ import br.com.tp.lanchescaieiras._core.commons.dtos.fooditem.FoodItemImageDTO;
 import br.com.tp.lanchescaieiras._core.commons.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemGateway;
 import br.com.tp.lanchescaieiras._core.commons.utils.FoodItemImageRules;
+import br.com.tp.lanchescaieiras._core.commons.utils.Logger;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItem;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImage;
 
@@ -22,6 +23,7 @@ public class CreateFoodItemUseCase {
     }
 
     public FoodItem execute(FoodItemDTO foodItemDTO) {
+        Logger.info("Iniciando criação de item de alimentação: " + foodItemDTO.getName());
         if (existsByName(foodItemDTO.getName())) {
             throw new FoodItemException("Item de Alimentação já cadastrado com o nome: " + foodItemDTO.getName(), 409);
         }
@@ -32,14 +34,13 @@ public class CreateFoodItemUseCase {
 
         FoodItem foodItem = new FoodItem(foodItemDTO);
         List<FoodItemImage> invalidFoodItemImages = new ArrayList<>();
-
         splitValidAndInvalidIFoodItemList(foodItemDTO, foodItem, invalidFoodItemImages);
-
-        foodItem = foodItemGateway.save(foodItem);
+        foodItem = foodItemGateway.createFoodItemImage(foodItem);
 
         if (!invalidFoodItemImages.isEmpty()) {
             foodItem.getImages().addAll(invalidFoodItemImages);
         }
+        Logger.info("Item de alimentação criado com sucesso: " + foodItem.getName());
         return foodItem;
     }
 
@@ -48,6 +49,7 @@ public class CreateFoodItemUseCase {
     }
 
     private void splitValidAndInvalidIFoodItemList(FoodItemDTO foodItemDTO, FoodItem foodItem, List<FoodItemImage> invalidFoodItemImages) {
+        Logger.debug("Separando imagens válidas e inválidas para o item de alimentação: " + foodItemDTO.getName());
         for (FoodItemImageDTO imageDTO : foodItemDTO.getImages()) {
             try {
                 foodItem.getImages().add(new FoodItemImage(imageDTO, foodItemImageRules));

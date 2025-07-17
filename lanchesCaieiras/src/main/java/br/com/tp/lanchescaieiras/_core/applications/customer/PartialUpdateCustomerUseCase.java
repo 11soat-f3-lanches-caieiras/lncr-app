@@ -28,7 +28,7 @@ public class PartialUpdateCustomerUseCase {
     }
 
     private Customer getById(Integer id) {
-        Customer customer = customerGateway.findById(id);
+        Customer customer = customerGateway.getCustomerById(id);
         if (customer == null) {
             throw new CustomerException("Cliente não encontrado com o ID: " + id, 404);
         }

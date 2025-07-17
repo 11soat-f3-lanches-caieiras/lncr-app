@@ -16,6 +16,7 @@ public class UpdateCustomerOrderUseCase {
     }
 
     public CustomerOrder updateStatusById(Integer customerOrderId, String newStatus, Boolean forceUpdate) {
+        Logger.info("Iniciando atualização de status do pedido com id: " + customerOrderId + " para o status: " + newStatus);
         CustomerOrder updateCustomerOrder= this.customerOrderGateway.getCustomerOrderById(customerOrderId);
 
         if (updateCustomerOrder != null) {
@@ -35,12 +36,14 @@ public class UpdateCustomerOrderUseCase {
                     break;
             }
             CustomerOrderUseCaseUtils.getCustomerDetails(updateCustomerOrder, this.customerOrderGateway);
+            Logger.info("Status do pedido atualizado com sucesso: " + updateCustomerOrder.getId() + " para o status: " + updateCustomerOrder.getStatus());
             return updateCustomerOrder;
         }
         throw new CustomerOrderException("Não encontrado pedido com o id: " +customerOrderId,404);
     }
 
     private void updateStatusToCancel(CustomerOrder updateCustomerOrder, String oldStatus) {
+        Logger.info("Atualizando status do pedido: " + updateCustomerOrder.getId() + " para Cancelled");
         try {
             this.customerOrderGateway.cancelPaymentChargeByCustomerOrderId(updateCustomerOrder.getId());
         } catch (Exception e) {
@@ -62,6 +65,7 @@ public class UpdateCustomerOrderUseCase {
     }
 
     private void updateStatusToReceived(CustomerOrder updateCustomerOrder) {
+        Logger.debug("Atualizando status do pedido: " + updateCustomerOrder.getId() + " para Received");
         updateCustomerOrder = this.customerOrderGateway.getCustomerOrderById(updateCustomerOrder.getId(), true);
         CustomerOrderUseCaseUtils.getFoodItemsDetails(updateCustomerOrder, this.customerOrderGateway);
         this.customerOrderGateway.createKitchenOrder(updateCustomerOrder);

@@ -21,12 +21,12 @@ public class GetCustomerUseCase {
             throw new CustomerException("Limite deve ser maior que 0 e menor ou igual a 50", 400);
         }
 
-        return customerGateway.findAll(limit.orElse(10));
+        return customerGateway.getAllCustomers(limit.orElse(10));
     }
 
     public Customer getById(Integer id) {
         Logger.info("Buscando cliente com ID: " + id);
-        Customer customer = customerGateway.findById(id);
+        Customer customer = customerGateway.getCustomerById(id);
         if (customer == null) {
             throw new CustomerException("Cliente não encontrado com o ID: " + id, 404);
         }
@@ -37,7 +37,7 @@ public class GetCustomerUseCase {
 
     public Customer getByDocumentNumber(String documentNumber) {
         Logger.info("Buscando cliente com número de documento: " + documentNumber);
-        Customer customer = customerGateway.findByDocumentNumber(documentNumber);
+        Customer customer = customerGateway.getCustomerByDocumentNumber(documentNumber);
         if (customer == null) {
             throw new CustomerException("Cliente não encontrado com o número de documento: " + documentNumber, 404);
         }

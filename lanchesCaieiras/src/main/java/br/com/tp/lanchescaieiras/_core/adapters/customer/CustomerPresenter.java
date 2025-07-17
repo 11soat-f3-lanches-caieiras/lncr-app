@@ -14,26 +14,26 @@ public class CustomerPresenter {
     }
 
     public CustomerDTO created(Customer customer) {
-        return customerMapper.domainToDto(customer);
+        return customerMapper.customerToDomain(customer);
     }
 
     public List<CustomerDTO> getAll(List<Customer> customerList) {
-        return customerList.stream().map(customerMapper::domainToDto).toList();
+        return customerList.stream().map(customerMapper::customerToDomain).toList();
     }
 
     public CustomerDTO getbyId(Customer customer) {
-        return customerMapper.domainToDto(customer);
+        return customerMapper.customerToDomain(customer);
     }
 
     public CustomerDTO getByDocumentNumber(Customer customer) {
-        return customerMapper.domainToDto(customer);
+        return customerMapper.customerToDomain(customer);
     }
 
     public CustomerDTO partialUpdatedById(Customer customer) {
-        return customerMapper.domainToDto(customer);
+        return customerMapper.customerToDomain(customer);
     }
 
     public List<CustomerDTO> getByIdList(List<Customer> customerList) {
-        return customerList.stream().map(customerMapper::domainToDto).toList();
+        return customerList.stream().map(customerMapper::customerToDomain).toList();
     }
 }

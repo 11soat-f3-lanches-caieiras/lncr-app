@@ -24,32 +24,16 @@ public class PaymentMercadoPagoQrDataProxy implements PaymentDatabase<PaymentMer
     }
 
     @Override
+    public void cancelPaymentOrder(String meliId) {
+        this.mercadoPagoIntegration.cancelOrder(meliId);
+    }
+
+    @Override
     public PaymentMercadopagoQrDTO createPaymentCharge(PaymentMercadopagoQrDTO paymentDTO) {
         paymentDTO = this.jpaMercadoPagoQrPostgresDatabase.save(paymentDTO);
         paymentDTO = this.mercadoPagoIntegration.createOrder(paymentDTO);
         paymentDTO = this.jpaMercadoPagoQrPostgresDatabase.save(paymentDTO);
         return paymentDTO;
-
-    }
-
-    @Override
-    public PaymentMercadopagoQrDTO findPaymentById(Integer paymentId) {
-        return this.jpaMercadoPagoQrPostgresDatabase.findById(paymentId);
-    }
-
-    @Override
-    public PaymentMercadopagoQrDTO findPaymentByCustomerOrderId(Integer customerOrderId) {
-        return this.jpaMercadoPagoQrPostgresDatabase.findByCustomerOrderId(customerOrderId);
-    }
-
-    @Override
-    public PaymentMercadopagoQrDTO save(PaymentMercadopagoQrDTO paymentDTO) {
-        return this.jpaMercadoPagoQrPostgresDatabase.save(paymentDTO);
-    }
-
-    @Override
-    public void updateCustomerOrderStatus(Integer customerOrderId, String newStatus) {
-        this.customerOrderIntegration.updateCustomerOrderStatus(customerOrderId,newStatus);
     }
 
     @Override
@@ -58,17 +42,32 @@ public class PaymentMercadoPagoQrDataProxy implements PaymentDatabase<PaymentMer
     }
 
     @Override
-    public void sendNotification(String notificationType, Integer artefactId, String message) {
-        this.notificationIntegration.sendNotification(notificationType, artefactId, message);
+    public PaymentMercadopagoQrDTO findPaymentByCustomerOrderId(Integer customerOrderId) {
+        return this.jpaMercadoPagoQrPostgresDatabase.findByCustomerOrderId(customerOrderId);
     }
 
     @Override
-    public void cancelPaymentOrder(String meliId) {
-        this.mercadoPagoIntegration.cancelOrder(meliId);
+    public PaymentMercadopagoQrDTO findPaymentById(Integer paymentId) {
+        return this.jpaMercadoPagoQrPostgresDatabase.findById(paymentId);
     }
 
     @Override
     public void refundPaymentOrder(String meliId) {
         this.mercadoPagoIntegration.refundOrder(meliId);
+    }
+
+    @Override
+    public PaymentMercadopagoQrDTO save(PaymentMercadopagoQrDTO paymentDTO) {
+        return this.jpaMercadoPagoQrPostgresDatabase.save(paymentDTO);
+    }
+
+    @Override
+    public void sendNotification(String notificationType, Integer artefactId, String message) {
+        this.notificationIntegration.sendNotification(notificationType, artefactId, message);
+    }
+
+    @Override
+    public void updateCustomerOrderStatus(Integer customerOrderId, String newStatus) {
+        this.customerOrderIntegration.updateCustomerOrderStatus(customerOrderId,newStatus);
     }
 }

@@ -5,11 +5,11 @@ import br.com.tp.lanchescaieiras._core.commons.dtos.kitchenorder.KitchenOrderDTO
 
 public interface KitchenOrderIntegration {
 
+    void cancelKitchenOrderById(Integer kitchenOrderOrderId);
+
     void createKitchenOrder(CustomerOrderDTO customerOrderDTO);
 
     KitchenOrderDTO getKitchenOrderByCustomerOrderId(Integer id);
-
-    void cancelKitchenOrderById(Integer kitchenOrderOrderId);
 
     void updateKitchenOrderById(Integer kitchenOrderOrderId, String newStatus, Boolean forceUpdate);
 }

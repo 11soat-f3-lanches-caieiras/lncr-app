@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface NotificationController {
 
-    void createNotification(NotificationDTO notificationDTO);
+    List<String> getNotificationTypeList();
 
     List<NotificationDTO> getNotificationByType(String notificationType);
 
-    List<String> getNotificationTypeList();
+    void createNotification(NotificationDTO notificationDTO);
 }

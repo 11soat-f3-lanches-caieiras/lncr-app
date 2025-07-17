@@ -6,19 +6,19 @@ import java.util.List;
 
 public interface CustomerGateway {
 
-    Customer save(Customer customer);
-
-    Customer findById(Integer id);
-
-    Customer findByDocumentNumber(String documentNumber);
-
-    List<Customer> findAll(Integer _limit);
-
-    void deleteById(Integer id);
-
     boolean existsByDocumentNumber(String documentNumber);
 
     boolean existsByEmail(String email);
 
+    void deleteCustomerById(Integer id);
+
+    List<Customer> getAllCustomers(Integer _limit);
+
+    Customer getCustomerByDocumentNumber(String documentNumber);
+
+    Customer getCustomerById(Integer id);
+
     List<Customer> getCustomerByIdList(List<Integer> customerIdList);
+
+    Customer save(Customer customer);
 }

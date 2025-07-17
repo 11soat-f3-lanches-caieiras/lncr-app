@@ -12,7 +12,6 @@ tags:
   - name: Customers
   - name: CustomerOrders
   - name: FoodItems
-  - name: FoodItemImages
   - name: KitchenOrders
   - name: Notifications
   - name: Payments
@@ -21,7 +20,7 @@ tags:
   - name: ManagedOperations
     description: Operações que utilizam arquétipos gerenciáveis
 paths:
-  '/customers':
+  /customers:
     post:
       operationId: createCustomer
       description: Criar um novo cliente
@@ -142,7 +141,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/customerOrders':
+  /customerOrders:
     post:
       operationId: createCustomerOrder
       description: Criar um novo pedido do Cliente
@@ -176,7 +175,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/customerOrders/status/{status}':
+  /customerOrders/status/{status}:
     get:
       operationId: getListCustomerOrders
       description: Buscar Lista de Pedidos de Clientes por status
@@ -213,7 +212,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/foodItems':
+  /foodItems:
     post:
       operationId: createFoodItem
       description: Criar um novo item
@@ -238,8 +237,8 @@ paths:
         - FoodItems
         - CollectionOperations
       parameters:
+        - $ref: '#/components/parameters/FoodStatus'
         - $ref: '#/components/parameters/FoodCategory'
-        - $ref: '#/components/parameters/IncludeImages'
       responses:
         '200':
           $ref: '#/components/responses/ListFoodItems'
@@ -247,7 +246,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/foodItems/{foodItemId}':
+  '/foodItems/{id}':
     get:
       operationId: getFoodItem
       description: Buscar Item de Alimentacao por Id
@@ -298,65 +297,13 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/foodItems/{foodItemId}/images':
-    post:
-      operationId: createFoodItemImage
-      description: Adicionar nova imagem em um item de alimentação.
-      summary: Adicionar nova imagem em um item de alimentação.
-      tags:
-        - FoodItemImages
-        - CollectionOperations
-      parameters:
-        - $ref: '#/components/parameters/FoodItemId'
-      requestBody:
-        $ref: '#/components/requestBodies/CreateFoodItemImage'
-      responses:
-        '200':
-          $ref: '#/components/responses/GetImage'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-    get:
-      operationId: getFoodItemImagesByFoodItemId
-      description: Buscar lista de imagens de um  item de alimentação.
-      summary: Buscar lista de imagens de um  item de alimentação.
-      tags:
-        - FoodItemImages
-        - CollectionOperations
-      parameters:
-        - $ref: '#/components/parameters/FoodItemId'
-        - $ref: '#/components/parameters/IncludeImageData'
-      responses:
-        '200':
-          $ref: '#/components/responses/GetImageListByFoodItemId'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-    delete:
-      operationId: deleteFoodItemImagesByFoodItemId
-      description: Deletar todas as imagens de um  item de alimentação.
-      summary: Deletar todas as imagens de um  item de alimentação.
-      tags:
-        - FoodItemImages
-        - CollectionOperations
-      parameters:
-        - $ref: '#/components/parameters/FoodItemId'
-      responses:
-        '200':
-          $ref: '#/components/responses/DeletedResponse'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/foodItems/image/{id}':
+  /foodItems/image/{id}:
     get:
       operationId: getFoodItemImage
       description: Buscar imagem de um item de alimentacao por Id
       summary: Buscar imagem de um item de alimentacao por Id
       tags:
-        - FoodItemImages
+        - FoodItems
         - ManagedOperations
       parameters:
         - $ref: '#/components/parameters/ImageId'
@@ -372,7 +319,7 @@ paths:
       description: Atualizar imagem de um item de alimentação
       summary: Atualizar imagem de um item de alimentação
       tags:
-        - FoodItemImages
+        - FoodItems
         - ManagedOperations
       parameters:
         - $ref: "#/components/parameters/ImageId"
@@ -390,7 +337,7 @@ paths:
       description: Deletar imagem de um item de alimentação
       summary: Deletar imagem de um item de alimentação
       tags:
-        - FoodItemImages
+        - FoodItems
         - ManagedOperations
       parameters:
         - $ref: "#/components/parameters/ImageId"
@@ -585,6 +532,25 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  '/webhooks/payments/mercadoPago/callback':
+    post:
+      operationId: webhookMercadoPagoCallback
+      description: Recebe callback do MercadoPago para pagamentos.
+      summary: Webhook de callback MercadoPago
+      tags:
+        - Payments
+        - CollectionOperations
+      parameters:
+        - $ref: '#/components/parameters/MercadoPagoPaymentDataExternalReference'
+        - $ref: '#/components/parameters/MercadoPagoPaymentDataId'
+        - $ref: '#/components/parameters/MercadoPagoPaymentType'
+      requestBody:
+        $ref: '#/components/requestBodies/MercadoPagoPaymentOrderCallback'
+      responses:
+        '202':
+          $ref: "#/components/responses/Accepted"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 components:
   requestBodies:
     CreateCustomer:
@@ -640,17 +606,6 @@ components:
                 name: X-Salada
                 description: 'Pão de Hamburger, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup.'
                 category: Sandwich
-    CreateFoodItemImage:
-      description: Request para criar uma nova imagem em um item de alimentação
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateFoodItemImageType'
-          examples:
-            CreateFoodItemImage:
-              summary: Criar Imagem em um item de alimentação
-              value:
-                _data: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4"
     CreateCustomerOrder:
       description: Pedido do Cliente request body
       content:
@@ -741,6 +696,32 @@ components:
               value:
                 orderId: 1
                 amount: 29.99
+    MercadoPagoPaymentOrderCallback:
+      description: Callback das ordens de pagamento do Mercado Pago
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MercadoPagoPaymentOrderCallbackType'
+          examples:
+            MercadoPagoPaymentOrderCallback:
+              summary: Exemplo de callback de pagamento MercadoPago
+              value:
+                action: order.refunded
+                api_version: v1
+                application_id: "4844709428317965"
+                data:
+                  external_reference: "2"
+                  id: "ORDTST01K0A8YZ1ACXYH4A81YWP10WA5"
+                  status: refunded
+                  status_detail: refunded
+                  total_amount: "91.44"
+                  total_paid_amount: "91.44"
+                  type: qr
+                  version: 4
+                date_created: "2025-07-16T18:50:30.536422188Z"
+                live_mode: false
+                type: order
+                user_id: "2425846779"
     PartialUpdateCustomer:
       description: Atualizar informacoes parciais do cliente
       content:
@@ -785,6 +766,19 @@ components:
               value:
                 data: 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
   responses:
+    Accepted:
+      description: Accepted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseTemplate'
+          examples:
+            Accepted:
+              summary: Accepted
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
     BadRequest:
       description: Bad Request
       content:
@@ -858,6 +852,8 @@ components:
                     00020101021243650016COM.MERCADOLIBRE0201306368b9a641d-6c90-4e0d-a987-58ef3824a4a35204000053039865802BR5909Test
                     Test6009SAO PAULO62070503***6304B762
                   status: Charged
+
+
     CreatedCustomer:
       description: Cliente criado com sucesso
       content:
@@ -913,7 +909,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/CreatedFoodItemType'
+            $ref: '#/components/schemas/CreatedFoodType'
           examples:
             CreatedFoodItem:
               summary: Item de Alimentacao criado com sucesso
@@ -1039,10 +1035,10 @@ components:
                 category: Sandwich
                 price: 29.99
                 images:
-                  - id: 11
-                    location: "https://localhost:8080/foodItems/11" #base64
-                  - id: 12
-                    location: "https://localhost:8080/foodItems/12"
+                  - id: 1
+                    location: "https://localhost:8080/foodItems/1" #base64
+                  - id: 2
+                    location: "https://localhost:8080/foodItems/2"
     GetImage:
       description: Obter dados de uma imagem
       content:
@@ -1056,50 +1052,8 @@ components:
                 response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2021-02-11T21:41:43.286Z'
-                _content:
-                  _data: "iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0I" #base64
-
-    GetImageListByFoodItemId:
-      description: Obter lista de imagems de um Item de alimentação
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ListFoodItemImagesType'
-          examples:
-            GetImageListByFoodItemIdWithImageData:
-              summary: Lista de imagens de um item de alimentação com base64 das imagens
-              value:
-                response:
-                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                  _timestamp: '2021-02-11T21:41:43.286Z'
-                _content:
-                  - id: 11
-                    _data: "iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0I" #base64
-                  - id: 12
-                    _data: "iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0I" #base64
-                  - id: 13
-                    _data: "iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0I" #base64
-                  - id: 14
-                    _data: "iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0I" #base64
-                  - id: 15
-                    _data: "iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0I" #base64
-            GetImageListByFoodItemIdWithoutImageData:
-              summary: Lista de imagens de um item de alimentação sem base64 das imagens
-              value:
-                response:
-                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
-                  _timestamp: '2021-02-11T21:41:43.286Z'
-                _content:
-                  - id: 11
-                    location: "https://localhost:8080/foodItems/11"
-                  - id: 12
-                    location: "https://localhost:8080/foodItems/12"
-                  - id: 13
-                    location: "https://localhost:8080/foodItems/13"
-                  - id: 14
-                    location: "https://localhost:8080/foodItems/14"
-                  - id: 15
-                    location: "https://localhost:8080/foodItems/15"
+                _data: "iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0I" #base64
+                fileName: "11.png"
     GetKitchenOrder:
       description: Informação de uma ordem de pedido
       content:
@@ -1591,7 +1545,7 @@ components:
       schema:
         $ref: '#/components/schemas/CustomerTemplate/properties/documentNumber'
     FoodItemId:
-      name: foodItemId
+      name: id
       in: path
       required: true
       description: Identificador único do Item de Alimentacao
@@ -1624,20 +1578,6 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/ImageTemplate/properties/id'
-    IncludeImageData:
-      name: includeData
-      description: Parâmetro para incluir ou não base64 na pesquisa de imagens
-      in: query
-      required: false
-      schema:
-        type: boolean
-    IncludeImages:
-      name: includeImages
-      description: Parâmetro para incluir ou não informações de imagens
-      in: query
-      required: false
-      schema:
-        type: boolean
     IncludeFoodItems:
       name: includeFoodItems
       in: query
@@ -1682,6 +1622,27 @@ components:
       required: false
       schema:
         $ref: '#/components/schemas/LimitTemplate'
+    MercadoPagoPaymentDataId:
+      name: "data.id"
+      in: query
+      description: Id da Ordem de pagamento do Mercado Pago
+      required: true
+      schema:
+        type: string
+    MercadoPagoPaymentDataExternalReference:
+      name: "data.external_reference"
+      in: query
+      description: Id de referência do pagamento interno
+      required: true
+      schema:
+        type: string
+    MercadoPagoPaymentType:
+      name: type
+      in: query
+      description: Tipo de callback de pagamento
+      required: true
+      schema:
+        type: string
     NotificationType:
       name: notificationType
       in: path
@@ -1716,7 +1677,7 @@ components:
         - $ref: '#/components/schemas/CustomerTemplate'
         - required:
             - customerId
-    CreatedFoodItemType:
+    CreatedFoodType:
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/FoodItemTemplate'
@@ -1739,10 +1700,6 @@ components:
             - description
             - category
             - price
-    CreateFoodItemImageType:
-      allOf:
-        - $ref: '#/components/schemas/ImageTemplate/properties/_data'
-
     CreateKitchenOrderType:
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
@@ -1858,8 +1815,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
         - $ref: '#/components/schemas/ImageTemplate/properties/_data'
-
-
     GetKitchenOrderType:
       description: Informação de um pedido de cliente
       allOf:
@@ -1970,23 +1925,6 @@ components:
                   - description
                   - category
                   - price
-    ListFoodItemImagesType:
-      allOf:
-        - $ref: '#/components/schemas/ResponseTemplate'
-        - type: object
-      properties:
-        _content:
-          type: array
-          items:
-            allOf:
-              - $ref: '#/components/schemas/FoodItemTemplate'
-              - type: object
-                required:
-                  - id
-                  - name
-                  - description
-                  - category
-                  - price
     ListKitchenOrdersType:
       description: Lista de ordens de preparo
       allOf:
@@ -2012,6 +1950,40 @@ components:
           items:
             allOf:
               - $ref: "#/components/schemas/NotificationTemplate"
+
+    MercadoPagoPaymentOrderCallbackType:
+      allOf:
+        - $ref: "#/components/schemas/MercadoPagoPaymentOrderCallbackTemplate"
+    MercadoPagoPaymentOrderCallbackTemplate:
+      type: object
+      description: Dados do callback de pagamento de ordem do MercadoPago
+      properties:
+        action:
+          type: string
+          example: order.refunded
+        api_version:
+          type: string
+          example: v1
+        application_id:
+          type: string
+          example: "4844709428317965"
+        data:
+          type: object
+          properties:
+            external_reference:
+              type: string
+              example: "2"
+            id:
+              type: string
+              example: "ORDTST01K0A8YZ1ACXYH4A81YWP10WA5"
+            status:
+              type: string
+              example: refunded
+            status_detail:
+              type: string
+              example: refunded
+            total_amount:
+              type: string
     NotificationTemplate:
       description: Modelo de dados de uma notificação
       properties:

@@ -14,22 +14,22 @@ public class FoodItemPresenter {
     }
 
     public FoodItemDTO created(FoodItem foodItem, String imageLocationPrefix) {
-        return formatFoodItemDTO(foodItemMapper.domainToDto(foodItem), imageLocationPrefix);
+        return formatFoodItemDTO(foodItemMapper.foodItemToDTO(foodItem), imageLocationPrefix);
     }
 
     public List<FoodItemDTO> getAll(List<FoodItem> foodItemList, String imageLocationPrefix) {
-        return formatFoodItemDTOList(foodItemList.stream().map(foodItemMapper::domainToDto).toList(), imageLocationPrefix);
+        return formatFoodItemDTOList(foodItemList.stream().map(foodItemMapper::foodItemToDTO).toList(), imageLocationPrefix);
     }
 
     public FoodItemDTO getById(FoodItem foodItem, String imageLocationPrefix) {
-        return formatFoodItemDTO(foodItemMapper.domainToDto(foodItem), imageLocationPrefix);
+        return formatFoodItemDTO(foodItemMapper.foodItemToDTO(foodItem), imageLocationPrefix);
     }
     public List<FoodItemDTO> getByIdList(List<FoodItem> foodItemList){
-        return foodItemList.stream().map(foodItemMapper::domainToDto).toList();
+        return foodItemList.stream().map(foodItemMapper::foodItemToDTO).toList();
     }
 
     public FoodItemDTO patialUpdateById(FoodItem foodItem, String imageLocationPrefix) {
-        return formatFoodItemDTO(foodItemMapper.domainToDto(foodItem), imageLocationPrefix);
+        return formatFoodItemDTO(foodItemMapper.foodItemToDTO(foodItem), imageLocationPrefix);
     }
 
     private List<FoodItemDTO> formatFoodItemDTOList(List<FoodItemDTO> foodItemListDTO, String imageLocationPrefix) {

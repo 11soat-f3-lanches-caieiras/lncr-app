@@ -23,6 +23,11 @@ public class KitchenOrderIntegrationImpl implements KitchenOrderIntegration {
     }
 
     @Override
+    public void cancelKitchenOrderById(Integer kitchenOrderOrderId) {
+        updateKitchenOrderById(kitchenOrderOrderId, "Cancelled", true);
+    }
+
+    @Override
     public void createKitchenOrder(CustomerOrderDTO customerOrderDTO) {
         RestTemplate restTemplate = new RestTemplate();
         String kitchenOrderUrl = integrationConfig.getKitchenOrdersUrl();
@@ -39,10 +44,6 @@ public class KitchenOrderIntegrationImpl implements KitchenOrderIntegration {
         return IntegrationUtil.getForObject(url, KitchenOrderDTO.class);
     }
 
-    @Override
-    public void cancelKitchenOrderById(Integer kitchenOrderOrderId) {
-        updateKitchenOrderById(kitchenOrderOrderId, "Cancelled", true);
-    }
     @Override
     public void updateKitchenOrderById(Integer kitchenOrderOrderId, String newStatus, Boolean forceUpdate) {
         String url = integrationConfig.getKitchenOrdersUrl() +"/" + kitchenOrderOrderId + "/updateStatus/" + newStatus + "?forceUpdate="+forceUpdate;

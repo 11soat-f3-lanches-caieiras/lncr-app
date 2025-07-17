@@ -18,7 +18,7 @@ public class PaymentGatewayImpl implements PaymentGateway<PaymentMercadopagoQR> 
     }
 
     @Override
-    public PaymentMercadopagoQR createCharge(PaymentMercadopagoQR payment) {
+    public PaymentMercadopagoQR createPaymentOrder(PaymentMercadopagoQR payment) {
         PaymentMercadopagoQrDTO paymentMercadopagoQrDTO = this.paymentMercadopagoQRMapper.paymentMercadopagoQrToDTO(payment);
         paymentMercadopagoQrDTO = this.paymentDatabase.createPaymentCharge(paymentMercadopagoQrDTO);
         return this.paymentMercadopagoQRMapper.paymentMercadopagoQrToDomain(paymentMercadopagoQrDTO);
@@ -26,7 +26,7 @@ public class PaymentGatewayImpl implements PaymentGateway<PaymentMercadopagoQR> 
     }
 
     @Override
-    public PaymentMercadopagoQR save(PaymentMercadopagoQR payment) {
+    public PaymentMercadopagoQR savePayment(PaymentMercadopagoQR payment) {
         PaymentMercadopagoQrDTO paymentMercadopagoQrDTO = this.paymentMercadopagoQRMapper.paymentMercadopagoQrToDTO(payment);
         paymentMercadopagoQrDTO = this.paymentDatabase.save(paymentMercadopagoQrDTO);
         return this.paymentMercadopagoQRMapper.paymentMercadopagoQrToDomain(paymentMercadopagoQrDTO);
@@ -62,12 +62,12 @@ public class PaymentGatewayImpl implements PaymentGateway<PaymentMercadopagoQR> 
     }
 
     @Override
-    public void cancelPaymentOrder(String meliId) {
+    public void cancelPaymentOrderByProviderId(String meliId) {
         this.paymentDatabase.cancelPaymentOrder(meliId);
     }
 
     @Override
-    public void refundPaymentOrder(String meliId) {
+    public void refundPaymentOrderByProviderId(String meliId) {
         this.paymentDatabase.refundPaymentOrder(meliId);
     }
 }

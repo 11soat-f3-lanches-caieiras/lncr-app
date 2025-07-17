@@ -2,6 +2,7 @@ package br.com.tp.lanchescaieiras._core.applications.fooditem;
 
 import br.com.tp.lanchescaieiras._core.commons.exceptions.FoodItemException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.fooditem.FoodItemGateway;
+import br.com.tp.lanchescaieiras._core.commons.utils.Logger;
 import br.com.tp.lanchescaieiras._core.domain.fooditem.FoodItemImage;
 
 public class GetFoodItemImageUseCase {
@@ -13,6 +14,7 @@ public class GetFoodItemImageUseCase {
     }
 
     public FoodItemImage getById(Integer foodItemImageId) {
+        Logger.info("Iniciando busca de imagem com id: " + foodItemImageId);
         FoodItemImage foodItemImage = foodItemGateway.getFoodItemImageById(foodItemImageId);
         if (foodItemImage == null) {
             throw new FoodItemException("Não encontrada imagem com id: " + foodItemImageId, 404);
@@ -21,7 +23,6 @@ public class GetFoodItemImageUseCase {
         if (foodItemImage.get_data() == null) {
             throw new FoodItemException("Não encontrado arquivo " + foodItemImage.getFileName() + " no sistema de arquivo.", 500);
         }
-
         return foodItemImage;
     }
 }

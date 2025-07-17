@@ -21,13 +21,13 @@ public class FoodItemGatewayImpl implements FoodItemGateway {
     }
 
     @Override
-    public void delete(FoodItem foodItem) {
-        this.foodItemDatabase.delete(this.foodItemMapper.domainToDto(foodItem));
+    public void deleteFoodItemImage(FoodItem foodItem) {
+        this.foodItemDatabase.delete(this.foodItemMapper.foodItemToDTO(foodItem));
     }
 
     @Override
-    public void delete(FoodItemImage foodItemImage) {
-        this.foodItemDatabase.delete(this.foodItemMapper.imageDomainToDto(foodItemImage));
+    public void deleteFoodItemImage(FoodItemImage foodItemImage) {
+        this.foodItemDatabase.delete(this.foodItemMapper.foodItemImageToDTO(foodItemImage));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class FoodItemGatewayImpl implements FoodItemGateway {
     @Override
     public List<FoodItemImage> getAllImagesByFoodItemId(Integer foodItemId, Boolean includeData) {
         List<FoodItemImageDTO> foodItemImageDTOList = this.foodItemDatabase.findAllFoodItemImagesByFoodItemId(foodItemId, includeData);
-        return foodItemMapper.imageDtoListToDomainList(foodItemImageDTOList);
+        return foodItemMapper.foodItemImageToDomainList(foodItemImageDTOList);
     }
 
     @Override
@@ -56,13 +56,13 @@ public class FoodItemGatewayImpl implements FoodItemGateway {
         Integer categoryId = category == null ? null : FoodItemCategory.fromDescription(category).getId();
         return this.foodItemDatabase.findAllFoodItems(_limit, categoryId, includeImages)
                 .stream()
-                .map(foodItemMapper::dtoToDomain)
+                .map(foodItemMapper::foodItemToDomain)
                 .toList();
     }
 
     @Override
     public FoodItem getFoodItemById(Integer foodItemId, Boolean includeImages) {
-        return this.foodItemMapper.dtoToDomain(this.foodItemDatabase.findFoodItemById(foodItemId,includeImages));
+        return this.foodItemMapper.foodItemToDomain(this.foodItemDatabase.findFoodItemById(foodItemId,includeImages));
     }
 
     @Override
@@ -73,32 +73,32 @@ public class FoodItemGatewayImpl implements FoodItemGateway {
     @Override
     public List<FoodItem> getFoodItemByIdList(List<Integer> foodItemIds) {
         List<FoodItemDTO> foodItemDTOList =  this.foodItemDatabase.findFoodItemByIdList(foodItemIds);
-        return foodItemDTOList.stream().map(foodItemMapper::dtoToDomain).toList();
+        return foodItemDTOList.stream().map(foodItemMapper::foodItemToDomain).toList();
     }
 
     @Override
     public FoodItemImage getFoodItemImageById(Integer foodItemImageId) {
-        return foodItemMapper.imageDtoToDomain(foodItemDatabase.findFoodItemImageById(foodItemImageId));
+        return foodItemMapper.foodItemImageToDomain(foodItemDatabase.findFoodItemImageById(foodItemImageId));
     }
 
     @Override
-    public FoodItem save(FoodItem foodItem) {
-        FoodItemDTO foodItemDTO = this.foodItemMapper.domainToDto(foodItem);
+    public FoodItem createFoodItemImage(FoodItem foodItem) {
+        FoodItemDTO foodItemDTO = this.foodItemMapper.foodItemToDTO(foodItem);
         foodItemDTO = this.foodItemDatabase.create(foodItemDTO);
-        return this.foodItemMapper.dtoToDomain(foodItemDTO);
+        return this.foodItemMapper.foodItemToDomain(foodItemDTO);
     }
 
     @Override
     public FoodItem saveFoodItem(FoodItem foodItem) {
-        FoodItemDTO foodItemDTO = this.foodItemMapper.domainToDto(foodItem);
+        FoodItemDTO foodItemDTO = this.foodItemMapper.foodItemToDTO(foodItem);
         foodItemDTO = this.foodItemDatabase.save(foodItemDTO);
-        return this.foodItemMapper.dtoToDomain(foodItemDTO);
+        return this.foodItemMapper.foodItemToDomain(foodItemDTO);
     }
 
     @Override
-    public FoodItemImage save(FoodItemImage foodItemImage) {
-        FoodItemImageDTO foodItemImageDTO = foodItemMapper.imageDomainToDto(foodItemImage);
+    public FoodItemImage createFoodItemImage(FoodItemImage foodItemImage) {
+        FoodItemImageDTO foodItemImageDTO = foodItemMapper.foodItemImageToDTO(foodItemImage);
         foodItemImageDTO = this.foodItemDatabase.save(foodItemImageDTO);
-        return foodItemMapper.imageDtoToDomain(foodItemImageDTO);
+        return foodItemMapper.foodItemImageToDomain(foodItemImageDTO);
     }
 }

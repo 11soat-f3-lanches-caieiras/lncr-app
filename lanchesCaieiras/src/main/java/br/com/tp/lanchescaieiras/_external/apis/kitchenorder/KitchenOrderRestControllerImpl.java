@@ -6,7 +6,7 @@ import br.com.tp.lanchescaieiras._external.commons.model.ResponseListModel;
 import br.com.tp.lanchescaieiras._external.commons.model.ResponseModel;
 import br.com.tp.lanchescaieiras._external.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lanchescaieiras._external.configs.KitchenOrderConfig;
-import br.com.tp.lanchescaieiras._external.dataproxy.KichenOrderDataProxy;
+import br.com.tp.lanchescaieiras._external.dataproxy.KitchenOrderDataProxy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +17,12 @@ import java.util.List;
 public class KitchenOrderRestControllerImpl implements KitchenOrderRestController {
 
     public final KitchenOrderController kichenOrderController;
-    public final KichenOrderDataProxy kichenOrderDataProxy;
+    public final KitchenOrderDataProxy kitchenOrderDataProxy;
     public final KitchenOrderConfig kitchenOrderConfig;
 
-    public KitchenOrderRestControllerImpl(KitchenOrderController kichenOrderController, KichenOrderDataProxy kichenOrderDataProxy, KitchenOrderConfig kitchenOrderConfig) {
+    public KitchenOrderRestControllerImpl(KitchenOrderController kichenOrderController, KitchenOrderDataProxy kitchenOrderDataProxy, KitchenOrderConfig kitchenOrderConfig) {
         this.kichenOrderController = kichenOrderController;
-        this.kichenOrderDataProxy = kichenOrderDataProxy;
+        this.kitchenOrderDataProxy = kitchenOrderDataProxy;
         this.kitchenOrderConfig = kitchenOrderConfig;
     }
 

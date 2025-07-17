@@ -7,11 +7,11 @@ import java.util.List;
 public interface KitchenOrderController {
     KitchenOrderDTO createKitchenOrder(KitchenOrderDTO kitchenOrderDTO);
 
-    KitchenOrderDTO getKitchenOrderById(Integer kitchenOrderId, Boolean includeFoodItems);
-
     KitchenOrderDTO getKitchenOrderByCustomerOrderId(Integer customerOrderId, Boolean includeFoodItems);
 
-    KitchenOrderDTO updateOrderStatusById(Integer kitchenOrderId, String newStatus, Boolean forceUpdate, Boolean updateCustomerOrder);
+    KitchenOrderDTO getKitchenOrderById(Integer kitchenOrderId, Boolean includeFoodItems);
 
     List<KitchenOrderDTO> getKitchenOrderByStatusList(List<String> statusList, Boolean includeFoodItems);
+
+    KitchenOrderDTO updateOrderStatusById(Integer kitchenOrderId, String newStatus, Boolean forceUpdate, Boolean updateCustomerOrder);
 }

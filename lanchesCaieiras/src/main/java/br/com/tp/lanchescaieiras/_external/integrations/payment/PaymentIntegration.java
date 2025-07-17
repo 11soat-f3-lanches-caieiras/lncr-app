@@ -5,11 +5,11 @@ import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQr
 
 public interface PaymentIntegration {
 
-    void createPayment(Integer customerOrderId, Double totalCost);
-
-    PaymentDTO getPaymentByOrderId(Integer customerOrderId);
-
     void cancelPaymentChargeByCustomerOrderId(Integer customerOrderId);
 
+    void createPayment(Integer customerOrderId, Double totalCost);
+
     PaymentMercadopagoQrDTO getPaymentByCustomerOrderId(Integer id);
+
+    PaymentDTO getPaymentByOrderId(Integer customerOrderId);
 }

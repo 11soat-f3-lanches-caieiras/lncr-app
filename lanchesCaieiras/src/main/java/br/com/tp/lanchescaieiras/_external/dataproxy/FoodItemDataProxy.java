@@ -33,6 +33,11 @@ public class FoodItemDataProxy implements FoodItemDatabase {
     }
 
     @Override
+    public boolean existsByName(String foodItemName) {
+        return jpaFoodItemRepositoryImpl.existsByName(foodItemName, jpaFoodItemRepository,jpaFoodItemMapper);
+    }
+
+    @Override
     public FoodItemDTO create(FoodItemDTO foodItemDTO) {
         FoodItemDTO savedFoodItemDTO = jpaFoodItemRepositoryImpl.save(foodItemDTO,jpaFoodItemRepository,jpaFoodItemMapper);
         savedFoodItemDTO.setImages(foodItemDTO.getImages());
@@ -49,11 +54,6 @@ public class FoodItemDataProxy implements FoodItemDatabase {
             return savedFoodItemDTO;
         }
         return savedFoodItemDTO;
-    }
-
-    @Override
-    public boolean existsByName(String foodItemName) {
-        return jpaFoodItemRepositoryImpl.existsByName(foodItemName, jpaFoodItemRepository,jpaFoodItemMapper);
     }
 
     @Override

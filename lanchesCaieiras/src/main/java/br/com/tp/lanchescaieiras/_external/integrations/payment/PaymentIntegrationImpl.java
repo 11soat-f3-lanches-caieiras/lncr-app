@@ -20,6 +20,15 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
     }
 
     @Override
+    public void cancelPaymentChargeByCustomerOrderId(Integer customerOrderId) {
+        String url = integrationConfig.getPaymentsUrl() + "/" + customerOrderId + "/cancel";
+        log.info("Cancelando pagamento por ID do pedido. Url:{}", url);
+        ResponseEntity<String> payment = IntegrationUtil.patchForObject(url, null);
+        log.info("StatusCode {}",payment.getStatusCode());
+        log.info("Response:{}", payment.getBody());
+    }
+
+    @Override
     public void createPayment(Integer customerOrderId, Double totalCost) {
         String url = integrationConfig.getPaymentsUrl() + "/charge";
         PaymentMercadopagoQrDTO createChargeBody = new PaymentMercadopagoQrDTO(customerOrderId,totalCost);
@@ -27,6 +36,12 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
         log.info("Url:{}", url);
         log.info("Request Body:{}", IntegrationUtil.toJson(createChargeBody) );
         IntegrationUtil.postForObject(url,createChargeBody);
+    }
+
+    @Override
+    public PaymentMercadopagoQrDTO getPaymentByCustomerOrderId(Integer id) {
+        String url = integrationConfig.getPaymentsUrl() + "/customerOrder/" + id;
+        return IntegrationUtil.getForObject(url, PaymentMercadopagoQrDTO.class);
     }
 
     @Override
@@ -38,21 +53,6 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
             throw new IntegrationException("Pagamento não encontrado para o pedido: " + customerOrderId, 404);
         }
         return payment;
-    }
-
-    @Override
-    public void cancelPaymentChargeByCustomerOrderId(Integer customerOrderId) {
-        String url = integrationConfig.getPaymentsUrl() + "/" + customerOrderId + "/cancel";
-        log.info("Cancelando pagamento por ID do pedido. Url:{}", url);
-        ResponseEntity<String> payment = IntegrationUtil.patchForObject(url, null);
-        log.info("StatusCode {}",payment.getStatusCode());
-        log.info("Response:{}", payment.getBody());
-    }
-
-    @Override
-    public PaymentMercadopagoQrDTO getPaymentByCustomerOrderId(Integer id) {
-        String url = integrationConfig.getPaymentsUrl() + "/customerOrder/" + id;
-        return IntegrationUtil.getForObject(url, PaymentMercadopagoQrDTO.class);
     }
 
 

@@ -19,37 +19,6 @@ public class CustomerGatewayImpl implements CustomerGateway {
     }
 
     @Override
-    public Customer save(Customer customer) {
-        CustomerDTO customerDTO = customerDatabase.save(customerMapper.domainToDto(customer));
-        return customerMapper.dtoToDomain(customerDTO);
-    }
-
-    @Override
-    public Customer findById(Integer id) {
-        Optional<CustomerDTO> customerDTO = this.customerDatabase.findById(id);
-        if (customerDTO.isEmpty()) {
-            return null;
-        }
-        return customerMapper.dtoToDomain(customerDTO.get());
-    }
-
-    @Override
-    public Customer findByDocumentNumber(String documentNumber) {
-        Optional<CustomerDTO> customerDTO = this.customerDatabase.findByDocumentNumber(documentNumber);
-        if (customerDTO.isEmpty()) {
-            return null;
-        }
-        return customerMapper.dtoToDomain(customerDTO.get());
-    }
-
-    @Override
-    public List<Customer> findAll(Integer _limit) {
-        return customerDatabase.findAll(_limit).stream()
-                .map(customerMapper::dtoToDomain)
-                .toList();
-    }
-
-    @Override
     public boolean existsByDocumentNumber(String documentNumber) {
         return this.customerDatabase.existsByDocumentNumber(documentNumber);
     }
@@ -60,18 +29,49 @@ public class CustomerGatewayImpl implements CustomerGateway {
     }
 
     @Override
-    public List<Customer> getCustomerByIdList(List<Integer> customerIdList) {
-        List<CustomerDTO> customerDTOList = this.customerDatabase.findByIdList(customerIdList);
-        return customerDTOList.stream().map(customerMapper::dtoToDomain).toList();
+    public List<Customer> getAllCustomers(Integer _limit) {
+        return customerDatabase.findAll(_limit).stream()
+                .map(customerMapper::customerToDTO)
+                .toList();
     }
 
     @Override
-    public void deleteById(Integer id) {
-        Customer customer = this.findById(id);
+    public Customer getCustomerByDocumentNumber(String documentNumber) {
+        Optional<CustomerDTO> customerDTO = this.customerDatabase.findByDocumentNumber(documentNumber);
+        if (customerDTO.isEmpty()) {
+            return null;
+        }
+        return customerMapper.customerToDTO(customerDTO.get());
+    }
+
+    @Override
+    public Customer getCustomerById(Integer id) {
+        Optional<CustomerDTO> customerDTO = this.customerDatabase.findById(id);
+        if (customerDTO.isEmpty()) {
+            return null;
+        }
+        return customerMapper.customerToDTO(customerDTO.get());
+    }
+
+    @Override
+    public List<Customer> getCustomerByIdList(List<Integer> customerIdList) {
+        List<CustomerDTO> customerDTOList = this.customerDatabase.findByIdList(customerIdList);
+        return customerDTOList.stream().map(customerMapper::customerToDTO).toList();
+    }
+
+    @Override
+    public void deleteCustomerById(Integer id) {
+        Customer customer = this.getCustomerById(id);
         if (customer == null) {
             throw new RuntimeException("Cliente não encontrado com o ID: " + id);
         }
-        CustomerDTO customerDTO = customerMapper.domainToDto(customer);
+        CustomerDTO customerDTO = customerMapper.customerToDomain(customer);
         this.customerDatabase.deleteById(id);
+    }
+
+    @Override
+    public Customer save(Customer customer) {
+        CustomerDTO customerDTO = customerDatabase.save(customerMapper.customerToDomain(customer));
+        return customerMapper.customerToDTO(customerDTO);
     }
 }

@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface PaymentGateway<T> {
 
-    T createCharge(T payment);
+    T createPaymentOrder(T payment);
 
-    T save(T payment);
+    T savePayment(T payment);
 
     T getPaymentById(Integer paymentId);
 
@@ -18,7 +18,7 @@ public interface PaymentGateway<T> {
 
     void sendNotification(String notificationType, Integer artefactId, String message);
 
-    void cancelPaymentOrder(String meliId);
+    void cancelPaymentOrderByProviderId(String meliId);
 
-    void refundPaymentOrder(String meliId);
+    void refundPaymentOrderByProviderId(String meliId);
 }

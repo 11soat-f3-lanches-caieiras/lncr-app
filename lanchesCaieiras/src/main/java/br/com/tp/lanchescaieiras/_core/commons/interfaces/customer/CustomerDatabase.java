@@ -7,19 +7,19 @@ import java.util.Optional;
 
 public interface CustomerDatabase {
 
-    CustomerDTO save(CustomerDTO customerDto);
-
-    Optional<CustomerDTO> findById(Integer id);
-
-    List<CustomerDTO> findAll(Integer _limit);
+    void deleteById(Integer id);
 
     boolean existsByDocumentNumber(String documentNumber);
 
     boolean existsByEmail(String email);
 
+    List<CustomerDTO> findAll(Integer _limit);
+
     Optional<CustomerDTO> findByDocumentNumber(String documentNumber);
 
-    void deleteById(Integer id);
+    Optional<CustomerDTO> findById(Integer id);
 
     List<CustomerDTO> findByIdList(List<Integer> customerIdList);
+
+    CustomerDTO save(CustomerDTO customerDto);
 }

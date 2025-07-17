@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class FoodItemMapper {
 
-    public FoodItemDTO domainToDto(FoodItem foodItem) {
+    public FoodItemDTO foodItemToDTO(FoodItem foodItem) {
         if (foodItem == null) return null;
         FoodItemDTO dto = new FoodItemDTO();
         dto.setId(foodItem.getId());
@@ -19,11 +19,11 @@ public class FoodItemMapper {
         dto.setDescription(foodItem.getDescription());
         dto.setPrice(foodItem.getPrice());
         dto.setCategory(foodItem.getCategory() != null ? foodItem.getCategory().getDescription() : null);
-        dto.setImages(imageDomainListToDtoList(foodItem.getImages()));
+        dto.setImages(foodItemImageToDtoList(foodItem.getImages()));
         return dto;
     }
 
-    public FoodItem dtoToDomain(FoodItemDTO foodItemDTO) {
+    public FoodItem foodItemToDomain(FoodItemDTO foodItemDTO) {
         if (foodItemDTO == null) return null;
         FoodItem domain = new FoodItem();
         domain.setId(foodItemDTO.getId());
@@ -31,11 +31,11 @@ public class FoodItemMapper {
         domain.setDescription(foodItemDTO.getDescription());
         domain.setPrice(foodItemDTO.getPrice());
         domain.setCategory(FoodItemCategory.fromDescription(foodItemDTO.getCategory()));
-        domain.setImages(imageDtoListToDomainList(foodItemDTO.getImages()));
+        domain.setImages(foodItemImageToDomainList(foodItemDTO.getImages()));
         return domain;
     }
 
-    public FoodItemImageDTO imageDomainToDto(FoodItemImage image) {
+    public FoodItemImageDTO foodItemImageToDTO(FoodItemImage image) {
         if (image == null) return null;
         FoodItemImageDTO dto = new FoodItemImageDTO();
         dto.setId(image.getId());
@@ -49,7 +49,7 @@ public class FoodItemMapper {
         return dto;
     }
 
-    public FoodItemImage imageDtoToDomain(FoodItemImageDTO dto) {
+    public FoodItemImage foodItemImageToDomain(FoodItemImageDTO dto) {
         if (dto == null) return null;
         FoodItemImage image = new FoodItemImage();
         image.setId(dto.getId());
@@ -62,13 +62,13 @@ public class FoodItemMapper {
         return image;
     }
 
-    public List<FoodItemImageDTO> imageDomainListToDtoList(List<FoodItemImage> images) {
+    public List<FoodItemImageDTO> foodItemImageToDtoList(List<FoodItemImage> images) {
         if (images == null) return null;
-        return images.stream().map(this::imageDomainToDto).collect(Collectors.toList());
+        return images.stream().map(this::foodItemImageToDTO).collect(Collectors.toList());
     }
 
-    public List<FoodItemImage> imageDtoListToDomainList(List<FoodItemImageDTO> dtos) {
+    public List<FoodItemImage> foodItemImageToDomainList(List<FoodItemImageDTO> dtos) {
         if (dtos == null) return null;
-        return dtos.stream().map(this::imageDtoToDomain).collect(Collectors.toList());
+        return dtos.stream().map(this::foodItemImageToDomain).collect(Collectors.toList());
     }
 }

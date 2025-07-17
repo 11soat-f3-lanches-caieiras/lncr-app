@@ -4,11 +4,11 @@ import br.com.tp.lanchescaieiras._core.commons.dtos.payment.PaymentMercadopagoQr
 
 public interface MercadoPagoIntegration {
 
-    String getAccessToken();
+    void cancelOrder(String meliId);
 
     PaymentMercadopagoQrDTO createOrder(PaymentMercadopagoQrDTO paymentMercadopagoQrDTO);
 
-    void cancelOrder(String meliId);
+    String getAccessToken();
 
     void refundOrder(String meliId);
 }

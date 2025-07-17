@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CustomerIntegration {
 
-    List<CustomerOrderCustomerDTO> getCustomerDetailsList(List<Integer> customerIdList);
-
     CustomerOrderCustomerDTO getCustomerDetails(Integer customerId);
+
+    List<CustomerOrderCustomerDTO> getCustomerDetailsList(List<Integer> customerIdList);
 }

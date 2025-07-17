@@ -5,6 +5,7 @@ import br.com.tp.lanchescaieiras._core.commons.enums.CustomerOrderStatus;
 import br.com.tp.lanchescaieiras._core.commons.exceptions.CustomerOrderException;
 import br.com.tp.lanchescaieiras._core.commons.interfaces.SortedByStatusCreated;
 import br.com.tp.lanchescaieiras._core.commons.utils.EnumUtils;
+import br.com.tp.lanchescaieiras._core.commons.utils.Logger;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -139,10 +140,12 @@ public class CustomerOrder implements SortedByStatusCreated {
     }
 
     private String validateNewStatusRules(String newStatus, Boolean forceUpdate) {
+        Logger.debug("Validando regras de novo status do pedido.");
         return EnumUtils.validateNewStatusRules(CustomerOrderStatus.class, this.getStatus(), newStatus, forceUpdate,
                 (message) -> new CustomerOrderException(message, 400));
     }
     private void cancelCustomerOrderRule(String newStatus) {
+        Logger.debug("Validando regra de cancelamento do pedido.");
         if (newStatus.equalsIgnoreCase(CustomerOrderStatus.CANCELLED.getDescription())) {
             if (this.status.equals(CustomerOrderStatus.CHECKOUT.getDescription()) || this.status.equals(CustomerOrderStatus.RECEIVED.getDescription())) {
                 this.status = newStatus;

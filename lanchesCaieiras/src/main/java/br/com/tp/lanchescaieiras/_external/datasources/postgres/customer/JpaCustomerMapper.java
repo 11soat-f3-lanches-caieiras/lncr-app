@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JpaCustomerMapper {
 
-    public JpaCustomerEntity toJpaCustomerPostgresEntity(CustomerDTO customerDTO) {
+    public JpaCustomerEntity customerDtoToJpa(CustomerDTO customerDTO) {
         if (customerDTO == null) {
             return null;
         }
@@ -18,7 +18,7 @@ public class JpaCustomerMapper {
 
     }
 
-    public CustomerDTO toCustomerDTO(JpaCustomerEntity jpaCustomerEntity) {
+    public CustomerDTO jpaCustomerToDTO(JpaCustomerEntity jpaCustomerEntity) {
         if (jpaCustomerEntity == null) {
             return null;
         }

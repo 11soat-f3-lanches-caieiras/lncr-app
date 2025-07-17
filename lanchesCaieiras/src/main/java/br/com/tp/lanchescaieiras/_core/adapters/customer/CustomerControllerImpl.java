@@ -27,7 +27,11 @@ public class CustomerControllerImpl implements CustomerController {
     public CustomerDTO create(CustomerDTO customerDto) {
         Customer customer = new CreateCustomerUseCase(customerGateway).execute(customerDto);
         return new CustomerPresenter(customerMapper).created(customer);
+    }
 
+    @Override
+    public void delete(Integer id) {
+        new DeleteCustomerUseCase(customerGateway).execute(id);
     }
 
     @Override
@@ -37,15 +41,21 @@ public class CustomerControllerImpl implements CustomerController {
     }
 
     @Override
+    public CustomerDTO getByDocumentNumber(String documentNumber) {
+        Customer customer = new GetCustomerUseCase(customerGateway).getByDocumentNumber(documentNumber);
+        return new CustomerPresenter(customerMapper).getByDocumentNumber(customer);
+    }
+
+    @Override
     public CustomerDTO getById(Integer id) {
         Customer customer = new GetCustomerUseCase(customerGateway).getById(id);
         return new CustomerPresenter(customerMapper).getbyId(customer);
     }
 
     @Override
-    public CustomerDTO getByDocumentNumber(String documentNumber) {
-        Customer customer = new GetCustomerUseCase(customerGateway).getByDocumentNumber(documentNumber);
-        return new CustomerPresenter(customerMapper).getByDocumentNumber(customer);
+    public List<CustomerDTO> getByIdList(List<Integer> customerIdList) {
+        List<Customer> customerList = new GetCustomerUseCase(customerGateway).getByIdList(customerIdList);
+        return new CustomerPresenter(customerMapper).getByIdList(customerList);
     }
 
     @Override
@@ -53,16 +63,5 @@ public class CustomerControllerImpl implements CustomerController {
         Customer customer = new PartialUpdateCustomerUseCase(customerGateway).execute(id, customerDTO);
         return new CustomerPresenter(customerMapper).partialUpdatedById(customer);
     }
-
-    @Override
-    public void delete(Integer id) {
-        new DeleteCustomerUseCase(customerGateway).execute(id);
-    }
-
-    @Override
-    public List<CustomerDTO> getByIdList(List<Integer> customerIdList) {
-        List<Customer> customerList = new GetCustomerUseCase(customerGateway).getByIdList(customerIdList);
-        return new CustomerPresenter(customerMapper).getByIdList(customerList);
-     }
 
 }

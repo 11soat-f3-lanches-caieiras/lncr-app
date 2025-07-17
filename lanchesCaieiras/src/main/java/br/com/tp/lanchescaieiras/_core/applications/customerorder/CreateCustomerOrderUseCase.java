@@ -16,16 +16,20 @@ public class CreateCustomerOrderUseCase {
 
     public CustomerOrder execute(CustomerOrderDTO customerOrderDTO) {
         Logger.info("Iniciando criação de pedido: " + customerOrderDTO.getId());
+
         customerOrderDTO.setStatus(CustomerOrderStatus.CHECKOUT.getDescription());
         CustomerOrder customerOrder = new CustomerOrder(customerOrderDTO);
-        //Obtendo informações do cliente
-        CustomerOrderUseCaseUtils.getCustomerDetails(customerOrder,customerOrderGateway);
-        //Obtendo informações dos items de alimentação
-        CustomerOrderUseCaseUtils.getFoodItemsDetails(customerOrder, customerOrderGateway);
-        customerOrder = this.customerOrderGateway.createCustomerOrder(customerOrder);
 
+        Logger.debug("Obtendo informações do cliente");
+        CustomerOrderUseCaseUtils.getCustomerDetails(customerOrder,customerOrderGateway);
+
+        Logger.debug("Obtendo informações dos items de alimentação");
+        CustomerOrderUseCaseUtils.getFoodItemsDetails(customerOrder, customerOrderGateway);
+
+        customerOrder = this.customerOrderGateway.createCustomerOrder(customerOrder);
         this.customerOrderGateway.createPaymentCharge(customerOrder);
         this.customerOrderGateway.sendNotification("CUSTOMER_ORDER_CHECKOUT",customerOrder.getId(),"Novo pedido realizado com id: " + customerOrder.getId() +"Aguardando pagamento");
+
         Logger.info("Pedido criado com sucesso: " + customerOrder.getId());
         return customerOrder;
     }

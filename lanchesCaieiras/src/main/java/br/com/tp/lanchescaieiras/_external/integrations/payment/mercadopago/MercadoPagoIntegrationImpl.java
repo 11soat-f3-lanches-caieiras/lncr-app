@@ -25,10 +25,17 @@ public class MercadoPagoIntegrationImpl implements MercadoPagoIntegration {
     }
 
     @Override
-    public String getAccessToken(){
-        String url = mercadoPagoConfig.getoAuthUrl();
-        String accessTokenResponse = IntegrationUtil.postForObjectWithReturn(url, setAccessTokenRequestyBody(),null);
-        return getAccessTokenValue(accessTokenResponse);
+    public void cancelOrder(String meliId) {
+        String url = mercadoPagoConfig.getOrdersUrl() + "/" + meliId + "/cancel";
+        HttpHeaders headers = setOrderHeaders();
+        try {
+            log.info("Cancelando ordem no Mercado Pago: {}", url);
+            String response =  IntegrationUtil.postForObjectWithReturn(url, null, headers);
+            log.info("Response: {}", response);
+        } catch (Exception e) {
+            log.error("Erro ao cancelar ordem no Mercado Pago: {}", e.getMessage());
+            throw new IntegrationException("Erro ao cancelar ordem no Mercado Pago", 500);
+        }
     }
 
     @Override
@@ -46,17 +53,10 @@ public class MercadoPagoIntegrationImpl implements MercadoPagoIntegration {
     }
 
     @Override
-    public void cancelOrder(String meliId) {
-        String url = mercadoPagoConfig.getOrdersUrl() + "/" + meliId + "/cancel";
-        HttpHeaders headers = setOrderHeaders();
-        try {
-            log.info("Cancelando ordem no Mercado Pago: {}", url);
-            String response =  IntegrationUtil.postForObjectWithReturn(url, null, headers);
-            log.info("Response: {}", response);
-        } catch (Exception e) {
-            log.error("Erro ao cancelar ordem no Mercado Pago: {}", e.getMessage());
-            throw new IntegrationException("Erro ao cancelar ordem no Mercado Pago", 500);
-        }
+    public String getAccessToken(){
+        String url = mercadoPagoConfig.getoAuthUrl();
+        String accessTokenResponse = IntegrationUtil.postForObjectWithReturn(url, setAccessTokenRequestyBody(),null);
+        return getAccessTokenValue(accessTokenResponse);
     }
 
     @Override

@@ -31,18 +31,18 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
 
     @Override
     public List<CustomerOrderCustomer> getCustomerDetailsList(List<Integer> customerIdList) {
-        return this.customerOrderDatabase.getCustomerDetailsList(customerIdList).stream().map(customerOrderMapper::customerInOrderToDomain).toList();
+        return this.customerOrderDatabase.findCustomerDetailsList(customerIdList).stream().map(customerOrderMapper::customerInOrderToDomain).toList();
     }
 
     @Override
     public CustomerOrderCustomer getCustomerDetails(Integer customerId) {
-        CustomerOrderCustomerDTO customerOrderCustomerDTO = this.customerOrderDatabase.getCustomerDetails(customerId);
+        CustomerOrderCustomerDTO customerOrderCustomerDTO = this.customerOrderDatabase.findCustomerDetails(customerId);
         return this.customerOrderMapper.customerInOrderToDomain(customerOrderCustomerDTO);
     }
 
     @Override
     public List<CustomerOrderFoodItem> getFoodItemsDetails(List<Integer> foodItemListIds) {
-        return this.customerOrderDatabase.getFoodItemsDetailsList(foodItemListIds)
+        return this.customerOrderDatabase.findFoodItemsDetailsList(foodItemListIds)
                 .stream()
                 .map(customerOrderMapper::foodItemInOrderToDomain)
                 .toList();
@@ -65,13 +65,13 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
 
     @Override
     public CustomerOrder getCustomerOrderById(Integer customerOrderId, Boolean includFoodItems) {
-        CustomerOrderDTO customerOrderDTO = this.customerOrderDatabase.getCustomerOrderById(customerOrderId,includFoodItems);
+        CustomerOrderDTO customerOrderDTO = this.customerOrderDatabase.findCustomerOrderById(customerOrderId,includFoodItems);
         return this.customerOrderMapper.customerOrderToDomain(customerOrderDTO);
     }
 
     @Override
     public List<CustomerOrder> getCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems) {
-        List<CustomerOrderDTO> customerOrderDTOList = this.customerOrderDatabase.getCustomerOrderByStatusList(statusListIds,includeFoodItems);
+        List<CustomerOrderDTO> customerOrderDTOList = this.customerOrderDatabase.findCustomerOrderByStatusList(statusListIds,includeFoodItems);
         return customerOrderDTOList.stream().map(customerOrderMapper::customerOrderToDomain).toList();
     }
 
@@ -95,7 +95,7 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
 
     @Override
     public PaymentMercadopagoQrDTO getPaymentByCustomerOrderId(Integer id) {
-        return this.customerOrderDatabase.getPaymentByCustomerOrderId(id);
+        return this.customerOrderDatabase.findPaymentByCustomerOrderId(id);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class CustomerOrderGatewayImpl implements CustomerOrderGateway {
 
     @Override
     public KitchenOrderDTO getKitchenOrderByCustomerOrderId(Integer customerOrderId) {
-        return this.customerOrderDatabase.getKitchenOrderByCustomerOrderId(customerOrderId);
+        return this.customerOrderDatabase.findKitchenOrderByCustomerOrderId(customerOrderId);
     }
 
 }
