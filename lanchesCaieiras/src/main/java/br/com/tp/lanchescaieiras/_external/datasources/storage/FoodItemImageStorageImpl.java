@@ -35,6 +35,16 @@ public class FoodItemImageStorageImpl {
         }
     }
 
+    public void getImagesFiles(List<FoodItemImageDTO> foodItemImageDTOList) {
+        for (FoodItemImageDTO images : foodItemImageDTOList) {
+            try {
+                images.set_data(getImgaeData(images.getFileName()));
+            } catch (IOException e) {
+                log.error("Erro ao buscar a imagem: " + images.getFileName(), e);
+            }
+        }
+    }
+
     public void deleteImagesFiles(List<FoodItemImageDTO> foodItemImageDTOList) {
         for (FoodItemImageDTO image : foodItemImageDTOList) {
             deleteImageFile(image.getFileName());

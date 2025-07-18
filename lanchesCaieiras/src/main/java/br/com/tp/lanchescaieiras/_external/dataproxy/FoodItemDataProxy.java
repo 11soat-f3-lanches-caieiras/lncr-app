@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -101,8 +102,14 @@ public class FoodItemDataProxy implements FoodItemDatabase {
 
     @Override
     public List<FoodItemImageDTO> findAllFoodItemImagesByFoodItemId(Integer foodItemId, Boolean includeData) {
-        return jpaFoodItemImageRepositoryImpl.findAllByFoodItemId(foodItemId, jpaFoodItemImageRepository, jpaFoodItemMapper);
+        List<FoodItemImageDTO> foodItemImageDTOList = jpaFoodItemImageRepositoryImpl.findAllByFoodItemId(foodItemId, jpaFoodItemImageRepository, jpaFoodItemMapper);
+        if (includeData != null && includeData) {
+            this.foodItemImageStorageImpl.getImagesFiles(foodItemImageDTOList);
+        }
+        return foodItemImageDTOList;
     }
+
+
 
     @Override
     public FoodItemDTO save(FoodItemDTO foodItemDTO) {

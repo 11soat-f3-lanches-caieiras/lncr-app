@@ -44,7 +44,7 @@ public class PaymentMercadoPagoQrRestRestControllerImpl implements PaymentRestCo
     }
 
     @Override
-    @GetMapping("/customerOrder/{customerOrderId}")
+    @GetMapping("{customerOrderId}/customerOrder")
     public ResponseEntity<ResponseModel<PaymentMercadopagoQrDTO>> getPaymentByCustomerOrderId(@PathVariable(name = "customerOrderId")Integer customerOrderId) {
         PaymentMercadopagoQrDTO paymentMercadopagoQrDTO = this.paymentMercadoPagoQrController.getPaymentByCustomerOrderId(this.paymentMercadoPagoQrDataProxy,customerOrderId);
         return ResponseEntityModelUtil.OK(paymentMercadopagoQrDTO);

@@ -31,10 +31,10 @@ lncr:
 
   integration:
     customers-url: "${lncr.base-url}/customers"
-    customers-list-url: "${lncr.base-url}/customers/customerIdList"
+    customers-list-url: "${lncr.base-url}/customers/listIds"
     customer-orders-url: "${lncr.base-url}/customerOrders"
     food-items-url: "${lncr.base-url}/foodItems"
-    food-items-list-url: "${lncr.base-url}/foodItems/foodItemListIds"
+    food-items-list-url: "${lncr.base-url}/foodItems/listIds"
     kitchen-orders-url: "${lncr.base-url}/kitchenOrders"
     payments-url: "${lncr.base-url}/payments/mercadoPago"
     notification-url: "${lncr.base-url}/notifications"

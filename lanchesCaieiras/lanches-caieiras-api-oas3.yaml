@@ -55,7 +55,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/customer/{id}':
+  '/customer/{customerId}':
     get:
       operationId: getCustomerById
       description: Obter um cliente pelo Id
@@ -106,6 +106,21 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  '/customer/listIds/{customerIdList}':
+    get:
+      operationId: getCustomersByIdList
+      description: Obter lista de clientes através de lista de ids.
+      summary: Obter lista de clientes através de lista de ids.
+      tags:
+        - Customers
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerOrderIdList'
+      responses:
+        '200':
+          $ref: "#/components/responses/ListCustomers"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   '/customer/documentNumber/{documentNumber}':
     get:
       operationId: getCustomer
@@ -141,7 +156,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /customerOrders:
+  '/customerOrders':
     post:
       operationId: createCustomerOrder
       description: Criar um novo pedido do Cliente
@@ -175,16 +190,20 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /customerOrders/status/{status}:
+  '/customerOrders/status/{statusList}':
     get:
       operationId: getListCustomerOrders
-      description: Buscar Lista de Pedidos de Clientes por status
-      summary: Buscar Lista de Pedidos de Clientes por status
+      description: Buscar Lista de Pedidos de Clientes por lista de status
+      summary: |
+        Buscar lista de Pedidos de clientes por lista de status que serão ordenados pela ordem de status informados.
+        Exemplo: Informando a lista Ready,Preparing,Received,Checkout,Cancelled
+        Retornará uma lista ordenando na sequência dos status informados.
+        Dentro de cada status as ordens estarão ordenadas do mais antigo para o mais atual
       tags:
         - CustomerOrders
         - CollectionOperations
       parameters:
-        - $ref: '#/components/parameters/CustomerOrderStatus'
+        - $ref: '#/components/parameters/CustomerOrderStatusList'
         - $ref: '#/components/parameters/IncludeFoodItems'
       responses:
         '200':
@@ -212,7 +231,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /foodItems:
+  '/foodItems':
     post:
       operationId: createFoodItem
       description: Criar um novo item
@@ -246,7 +265,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/foodItems/{id}':
+  '/foodItems/{foodItemId}':
     get:
       operationId: getFoodItem
       description: Buscar Item de Alimentacao por Id
@@ -297,7 +316,59 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /foodItems/image/{id}:
+  '/foodItems/{foodItemId}/images':
+    post:
+      operationId: createFoodItemImage
+      description: Cria uma imagem em um item de alimentação
+      summary: Cria uma imagem em um item de alimentação
+      tags:
+        - FoodItems
+        - CollectionOperations
+      parameters:
+        - $ref: "#/components/parameters/FoodItemId"
+      requestBody:
+        $ref: "#/components/requestBodies/CreateFoodItemImage"
+      responses:
+        '201':
+          $ref: '#/components/responses/CreatedFoodItemImage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: "#/components/responses/Conflict"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      operationId: getFoodItemImageByFoodItemId
+      description: Busca lista de imagens de uma Item de Alimentação
+      summary: Busca lista de imagens de uma Item de Alimentação
+      tags:
+        - FoodItems
+        - CollectionOperations
+      parameters:
+        - $ref: "#/components/parameters/FoodItemId"
+        - $ref: "#/components/parameters/IncludeData"
+      responses:
+        '200':
+          $ref: "#/components/responses/ListFoodItemImage"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      operationId: deleteFoodItemImagesByFoodItemId
+      description: Deleta imagens de uma Item de Alimentação por id
+      summary: Deleta todas as imagens de um Item de Alimentação
+      tags:
+        - FoodItems
+        - CollectionOperations
+      parameters:
+        - $ref: "#/components/parameters/FoodItemId"
+      responses:
+        '200':
+          $ref: "#/components/responses/DeletedResponse"
+        '404':
+          $ref: "#/components/responses/NotFound"
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/foodItems/image/{foodItemImageId}':
     get:
       operationId: getFoodItemImage
       description: Buscar imagem de um item de alimentacao por Id
@@ -348,7 +419,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: "#/components/responses/InternalServerError"
-  /kitchenOrders:
+  '/kitchenOrders':
     post:
       operationId: createKitchenOrder
       description: Criar uma nova ordem de preparo
@@ -402,6 +473,28 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  '/kitchenOrders/status/{statusList}':
+    get:
+      operationId: getListKitchenrOrders
+      description: Buscar Lista de Preparos por lista de status
+      summary: |
+        Buscar lista de Preparos lista de status que serão ordenados pela ordem de status informados.
+        Exemplo: Informando a lista Ready,Preparing,Received,Cancelled
+        Retornará uma lista ordenando na sequência dos status informados.
+        Dentro de cada status as ordens estarão ordenadas do mais antigo para o mais atual
+      tags:
+        - KitchenOrders
+        - CollectionOperations
+      parameters:
+        - $ref: '#/components/parameters/KitchenOrderStatusList'
+        - $ref: '#/components/parameters/IncludeFoodItems'
+      responses:
+        '200':
+          $ref: '#/components/responses/ListKitchenOrders'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   '/kitchenOrders/customerOrder/{customerOrderId}':
     get:
       operationId: getKitchenOrderByCustomerOrder
@@ -416,24 +509,6 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/GetKitchenOrder'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-  '/kitchenOrders/status/{kitchenOrderStatus}':
-    get:
-      operationId: getKitchenOrderByCustomerOrderId
-      description: Buscar lista de preparos por status
-      summary: Buscar lista de preparos por status
-      tags:
-        - KitchenOrders
-        - CollectionOperations
-      parameters:
-        - $ref: '#/components/parameters/KitchenOrderStatusPath'
-        - $ref: '#/components/parameters/IncludeFoodItems'
-      responses:
-        '200':
-          $ref: '#/components/responses/ListKitchenOrders'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -459,6 +534,19 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  '/notifications/':
+    get:
+      operationId: getNotificationsTypeList
+      description: Buscar lista de notificações existentes
+      summary: Buscar lista de notificações existentes
+      tags:
+        - Notifications
+        - CollectionOperations
+      responses:
+        '200':
+          $ref: "#/components/responses/ListNotificationsTypes"
+        '500':
+          $ref: "#/components/responses/InternalServerError"
   '/notifications/{notificationType}':
     get:
       operationId: getNotificationsByType
@@ -495,7 +583,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/payments/mercadoPago/customerOrder/callback':
+  '/payments/mercadoPago/paymentReceived':
     patch:
       operationId: paymentReceived
       description: Informar Pagamento pagamento realizado
@@ -504,20 +592,40 @@ paths:
         - Payments
         - ManagedOperations
       parameters:
-        - $ref: '#/components/parameters/CallbackPaymentDataId'
-        - $ref: '#/components/parameters/CallbackPaymentType'
+        - $ref: "#/components/parameters/MercadoPagoPaymentDataExternalReference"
+        - $ref: "#/components/parameters/MercadoPagoPaymentDataId"
+        - $ref: "#/components/parameters/MercadoPagoPaymentType"
       responses:
         '200':
-          $ref: '#/components/responses/CallbackPayment'
+          $ref: "#/components/responses/GetPayment"
         '400':
           $ref: "#/components/responses/BadRequest"
         '500':
           $ref: "#/components/responses/InternalServerError"
-  '/payments/mercadoPago/customerOrder/{customerOrderId}':
+  '/payments/mercadoPago/{customerOrderId}/get':
     get:
       operationId: getPaymentByCustomerOrderId
       description: Buscar pagamento/cobrança pelo id do pedido do cleinte
       summary: Buscar pagamento/cobrança pelo id do pedido do cleinte
+      tags:
+        - Payments
+        - ManagedOperations
+      parameters:
+        - $ref: '#/components/parameters/CustomerOrderId'
+      responses:
+        '200':
+          $ref: "#/components/responses/GetPayment"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/payments/mercadoPago/{customerOrderId}/cancel':
+    patch:
+      operationId: cancelPaymentByCustomerOrderId
+      description: Cancela pagamento/cobrança pelo id do pedido do cleinte
+      summary: Cancela pagamento/cobrança pelo id do pedido do cleinte
       tags:
         - Payments
         - ManagedOperations
@@ -606,6 +714,17 @@ components:
                 name: X-Salada
                 description: 'Pão de Hamburger, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup.'
                 category: Sandwich
+    CreateFoodItemImage:
+      description: Criar Imagem em um Item de Alimentacao request body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateFoodItemImageType'
+          examples:
+            CreateFoodItemImage:
+              summary: Criar Imagem em um Item de Alimentacao
+              value:
+                _data: iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxEAAAsRAX9kX5EAAAGHaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49J++7vycgaWQ9J1c1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCc/Pg0KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLy
     CreateCustomerOrder:
       description: Pedido do Cliente request body
       content:
@@ -703,8 +822,27 @@ components:
           schema:
             $ref: '#/components/schemas/MercadoPagoPaymentOrderCallbackType'
           examples:
-            MercadoPagoPaymentOrderCallback:
+            MercadoPagoPaymentOrderCallbackProcessed:
               summary: Exemplo de callback de pagamento MercadoPago
+              value:
+                action: order.cancelled
+                api_version: v1
+                application_id: "4844709428317965"
+                data:
+                  external_reference: "2"
+                  id: "ORDTST01K0A8YZ1ACXYH4A81YWP10WA5"
+                  status: processed
+                  status_detail: accredited
+                  total_amount: "91.44"
+                  total_paid_amount: "91.44"
+                  type: qr
+                  version: 4
+                date_created: "2025-07-16T18:50:30.536422188Z"
+                live_mode: false
+                type: order
+                user_id: "2425846779"
+            MercadoPagoPaymentOrderCallbackRefunded:
+              summary: Exemplo de callback de pagamento MercadoPago estornada
               value:
                 action: order.refunded
                 api_version: v1
@@ -714,6 +852,25 @@ components:
                   id: "ORDTST01K0A8YZ1ACXYH4A81YWP10WA5"
                   status: refunded
                   status_detail: refunded
+                  total_amount: "91.44"
+                  total_paid_amount: "91.44"
+                  type: qr
+                  version: 4
+                date_created: "2025-07-16T18:50:30.536422188Z"
+                live_mode: false
+                type: order
+                user_id: "2425846779"
+            MercadoPagoPaymentOrderCallbackCancelled:
+              summary: Exemplo de callback de pagamento MercadoPago
+              value:
+                action: order.cancelled
+                api_version: v1
+                application_id: "4844709428317965"
+                data:
+                  external_reference: "2"
+                  id: "ORDTST01K0A8YZ1ACXYH4A81YWP10WA5"
+                  status: cancelled
+                  status_detail: cancelled
                   total_amount: "91.44"
                   total_paid_amount: "91.44"
                   type: qr
@@ -808,9 +965,11 @@ components:
                   _timestamp: "2025-05-28T23:27:19.507008600Z"
                 payment:
                   id: 3
+                  _created: "2025-05-28T23:27:19.507008600Z"
+                  _updated: "2025-05-28T23:27:19.507008600Z"
                   orderId: 2
                   amount: 91.43
-                  storeOrderId: 8b9a641d-6c90-4e0d-a987-58ef3824a4a3
+                  meliId: 8b9a641d-6c90-4e0d-a987-58ef3824a4a3
                   qrData: >-
                     00020101021243650016COM.MERCADOLIBRE0201306368b9a641d-6c90-4e0d-a987-58ef3824a4a35204000053039865802BR5909Test
                     Test6009SAO PAULO62070503***6304B762
@@ -829,7 +988,6 @@ components:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2025-02-12T21:41:43.286Z'
                   _message: "Mensagem de conflito de recurso"
-
     CreatedPaymentCharge:
       description: Resposta do QR Code gerado e cobrado.
       content:
@@ -845,15 +1003,15 @@ components:
                   _timestamp: "2025-05-28T23:27:19.507008600Z"
                 payment:
                   id: 3
+                  _created: "2025-05-28T23:27:19.507008600Z"
+                  _updated: "2025-05-28T23:27:19.507008600Z"
                   orderId: 2
                   amount: 91.43
-                  storeOrderId: 8b9a641d-6c90-4e0d-a987-58ef3824a4a3
+                  meliId: 8b9a641d-6c90-4e0d-a987-58ef3824a4a3
                   qrData: >-
                     00020101021243650016COM.MERCADOLIBRE0201306368b9a641d-6c90-4e0d-a987-58ef3824a4a35204000053039865802BR5909Test
                     Test6009SAO PAULO62070503***6304B762
                   status: Charged
-
-
     CreatedCustomer:
       description: Cliente criado com sucesso
       content:
@@ -930,7 +1088,22 @@ components:
                       locatiton: "Tamanho da imagem excede o limite de 524288 bytes"
                     - id: 5
                       locatiton: "https://localhost:8080/foodItems/1"
-
+    CreatedFoodItemImage:
+      description: Imagem de um Item Alimentacao criado com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreatedFoodItemImageType'
+          examples:
+            CreatedFoodItem:
+              summary: Item de Alimentacao criado com sucesso
+              value:
+                _response:
+                  _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  _timestamp: '2025-02-12T21:41:43.286Z'
+                _content:
+                  id: 1
+                  locatiton: "https://localhost:8080/foodItems/1" #base64
       headers:
         Location:
           $ref: '#/components/headers/Location'
@@ -978,13 +1151,15 @@ components:
                 _response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2021-02-11T21:41:43.286Z'
-                customer:
+                _content:
                   id: 1
-                  documentNumber: '11111111111'
-                  name: José da Silva
-                  email: josedasilva@email.com.br
-                order:
-                  id: 1
+                  _created: '2021-02-11T21:41:43.286Z'
+                  _updated: '2021-02-11T21:41:43.286Z'
+                  totalCost: 39.8
+                  status: Preparing
+                  customer:
+                    id: 1
+                    name: José da Silva
                   foodItems:
                     - id: 1
                       name: X-Salada
@@ -994,17 +1169,18 @@ components:
                       name: Coca Zero
                       notes: Sem Gelo
                       price: 9.9
-                  totalCost: 39.8
-                  status: Preparing
             GetCustomerOrderWithoutIdentification:
               summary: Pedido de cliente sem identificação
               value:
                 _response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2021-02-11T21:41:43.286Z'
-                customer: null
-                order:
+                _content:
                   id: 1
+                  _created: '2021-02-11T21:41:43.286Z'
+                  _updated: '2021-02-11T21:41:43.286Z'
+                  totalCost: 39.8
+                  status: Preparing
                   foodItems:
                     - id: 1
                       name: X-Salada
@@ -1014,8 +1190,6 @@ components:
                       name: Coca Zero
                       notes: Sem Gelo
                       price: 9.9
-                  totalCost: 39.8
-                  status: Preparing
     GetFoodItem:
       description: Informação do Item de Alimentacao
       content:
@@ -1052,8 +1226,8 @@ components:
                 response:
                   _traceId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
                   _timestamp: '2021-02-11T21:41:43.286Z'
-                _data: "iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0I" #base64
-                fileName: "11.png"
+                _content:
+                  _data: "iVBORw0KGgoAAAANSUhEUgAAAEAAAAAqCAYAAAADBl3iAAAAAXNSR0I" #base64
     GetKitchenOrder:
       description: Informação de uma ordem de pedido
       content:
@@ -1118,9 +1292,11 @@ components:
                   _timestamp: "2025-05-28T23:27:19.507008600Z"
                 payment:
                   id: 3
+                  _created: "2025-05-28T23:27:19.507008600Z"
+                  _updated: "2025-05-28T23:27:19.507008600Z"
                   orderId: 2
                   amount: 91.43
-                  storeOrderId: 8b9a641d-6c90-4e0d-a987-58ef3824a4a3
+                  meliId: 8b9a641d-6c90-4e0d-a987-58ef3824a4a3
                   qrData: >-
                     00020101021243650016COM.MERCADOLIBRE0201306368b9a641d-6c90-4e0d-a987-58ef3824a4a35204000053039865802BR5909Test
                     Test6009SAO PAULO62070503***6304B762
@@ -1326,6 +1502,106 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ListFoodItemsType'
+          examples:
+            ListFoodItemsWithOutImages:
+              summary: Lista de Items de alimentação sem imagens | includeImages = false
+              value:
+                _response:
+                  _traceId: cc359cff-d9c0-4f33-9a59-3a41674a826f
+                  _timestamp: 2025-07-18T13:15:50.272564100Z
+                _content:
+                  - id: 1
+                    name: X-Salada
+                    description: Pão de Hamburger, hamburger bovino de 120g, queijo, tomate, salada, maionese, ketchup.
+                    price: 29.99
+                    category: Sandwich
+                  - id: 2
+                    name: Cachorro-quente
+                    description: Pão de cahorro-quente, 1 salsicha, purê de batata, maionese, ketchup, mostarda,vinagrete e batata palha
+                    price: 12.5
+                    category: Sandwich
+            ListFoodItemsWithImages:
+              summary: Lista de Items de alimentação com imagens | includeImages = true
+              value:
+                _response:
+                  _traceId: 7e03309f-8d65-4529-9de6-88060fe9be28
+                  _timestamp: 2025-07-18T13:21:12.613721300Z
+                _content:
+                  - id: 6
+                    name: Sundae
+                    description: Sorvete de creme com castanhas picadas e cobertura de Chocolate, Morango ou Caramelo
+                    price: 9.99
+                    category: Dessert
+                    images:
+                      - id: 61
+                        location: http://localhost:8080/foodItems/image/61
+                      - id: 62
+                        location: http://localhost:8080/foodItems/image/62
+                      - id: 63
+                        location: http://localhost:8080/foodItems/image/63
+                  - id: 7
+                    name: Petit Gateau
+                    description: Petit Gateu com bola de sorvete
+                    price: 15.0
+                    category: Dessert
+                    images: []
+                  - id: 8
+                    name: Salada de Fruta
+                    description: Salada de Frutas com frutas da estação
+                    price: 12.99
+                    category: Dessert
+                    images:
+                      - id: 81
+                        location: http://localhost:8080/foodItems/image/81
+                      - id: 82
+                        location: http://localhost:8080/foodItems/image/82
+                      - id: 83
+                        location: http://localhost:8080/foodItems/image/83
+                      - id: 84
+                        location: http://localhost:8080/foodItems/image/84
+                      - id: 85
+                        location: http://localhost:8080/foodItems/image/85
+    ListFoodItemImage:
+      description: Lista de Items de Alimentacao retornados com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListFoodItemImagesType'
+          examples:
+            ListImages:
+              summary: Lista de Items de alimentação com imagens | includeData = false
+              value:
+                _response:
+                  _traceId: 7e03309f-8d65-4529-9de6-88060fe9be28
+                  _timestamp: 2025-07-18T13:21:12.613721300Z
+                _content:
+                  - id: 81
+                    location: http://localhost:8080/foodItems/image/81
+                  - id: 82
+                    location: http://localhost:8080/foodItems/image/82
+                  - id: 83
+                    location: http://localhost:8080/foodItems/image/83
+                  - id: 84
+                    location: http://localhost:8080/foodItems/image/84
+                  - id: 85
+                    location: http://localhost:8080/foodItems/image/85
+            ListImagesWithData:
+              summary: Lista de Items de alimentação com imagens | includeData = true
+              value:
+                _response:
+                  _traceId: 7e03309f-8d65-4529-9de6-88060fe9be28
+                  _timestamp: 2025-07-18T13:21:12.613721300Z
+                _content:
+                  - id: 81
+                    _data: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4
+                  - id: 82
+                    _data: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4
+                  - id: 83
+                    _data: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4
+                  - id: 84
+                    _data: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4
+                  - id: 85
+                    _data: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4
     ListKitchenOrders:
       description: Lista de ordens de preparo
       content:
@@ -1394,7 +1670,7 @@ components:
                 _response:
                   _traceId: 9bc2bea1-6586-4870-9940-f99b7979189e
                   _timestamp: "2025-05-29T11:14:05.927893900Z"
-                notifications:
+                _content:
                   - id: 1
                     notificationType: PAYMENT
                     artefactId: 2
@@ -1405,6 +1681,29 @@ components:
                     artefactId: 3
                     message: "Cobrança criada para o pedido: 3. Valor: 100.00"
                     createdAt: "2025-05-29T20:27:19.481908"
+    ListNotificationsTypes:
+      description: Lista de tipos de notificações
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListNotificationTypesType'
+          examples:
+            ListNotification:
+              summary: Lista de tipos de notificações notificações
+              value:
+                _response:
+                  _traceId: 9bc2bea1-6586-4870-9940-f99b7979189e
+                  _timestamp: "2025-05-29T11:14:05.927893900Z"
+                _content:
+                  - CUSTOMER_ORDER_RECEIVED
+                  - PAYMENT_MERCADOPAGO_QR_REFUND
+                  - PAYMENT_MERCADOPAGO_QR_PAID
+                  - PAYMENT_MERCADOPAGO_QR_CANCELLED
+                  - PAYMENT_MERCADOPAGO_QR_CHECKOUT
+                  - KITCHEN_ORDER_CANCELLED
+                  - CUSTOMER_ORDER_CHECKOUT
+                  - KITCHEN_ORDER_RECEIVED
+                  - CUSTOMER_ORDER_CANCELLED
     NoContent:
       description: No Content
     NotFound:
@@ -1446,7 +1745,6 @@ components:
                   customer:
                     id: 1
                     name: "Tereza Nina Monteiro"
-
     UpdatedFoodItemImage:
       description: Imagem atualizada.
       content:
@@ -1513,7 +1811,7 @@ components:
         enum:
           - payment
     CustomerId:
-      name: id
+      name: customerId
       in: path
       required: true
       schema:
@@ -1524,6 +1822,16 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/OrderTemplate/properties/id'
+    CustomerOrderIdList:
+      name: customerIdList
+      in: path
+      required: true
+      schema:
+        type: array
+        items:
+          type: integer
+      style: simple
+      explode: false
     CustomerOrderNewStatus:
       description: Parâmetro para atualizar status do pedido do cliente
       name: newStatus
@@ -1531,8 +1839,8 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/CustomerOrderTemplate/properties/status'
-    CustomerOrderStatus:
-      name: status
+    CustomerOrderStatusList:
+      name: statusList
       in: path
       required: true
       schema:
@@ -1545,7 +1853,7 @@ components:
       schema:
         $ref: '#/components/schemas/CustomerTemplate/properties/documentNumber'
     FoodItemId:
-      name: id
+      name: foodItemId
       in: path
       required: true
       description: Identificador único do Item de Alimentacao
@@ -1573,13 +1881,19 @@ components:
       schema:
         type: boolean
     ImageId:
-      name: id
+      name: foodItemImageId
       in: path
       required: true
       schema:
         $ref: '#/components/schemas/ImageTemplate/properties/id'
     IncludeFoodItems:
       name: includeFoodItems
+      in: query
+      required: false
+      schema:
+        type: boolean
+    IncludeData:
+      name: includeData
       in: query
       required: false
       schema:
@@ -1603,8 +1917,8 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/KitchenOrderTemplate/properties/status'
-    KitchenOrderStatusPath:
-      name: kitchenOrderStatus
+    KitchenOrderStatusList:
+      name: statusList
       in: path
       required: true
       schema:
@@ -1615,13 +1929,6 @@ components:
       required: false
       schema:
         $ref: '#/components/schemas/KitchenOrderTemplate/properties/status'
-    Limit:
-      name: _limit
-      in: query
-      description: Quantidade limite de registros retornados
-      required: false
-      schema:
-        $ref: '#/components/schemas/LimitTemplate'
     MercadoPagoPaymentDataId:
       name: "data.id"
       in: query
@@ -1643,6 +1950,13 @@ components:
       required: true
       schema:
         type: string
+    Limit:
+      name: _limit
+      in: query
+      description: Quantidade limite de registros retornados
+      required: false
+      schema:
+        $ref: '#/components/schemas/LimitTemplate'
     NotificationType:
       name: notificationType
       in: path
@@ -1683,6 +1997,13 @@ components:
         - $ref: '#/components/schemas/FoodItemTemplate'
         - required:
             - id
+    CreatedFoodItemImageType:
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - $ref: '#/components/schemas/ImageTemplate'
+        - required:
+            - location
+
     CreatedKitchenOrderType:
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
@@ -1700,6 +2021,11 @@ components:
             - description
             - category
             - price
+    CreateFoodItemImageType:
+      allOf:
+        - $ref: '#/components/schemas/ImageTemplate/properties/_data'
+        - required:
+            - _data
     CreateKitchenOrderType:
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'
@@ -1925,6 +2251,23 @@ components:
                   - description
                   - category
                   - price
+    ListFoodItemImagesType:
+      description: Lista de Items de Alimentacao
+      allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - type: object
+      properties:
+        _content:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/ImageTemplate'
+              - type: object
+                required:
+                  - id
+                  - locatiom
+                  - _data
+
     ListKitchenOrdersType:
       description: Lista de ordens de preparo
       allOf:
@@ -1950,7 +2293,15 @@ components:
           items:
             allOf:
               - $ref: "#/components/schemas/NotificationTemplate"
-
+    ListNotificationTypesType:
+      description: Resposta para uma lista de tipos de notificações
+      allOf:
+        - $ref: "#/components/schemas/ResponseTemplate"
+      properties:
+        _content:
+          type: array
+          items:
+            type: string
     MercadoPagoPaymentOrderCallbackType:
       allOf:
         - $ref: "#/components/schemas/MercadoPagoPaymentOrderCallbackTemplate"
@@ -2015,7 +2366,12 @@ components:
           format: int32
           minimum: 1
           maximum: 999999
-        createdOn:
+        _created:
+          type: string
+          description: Timestamp da transação
+          format: date-time
+          readOnly: true
+        _updated:
           type: string
           description: Timestamp da transação
           format: date-time
@@ -2047,6 +2403,16 @@ components:
           description: Id único do pagamento
           type: integer
           format: int32
+        _created:
+          type: string
+          description: Timestamp da transação
+          format: date-time
+          readOnly: true
+        _updated:
+          type: string
+          description: Timestamp da transação
+          format: date-time
+          readOnly: true
         orderId:
           description: Id do Pedido do Cliente
           type: integer
@@ -2054,7 +2420,7 @@ components:
         amount:
           description: Valor total do pagamento
           type: number
-        storeOrderId:
+        meliId:
           description: Id da cobrança no Mercado Pago
           type: string
           format: uuid
@@ -2067,6 +2433,7 @@ components:
           enum:
             - Charged
             - Paid
+            - Cancelled
         paymentId:
           description: Id do Pagamento
           type: integer

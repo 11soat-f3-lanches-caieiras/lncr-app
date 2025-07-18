@@ -55,7 +55,7 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
 
     }
     @Override
-    @GetMapping("/foodItemListIds/{foodItemIdList}")
+    @GetMapping("/listIds/{foodItemIdList}")
     public ResponseEntity<ResponseListModel<FoodItemDTO>> getFoodItemByIdList(@PathVariable(name = "foodItemIdList") List<Integer> foodItemIdList) {
         List<FoodItemDTO> foodItemDTOList = this.foodItemController.getByIdList(foodItemIdList,foodItemDataProxy);
         return ResponseEntityModelUtil.listOK(foodItemDTOList);

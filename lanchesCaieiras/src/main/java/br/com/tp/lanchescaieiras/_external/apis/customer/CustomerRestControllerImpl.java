@@ -61,7 +61,7 @@ public class CustomerRestControllerImpl implements CustomerRestController {
     }
 
     @Override
-    @GetMapping("/customerIdList/{customerIdList}")
+    @GetMapping("/listIds/{customerIdList}")
     public ResponseEntity<ResponseListModel<CustomerDTO>> getCustomerByIdList(@PathVariable(name="customerIdList") List<Integer> customerIdList) {
         List<CustomerDTO> customerDTOList = this.customerController.getByIdList(customerIdList);
         return ResponseEntityModelUtil.listOK(customerDTOList);
