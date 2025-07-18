@@ -1,0 +1,83 @@
+package br.com.tp.lncr.external.apis.customer;
+
+import br.com.tp.lncr.core.commons.dtos.customer.CustomerDTO;
+import br.com.tp.lncr.core.commons.interfaces.customer.CustomerController;
+import br.com.tp.lncr.external.commons.model.ResponseListModel;
+import br.com.tp.lncr.external.commons.model.ResponseModel;
+import br.com.tp.lncr.external.commons.utils.ResponseEntityModelUtil;
+import br.com.tp.lncr.external.configs.CustomerConfig;
+import br.com.tp.lncr.external.datasources.postgres.customer.JpaCustomerReposityImpl;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+
+@RestController
+@RequestMapping("/customers")
+public class CustomerRestControllerImpl implements CustomerRestController {
+
+    public final CustomerController customerController;
+    public final JpaCustomerReposityImpl jpaCustomerRepository;
+    public final CustomerConfig customerConfig;
+
+    public CustomerRestControllerImpl(CustomerController customerController,
+                                      JpaCustomerReposityImpl jpaCustomerRepository,
+                                      CustomerConfig customerConfig) {
+        this.customerController = customerController;
+        this.jpaCustomerRepository = jpaCustomerRepository;
+        this.customerConfig = customerConfig;
+    }
+
+    @Override
+    @PostMapping
+    public ResponseEntity<ResponseModel<CustomerDTO>> createCustomer(@RequestBody CustomerDTO customerDto) {
+        customerDto = this.customerController.create(customerDto);
+        return ResponseEntityModelUtil.created(customerDto, customerConfig.getLocationPrefix());
+    }
+
+    @Override
+    @GetMapping
+    public ResponseEntity<ResponseListModel<CustomerDTO>> getAllCustomers(@RequestParam("_limit") Optional<Integer> _limit) {
+        List<CustomerDTO> listCustomerDTO = this.customerController.getAll(_limit);
+        return ResponseEntityModelUtil.listOK(listCustomerDTO);
+    }
+
+    @Override
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseModel<CustomerDTO>> getCustomerById(@PathVariable("id") Integer id) {
+        CustomerDTO customerDTO = this.customerController.getById(id);
+        return ResponseEntityModelUtil.OK(customerDTO);
+    }
+
+
+
+    @Override
+    @GetMapping("/documentNumber/{documentNumber}")
+    public ResponseEntity<ResponseModel<CustomerDTO>> getCustomerByDocumentNumber(@PathVariable("documentNumber") String documentNumber) {
+        CustomerDTO customerDTO = this.customerController.getByDocumentNumber(documentNumber);
+        return ResponseEntityModelUtil.OK(customerDTO);
+    }
+
+    @Override
+    @GetMapping("/listIds/{customerIdList}")
+    public ResponseEntity<ResponseListModel<CustomerDTO>> getCustomerByIdList(@PathVariable(name="customerIdList") List<Integer> customerIdList) {
+        List<CustomerDTO> customerDTOList = this.customerController.getByIdList(customerIdList);
+        return ResponseEntityModelUtil.listOK(customerDTOList);
+    }
+
+    @Override
+    @PatchMapping("/{id}")
+    public ResponseEntity<ResponseModel<CustomerDTO>> partialUpdateCustomer(@RequestBody CustomerDTO customerDTO, @PathVariable Integer id) {
+        customerDTO = this.customerController.partialUpdateById(id, customerDTO);
+        return ResponseEntityModelUtil.OK(customerDTO);
+    }
+
+    @Override
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseModel<CustomerDTO>> deleteCustomer(@PathVariable("id") Integer id) {
+        this.customerController.delete(id);
+        return ResponseEntityModelUtil.OK(null);
+    }
+}
