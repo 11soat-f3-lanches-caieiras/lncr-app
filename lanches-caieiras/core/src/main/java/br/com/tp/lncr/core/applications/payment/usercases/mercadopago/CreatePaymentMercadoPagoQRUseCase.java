@@ -20,7 +20,7 @@ public class CreatePaymentMercadoPagoQRUseCase {
         if (this.paymentGateway.getPaymentByCustomerOrderId(paymentMercadopagoQrDTO.getOrderId()) == null) {
             paymentMercadopagoQrDTO.setStatus(PaymentStatus.CHARGED.getDescription());
             PaymentMercadopagoQR paymentMercadopagoQR = new PaymentMercadopagoQR(paymentMercadopagoQrDTO);
-            paymentMercadopagoQR = (PaymentMercadopagoQR) this.paymentGateway.createPaymentOrder(paymentMercadopagoQR);
+            paymentMercadopagoQR = this.paymentGateway.createPaymentOrder(paymentMercadopagoQR);
             this.paymentGateway.sendNotification("PAYMENT_MERCADOPAGO_QR_CHECKOUT", paymentMercadopagoQR.getOrderId(), "Nova cobrança criada com id: " + paymentMercadopagoQR.getOrderId() + " Aguardando pagamento");
             Logger.info("Cobrança Mercado Pago QR criada com sucesso, id: " + paymentMercadopagoQR.getOrderId());
             return paymentMercadopagoQR;

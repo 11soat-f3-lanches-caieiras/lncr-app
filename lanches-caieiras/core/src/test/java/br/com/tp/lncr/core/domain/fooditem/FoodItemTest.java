@@ -6,12 +6,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class FoodItemTest {
     @Test
     void testConstructorAndGetters() {
         FoodItemImage image = new FoodItemImage(1, 1, "data", "location", "file.png", "png", null);
-        FoodItem item = new FoodItem(1, "Coxinha", "Salgado", 7.5, FoodItemCategory.SNACK, Arrays.asList(image));
+        FoodItem item = new FoodItem(1, "Coxinha", "Salgado", 7.5, FoodItemCategory.SNACK, List.of(image));
         Assertions.assertEquals(1, item.getId());
         Assertions.assertEquals("Coxinha", item.getName());
         Assertions.assertEquals("Salgado", item.getDescription());

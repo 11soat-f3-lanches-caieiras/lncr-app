@@ -5,12 +5,13 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 
 public class KitchenOrderTest {
     @Test
     void testConstructorAndGetters() {
         KitchenOrderFoodItem item = new KitchenOrderFoodItem(1, 10, "Coxinha", "Salgado", "Sem pimenta");
-        KitchenOrder order = new KitchenOrder(1, 10, "Recebido", Arrays.asList(item), LocalDateTime.now(), LocalDateTime.now());
+        KitchenOrder order = new KitchenOrder(1, 10, "Recebido", List.of(item), LocalDateTime.now(), LocalDateTime.now());
         Assertions.assertEquals(1, order.getId());
         Assertions.assertEquals(10, order.getCustomerOrderId());
         Assertions.assertEquals("Recebido", order.getStatus());
@@ -23,7 +24,7 @@ public class KitchenOrderTest {
         order.setId(2);
         order.setCustomerOrderId(20);
         order.setStatus("Preparing");
-        order.setFoodItems(Arrays.asList(new KitchenOrderFoodItem()));
+        order.setFoodItems(List.of(new KitchenOrderFoodItem()));
         Assertions.assertEquals(2, order.getId());
         Assertions.assertEquals(20, order.getCustomerOrderId());
         Assertions.assertEquals("Preparing", order.getStatus());

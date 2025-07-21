@@ -27,7 +27,7 @@ class KitchenOrderDTOTest {
     void setAndGetFieldsIndividually() {
         KitchenOrderDTO dto = new KitchenOrderDTO();
         KitchenOrderFoodItemDTO foodItem = new KitchenOrderFoodItemDTO();
-        List<KitchenOrderFoodItemDTO> foodItems = Arrays.asList(foodItem);
+        List<KitchenOrderFoodItemDTO> foodItems = List.of(foodItem);
         LocalDateTime now = LocalDateTime.now();
         dto.setId(11);
         dto.setCustomerOrderId(21);

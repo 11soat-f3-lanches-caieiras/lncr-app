@@ -11,13 +11,14 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class CustomerOrderTest {
     @Test
     void testConstructorAndGetters() {
         CustomerOrderCustomer customer = new CustomerOrderCustomer(1, "Cliente Teste");
         CustomerOrderFoodItem item = new CustomerOrderFoodItem(1, 1, "Coxinha", "Salgado", 7.5, "Sem pimenta");
-        CustomerOrder order = new CustomerOrder(10, CustomerOrderStatus.RECEIVED.getDescription(), 7.5, LocalDateTime.now(), LocalDateTime.now(), customer, Arrays.asList(item));
+        CustomerOrder order = new CustomerOrder(10, CustomerOrderStatus.RECEIVED.getDescription(), 7.5, LocalDateTime.now(), LocalDateTime.now(), customer, List.of(item));
         Assertions.assertEquals(10, order.getId());
         Assertions.assertEquals("Received", order.getStatus());
         Assertions.assertEquals(7.5, order.getTotalCost());
@@ -34,7 +35,7 @@ public class CustomerOrderTest {
         CustomerOrderCustomer customer = new CustomerOrderCustomer(2, "Outro Cliente");
         order.setCustomer(customer);
         CustomerOrderFoodItem item = new CustomerOrderFoodItem(2, 20, "Pastel", "Pastel de queijo", 8.0, "Com queijo extra");
-        order.setFoodItems(Arrays.asList(item));
+        order.setFoodItems(List.of(item));
         Assertions.assertEquals(20, order.getId());
         Assertions.assertEquals("Checkout", order.getStatus());
         Assertions.assertEquals(8.0, order.getTotalCost());
@@ -61,7 +62,7 @@ public class CustomerOrderTest {
         itemDTO.setDescription("Esfiha de carne");
         itemDTO.setPrice(6.0);
         itemDTO.setNotes("Sem cebola");
-        dto.setFoodItems(Arrays.asList(itemDTO));
+        dto.setFoodItems(List.of(itemDTO));
         CustomerOrder order = new CustomerOrder(dto);
         Assertions.assertEquals(30, order.getId());
         Assertions.assertEquals("Received", order.getStatus());
@@ -86,7 +87,7 @@ public class CustomerOrderTest {
     void testToString() {
         CustomerOrderCustomer customer = new CustomerOrderCustomer(1, "Cliente Teste");
         CustomerOrderFoodItem item = new CustomerOrderFoodItem(1, 1, "Coxinha", "Salgado", 7.5, "Sem pimenta");
-        CustomerOrder order = new CustomerOrder(10, CustomerOrderStatus.RECEIVED.getDescription(), 7.5, LocalDateTime.now(), LocalDateTime.now(), customer, Arrays.asList(item));
+        CustomerOrder order = new CustomerOrder(10, CustomerOrderStatus.RECEIVED.getDescription(), 7.5, LocalDateTime.now(), LocalDateTime.now(), customer, List.of(item));
         String str = order.toString();
         Assertions.assertTrue(str.contains("CustomerOrder{"));
     }

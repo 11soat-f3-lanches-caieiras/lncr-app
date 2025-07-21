@@ -78,7 +78,7 @@ public class KitchenOrderDTO {
                 ", status='" + status + '\'' +
                 ", created=" + created +
                 ", updated=" + updated +
-                ", foodItems=" + foodItems.stream().toString() +
+                ", foodItems=" + foodItems.stream() +
                 '}';
     }
 }

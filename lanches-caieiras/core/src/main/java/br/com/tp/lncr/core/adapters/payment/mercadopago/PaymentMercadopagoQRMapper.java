@@ -21,7 +21,7 @@ public class PaymentMercadopagoQRMapper {
             entity.get_updated(),
             entity.getExternalPaymentId(),
             entity.getQrData(),
-            entity.getMeliId() != null ? entity.getMeliId().toString() : null
+            entity.getMeliId() != null ? entity.getMeliId() : null
         );
     }
 

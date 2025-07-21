@@ -27,7 +27,7 @@ class GetNotificationUseCaseTest {
     @Test
     void deveRetornarNotificacoesPorTipo() {
         Notification notification = mock(Notification.class);
-        when(notificationGateway.getNotificationsByType("INFO")).thenReturn(Arrays.asList(notification));
+        when(notificationGateway.getNotificationsByType("INFO")).thenReturn(Collections.singletonList(notification));
         List<Notification> result = useCase.getByType("INFO");
         assertEquals(1, result.size());
         assertEquals(notification, result.get(0));

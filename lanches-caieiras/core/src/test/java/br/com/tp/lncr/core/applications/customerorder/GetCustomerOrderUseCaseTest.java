@@ -43,7 +43,7 @@ class GetCustomerOrderUseCaseTest {
     @Test
     void deveBuscarPedidosPorStatusComSucesso() {
         CustomerOrder order = mock(CustomerOrder.class);
-        List<CustomerOrder> orders = Arrays.asList(order);
+        List<CustomerOrder> orders = Collections.singletonList(order);
         when(gateway.getCustomerOrderByStatusList(anyList(), anyBoolean())).thenReturn(orders);
         List<CustomerOrder> result = useCase.getByStatusList(Collections.singletonList(CustomerOrderStatus.CHECKOUT.getDescription()), true);
         assertFalse(result.isEmpty());

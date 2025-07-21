@@ -55,9 +55,9 @@ class GetPaymentMercadoPagoQRUseCaseTest {
 
     @Test
     void deveBuscarPagamentosPorStatusComSucesso() {
-        List<String> statusList = Arrays.asList(PaymentStatus.CHARGED.getDescription());
+        List<String> statusList = Collections.singletonList(PaymentStatus.CHARGED.getDescription());
         PaymentMercadopagoQR payment = mock(PaymentMercadopagoQR.class);
-        when(paymentGateway.getPaymentMercadoPagoQRList(anyList())).thenReturn(Arrays.asList(payment));
+        when(paymentGateway.getPaymentMercadoPagoQRList(anyList())).thenReturn(Collections.singletonList(payment));
         List<PaymentMercadopagoQR> result = useCase.getByStatusList(statusList);
         assertEquals(1, result.size());
         assertEquals(payment, result.get(0));

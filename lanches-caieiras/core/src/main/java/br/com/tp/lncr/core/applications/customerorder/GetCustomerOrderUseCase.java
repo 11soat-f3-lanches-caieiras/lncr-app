@@ -25,7 +25,7 @@ public class GetCustomerOrderUseCase {
         }
         CustomerOrderUseCaseUtils.getCustomerDetails(customerOrder,customerOrderGateway);
         if (includFoodItems == true) CustomerOrderUseCaseUtils.getFoodItemsDetails(customerOrder, customerOrderGateway);
-        Logger.info("Pedido encontrado: " + customerOrder.toString());
+        Logger.info("Pedido encontrado: " + customerOrder);
         return customerOrder;
     }
 

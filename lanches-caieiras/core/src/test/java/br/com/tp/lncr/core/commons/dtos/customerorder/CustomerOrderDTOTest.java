@@ -31,7 +31,7 @@ class CustomerOrderDTOTest {
         LocalDateTime now = LocalDateTime.now();
         CustomerOrderCustomerDTO customer = new CustomerOrderCustomerDTO(2, "Maria");
         CustomerOrderFoodItemDTO foodItem = new CustomerOrderFoodItemDTO();
-        List<CustomerOrderFoodItemDTO> foodItems = Arrays.asList(foodItem);
+        List<CustomerOrderFoodItemDTO> foodItems = List.of(foodItem);
         dto.setId(200);
         dto.setStatus("READY");
         dto.setTotalCost(50.0);

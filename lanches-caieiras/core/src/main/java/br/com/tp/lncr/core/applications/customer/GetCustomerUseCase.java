@@ -30,7 +30,7 @@ public class GetCustomerUseCase {
         if (customer == null) {
             throw new CustomerException("Cliente não encontrado com o ID: " + id, 404);
         }
-        Logger.info("Cliente encontrado: " + customer.toString());
+        Logger.info("Cliente encontrado: " + customer);
         return customer;
     }
 
@@ -41,7 +41,7 @@ public class GetCustomerUseCase {
         if (customer == null) {
             throw new CustomerException("Cliente não encontrado com o número de documento: " + documentNumber, 404);
         }
-        Logger.info("Cliente encontrado: " + customer.toString());
+        Logger.info("Cliente encontrado: " + customer);
         return customer;
     }
 
@@ -51,7 +51,7 @@ public class GetCustomerUseCase {
         if (customer == null){
             throw new CustomerException("Não foram encontrados clientes com os id: " + customerIdList, 404);
         }
-        Logger.info("Clientes encontrados: " + customer.toString());
+        Logger.info("Clientes encontrados: " + customer);
         return customer;
     }
 }

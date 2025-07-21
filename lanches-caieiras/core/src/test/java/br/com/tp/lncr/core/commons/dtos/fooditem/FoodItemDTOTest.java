@@ -25,7 +25,7 @@ class FoodItemDTOTest {
     void setAndGetFieldsIndividually() {
         FoodItemDTO dto = new FoodItemDTO();
         FoodItemImageDTO image = new FoodItemImageDTO();
-        List<FoodItemImageDTO> images = Arrays.asList(image);
+        List<FoodItemImageDTO> images = List.of(image);
         dto.setId(20);
         dto.setName("Hamburguer");
         dto.setDescription("Carne");

@@ -41,7 +41,7 @@ lncr:
     max-images: 5
     image:
       location-prefix: "${lncr.base-url}/foodItems/image"
-      directory: "./images/"
+      directory: "../../images/"
       maxSize: 524288 # 512 KB
       allowed-extensions:
         ".jpg": "FFD8"

@@ -67,7 +67,7 @@ class GetCustomerUseCaseTest {
 
     @Test
     void deveBuscarListaDeIdsComSucesso() {
-        List<Customer> customers = Arrays.asList(mock(Customer.class));
+        List<Customer> customers = Collections.singletonList(mock(Customer.class));
         when(customerGateway.getCustomerByIdList(anyList())).thenReturn(customers);
         assertEquals(customers, useCase.getByIdList(Arrays.asList(1,2)));
     }
