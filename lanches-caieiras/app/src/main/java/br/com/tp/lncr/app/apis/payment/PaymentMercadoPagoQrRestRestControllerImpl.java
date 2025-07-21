@@ -33,7 +33,7 @@ public class PaymentMercadoPagoQrRestRestControllerImpl implements PaymentRestCo
     @PostMapping("/charge")
     public ResponseEntity<ResponseModel<PaymentMercadopagoQrDTO>> createPaymentCharge(@RequestBody PaymentMercadopagoQrDTO paymentMercadopagoQrDTO) {
         paymentMercadopagoQrDTO = this.paymentMercadoPagoQrController.createPaymentCharge(this.paymentMercadoPagoQrDataProxy,paymentMercadopagoQrDTO);
-        return ResponseEntityModelUtil.created(null,mercadoPagoConfig.locationPrefix +"/" + paymentMercadopagoQrDTO.getId());
+        return ResponseEntityModelUtil.created(null, mercadoPagoConfig.getLocationPrefix() + "/" + paymentMercadopagoQrDTO.getId());
     }
 
     @Override

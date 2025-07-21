@@ -8,6 +8,7 @@ import br.com.tp.lncr.core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 import br.com.tp.lncr.core.commons.interfaces.payment.PaymentDatabase;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PaymentMercadoPagoQrDataProxy implements PaymentDatabase<PaymentMercadopagoQrDTO> {
 
@@ -43,7 +44,9 @@ public class PaymentMercadoPagoQrDataProxy implements PaymentDatabase<PaymentMer
 
     @Override
     public PaymentMercadopagoQrDTO findPaymentByCustomerOrderId(Integer customerOrderId) {
-        return this.jpaMercadoPagoQrPostgresDatabase.findByCustomerOrderId(customerOrderId);
+        return Optional.ofNullable(this.jpaMercadoPagoQrPostgresDatabase.findByCustomerOrderId(customerOrderId))
+                .filter(obj -> true)
+                .map(paymentMercadopagoQrDTO -> paymentMercadopagoQrDTO).orElse(null);
     }
 
     @Override
