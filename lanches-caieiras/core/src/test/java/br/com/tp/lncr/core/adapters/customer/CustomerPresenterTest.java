@@ -21,42 +21,42 @@ class CustomerPresenterTest {
 
     @Test
     void testCreated() {
-        Customer customer = new Customer(1, "123", "Tito", "tito@email.com");
+        Customer customer = new Customer(1, "71590186214", "Tito", "tito@email.com");
         CustomerDTO dto = presenter.created(customer);
         assertEquals(customer.getId(), dto.getId());
     }
 
     @Test
     void testGetAll() {
-        Customer customer = new Customer(1, "123", "Tito", "tito@email.com");
+        Customer customer = new Customer(1, "71590186214", "Tito", "tito@email.com");
         List<CustomerDTO> dtos = presenter.getAll(List.of(customer));
         assertEquals(1, dtos.size());
     }
 
     @Test
     void testGetById() {
-        Customer customer = new Customer(1, "123", "Tito", "tito@email.com");
+        Customer customer = new Customer(1, "71590186214", "Tito", "tito@email.com");
         CustomerDTO dto = presenter.getbyId(customer);
         assertEquals(customer.getId(), dto.getId());
     }
 
     @Test
     void testGetByDocumentNumber() {
-        Customer customer = new Customer(1, "123", "Tito", "tito@email.com");
+        Customer customer = new Customer(1, "71590186214", "Tito", "tito@email.com");
         CustomerDTO dto = presenter.getByDocumentNumber(customer);
         assertEquals(customer.getDocumentNumber(), dto.getDocumentNumber());
     }
 
     @Test
     void testPartialUpdatedById() {
-        Customer customer = new Customer(1, "123", "Tito", "tito@email.com");
+        Customer customer = new Customer(1, "71590186214", "Tito", "tito@email.com");
         CustomerDTO dto = presenter.partialUpdatedById(customer);
         assertEquals(customer.getId(), dto.getId());
     }
 
     @Test
     void testGetByIdList() {
-        Customer customer = new Customer(1, "123", "Tito", "tito@email.com");
+        Customer customer = new Customer(1, "71590186214", "Tito", "tito@email.com");
         List<CustomerDTO> dtos = presenter.getByIdList(List.of(customer));
         assertEquals(1, dtos.size());
     }

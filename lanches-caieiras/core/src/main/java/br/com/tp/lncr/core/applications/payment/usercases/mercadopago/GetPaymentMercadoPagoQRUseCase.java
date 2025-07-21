@@ -19,7 +19,7 @@ public class GetPaymentMercadoPagoQRUseCase {
 
     public PaymentMercadopagoQR getById(Integer paymentId) {
         Logger.info("Iniciando busca de pagamento Mercado Pago QR pelo id: " + paymentId);
-        PaymentMercadopagoQR paymentMercadopagoQR = (PaymentMercadopagoQR) this.paymentGateway.getPaymentById(paymentId);
+        PaymentMercadopagoQR paymentMercadopagoQR = this.paymentGateway.getPaymentById(paymentId);
         if (paymentMercadopagoQR == null){
             throw new PaymentException("Não encontrado pagamento pelo id: "+ paymentId, 404);
         }
@@ -29,7 +29,7 @@ public class GetPaymentMercadoPagoQRUseCase {
 
     public PaymentMercadopagoQR getByCustomerOrderId(Integer customerOrderId) {
         Logger.info("Iniciando busca de pagamento Mercado Pago QR pelo id do pedido do cliente: " + customerOrderId);
-        PaymentMercadopagoQR paymentMercadopagoQR = (PaymentMercadopagoQR) this.paymentGateway.getPaymentByCustomerOrderId(customerOrderId);
+        PaymentMercadopagoQR paymentMercadopagoQR = this.paymentGateway.getPaymentByCustomerOrderId(customerOrderId);
         if (paymentMercadopagoQR == null){
             throw new PaymentException("Não encontrado pagamento pelo id: "+ customerOrderId, 404);
         }

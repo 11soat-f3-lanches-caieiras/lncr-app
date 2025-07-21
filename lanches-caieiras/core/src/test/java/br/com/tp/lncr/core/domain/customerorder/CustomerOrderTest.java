@@ -19,7 +19,7 @@ public class CustomerOrderTest {
         CustomerOrderFoodItem item = new CustomerOrderFoodItem(1, 1, "Coxinha", "Salgado", 7.5, "Sem pimenta");
         CustomerOrder order = new CustomerOrder(10, CustomerOrderStatus.RECEIVED.getDescription(), 7.5, LocalDateTime.now(), LocalDateTime.now(), customer, Arrays.asList(item));
         Assertions.assertEquals(10, order.getId());
-        Assertions.assertEquals("Recebido", order.getStatus());
+        Assertions.assertEquals("Received", order.getStatus());
         Assertions.assertEquals(7.5, order.getTotalCost());
         Assertions.assertEquals(customer, order.getCustomer());
         Assertions.assertEquals(1, order.getFoodItems().size());
@@ -64,7 +64,7 @@ public class CustomerOrderTest {
         dto.setFoodItems(Arrays.asList(itemDTO));
         CustomerOrder order = new CustomerOrder(dto);
         Assertions.assertEquals(30, order.getId());
-        Assertions.assertEquals("Recebido", order.getStatus());
+        Assertions.assertEquals("Received", order.getStatus());
         Assertions.assertEquals(6.0, order.getTotalCost());
         Assertions.assertEquals("DTO Cliente", order.getCustomer().getName());
         Assertions.assertEquals(1, order.getFoodItems().size());

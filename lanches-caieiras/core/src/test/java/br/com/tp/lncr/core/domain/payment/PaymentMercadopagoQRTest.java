@@ -22,17 +22,17 @@ public class PaymentMercadopagoQRTest {
 
     @Test
     void testSetters() {
-        PaymentMercadopagoQR payment = new PaymentMercadopagoQR(2, 20, "Pendente", 100.0, "ext456", LocalDateTime.now(), LocalDateTime.now(), "meli456", "qrdata2");
+        PaymentMercadopagoQR payment = new PaymentMercadopagoQR(2, 20, "CHARGED", 100.0, "ext456", LocalDateTime.now(), LocalDateTime.now(), "meli456", "qrdata2");
         payment.setId(3);
         payment.setOrderId(30);
-        payment.setStatus("Cancelado");
+        payment.setStatus("Cancelled");
         payment.setAmount(200.0);
         payment.setExternalPaymentId("ext789");
         payment.setMeliId("meli789");
         payment.setQrData("qrdata3");
         Assertions.assertEquals(3, payment.getId());
         Assertions.assertEquals(30, payment.getOrderId());
-        Assertions.assertEquals("Cancelado", payment.getStatus());
+        Assertions.assertEquals("Cancelled", payment.getStatus());
         Assertions.assertEquals(200.0, payment.getAmount());
         Assertions.assertEquals("ext789", payment.getExternalPaymentId());
         Assertions.assertEquals("meli789", payment.getMeliId());

@@ -22,11 +22,11 @@ public class KitchenOrderTest {
         KitchenOrder order = new KitchenOrder();
         order.setId(2);
         order.setCustomerOrderId(20);
-        order.setStatus("Em preparo");
+        order.setStatus("Preparing");
         order.setFoodItems(Arrays.asList(new KitchenOrderFoodItem()));
         Assertions.assertEquals(2, order.getId());
         Assertions.assertEquals(20, order.getCustomerOrderId());
-        Assertions.assertEquals("Em preparo", order.getStatus());
+        Assertions.assertEquals("Preparing", order.getStatus());
         Assertions.assertEquals(1, order.getFoodItems().size());
     }
 }

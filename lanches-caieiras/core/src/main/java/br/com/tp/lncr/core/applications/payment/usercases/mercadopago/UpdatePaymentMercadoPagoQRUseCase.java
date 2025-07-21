@@ -18,13 +18,13 @@ public class UpdatePaymentMercadoPagoQRUseCase {
 
     public PaymentMercadopagoQR cancelByCustomerOrderId(Integer customerOrderId) {
         Logger.info("Iniciando cancelamento do pagamento para o pedido id: "+customerOrderId);
-        PaymentMercadopagoQR paymentMercadopagoQR = (PaymentMercadopagoQR) this.paymentGateway.getPaymentByCustomerOrderId(customerOrderId);
+        PaymentMercadopagoQR paymentMercadopagoQR =this.paymentGateway.getPaymentByCustomerOrderId(customerOrderId);
         if (paymentMercadopagoQR == null) {
             throw new PaymentException("Não encontrado pagamento pelo id: " + customerOrderId, 404);
         }
         String previousStatus = paymentMercadopagoQR.getStatus();
         paymentMercadopagoQR.setStatus(PaymentStatus.CANCELLED.getDescription());
-        paymentMercadopagoQR = (PaymentMercadopagoQR) this.paymentGateway.savePayment(paymentMercadopagoQR);
+        paymentMercadopagoQR = this.paymentGateway.savePayment(paymentMercadopagoQR);
 
         switch (previousStatus.toUpperCase()) {
             case "CHARGED":
@@ -41,11 +41,11 @@ public class UpdatePaymentMercadoPagoQRUseCase {
     public PaymentMercadopagoQR processPaymentReceived(String externalReference, String dataId, Map<String, Object> body) {
         Integer externalReferenceId = Integer.valueOf(externalReference);
         if (validadeOrderPayment(body)) {
-            PaymentMercadopagoQR paymentMercadopagoQR = (PaymentMercadopagoQR) this.paymentGateway.getPaymentByCustomerOrderId(externalReferenceId);
+            PaymentMercadopagoQR paymentMercadopagoQR = this.paymentGateway.getPaymentByCustomerOrderId(externalReferenceId);
             if (paymentMercadopagoQR != null && paymentMercadopagoQR.getMeliId().equals(dataId)) {
-                if (paymentMercadopagoQR.getStatus().equals(PaymentStatus.CHARGED.getDescription())) {
+                if (paymentMercadopagoQR.getStatus().equalsIgnoreCase(PaymentStatus.CHARGED.getDescription())) {
                     paymentMercadopagoQR.setStatus(PaymentStatus.PAID.getDescription());
-                    paymentMercadopagoQR = (PaymentMercadopagoQR) this.paymentGateway.savePayment(paymentMercadopagoQR);
+                    paymentMercadopagoQR = this.paymentGateway.savePayment(paymentMercadopagoQR);
                     this.paymentGateway.updateCustomerOrderStatus(externalReferenceId, "Received");
                     this.paymentGateway.sendNotification("PAYMENT_MERCADOPAGO_QR_PAID", paymentMercadopagoQR.getOrderId(), "Pagamento com id: " + paymentMercadopagoQR.getOrderId() + " finalizado.");
                     return paymentMercadopagoQR;

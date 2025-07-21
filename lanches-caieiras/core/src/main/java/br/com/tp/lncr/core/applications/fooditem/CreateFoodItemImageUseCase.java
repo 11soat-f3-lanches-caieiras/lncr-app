@@ -27,7 +27,7 @@ public class CreateFoodItemImageUseCase {
         List<FoodItemImage> foodItemImageList = foodItemGateway.getAllImagesByFoodItemId(foodItemId, false);
 
         if (foodItemImageList.size() >= maxImages) {
-            throw new FoodItemException("O item de alimentação com id " + foodItemId + " já possui 5 imagens. Subistitua uma imagem já existente", 409);
+            throw new FoodItemException("O item de alimentação com id " + foodItemId + " já possui "+maxImages+" imagens. Subistitua uma imagem já existente", 409);
         }
 
         FoodItemImage foodItemImage = new FoodItemImage(foodItemImageDTO, foodItemImageRules);

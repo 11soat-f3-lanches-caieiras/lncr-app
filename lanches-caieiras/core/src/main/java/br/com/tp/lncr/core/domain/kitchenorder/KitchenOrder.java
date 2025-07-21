@@ -104,6 +104,5 @@ public class KitchenOrder implements SortedByStatusCreated {
         return EnumUtils.validateNewStatusRules(KitchenOrderStatus.class, this.getStatus(), newStatus, forceUpdate,
                 (message) -> new KitchenOrderException(message, 400));
     }
-
 }
 

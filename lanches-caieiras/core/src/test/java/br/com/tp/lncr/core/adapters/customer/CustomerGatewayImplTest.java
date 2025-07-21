@@ -26,8 +26,8 @@ class CustomerGatewayImplTest {
 
     @Test
     void testExistsByDocumentNumber() {
-        when(customerDatabase.existsByDocumentNumber("123")).thenReturn(true);
-        assertTrue(gateway.existsByDocumentNumber("123"));
+        when(customerDatabase.existsByDocumentNumber("71590186214")).thenReturn(true);
+        assertTrue(gateway.existsByDocumentNumber("71590186214"));
     }
 
     @Test
@@ -38,7 +38,7 @@ class CustomerGatewayImplTest {
 
     @Test
     void testGetAllCustomers() {
-        CustomerDTO dto = new CustomerDTO(1, "123", "Tito", "tito@email.com");
+        CustomerDTO dto = new CustomerDTO(1, "71590186214", "Tito", "tito@email.com");
         when(customerDatabase.findAll(any())).thenReturn(List.of(dto));
         List<Customer> result = gateway.getAllCustomers(10);
         assertEquals(1, result.size());
@@ -46,16 +46,16 @@ class CustomerGatewayImplTest {
 
     @Test
     void testGetCustomerByDocumentNumber() {
-        CustomerDTO dto = new CustomerDTO(1, "123", "Tito", "tito@email.com");
-        when(customerDatabase.findByDocumentNumber("123")).thenReturn(Optional.of(dto));
-        Customer result = gateway.getCustomerByDocumentNumber("123");
+        CustomerDTO dto = new CustomerDTO(1, "71590186214", "Tito", "tito@email.com");
+        when(customerDatabase.findByDocumentNumber("71590186214")).thenReturn(Optional.of(dto));
+        Customer result = gateway.getCustomerByDocumentNumber("71590186214");
         assertNotNull(result);
-        assertEquals("123", result.getDocumentNumber());
+        assertEquals("71590186214", result.getDocumentNumber());
     }
 
     @Test
     void testGetCustomerById() {
-        CustomerDTO dto = new CustomerDTO(1, "123", "Tito", "tito@email.com");
+        CustomerDTO dto = new CustomerDTO(1, "71590186214", "Tito", "tito@email.com");
         when(customerDatabase.findById(1)).thenReturn(Optional.of(dto));
         Customer result = gateway.getCustomerById(1);
         assertNotNull(result);
@@ -64,7 +64,7 @@ class CustomerGatewayImplTest {
 
     @Test
     void testGetCustomerByIdList() {
-        CustomerDTO dto = new CustomerDTO(1, "123", "Tito", "tito@email.com");
+        CustomerDTO dto = new CustomerDTO(1, "71590186214", "Tito", "tito@email.com");
         when(customerDatabase.findByIdList(any())).thenReturn(List.of(dto));
         List<Customer> result = gateway.getCustomerByIdList(List.of(1));
         assertEquals(1, result.size());
@@ -78,8 +78,8 @@ class CustomerGatewayImplTest {
 
     @Test
     void testSave() {
-        Customer customer = new Customer(1, "123", "Tito", "tito@email.com");
-        CustomerDTO dto = new CustomerDTO(1, "123", "Tito", "tito@email.com");
+        Customer customer = new Customer(1, "71590186214", "Tito", "tito@email.com");
+        CustomerDTO dto = new CustomerDTO(1, "71590186214", "Tito", "tito@email.com");
         when(customerDatabase.save(any())).thenReturn(dto);
         Customer result = gateway.save(customer);
         assertEquals(customer.getId(), result.getId());

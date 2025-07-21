@@ -6,8 +6,6 @@ import br.com.tp.lncr.core.commons.interfaces.customer.CustomerGateway;
 import br.com.tp.lncr.core.commons.utils.Logger;
 import br.com.tp.lncr.core.domain.customer.Customer;
 
-import java.lang.reflect.Field;
-
 public class PartialUpdateCustomerUseCase {
 
     private final CustomerGateway customerGateway;
@@ -18,7 +16,7 @@ public class PartialUpdateCustomerUseCase {
 
     public Customer execute(Integer id, CustomerDTO customerDto) {
         Logger.info("Iniciando atualização parcial do cliente com ID: " + id);
-        Customer updatedCustomer = new Customer(customerDto);
+        Customer updatedCustomer = new Customer(id,customerDto.getDocumentNumber(),customerDto.getName(),customerDto.getEmail());
         validateExistsCustomerByDocumentNumberAndEmail(updatedCustomer);
         Customer actualCustomer = getById(id);
         mergeCustomerDto(actualCustomer, customerDto);
@@ -42,27 +40,25 @@ public class PartialUpdateCustomerUseCase {
 
     private void existsByDocumentNumber(Customer updatedCustomer) {
         Logger.debug("Verificando se já existe cliente com o mesmo número de documento: " + updatedCustomer.getDocumentNumber());
-        if (customerGateway.existsByDocumentNumber(updatedCustomer.getDocumentNumber())) {
+        if (updatedCustomer.getDocumentNumber() != null && customerGateway.existsByDocumentNumber(updatedCustomer.getDocumentNumber())) {
             throw new CustomerException("Cliente já cadastrado com o mesmo número de documento: " + updatedCustomer.getDocumentNumber(), 409);
         }
     }
 
     private void existsByEmail(Customer updatedCustomer) {
         Logger.debug("Verificando se já existe cliente com o mesmo número de documento: " + updatedCustomer.getDocumentNumber());
-        if (customerGateway.existsByEmail(updatedCustomer.getEmail())) {
+        if (updatedCustomer.getEmail() !=null && customerGateway.existsByEmail(updatedCustomer.getEmail())) {
             throw new CustomerException("Cliente já cadastrado com o mesmo e-mail: " + updatedCustomer.getEmail(), 409);
         }
     }
 
     private Customer mergeCustomerDto(Customer actualCustomer, CustomerDTO updatedCustomerDto) {
-        updatedCustomerDto.setId(null);
-        try {
-            for (Field field : Customer.class.getDeclaredFields()) {
-                field.setAccessible(true);
-                Object newValue = field.get(updatedCustomerDto);
-                if (newValue != null) {
-                    field.set(actualCustomer, newValue);
-                }
+        try{
+            if (actualCustomer.getName() != null && !actualCustomer.getName().equals(updatedCustomerDto.getName())) {
+                actualCustomer.setName(updatedCustomerDto.getName());
+            }
+            if (actualCustomer.getEmail() != null && !actualCustomer.getEmail().equals(updatedCustomerDto.getEmail())) {
+                actualCustomer.setEmail(updatedCustomerDto.getEmail());
             }
         } catch (Exception e) {
             throw new CustomerException("Erro ao atualizar cliente: " + e.getMessage(), 500);

@@ -35,7 +35,7 @@ public class CreateFoodItemUseCase {
         FoodItem foodItem = new FoodItem(foodItemDTO);
         List<FoodItemImage> invalidFoodItemImages = new ArrayList<>();
         splitValidAndInvalidIFoodItemList(foodItemDTO, foodItem, invalidFoodItemImages);
-        foodItem = foodItemGateway.createFoodItem(foodItem);
+        foodItem = foodItemGateway.saveFoodItem(foodItem);
 
         if (!invalidFoodItemImages.isEmpty()) {
             foodItem.getImages().addAll(invalidFoodItemImages);

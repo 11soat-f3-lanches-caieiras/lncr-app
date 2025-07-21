@@ -11,7 +11,7 @@ class CustomerMapperTest {
 
     @Test
     void testCustomerToDomain() {
-        Customer customer = new Customer(1, "123", "Tito", "tito@email.com");
+        Customer customer = new Customer(1, "71590186214", "Tito", "tito@email.com");
         CustomerDTO dto = mapper.customerToDomain(customer);
         assertEquals(customer.getId(), dto.getId());
         assertEquals(customer.getDocumentNumber(), dto.getDocumentNumber());
@@ -21,7 +21,7 @@ class CustomerMapperTest {
 
     @Test
     void testCustomerToDTO() {
-        CustomerDTO dto = new CustomerDTO(1, "123", "Tito", "tito@email.com");
+        CustomerDTO dto = new CustomerDTO(1, "71590186214", "Tito", "tito@email.com");
         Customer customer = mapper.customerToDTO(dto);
         assertEquals(dto.getId(), customer.getId());
         assertEquals(dto.getDocumentNumber(), customer.getDocumentNumber());

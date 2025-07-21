@@ -26,6 +26,10 @@ public class UpdateFoodItemImageUseCase {
         foodItemImageDTO.setFoodItemId(existFoodItemImage.getFoodItemId());
         FoodItemImage newFoodItemImage = foodItemGateway.createFoodItem(new FoodItemImage(foodItemImageDTO,foodItemImageRules));
 
+        if (newFoodItemImage == null) {
+            throw new FoodItemException("Erro ao atualizar imagem: retorno nulo do gateway.", 500);
+        }
+
         if (!existFoodItemImage.getFileName().equals(newFoodItemImage.getFileName())){
             Logger.debug("Arquivo de imagem alterado, removendo arquivo antigo: " + existFoodItemImage.getFileName());
             foodItemGateway.deleteImageFile(existFoodItemImage.getFileName());

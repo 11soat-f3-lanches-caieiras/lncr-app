@@ -18,7 +18,7 @@ class KitchenOrderMapperTest {
         KitchenOrder order = new KitchenOrder();
         order.setId(1);
         order.setCustomerOrderId(2);
-        order.setStatus("NEW");
+        order.setStatus("RECEIVED");
         order.setFoodItems(Collections.emptyList());
         KitchenOrderDTO dto = mapper.kitchenOrderToDTO(order);
         assertNotNull(dto);

@@ -20,7 +20,7 @@ class CustomerOrderMapperTest {
     void testCustomerOrderToDTOAndBack() {
         CustomerOrder order = new CustomerOrder();
         order.setId(1);
-        order.setStatus("PENDING");
+        order.setStatus("RECEIVED");
         order.setTotalCost(10.0);
         CustomerOrderCustomer customer = new CustomerOrderCustomer();
         customer.setId(2);

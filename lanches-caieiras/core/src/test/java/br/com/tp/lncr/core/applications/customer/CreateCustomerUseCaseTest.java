@@ -26,7 +26,7 @@ class CreateCustomerUseCaseTest {
     void deveCriarClienteComSucesso() {
         CustomerDTO dto = new CustomerDTO();
         dto.setName("João");
-        dto.setDocumentNumber("123");
+        dto.setDocumentNumber("71590186214");
         dto.setEmail("joao@email.com");
         when(customerGateway.existsByDocumentNumber(any())).thenReturn(false);
         when(customerGateway.existsByEmail(any())).thenReturn(false);
@@ -41,9 +41,9 @@ class CreateCustomerUseCaseTest {
     void deveLancarExcecaoSeDocumentoExistir() {
         CustomerDTO dto = new CustomerDTO();
         dto.setName("Maria");
-        dto.setDocumentNumber("123");
+        dto.setDocumentNumber("71590186214");
         dto.setEmail("maria@email.com");
-        when(customerGateway.existsByDocumentNumber("123")).thenReturn(true);
+        when(customerGateway.existsByDocumentNumber("71590186214")).thenReturn(true);
         when(customerGateway.existsByEmail(any())).thenReturn(false);
 
         CustomerException ex = assertThrows(CustomerException.class, () -> useCase.execute(dto));
@@ -54,7 +54,7 @@ class CreateCustomerUseCaseTest {
     void deveLancarExcecaoSeEmailExistir() {
         CustomerDTO dto = new CustomerDTO();
         dto.setName("Pedro");
-        dto.setDocumentNumber("456");
+        dto.setDocumentNumber("71590186214");
         dto.setEmail("pedro@email.com");
         when(customerGateway.existsByDocumentNumber(any())).thenReturn(false);
         when(customerGateway.existsByEmail("pedro@email.com")).thenReturn(true);

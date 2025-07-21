@@ -1,20 +1,23 @@
 package br.com.tp.lncr.core.commons.interfaces.payment;
 
+import br.com.tp.lncr.core.domain.payment.Payment;
+import br.com.tp.lncr.core.domain.payment.PaymentMercadopagoQR;
+
 import java.util.List;
 
-public interface PaymentGateway<T> {
+public interface PaymentGateway<T extends Payment> {
 
-    T createPaymentOrder(T payment);
+    PaymentMercadopagoQR createPaymentOrder(T payment);
 
-    T savePayment(T payment);
+    PaymentMercadopagoQR savePayment(T payment);
 
-    T getPaymentById(Integer paymentId);
+    PaymentMercadopagoQR getPaymentById(Integer paymentId);
 
-    T getPaymentByCustomerOrderId(Integer customerOrderId);
+    PaymentMercadopagoQR getPaymentByCustomerOrderId(Integer customerOrderId);
 
     void updateCustomerOrderStatus(Integer customerOrderId, String newStatus);
 
-    List<T> getPaymentMercadoPagoQRList(List<Integer> paymentStatusIdsList);
+    List<PaymentMercadopagoQR> getPaymentMercadoPagoQRList(List<Integer> paymentStatusIdsList);
 
     void sendNotification(String notificationType, Integer artefactId, String message);
 

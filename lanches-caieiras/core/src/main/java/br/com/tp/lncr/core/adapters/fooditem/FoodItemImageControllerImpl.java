@@ -24,7 +24,6 @@ public class FoodItemImageControllerImpl implements FoodItemImageController {
 
     @Override
     public FoodItemImageDTO create(Integer foodItemId, FoodItemImageDTO foodItemImageDTO, FoodItemDatabase foodItemDatabase, FoodItemImageRules foodItemImageRules) {
-
         FoodItemImage newFoodItemImage = new CreateFoodItemImageUseCase(foodItemGateway, foodItemImageRules).execute(foodItemId, foodItemImageDTO);
         return new FoodItemImagePresenter(foodItemMapper).created(newFoodItemImage, foodItemImageRules.getImageLocation());
     }

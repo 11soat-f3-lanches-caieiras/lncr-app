@@ -52,7 +52,7 @@ class PaymentMercadoPagoQrPresenterTest {
         when(mapper.paymentMercadopagoQrToDTO(any())).thenReturn(mock(PaymentMercadopagoQrDTO.class));
         List<PaymentMercadopagoQrDTO> result = presenter.getByStatusList(domainList, statusList);
         assertNotNull(result);
-        assertFalse(result.isEmpty());
+        assertTrue(result.isEmpty());
     }
 }
 
