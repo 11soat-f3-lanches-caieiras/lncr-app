@@ -2,10 +2,10 @@ HELP.md
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-/app/storage/
-/app/target/
-/app/images/
-/core/target/
+images/
+data/
+lanches-caieiras/app/target/
+lanches-caieiras/core/target/
 
 # Environment variables
 .env
