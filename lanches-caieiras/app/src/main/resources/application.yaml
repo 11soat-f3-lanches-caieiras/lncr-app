@@ -3,12 +3,11 @@ server:
 spring:
   application:
     name: Lanches Caieiras
-  jackson:
-    default-property-inclusion: non_null
+    jackson:
+      default-property-inclusion: non_null
   datasources:
     postgres:
-      url: "${POSTGRES_JDBC}"
-      jdbcUrl: "${POSTGRES_JDBC}"
+      jdbcUrl: "${POSTGRES_URL}"
       username: "${POSTGRES_USER}"
       password: "${POSTGRES_PASSWORD}"
       driver-class-name: org.postgresql.Driver
@@ -41,7 +40,7 @@ lncr:
     max-images: 5
     image:
       location-prefix: "${lncr.base-url}/foodItems/image"
-      directory: "../../images/"
+      directory: "/app/images/"
       maxSize: 524288 # 512 KB
       allowed-extensions:
         ".jpg": "FFD8"

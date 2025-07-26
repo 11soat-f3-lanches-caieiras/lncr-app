@@ -44,11 +44,11 @@ class CreateFoodItemUseCaseTest {
                 null, null, null, null));
         FoodItemDTO foodItemDTO = new FoodItemDTO(null, "X-SALADA", "DESCRIÇÃO", 25.99, FoodItemCategory.SANDWICH.getDescription(), list);
 
-        when(gateway.saveFoodItem(any(FoodItem.class))).thenReturn(item);
+        when(gateway.createFoodItem(any(FoodItem.class))).thenReturn(item);
 
         FoodItem result = useCase.execute(foodItemDTO);
         assertNotNull(result);
-        verify(gateway, times(1)).saveFoodItem(any(FoodItem.class));
+        verify(gateway, times(1)).createFoodItem(any(FoodItem.class));
         verify(imageRules, times(1)).getMaxNumberOfImages();
     }
 }

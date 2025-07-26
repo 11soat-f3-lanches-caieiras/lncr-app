@@ -44,6 +44,7 @@ class FoodItemControllerImplTest {
         Mockito.when(foodItemDatabase.findFoodItemById(1, false)).thenReturn(ITEM_DTO);
         Mockito.when(foodItemDatabase.findAllFoodItems(Mockito.anyInt(), Mockito.any(), Mockito.anyBoolean())).thenReturn(Collections.singletonList(foodItem));
         Mockito.when(foodItemDatabase.findFoodItemByIdList(Mockito.anyList())).thenReturn(Collections.singletonList(foodItem));
+        Mockito.when(foodItemDatabase.create(Mockito.any(FoodItemDTO.class))).thenReturn(foodItem);
         Mockito.when(foodItemDatabase.save(Mockito.any(FoodItemDTO.class))).thenReturn(foodItem);
         Mockito.when(foodItemDatabase.save(Mockito.any(FoodItemImageDTO.class))).thenReturn(images.get(0));
         Mockito.when(foodItemDatabase.findFoodItemImageById(1)).thenReturn(images.get(0));

@@ -70,7 +70,7 @@ public class FoodItemRestControllerImpl implements FoodItemRestController {
 
     @Override
     @DeleteMapping("/{foodItemId}")
-    public ResponseEntity<ResponseModel<FoodItemDTO>> deleteFoodItemById(@PathVariable(name = "id") Integer foodItemId) {
+    public ResponseEntity<ResponseModel<FoodItemDTO>> deleteFoodItemById(@PathVariable(name = "foodItemId") Integer foodItemId) {
         this.foodItemController.deleteById(foodItemId, foodItemDataProxy);
         return ResponseEntityModelUtil.OK(null);
     }
