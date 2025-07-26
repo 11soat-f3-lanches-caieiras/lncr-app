@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-scripts
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.postgres.containerName }}
+data:
+  01-init-user.sql: |
+    -- Garante que o usuário postgres existe
+    DO
+    $do$
+    BEGIN
+       IF NOT EXISTS (
+          SELECT FROM pg_catalog.pg_roles
+          WHERE  rolname = 'postgres') THEN
+          
+          CREATE ROLE postgres SUPERUSER CREATEDB CREATEROLE INHERIT LOGIN;
+       END IF;
+    END
+
