@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.app.name }}-deployment
-  namespace: {{ .Values.namespace }}
   labels:
     app: {{ .Values.app.name }}
 spec:
@@ -23,22 +22,11 @@ spec:
             - -c
             - |
               echo "Waiting for PostgreSQL to be ready..."
-              until pg_isready -h {{ .Values.postgres.containerName }} -p 5432 -U $POSTGRES_USER; do
+              until pg_isready -h {{ .Values.postgres.containerName }} -p 5432 -U postgres; do
                 echo "PostgreSQL is not ready yet. Waiting 5 seconds..."
                 sleep 5
               done
               echo "PostgreSQL is ready!"
-          env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.app.name }}-secret
-                  key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.app.name }}-secret
-                  key: POSTGRES_PASSWORD
       containers:
         - name: {{ .Values.app.containerName}}
           image: "{{ .Values.app.image.repository }}{{- if .Values.app.image.tag }}:{{ .Values.app.image.tag }}{{- end }}"

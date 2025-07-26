@@ -1,7 +1,5 @@
 #valores padrões para o Helm Chart
 
-# Namespace
-namespace: lanches-caieiras
 
 #Aplicação
 app:
@@ -35,8 +33,6 @@ postgres:
   containerName: lncr-db
   name: lncr-db
   url: jdbc:postgresql://lncr-db:5432/postgres
-  user: ${POSTGRES_USER}
-  password: ${POSTGRES_PASSWORD}
   database: postgres
   storage: "${PWD}/db"
   ports:
@@ -81,3 +77,11 @@ hpa:
   maxReplicas: 5
   targetCPUUtilizationPercentage: 70
   targetMemoryUtilizationPercentage: 70
+
+#Secrets
+secrets:
+  postgresPassword: ${POSTGRES_PASSWORD}
+  postgresUser: ${POSTGRES_USER}
+  mercadopagoClientId: ${MERCADOPAGO_CLIENT_ID}
+  mercadopagoSecretId: ${MERCADOPAGO_SECRET_ID}
+  mercadopagoPosId: ${MERCADOPAGO_POS_ID}

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.postgres.containerName }}-deployment
-  namespace: {{ .Values.namespace }}
+  
   labels:
     app: {{ .Values.postgres.containerName }}
 spec:
@@ -45,8 +45,6 @@ spec:
           volumeMounts:
             - name: db-storage
               mountPath: /var/lib/postgresql/data
-            - name: init-scripts
-              mountPath: /docker-entrypoint-initdb.d
           resources:
             requests:
               memory: {{ .Values.resources.postgres.requests.memory }}
@@ -79,6 +77,3 @@ spec:
           hostPath:
             path: {{ .Values.storage.database.hostPath | replace "C:/" "/run/desktop/mnt/host/c/" | replace "\\" "/" }}
             type: DirectoryOrCreate
-        - name: init-scripts
-          configMap:
-            name: postgres-init-scripts
