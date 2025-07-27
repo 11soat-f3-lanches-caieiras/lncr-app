@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.postgres.containerName }}-deployment
-  
+
   labels:
     app: {{ .Values.postgres.containerName }}
 spec:

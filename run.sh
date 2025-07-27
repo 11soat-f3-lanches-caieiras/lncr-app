@@ -1,9 +1,9 @@
 #!/bin/bash
 #Script de inicialização do ambiente local da aplicação
 BIN=$PWD
-HELM_RUN_PATH=$BIN/iac/kubernetes/
-ENV_FILE=$BIN/.env
-DOCKER_BUILD_PATH=$BIN/lanches-caieiras
+HELM_RUN_PATH="iac/kubernetes/"
+ENV_FILE="$BIN/.env"
+DOCKER_BUILD_PATH="$BIN/lanches-caieiras"
 NAMESPACE="ns-lncr"
 APP_NAME="lanches-caieiras"
 
