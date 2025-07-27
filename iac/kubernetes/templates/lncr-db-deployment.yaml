@@ -75,5 +75,5 @@ spec:
       volumes:
         - name: db-storage
           hostPath:
-            path: {{ .Values.storage.database.hostPath | replace "C:/" "/run/desktop/mnt/host/c/" | replace "\\" "/" }}
+            path: {{ .Values.storage.database.hostPath | replace "C:/" "/run/desktop/mnt/host/c/" | replace "\\" "/" | quote }}
             type: DirectoryOrCreate

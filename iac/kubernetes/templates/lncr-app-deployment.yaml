@@ -106,5 +106,5 @@ spec:
       volumes:
         - name: images-storage
           hostPath:
-            path: {{ .Values.storage.images.hostPath | replace "C:/" "/run/desktop/mnt/host/c/" | replace "\\" "/" }}
+            path: {{ .Values.storage.images.hostPath | replace "C:/" "/run/desktop/mnt/host/c/" | replace "\\" "/" | quote }}
             type: DirectoryOrCreate
