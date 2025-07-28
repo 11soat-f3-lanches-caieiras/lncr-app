@@ -56,9 +56,6 @@ Foram aplicados os conceintos de Clean Archtecture e infraesturura em Kubernetes
    POSTGRES_DB=postgres
    POSTGRES_USER= {{ seu usuario }}
    POSTGRES_PASSWORD= {{sua senha }}
-   LNCR_BASE_URL=http://localhost:8080
-   MERCADOPAGO_ORDERS_URL=https://api.mercadopago.com/v1/orders
-   MERCADOPAGO_OAUTH_URL=https://api.mercadopago.com/oauth/token
    MERCADOPAGO_CLIENT_ID= {{ seu client_id Mercado Pago }}
    MERCADOPAGO_SECRET_ID= {{ seu secret_id do Mercado Pago}}
    MERCADOPAGO_POS_ID= {{ seu pos_id do Mercado Pago }}
@@ -70,6 +67,9 @@ Foram aplicados os conceintos de Clean Archtecture e infraesturura em Kubernetes
 ```
 
 ## Demonstração
+
+Acesse o vídeo de demonstração:
+[Fase 2 - Tech Challange - 11 SOAT](https://www.youtube.com/watch?v=LjR9S2n_6DQ)
 
 # Estrutura do Projeto
 ## Arquitetura do Projeto
@@ -295,39 +295,10 @@ Princípios da Clean Architecture aplicados:
    - **Webhooks**: Endpoints para receber callbacks externos
 
 
-### 3. Arquitetura da Funcional
+### 3. Arquitetura Funcional
 
-O diagrama das imagens abaixo pode ser melhor visualizado no [draw.io](https://app.diagrams.net/#) abrindo o arquivo `lanches-caieiras-arquitetura-fincional.drawio` no diretório `docs/funcional`. 
-
-#### 3.1 Cadastro de Clientes
-![Cadastro de Clientes](docs/funcional/cadastro_cliente.png)
-
-#### 3.2 - Cadastro de Items de Alimentação
-![Cadastro de Items de Alimentação](docs/funcional/cadastro_item_alimentação.png)
-
-#### 3.3 - Novo Pedido - Checkout 
-![Pedido Recebido](docs/funcional/checkout_pedido.png)
-
-#### 3.4 - Pagamento
-![Pagamento](docs/funcional/pagamento.png)
-
-#### 3.5 - Pedido Recebido - Pagamento Confirmado
-![Pedido Recebido - Pagamento Confirmado](docs/funcional/pedido_recebido.png)
-
-#### 3.6 - Atualização Preapro
-![Atualização Preapro](docs/funcional/atualizacao_preparo.png)
-
-#### 3.7 - Cancelamento Pedido
-![Cancelamento Pedido](docs/funcional/cancelamento_pedido.png)
-
-#### 3.8 - Cancelamento Pagamento
-![Cancelamento Pagamento](docs/funcional/cancelamento_pagamento.png)
-
-#### 3.9 - Acompanhar Pedidos
-![Acompanhar Pedidos](docs/funcional/acompanhar_pedidos.png)
-
-#### 3.10 - Notificações
-![Notificações](docs/funcional/notificacoes.png)
+<iframe src="docs/funcional/lanches-caieiras-arquitetura-fincional.html" width="800" height="700">
+</iframe>
 
 
 ## Contrato da API
