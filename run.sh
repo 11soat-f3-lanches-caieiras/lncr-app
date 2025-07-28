@@ -21,9 +21,7 @@ validate_env_file() {
 validate_env_variables() {
     local env_file="$ENV_FILE"
     local required_vars=(
-        "POSTGRES_URL" "POSTGRES_USER" "POSTGRES_PASSWORD"
-        "LNCR_BASE_URL" "MERCADOPAGO_ORDERS_URL" "MERCADOPAGO_OAUTH_URL"
-        "MERCADOPAGO_CLIENT_ID" "MERCADOPAGO_SECRET_ID" "MERCADOPAGO_POS_ID"
+        "POSTGRES_URL" "POSTGRES_USER" "POSTGRES_PASSWORD" "MERCADOPAGO_CLIENT_ID" "MERCADOPAGO_SECRET_ID" "MERCADOPAGO_POS_ID"
     )
 
     echo "Validando variáveis do arquivo .env..."
