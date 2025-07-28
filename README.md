@@ -12,10 +12,10 @@
 - [Arquitetura do Projeto](#arquitetura-do-projeto)
     - [1. Arquitetura de Infraestrutura em Kubernetes](#1-arquitetura-de-infraestrutura-kubernetes)
     - [2. Arquitetura da Aplicação - Clean Architecture](#2-arquitetura-da-aplicação---clean-architecture)
-    - [3. Arquitetura Funcional](#3-arquitetura-da-funcional)
+    - [3. Arquitetura Funcional](#3-arquitetura-funcional)
         - [3.1 Cadastro de Clientes](#31-cadastro-de-clientes)
         - [3.2 Cadastro de Items de Alimentação](#32---cadastro-de-items-de-alimentação)
-        - [3.3 Novo Pedido - Checkout](#33---novo-pedido---checkout-)
+        - [3.3 Novo Pedido - Checkout](#33---novo-pedido---checkout)
         - [3.4 Pagamento](#34---pagamento)
         - [3.5 Pedido Recebido - Pagamento Confirmado](#35---pedido-recebido---pagamento-confirmado)
         - [3.6 Atualização Preparo](#36---atualização-preapro)
@@ -56,6 +56,9 @@ Foram aplicados os conceintos de Clean Archtecture e infraesturura em Kubernetes
    POSTGRES_DB=postgres
    POSTGRES_USER= {{ seu usuario }}
    POSTGRES_PASSWORD= {{sua senha }}
+   LNCR_BASE_URL=http://localhost:8080
+   MERCADOPAGO_ORDERS_URL=https://api.mercadopago.com/v1/orders
+   MERCADOPAGO_OAUTH_URL=https://api.mercadopago.com/oauth/token
    MERCADOPAGO_CLIENT_ID= {{ seu client_id Mercado Pago }}
    MERCADOPAGO_SECRET_ID= {{ seu secret_id do Mercado Pago}}
    MERCADOPAGO_POS_ID= {{ seu pos_id do Mercado Pago }}
@@ -296,19 +299,38 @@ Princípios da Clean Architecture aplicados:
 
 
 ### 3. Arquitetura Funcional
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Example HTML</title>
-</head>
-<body>
-        <iframe src="docs/funcional/lanches-caieiras-arquitetura-fincional.html" width="800" height="700">
-        Diagramas de Arquitetura Funcional
-        </iframe>
-</body>
-</html>
 
+O diagrama das imagens abaixo pode ser melhor visualizado no [draw.io](https://app.diagrams.net/#) abrindo o arquivo `lanches-caieiras-arquitetura-fincional.drawio` no diretório `docs/funcional`.
+
+#### 3.1 Cadastro de Clientes
+![Cadastro de Clientes](docs/funcional/cadastro_cliente.png)
+
+#### 3.2 - Cadastro de Items de Alimentação
+![Cadastro de Items de Alimentação](docs/funcional/cadastro_item_alimentação.png)
+
+#### 3.3 - Novo Pedido - Checkout
+![Pedido Recebido](docs/funcional/checkout_pedido.png)
+
+#### 3.4 - Pagamento
+![Pagamento](docs/funcional/pagamento.png)
+
+#### 3.5 - Pedido Recebido - Pagamento Confirmado
+![Pedido Recebido - Pagamento Confirmado](docs/funcional/pedido_recebido.png)
+
+#### 3.6 - Atualização Preapro
+![Atualização Preapro](docs/funcional/atualizacao_preparo.png)
+
+#### 3.7 - Cancelamento Pedido
+![Cancelamento Pedido](docs/funcional/cancelamento_pedido.png)
+
+#### 3.8 - Cancelamento Pagamento
+![Cancelamento Pagamento](docs/funcional/cancelamento_pagamento.png)
+
+#### 3.9 - Acompanhar Pedidos
+![Acompanhar Pedidos](docs/funcional/acompanhar_pedidos.png)
+
+#### 3.10 - Notificações
+![Notificações](docs/funcional/notificacoes.png)
 
 ## Contrato da API
 
