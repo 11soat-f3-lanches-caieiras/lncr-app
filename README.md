@@ -296,9 +296,18 @@ Princípios da Clean Architecture aplicados:
 
 
 ### 3. Arquitetura Funcional
-
-<iframe src="docs/funcional/lanches-caieiras-arquitetura-fincional.html" width="800" height="700">
-</iframe>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example HTML</title>
+</head>
+<body>
+        <iframe src="docs/funcional/lanches-caieiras-arquitetura-fincional.html" width="800" height="700">
+        Diagramas de Arquitetura Funcional
+        </iframe>
+</body>
+</html>
 
 
 ## Contrato da API
