@@ -1,9 +1,9 @@
 #!/bin/bash
 #Script de inicialização do ambiente local da aplicação
 BIN=$PWD
-HELM_RUN_PATH=$BIN/iac/kubernetes/
-ENV_FILE=$BIN/.env
-DOCKER_BUILD_PATH=$BIN/lanches-caieiras
+HELM_RUN_PATH="iac/kubernetes/"
+ENV_FILE="$BIN/.env"
+DOCKER_BUILD_PATH="$BIN/lncr-app"
 NAMESPACE="ns-lncr"
 APP_NAME="lanches-caieiras"
 
@@ -21,7 +21,16 @@ validate_env_file() {
 validate_env_variables() {
     local env_file="$ENV_FILE"
     local required_vars=(
-        "POSTGRES_URL" "POSTGRES_USER" "POSTGRES_PASSWORD" "MERCADOPAGO_CLIENT_ID" "MERCADOPAGO_SECRET_ID" "MERCADOPAGO_POS_ID"
+        "POSTGRES_URL"
+        "POSTGRES_USER"
+        "POSTGRES_PASSWORD"
+        "MERCADOPAGO_CLIENT_ID"
+        "MERCADOPAGO_SECRET_ID"
+        "MERCADOPAGO_POS_ID"
+        "OAUTH_TOTEM_CLIENT_ID"
+        "OAUTH_TOTEM_CLIENT_SECRET"
+        "OAUTH_ADMIN_CLIENT_ID"
+        "OAUTH_ADMIN_CLIENT_SECRET"
     )
 
     echo "Validando variáveis do arquivo .env..."
