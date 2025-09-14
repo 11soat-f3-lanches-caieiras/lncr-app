@@ -12,7 +12,7 @@ import java.util.Map;
 public class TokenUtil {
     public static String generateToken(OauthCredentialsDTO oauthCredentialsDTO, OauthProfileConfig oauthConfig) {
         return JWT.create()
-                .withSubject("Access Token")
+                .withSubject("lncr-token")
                 .withExpiresAt(getExpirationDate(oauthConfig.getExpireIn()))
                 .withIssuedAt(new Date())
                 .withPayload(setClaims(oauthCredentialsDTO))
@@ -21,7 +21,7 @@ public class TokenUtil {
 
     private static Date getExpirationDate(Integer expireIn) {
         Date now = new Date();
-        return new Date(now.getTime() + expireIn);
+        return new Date(now.getTime() + (expireIn * 1000));
     }
 
     private static Algorithm getAlgorithm(String secretkey) {
@@ -30,7 +30,6 @@ public class TokenUtil {
     private static Map<String,Object> setClaims(OauthCredentialsDTO oauthCredentialsDTO){
         Map<String, Object> claims = new HashMap<>();
         claims.put("client_id", oauthCredentialsDTO.client_id());
-        claims.put("secret_id", oauthCredentialsDTO.client_secret());
         claims.put("scope", oauthCredentialsDTO.scope());
         claims.put("name", oauthCredentialsDTO.name());
         claims.put("customerId", oauthCredentialsDTO.customerId());

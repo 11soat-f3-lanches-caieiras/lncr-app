@@ -17,8 +17,8 @@ public class JpaOauthCustomerRepositoryImpl implements OauthDatabase {
     }
 
     @Override
-    public OauthCredentialsDTO validateCredentials(String documentNumber, String email) {
-        return jpaCustomerMapper.jpaCustomerToDTO(jpaCustomerRepository.findByDocumentNumberAndEmail(documentNumber,email).orElse(null));
+    public OauthCredentialsDTO validateCredentials(OauthCredentialsDTO oauthCredentialsDTO) {
+        return jpaCustomerMapper.jpaCustomerToDTO(jpaCustomerRepository.findByDocumentNumberAndEmail(oauthCredentialsDTO.client_id(),oauthCredentialsDTO.client_secret()).orElse(null));
     }
 
 }

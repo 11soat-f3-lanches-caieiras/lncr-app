@@ -17,8 +17,10 @@ public class OauthProfileStrategyFactory {
     public OauthProfileStrategy getStrategy(String profile) {
         return switch (profile.toUpperCase()) {
             case "ADMIN" -> new AdminOauthProfileStrategy(configurationDatabase);
-            case "TOTEM" -> new TotemOauthProfileStrategy(configurationDatabase);
             case "CUSTOMER" -> new CustomerOauthProfileStrategy(jpaOauthDatabase);
+            case "MONITOR" -> new MonitorOauthProfileStrategy(configurationDatabase);
+            case "TOTEM" -> new TotemOauthProfileStrategy(configurationDatabase);
+
             default -> throw new OauthException("Perfil inválido", 400);
         };
     }

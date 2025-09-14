@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("unused")
 @Component
 @ConfigurationProperties(prefix = "lncr.oauth")
 public class OauthConfig {
     private String secretKey;
+    private Integer expireIn;
     private Map<String, OauthProfileDTO> profiles;
 
     public Map<String, OauthProfileDTO> getProfiles() {
@@ -43,9 +43,17 @@ public class OauthConfig {
         this.secretKey = secretKey;
     }
 
+    public Integer getExpireIn() {
+        return expireIn;
+    }
+
+    public void setExpireIn(Integer expireIn) {
+        this.expireIn = expireIn;
+    }
+
     public OauthProfileConfig getProfileConfig(String profileKey) {
         if (profiles != null && profiles.containsKey(profileKey)) {
-            return new OauthProfileConfig(secretKey, profiles.get(profileKey));
+            return new OauthProfileConfig(secretKey, expireIn ,profiles.get(profileKey));
         }
         throw new OauthException("Scope inválido: " + profileKey, 400);
     }

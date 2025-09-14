@@ -13,7 +13,7 @@ public abstract class AbstractOauthProfileStrategy implements OauthProfileStrate
 
     @Override
     public OauthCredentialsDTO validateCredentials(OauthCredentialsDTO oauthCredentialsDTO){
-        OauthCredentialsDTO validatedCredentials = oauthDatabase.validateCredentials(oauthCredentialsDTO.client_id(), oauthCredentialsDTO.client_secret());
+        OauthCredentialsDTO validatedCredentials = oauthDatabase.validateCredentials(oauthCredentialsDTO);
         if (validatedCredentials != null) {
             return new OauthCredentialsDTO(
                     validatedCredentials.client_id(),
@@ -23,7 +23,7 @@ public abstract class AbstractOauthProfileStrategy implements OauthProfileStrate
                     validatedCredentials.name(),
                     validatedCredentials.customerId());
         } else {
-            throw new OauthException("Número do documento: " + oauthCredentialsDTO.client_id() + " e e-mail: " + oauthCredentialsDTO.client_secret() + " inválidos.", 401);
+            throw new OauthException("Credenciais inválidas.", 401);
         }
     }
 

@@ -1,6 +1,5 @@
 package br.com.tp.lncr.core.commons.dtos.oauth;
 
-@SuppressWarnings("unused")
 public class OauthProfileDTO {
     private String clientId;
     private String clientSecret;

@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@SuppressWarnings("unused")
+
 public interface OauthRestController {
 
     ResponseEntity<OauthTokenDTO> token(@RequestHeader("Authorization") String authorizationHeader,

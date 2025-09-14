@@ -30,20 +30,26 @@ lncr:
 
   oauth:
     secretKey: "${OAUTH_SECRET_KEY}"
+    expireIn: 31536000
     profiles:
-      totem: # Self Service Terminal - Totem
-          clientId: "${OAUTH_TOTEM_CLIENT_ID}"
-          clientSecret: "${OAUTH_TOTEM_CLIENT_SECRET}"
-          scope: "totem"
-          grantType: "client_credentials"
+      admin:
+        clientId: "${OAUTH_ADMIN_CLIENT_ID}"
+        clientSecret: "${OAUTH_ADMIN_CLIENT_SECRET}"
+        scope: "admin"
+        grantType: "client_credentials"
       customer:
           scope: "customer"
           grantType: "client_credentials"
-      admin:
-          clientId: "${OAUTH_ADMIN_CLIENT_ID}"
-          clientSecret: "${OAUTH_ADMIN_CLIENT_SECRET}"
-          scope: "admin"
+      monitor:
+          clientId: "${OAUTH_MONITOR_CLIENT_ID}"
+          clientSecret: "${OAUTH_MONITOR_CLIENT_SECRET}"
+          scope: "monitor"
           grantType: "client_credentials"
+      totem: # Self Service Terminal - Totem
+        clientId: "${OAUTH_TOTEM_CLIENT_ID}"
+        clientSecret: "${OAUTH_TOTEM_CLIENT_SECRET}"
+        scope: "totem"
+        grantType: "client_credentials"
 
   customer:
     location-prefix: "${lncr.base-url}/customers"

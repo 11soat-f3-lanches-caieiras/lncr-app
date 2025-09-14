@@ -4,6 +4,6 @@ import br.com.tp.lncr.core.commons.dtos.oauth.OauthCredentialsDTO;
 
 public interface OauthDatabase {
 
-    OauthCredentialsDTO validateCredentials(String client_id, String client_secret);
+    OauthCredentialsDTO validateCredentials(OauthCredentialsDTO oauthCredentialsDTO);
 
 }

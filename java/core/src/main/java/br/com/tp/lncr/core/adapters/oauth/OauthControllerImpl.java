@@ -5,24 +5,18 @@ import br.com.tp.lncr.core.commons.dtos.oauth.OauthCredentialsDTO;
 import br.com.tp.lncr.core.commons.dtos.oauth.OauthProfileConfig;
 import br.com.tp.lncr.core.commons.dtos.oauth.OauthTokenDTO;
 import br.com.tp.lncr.core.commons.interfaces.oauth.OauthController;
-import br.com.tp.lncr.core.commons.interfaces.oauth.OauthGateway;
 import br.com.tp.lncr.core.commons.interfaces.oauth.OauthProfileStrategy;
 import br.com.tp.lncr.core.domain.oauth.OauthToken;
 
 
 public class OauthControllerImpl implements OauthController {
 
-    private final OauthMapper oauthMapper;
-    private final OauthGateway oauthGateway;
-
-    public OauthControllerImpl() {
-        this.oauthMapper = new OauthMapper();
-        this.oauthGateway = new OauthGatewayImpl();
-    }
+    private final OauthMapper oauthMapper = new OauthMapper();
 
     @Override
     public OauthTokenDTO createToken(String authorization, OauthCredentialsDTO oauthCredentialsDTO, OauthProfileConfig oauthProfileConfig, OauthProfileStrategy oauthProfileStrategy) {
-        OauthToken oauthToken = new CreateTokenUseCase(oauthGateway).createToken(authorization, oauthCredentialsDTO, oauthProfileConfig, oauthProfileStrategy);
+        OauthGatewayImpl oauthGateway = new OauthGatewayImpl(oauthProfileStrategy);
+        OauthToken oauthToken = new CreateTokenUseCase(oauthGateway).createToken(authorization, oauthCredentialsDTO, oauthProfileConfig);
         return new OauthPresenter(oauthMapper).createdToken(oauthToken);
 
     }
