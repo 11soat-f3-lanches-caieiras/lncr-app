@@ -4,8 +4,8 @@ HELP.md
 !**/src/test/**/target/
 images/
 data/
-lanches-caieiras/app/target/
-lanches-caieiras/core/target/
+java/app/target/
+java/core/target/
 
 # Environment variables
 .env
