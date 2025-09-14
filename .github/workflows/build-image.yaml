@@ -9,15 +9,12 @@ on:
     types: [closed]
 
 jobs:
-  build:
-    name: Build Docker image
-    runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
+  build-and-upload:
+    name: Build and Upload Docker image to ECR
+    runs-on: codebuild-lncr-codebuild-project-github-${{ github.run_id }}-${{ github.run_attempt }}
     if: github.event.pull_request.merged == true || github.event_name == 'push'
     environment:
       name: ${{ github.ref_name == 'master' && 'prd' || 'dev' }}
-    outputs:
-      image-name: ${{ steps.build-image.outputs.image-name }}
-      commit-hash: ${{ steps.set-vars.outputs.commit-hash }}
     steps:
 
       - name: Checkout code
@@ -37,38 +34,28 @@ jobs:
           echo "DOCKERFILE_PATH=$DOCKERFILE_PATH" >> $GITHUB_ENV
           echo "commit-hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
 
-      - name: Build Application Docker Image
-        id: build-image
-        run: |
-          IMAGE_NAME=lncr-app-${{ env.COMMIT_HASH }}
-          docker build -t $IMAGE_NAME -f $DOCKERFILE_PATH .
-          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
-          echo "image-name=$IMAGE_NAME" >> $GITHUB_OUTPUT
-        env:
-          DOCKERFILE_PATH: ${{ env.DOCKERFILE_PATH }}
-
-  upload:
-    name: Upload to ECR
-    runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
-    needs: build
-    if: github.event.pull_request.merged == true || github.event_name == 'push'
-    environment:
-      name: ${{ github.ref_name == 'master' && 'prd' || 'dev' }}
-    steps:
-
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Tag and push image to ECR
+      - name: Build, tag and push image to ECR
         run: |
           ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY=${{ vars.ECR_REPOSITORY }}
+          IMAGE_TAG=${{ env.COMMIT_HASH }}
+          
+          # Build da imagem
+          IMAGE_NAME=lncr-app-$IMAGE_TAG
+          docker build -t $IMAGE_NAME -f $DOCKERFILE_PATH .
           
           # Tag da imagem para ECR
-          docker tag ${{ needs.build.outputs.image-name }} $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker tag $IMAGE_NAME $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker tag $IMAGE_NAME $ECR_REGISTRY/$ECR_REPOSITORY:latest
           
           # Push das imagens
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
           
-          echo "Image pushed to ECR: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "Image built and pushed to ECR: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        env:
+          DOCKERFILE_PATH: ${{ env.DOCKERFILE_PATH }}
