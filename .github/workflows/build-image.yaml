@@ -11,7 +11,7 @@ on:
 jobs:
   build-and-upload:
     name: Build and Upload Docker image to ECR
-    runs-on: codebuild-lncr-codebuild-project-github-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
     if: github.event.pull_request.merged == true || github.event_name == 'push'
     environment:
       name: ${{ github.ref_name == 'master' && 'prd' || 'dev' }}
