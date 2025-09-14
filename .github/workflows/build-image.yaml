@@ -38,24 +38,34 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build, tag and push image to ECR
+      - name: Build Docker image
+        run: |
+          IMAGE_TAG=${{ env.COMMIT_HASH }}
+          IMAGE_NAME=lncr-app-$IMAGE_TAG
+          docker build -t $IMAGE_NAME -f $DOCKERFILE_PATH .
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+        env:
+          DOCKERFILE_PATH: ${{ env.DOCKERFILE_PATH }}
+
+      - name: Tag image for ECR
         run: |
           ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY=${{ vars.ECR_REPOSITORY }}
           IMAGE_TAG=${{ env.COMMIT_HASH }}
           
-          # Build da imagem
-          IMAGE_NAME=lncr-app-$IMAGE_TAG
-          docker build -t $IMAGE_NAME -f $DOCKERFILE_PATH .
+          docker tag ${{ env.IMAGE_NAME }} $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker tag ${{ env.IMAGE_NAME }} $ECR_REGISTRY/$ECR_REPOSITORY:latest
           
-          # Tag da imagem para ECR
-          docker tag $IMAGE_NAME $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker tag $IMAGE_NAME $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          echo "ECR_REGISTRY=$ECR_REGISTRY" >> $GITHUB_ENV
+          echo "ECR_REPOSITORY=$ECR_REPOSITORY" >> $GITHUB_ENV
+
+      - name: Push image to ECR
+        run: |
+          IMAGE_TAG=${{ env.COMMIT_HASH }}
           
-          # Push das imagens
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG
+          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
           
-          echo "Image built and pushed to ECR: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "Image pushed to ECR: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG"
         env:
           DOCKERFILE_PATH: ${{ env.DOCKERFILE_PATH }}
