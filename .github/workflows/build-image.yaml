@@ -31,7 +31,7 @@ jobs:
       - name: Set Paths and Env Variables
         id: set-vars
         run: |
-          DOCKERFILE_PATH=$PWD/java/app/Dockerfile
+          DOCKERFILE_PATH=$PWD/app/Dockerfile
           COMMIT_HASH=$(git rev-parse --short HEAD)
           echo "APP_PATH=$APP_PATH" >> $GITHUB_ENV
           echo "COMMIT_HASH=$COMMIT_HASH" >> $GITHUB_ENV
