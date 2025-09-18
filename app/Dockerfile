@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 RUN mkdir -p ~/.m2
 COPY app/maven_settings.xml ~/.m2/settings.xml
-RUN mvn clean test package -s ~/.m2/settings.xml $DEBUG
+RUN mvn clean test package -s ~/.m2/settings.xml -X
 
 # Etapa 2: Execução
 FROM openjdk:17-jdk-slim
