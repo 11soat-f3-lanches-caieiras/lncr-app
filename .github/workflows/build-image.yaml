@@ -8,11 +8,15 @@ on:
       - master
     types: [closed]
 
+  workflow_dispatch:
+
+
+
 jobs:
   build-and-upload:
     name: Build and Upload Docker image to ECR
     runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
-    if: github.event.pull_request.merged == true || github.event_name == 'push'
+    if: github.event.pull_request.merged == true || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     environment:
       name: ${{ github.ref_name == 'master' && 'prd' || 'dev' }}
     steps:
