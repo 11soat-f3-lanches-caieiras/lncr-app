@@ -5,7 +5,7 @@ ARG LNCR_MAVEN_TOKEN
 ARG DEBUG
 ENV LNCR_MAVEN_ACTOR=$LNCR_MAVEN_ACTOR LNCR_MAVEN_TOKEN=$LNCR_MAVEN_TOKEN DEBUG=$DEBUG
 WORKDIR /app
-COPY . .
+COPY /app .
 RUN echo $PWD && ls -la && mvn clean test package -s maven_settings.xml $DEGUG
 #RUN mvn clean test package -s maven_settings.xml $DEGUG
 
