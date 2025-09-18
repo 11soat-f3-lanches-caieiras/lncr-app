@@ -10,8 +10,6 @@ on:
 
   workflow_dispatch:
 
-
-
 jobs:
   build-and-upload:
     name: Build and Upload Docker image to ECR
