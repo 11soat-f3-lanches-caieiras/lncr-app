@@ -1055,3 +1055,4 @@ build/
 /storage/db-lncr/postgresql.conf
 /storage/db-lncr/postmaster.opts
 /storage/db-lncr/postmaster.pid
+/app/target/
