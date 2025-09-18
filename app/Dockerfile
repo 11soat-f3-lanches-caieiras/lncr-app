@@ -7,7 +7,7 @@ ENV LNCR_MAVEN_ACTOR=$LNCR_MAVEN_ACTOR LNCR_MAVEN_TOKEN=$LNCR_MAVEN_TOKEN DEBUG=
 WORKDIR /app
 COPY . .
 RUN mkdir -p ~/.m2
-COPY maven_settings.xml ~/.m2/settings.xml
+COPY app/maven_settings.xml ~/.m2/settings.xml
 RUN mvn clean test package -s ~/.m2/settings.xml $DEBUG
 
 # Etapa 2: Execução
