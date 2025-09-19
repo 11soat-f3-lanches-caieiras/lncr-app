@@ -1,4 +1,4 @@
-name: Build and upload image
+name: Construir e Upload da Aplicação lncr-app
 on:
   push:
     branches:
@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 env:
-  #variables
+  #variáveis
   ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
   LNCR_BASE_URL: ${{ vars.LNCR_BASE_URL }}
   MERCADOPAGO_OAUTH_URL: ${{ vars.MERCADOPAGO_OAUTH_URL }}
@@ -44,50 +44,50 @@ env:
 
 jobs:
   build-and-upload:
-    name: Build and Upload Docker image to ECR
+    name: Construir e Fazer Upload da Imagem Docker para ECR
     runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
     if: github.event.pull_request.merged == true || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     environment:
       name: ${{ github.ref_name == 'master' && 'prd' || 'dev' }}
     steps:
 
-      - name: Checkout code
+      - name: Fazer checkout do código
         uses: actions/checkout@v4
 
-      - name: Login to Docker Hub
+      - name: Login no Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ env.DOCKER_USERNAME }}
           password: ${{ env.DOCKER_PASSWORD }}
 
-      - name: Set Paths and Env Variables
+      - name: Definir Caminhos e Variáveis de Ambiente
         id: set-vars
 
         run: |
-          echo "\n Compondo variáveis de ambiente...\n"
+          echo "Compondo variáveis de ambiente..."
           DOCKERFILE_PATH=$PWD/app/Dockerfile
           COMMIT_HASH=$(git rev-parse --short HEAD)
           IMAGE_TAG=${{ env.COMMIT_HASH }}
           IMAGE_NAME=lncr-app-$IMAGE_TAG
           
-          echo"\n Exportando variáveis de ambiente...\n"
+          echo "Exportando variáveis de ambiente..."
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
           echo "APP_PATH=$APP_PATH" >> $GITHUB_ENV
           echo "COMMIT_HASH=$COMMIT_HASH" >> $GITHUB_ENV
           echo "DOCKERFILE_PATH=$DOCKERFILE_PATH" >> $GITHUB_ENV
           
           
-          echo "\n Exportando variáveis de output...\n"
+          echo "Exportando variáveis de output..."
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_OUTPUT
           echo "COMMIT_HASH=$COMMIT_HASH" >> $GITHUB_OUTPUT
 
-      - name: Login to Amazon ECR
+      - name: Login no Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build Docker image
+      - name: Construir imagem Docker
         run: |
-          echo "Criando imagem da aplicação...\n"
+          echo "Criando imagem da aplicação..."
           IMAGE_TAG=${{ env.COMMIT_HASH }}
           IMAGE_NAME=lncr-app-$IMAGE_TAG
           docker build -t $IMAGE_NAME -f $DOCKERFILE_PATH . \
@@ -99,38 +99,38 @@ jobs:
           LNCR_MAVEN_PAT: ${{ env.LNCR_MAVEN_PAT }}
           LNCR_MAVEN_ACTOR: ${{ env.LNCR_MAVEN_ACTOR }}
 
-      - name: Tag image for ECR
+      - name: Marcar imagem para ECR
         run: |
           ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG=${{ env.COMMIT_HASH }}
           
-          echo "Tagging image for ECR..."
+          echo "Marcando imagem para ECR..."
           docker tag ${{ env.IMAGE_NAME }} $ECR_REGISTRY/$ECR_REPOSITORY:latest
           
           echo "ECR_REGISTRY=$ECR_REGISTRY" >> $GITHUB_ENV
 
-      - name: Push image to ECR
+      - name: Enviar imagem para ECR
         run: |
           IMAGE_TAG=${{ env.COMMIT_HASH }}
           
           docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
           
-          echo "Image pushed to ECR: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG"
+          echo "Imagem enviada para ECR: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG"
         env:
           DOCKERFILE_PATH: ${{ env.DOCKERFILE_PATH }}
   approval:
     runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
-    needs: build
+    needs: build-and-upload
     if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
     steps:
-      - name: Manual Workflow Approval
+      - name: Aprovação Manual do Workflow
         uses: trstringer/manual-approval@v1.9.1
         with:
           secret: ${{ github.TOKEN }}
           approvers: ${{ vars.ADMINS }}
           minimum-approvals: 1
   deploy:
-    name: Deploy to Kubernetes Cluster
+    name: Deploy no Cluster Kubernetes
     runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
     needs: build-and-upload
     if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
