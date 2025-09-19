@@ -1,5 +1,5 @@
 apiVersion: v2
-name: lanches-caieiras
+name: lncr-app
 description: Aplicação de lanchonete - Fase 2 FIAP
 type: application
 version: 1.0.0

@@ -15,8 +15,26 @@ import java.util.Map;
 @Component
 @ConfigurationProperties(prefix = "lncr.oauth")
 public class OauthConfig {
+    private String oAuthSecretKey;
     private Integer expireIn;
     private Map<String, OauthProfileDTO> profiles;
+
+
+    public String getoAuthSecretKey() {
+        return oAuthSecretKey;
+    }
+
+    public void setoAuthSecretKey(String oAuthSecretKey) {
+        this.oAuthSecretKey = oAuthSecretKey;
+    }
+
+    public Integer getExpireIn() {
+        return expireIn;
+    }
+
+    public void setExpireIn(Integer expireIn) {
+        this.expireIn = expireIn;
+    }
 
     public Map<String, OauthProfileDTO> getProfiles() {
         return profiles;
@@ -34,17 +52,9 @@ public class OauthConfig {
         return profiles != null ? profiles.values().stream().map(OauthProfileDTO::getGrantType).toList() : List.of();
     }
 
-    public Integer getExpireIn() {
-        return expireIn;
-    }
-
-    public void setExpireIn(Integer expireIn) {
-        this.expireIn = expireIn;
-    }
-
     public OauthProfileConfig getProfileConfig(String profileKey) {
         if (profiles != null && profiles.containsKey(profileKey)) {
-            return new OauthProfileConfig(expireIn ,profiles.get(profileKey));
+            return new OauthProfileConfig(expireIn ,profiles.get(profileKey),getoAuthSecretKey());
         }
         throw new OauthException("Scope inválido: " + profileKey, 400);
     }
