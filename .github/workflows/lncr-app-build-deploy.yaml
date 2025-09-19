@@ -1,0 +1,140 @@
+name: Construir e Upload da Aplicação lncr-app
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'app/src/main**'
+
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'app/**'
+    types: [closed]
+
+  workflow_dispatch:
+
+env:
+  #variáveis
+  ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+  LNCR_BASE_URL: ${{ vars.LNCR_BASE_URL }}
+  MERCADOPAGO_OAUTH_URL: ${{ vars.MERCADOPAGO_OAUTH_URL }}
+  MERCADOPAGO_ORDERS_URL: ${{ vars.MERCADOPAGO_ORDERS_URL }}
+
+  # secrets
+  LNCR_MAVEN_ACTOR: ${{ secrets.LNCR_MAVEN_ACTOR }}
+  LNCR_MAVEN_PAT: ${{ secrets.LNCR_MAVEN_PAT }}
+  LNCR_OAUTH_ADMIN_CLIENT_ID: ${{ secrets.LNCR_OAUTH_ADMIN_CLIENT_ID }}
+  LNCR_OAUTH_ADMIN_CLIENT_SECRET: ${{ secrets.LNCR_OAUTH_ADMIN_CLIENT }}
+  LNCR_OAUTH_MONITOR_CLIENT_ID: ${{ secrets.LNCR_OAUTH_MONITOR_CLIENT_ID }}
+  LNCR_OAUTH_MONITOR_CLIENT_SECRET: ${{ secrets.LNCR_OAUTH_MONITOR_CLIENT_SECRET }}
+  LNCR_OAUTH_TOTEM_CLIENT_ID: ${{ secrets.LNCR_OAUTH_TOTEM_CLIENT_ID }}
+  LNCR_OAUTH_TOTEM_CLIENT_SECRET: ${{ secrets.LNCR_OAUTH_TOTEM_CLIENT_SECRET }}
+  LNCR_OAUTH_SECRET_KEY: ${{ secrets.LNCR_OAUTH_SECRET_KEY }}
+  MERCADOPAGO_CLIENT_ID: ${{ secrets.MERCADOPAGO_CLIENT_ID }}
+  MERCADOPAGO_SECRET_ID: ${{ secrets.MERCADOPAGO_SECRET_ID }}
+  MERCADOPAGO_POS_ID: ${{ secrets.MERCADOPAGO_POS_ID }}
+  POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+  POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+  POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+
+jobs:
+  build-and-upload:
+    name: Construir e Fazer Upload da Imagem Docker para ECR
+    runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
+    if: github.event.pull_request.merged == true || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    environment:
+      name: ${{ github.ref_name == 'master' && 'prd' || 'dev' }}
+    steps:
+
+      - name: Fazer checkout do código
+        uses: actions/checkout@v4
+
+      - name: Login no Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+
+      - name: Definir Caminhos e Variáveis de Ambiente
+        id: set-vars
+
+        run: |
+          echo "Compondo variáveis de ambiente..."
+          DOCKERFILE_PATH=$PWD/app/Dockerfile
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          IMAGE_TAG=${{ env.COMMIT_HASH }}
+          IMAGE_NAME=lncr-app-$IMAGE_TAG
+          
+          echo "Exportando variáveis de ambiente..."
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+          echo "APP_PATH=$APP_PATH" >> $GITHUB_ENV
+          echo "COMMIT_HASH=$COMMIT_HASH" >> $GITHUB_ENV
+          echo "DOCKERFILE_PATH=$DOCKERFILE_PATH" >> $GITHUB_ENV
+          
+          
+          echo "Exportando variáveis de output..."
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_OUTPUT
+          echo "COMMIT_HASH=$COMMIT_HASH" >> $GITHUB_OUTPUT
+
+      - name: Login no Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Construir imagem Docker
+        run: |
+          echo "Criando imagem da aplicação..."
+          IMAGE_TAG=${{ env.COMMIT_HASH }}
+          IMAGE_NAME=lncr-app-$IMAGE_TAG
+          docker build -t $IMAGE_NAME -f $DOCKERFILE_PATH . \
+          --build-arg LNCR_MAVEN_ACTOR=$LNCR_MAVEN_ACTOR \
+          --build-arg LNCR_MAVEN_PAT=$LNCR_MAVEN_PAT
+
+        env:
+          DOCKERFILE_PATH: ${{ env.DOCKERFILE_PATH }}
+          LNCR_MAVEN_PAT: ${{ env.LNCR_MAVEN_PAT }}
+          LNCR_MAVEN_ACTOR: ${{ env.LNCR_MAVEN_ACTOR }}
+
+      - name: Marcar imagem para ECR
+        run: |
+          ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG=${{ env.COMMIT_HASH }}
+          
+          echo "Marcando imagem para ECR..."
+          docker tag ${{ env.IMAGE_NAME }} $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          
+          echo "ECR_REGISTRY=$ECR_REGISTRY" >> $GITHUB_ENV
+
+      - name: Enviar imagem para ECR
+        run: |
+          IMAGE_TAG=${{ env.COMMIT_HASH }}
+          
+          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
+          
+          echo "Imagem enviada para ECR: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG"
+        env:
+          DOCKERFILE_PATH: ${{ env.DOCKERFILE_PATH }}
+  approval:
+    runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
+    needs: build-and-upload
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Aprovação Manual do Workflow
+        uses: trstringer/manual-approval@v1.9.1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: ${{ vars.ADMINS }}
+          minimum-approvals: 1
+  deploy:
+    name: Deploy no Cluster Kubernetes
+    runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
+    needs: build-and-upload
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Echo vazio
+        run: |
+          echo "Aguardando implementação do deploy..."
