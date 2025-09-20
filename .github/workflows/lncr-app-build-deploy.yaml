@@ -163,5 +163,7 @@
             helm upgrade --install lncr-app ./iac/kubernetes \
               --set app.image.repository=$ECR_REGISTRY/${{ env.ECR_REPOSITORY }} \
               --set app.image.tag=$COMMIT_HASH \
+              --set app.containerName=lncr-app \
+              --set app.name=lncr-app \
               --namespace fiap --create-namespace \
               --wait
