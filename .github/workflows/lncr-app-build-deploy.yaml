@@ -138,7 +138,7 @@ jobs:
   deploy:
     name: Deploy no Cluster Kubernetes
     runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
-    needs: build-and-upload
+    needs: approve
     if: github.ref == 'refs/heads/develop' && github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     environment:
       name: ${{ github.ref_name == 'master' && 'prd' || 'dev' }}
@@ -148,7 +148,7 @@ jobs:
 
       - name: Configurar kubectl
         run: |
-          aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name $EKS_CLUSTER
+          aws eks update-kubeconfig --region ${{ secrets.AWS_DEFAULT_REGION }} --name ${{ secrets.EKS_CLUSTER }}
 
       - name: Deploy com Helm
         run: |
