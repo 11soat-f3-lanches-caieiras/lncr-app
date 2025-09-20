@@ -100,19 +100,21 @@ jobs:
         run: |
           ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG=${{ env.COMMIT_HASH }}
+          UNIQUE_TAG="${IMAGE_TAG}-$(date +%s)"
           
           echo "Marcando imagem para ECR..."
-          docker tag ${{ env.IMAGE_NAME }} $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker tag ${{ env.IMAGE_NAME }} $ECR_REGISTRY/$ECR_REPOSITORY:$UNIQUE_TAG
+          docker tag ${{ env.IMAGE_NAME }} $ECR_REGISTRY/$ECR_REPOSITORY:latest
           
           echo "ECR_REGISTRY=$ECR_REGISTRY" >> $GITHUB_ENV
+          echo "UNIQUE_TAG=$UNIQUE_TAG" >> $GITHUB_ENV
 
       - name: Enviar imagem para ECR
         run: |
-          IMAGE_TAG=${{ env.COMMIT_HASH }}
+          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.UNIQUE_TAG }}
+          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
           
-          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG
-          
-          echo "Imagem enviada para ECR: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG"
+          echo "Imagem enviada para ECR: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.UNIQUE_TAG }},latest"
         env:
           DOCKERFILE_PATH: ${{ env.DOCKERFILE_PATH }}
 
