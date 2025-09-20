@@ -16,6 +16,8 @@ on:
 env:
   #variáveis
   ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+  AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
+  EKS_CLUSTER: ${{ vars.EKS_CLUSTER }}
   LNCR_BASE_URL: ${{ vars.LNCR_BASE_URL }}
   MERCADOPAGO_OAUTH_URL: ${{ vars.MERCADOPAGO_OAUTH_URL }}
   MERCADOPAGO_ORDERS_URL: ${{ vars.MERCADOPAGO_ORDERS_URL }}
@@ -138,7 +140,23 @@ jobs:
     runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
     needs: build-and-upload
     if: github.ref == 'refs/heads/develop' && github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    environment:
+      name: ${{ github.ref_name == 'master' && 'prd' || 'dev' }}
     steps:
-      - name: Echo vazio
+      - name: Fazer checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar kubectl
         run: |
-          echo "Aguardando implementação do deploy..."
+          aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name $EKS_CLUSTER
+
+      - name: Deploy com Helm
+        run: |
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          ECR_REGISTRY=550939688996.dkr.ecr.us-east-1.amazonaws.com
+          
+          helm upgrade --install lncr-app ./iac/kubernetes \
+            --set app.image.repository=$ECR_REGISTRY/${{ env.ECR_REPOSITORY }} \
+            --set app.image.tag=$COMMIT_HASH \
+            --namespace fiap --create-namespace \
+            --wait
