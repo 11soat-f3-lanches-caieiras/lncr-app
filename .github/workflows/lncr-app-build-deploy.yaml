@@ -4,7 +4,7 @@ on:
     branches:
       - develop
     paths:
-      - 'app/src/main**'
+      - 'app/**'
 
   pull_request:
     branches:
