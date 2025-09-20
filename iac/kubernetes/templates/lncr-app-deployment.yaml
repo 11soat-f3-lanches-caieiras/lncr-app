@@ -14,6 +14,10 @@ spec:
       labels:
         app: {{ .Values.app.name }}
     spec:
+      tolerations:
+        - key: "CriticalAddonsOnly"
+          operator: "Exists"
+          effect: "NoSchedule"
       containers:
         - name: {{ .Values.app.containerName}}
           image: "{{ .Values.app.image.repository }}{{- if .Values.app.image.tag }}:{{ .Values.app.image.tag }}{{- end }}"
