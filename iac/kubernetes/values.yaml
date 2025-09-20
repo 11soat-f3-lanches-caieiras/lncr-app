@@ -29,7 +29,7 @@ service:
 #Storage
 storage:
   fsx:
-    server: "fs-08037caa804338f32.fsx.us-east-1.amazonaws.com" 
+    server: "10.1.43.189" 
     path: "/fsx"  
 
 
