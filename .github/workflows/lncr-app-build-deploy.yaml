@@ -153,7 +153,7 @@
 
         - name: Configurar kubectl
           run: |
-            aws eks update-kubeconfig --region ${{ secrets.AWS_DEFAULT_REGION }} --name ${{ secrets.EKS_CLUSTER }}
+            aws eks update-kubeconfig --region ${{ vars.AWS_DEFAULT_REGION }} --name ${{ vars.EKS_CLUSTER }}
 
         - name: Deploy com Helm
           run: |
