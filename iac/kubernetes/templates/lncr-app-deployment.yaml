@@ -133,6 +133,6 @@ spec:
             failureThreshold: 3
       volumes:
         - name: images-storage
-          hostPath:
-            path: {{ .Values.storage.images.hostPath | replace "C:/" "/run/desktop/mnt/host/c/" | replace "\\" "/" | quote }}
-            type: DirectoryOrCreate
+          nfs:
+            server: {{ .Values.storage.fsx.server }}
+            path: {{ .Values.storage.fsx.path }}

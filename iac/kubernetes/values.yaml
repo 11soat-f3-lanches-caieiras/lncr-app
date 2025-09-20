@@ -28,12 +28,10 @@ service:
 
 #Storage
 storage:
-  images:
-    size: "10Gi"
-    mountPath: "/app/images"
-    hostPath: "${PWD}/images"
-    # storageClass: "standard"  # Comentado para usar o storageClass padrão do cluster
-    accessMode: "ReadWriteOnce"
+  fsx:
+    server: "fs-08037caa804338f32.fsx.us-east-1.amazonaws.com" 
+    path: "/fsx"  
+
 
 #Deployment
 resources:
