@@ -65,8 +65,7 @@ jobs:
           echo "Compondo variáveis de ambiente..."
           DOCKERFILE_PATH=$PWD/app/Dockerfile
           COMMIT_HASH=$(git rev-parse --short HEAD)
-          IMAGE_TAG=${{ env.COMMIT_HASH }}
-          IMAGE_NAME=lncr-app-$IMAGE_TAG
+          IMAGE_NAME=lncr-app-$COMMIT_HASH
           
           echo "Exportando variáveis de ambiente..."
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
@@ -86,9 +85,7 @@ jobs:
       - name: Construir imagem Docker
         run: |
           echo "Criando imagem da aplicação..."
-          IMAGE_TAG=${{ env.COMMIT_HASH }}
-          IMAGE_NAME=lncr-app-$IMAGE_TAG
-          docker build -t $IMAGE_NAME -f $DOCKERFILE_PATH . \
+          docker build -t ${{ env.IMAGE_NAME }} -f $DOCKERFILE_PATH . \
           --build-arg LNCR_MAVEN_ACTOR=$LNCR_MAVEN_ACTOR \
           --build-arg LNCR_MAVEN_PAT=$LNCR_MAVEN_PAT
 
