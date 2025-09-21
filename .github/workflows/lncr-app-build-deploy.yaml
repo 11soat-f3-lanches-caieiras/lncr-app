@@ -158,7 +158,7 @@
         - name: Deploy com Helm
           run: |
             
-            COMMIT_HASH=$(git rev-parse --short HEAD)
+            COMMIT_HASH=`"$(`git rev-parse --short HEAD)"
             ECR_REGISTRY=550939688996.dkr.ecr.us-east-1.amazonaws.com
             
             helm upgrade --install lncr-app ./iac/kubernetes \

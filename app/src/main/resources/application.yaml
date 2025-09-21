@@ -29,7 +29,7 @@ lncr:
     notification-url: "${lncr.base-url}/notifications"
 
   oauth:
-    oAuthSecretKey: {LNCR_OAUTH_SECRET_KEY}
+    oAuthSecretKey: "${LNCR_OAUTH_SECRET_KEY}"
     expireIn: 31536000
     profiles:
       admin:
