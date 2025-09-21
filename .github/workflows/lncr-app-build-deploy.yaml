@@ -26,7 +26,7 @@
     LNCR_MAVEN_ACTOR: ${{ secrets.LNCR_MAVEN_ACTOR }}
     LNCR_MAVEN_PAT: ${{ secrets.LNCR_MAVEN_PAT }}
     LNCR_OAUTH_ADMIN_CLIENT_ID: ${{ secrets.LNCR_OAUTH_ADMIN_CLIENT_ID }}
-    LNCR_OAUTH_ADMIN_CLIENT_SECRET: ${{ secrets.LNCR_OAUTH_ADMIN_CLIENT }}
+    LNCR_OAUTH_ADMIN_CLIENT_SECRET: ${{ secrets.LNCR_OAUTH_ADMIN_CLIENT_SECRET }}
     LNCR_OAUTH_MONITOR_CLIENT_ID: ${{ secrets.LNCR_OAUTH_MONITOR_CLIENT_ID }}
     LNCR_OAUTH_MONITOR_CLIENT_SECRET: ${{ secrets.LNCR_OAUTH_MONITOR_CLIENT_SECRET }}
     LNCR_OAUTH_TOTEM_CLIENT_ID: ${{ secrets.LNCR_OAUTH_TOTEM_CLIENT_ID }}
@@ -163,9 +163,9 @@
             
             helm upgrade --install lncr-app ./iac/kubernetes \ 
             --set app.image.repository=$ECR_REGISTRY/${{ env.ECR_REPOSITORY }} \
-            --set app.image.tag=$COMMIT_HASH }} \ 
+            --set app.image.tag=$COMMIT_HASH \
             --set app.containerName=lncr-app \
-            --set app.baseUrl=${{ env.LNCR_BASE_URL}} \
+            --set app.baseUrl=${{ env.LNCR_BASE_URL }} \
             --set app.mercadopago.oauthUrl=${{ env.MERCADOPAGO_OAUTH_URL }} \
             --set app.mercadopago.ordersUrl=${{ env.MERCADOPAGO_ORDERS_URL }} \
             --set app.mercadopago.secretId=${{ env.MERCADOPAGO_SECRET_ID }} \
