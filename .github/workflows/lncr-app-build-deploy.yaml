@@ -157,32 +157,33 @@
 
         - name: Deploy com Helm
           run: |
+            
             COMMIT_HASH=$(git rev-parse --short HEAD)
             ECR_REGISTRY=550939688996.dkr.ecr.us-east-1.amazonaws.com
             
-            helm upgrade --install lncr-app ./iac/kubernetes }} \
-              --set app.image.repository=$ECR_REGISTRY/${{ env.ECR_REPOSITORY }} \
-              --set app.image.tag=$COMMIT_HASH }} \
-              --set app.containerName=lncr-app}} \
-              --set app.baseUrl=${{ env.LNCR_BASE_URL}} \
-              --set app.mercadopago.oauthUrl=${{ env.MERCADOPAGO_OAUTH_URL }} \
-              --set app.mercadopago.ordersUrl=${{ env.MERCADOPAGO_ORDERS_URL }} \
-              --set app.mercadopago.clientId=${{ env.MERCADOPAGO_CLIENT_ID }} \
-              --set app.mercadopago.secretId=${{ env.MERCADOPAGO_SECRET_ID }} \
-              --set app.mercadopago.posId=${{ env.MERCADOPAGO_POS_ID }} \
-              --set secrets.oauthAdminClientId=${{ env.LNCR_OAUTH_ADMIN_CLIENT_ID}} \
-              --set secrets.oauthAdminClientSecret=${{ env.LNCR_OAUTH_ADMIN_CLIENT_SECRET}} \
-              --set secrets.oauthMonitorClientId=${{ env.LNCR_OAUTH_MONITOR_CLIENT_ID}} \
-              --set secrets.oauthMonitorClientSecret=${{ env.LNCR_OAUTH_MONITOR_CLIENT_SECRET}} \
-              --set secrets.oauthTotemClientId=${{ env.LNCR_OAUTH_TOTEM_CLIENT_ID}} \
-              --set secrets.oauthTotemClientSecret=${{ env.LNCR_OAUTH_TOTEM_CLIENT_SECRET}} \
-              --set secrets.oauthSecretKey=${{ env.LNCR_OAUTH_SECRET_KEY}} \
-              --set secrets.mercadopagoClientId=${{ env.MERCADOPAGO_CLIENT_ID
-              --set secrets.mercadopagoSecretId=${{ env.MERCADOPAGO_SECRET_ID}} \
-              --set secrets.mercadopagoPosId=${{ env.MERCADOPAGO_POS_ID}} \
-              --set secrets.postgresUrl=${{ env.POSTGRES_URL}} \
-              --set secrets.postgresUser=${{ env.POSTGRES_USER}} \
-              --set secrets.postgresPassword=${{ env.POSTGRES_PASSWORD}} \
-              --set app.name=lncr-app}} \
-              --namespace ns-lncr --create-namespace}} \
-              --wait
+            helm upgrade --install lncr-app ./iac/kubernetes }}
+            --set app.image.repository=$ECR_REGISTRY/${{ env.ECR_REPOSITORY }} \
+            --set app.image.tag=$COMMIT_HASH }} \ 
+            --set app.containerName=lncr-app \
+            --set app.baseUrl=${{ env.LNCR_BASE_URL}} \
+            --set app.mercadopago.oauthUrl=${{ env.MERCADOPAGO_OAUTH_URL }} \
+            --set app.mercadopago.ordersUrl=${{ env.MERCADOPAGO_ORDERS_URL }} \
+            --set app.mercadopago.secretId=${{ env.MERCADOPAGO_SECRET_ID }} \
+            --set app.mercadopago.clientId=${{ env.MERCADOPAGO_CLIENT_ID }} \
+            --set app.mercadopago.posId=${{ env.MERCADOPAGO_POS_ID }} \
+            --set secrets.oauthAdminClientId=${{ env.LNCR_OAUTH_ADMIN_CLIENT_ID }} \
+            --set secrets.oauthAdminClientSecret=${{ env.LNCR_OAUTH_ADMIN_CLIENT_SECRET }} \
+            --set secrets.oauthMonitorClientId=${{ env.LNCR_OAUTH_MONITOR_CLIENT_ID }} \
+            --set secrets.oauthMonitorClientSecret=${{ env.LNCR_OAUTH_MONITOR_CLIENT_SECRET }} \
+            --set secrets.oauthTotemClientId=${{ env.LNCR_OAUTH_TOTEM_CLIENT_ID }} \
+            --set secrets.oauthTotemClientSecret=${{ env.LNCR_OAUTH_TOTEM_CLIENT_SECRET }} \
+            --set secrets.oauthSecretKey=${{ env.LNCR_OAUTH_SECRET_KEY }} \
+            --set secrets.mercadopagoClientId=${{ env.MERCADOPAGO_CLIENT_ID }} \
+            --set secrets.mercadopagoSecretId=${{ env.MERCADOPAGO_SECRET_ID }} \
+            --set secrets.mercadopagoPosId=${{ env.MERCADOPAGO_POS_ID }} \
+            --set secrets.postgresUrl=${{ env.POSTGRES_URL }} \
+            --set secrets.postgresUser=${{ env.POSTGRES_USER }} \
+            --set secrets.postgresPassword=${{ env.POSTGRES_PASSWORD }} \
+            --set app.name=lncr-app \
+            --namespace ns-lncr --create-namespace \
+            --wait
