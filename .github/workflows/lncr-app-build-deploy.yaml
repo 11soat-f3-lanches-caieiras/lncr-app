@@ -185,5 +185,5 @@
             --set secrets.postgresUser=${{ env.POSTGRES_USER }} \
             --set secrets.postgresPassword=${{ env.POSTGRES_PASSWORD }} \
             --set app.name=lncr-app \
-            --namespace ns-lncr --create-namespace \
+            --namespace fiap --create-namespace \
             --wait
