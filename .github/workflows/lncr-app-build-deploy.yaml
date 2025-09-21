@@ -141,11 +141,12 @@ jobs:
 
       - name: Deploy com Helm
         run: |
+          set -x
           COMMIT_HASH="$(git rev-parse --short HEAD)"
-          ECR_REGISTRY=550939688996.dkr.ecr.us-east-1.amazonaws.com
+          ECR_REGISTRY="550939688996.dkr.ecr.us-east-1.amazonaws.com"
           
           helm upgrade --install lncr-app ./iac/kubernetes \
-            --set app.image.repository=$ECR_REGISTRY/${{ env.ECR_REPOSITORY }} \
+            --set app.image.repository="$ECR_REGISTRY"/${{ env.ECR_REPOSITORY }} \
             --set app.image.tag="$COMMIT_HASH" \
             --set app.containerName=lncr-app \
             --set app.baseUrl=${{ env.LNCR_BASE_URL }} \
