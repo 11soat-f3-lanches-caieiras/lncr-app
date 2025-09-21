@@ -171,3 +171,5 @@ jobs:
             --set app.name=lncr-app \
             --namespace fiap --create-namespace \
             --wait
+            --force \
+            --recreate-pods
