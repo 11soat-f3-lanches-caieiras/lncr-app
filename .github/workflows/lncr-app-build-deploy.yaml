@@ -87,8 +87,8 @@
         - name: Construir imagem Docker
           run: |
             echo "Criando imagem da aplicação..."
-            docker build -t ${{ env.IMAGE_NAME }} -f $DOCKERFILE_PATH .}} \
-            --build-arg LNCR_MAVEN_ACTOR=$LNCR_MAVEN_ACTOR}} \
+            docker build -t ${{ env.IMAGE_NAME }} -f $DOCKERFILE_PATH . \
+            --build-arg LNCR_MAVEN_ACTOR=$LNCR_MAVEN_ACTOR \
             --build-arg LNCR_MAVEN_PAT=$LNCR_MAVEN_PAT
 
           env:
@@ -161,7 +161,7 @@
             COMMIT_HASH=$(git rev-parse --short HEAD)
             ECR_REGISTRY=550939688996.dkr.ecr.us-east-1.amazonaws.com
             
-            helm upgrade --install lncr-app ./iac/kubernetes }}
+            helm upgrade --install lncr-app ./iac/kubernetes 
             --set app.image.repository=$ECR_REGISTRY/${{ env.ECR_REPOSITORY }} \
             --set app.image.tag=$COMMIT_HASH }} \ 
             --set app.containerName=lncr-app \
