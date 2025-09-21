@@ -170,6 +170,4 @@ jobs:
             --set secrets.postgresPassword="${{ env.POSTGRES_PASSWORD }}" \
             --set app.name=lncr-app \
             --namespace fiap --create-namespace \
-            --wait --timeout=1m \
-            --force \
-            --recreate-pods
+            --force
