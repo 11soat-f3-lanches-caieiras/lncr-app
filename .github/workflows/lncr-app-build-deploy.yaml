@@ -1,17 +1,10 @@
 name: Construir e Upload da Aplicação lncr-app
 on:
-  push:
-    branches: [ develop ]
-  workflow_dispatch:
-
-  # pull_request:
-  #   branches:
-  #     - master
-  #   paths:
-  #     - 'app/**'
-  #   types: [closed]
-
-  # workflow_dispatch:
+  workflow_run:
+    workflows: ["Infra Base"]
+    types: [completed]
+    repositories:
+      - 11soat-f3-lanches-caieiras/lncr-iac
 
 env:
   #variáveis
@@ -141,7 +134,6 @@ jobs:
 
       - name: Deploy com Helm
         run: |
-          set -x
           COMMIT_HASH="$(git rev-parse --short HEAD)"
           ECR_REGISTRY="550939688996.dkr.ecr.us-east-1.amazonaws.com"
           
@@ -167,7 +159,7 @@ jobs:
             --set secrets.mercadopagoPosId="${{ env.MERCADOPAGO_POS_ID }}" \
             --set secrets.postgresUrl="${{ env.POSTGRES_URL }}" \
             --set secrets.postgresUser="${{ env.POSTGRES_USER }}" \
-            --set secrets.postgresPassword="${{ env.POSTGRES_PASSWORD }}" \
+            --set secrets.postgresPassword="${{ env.POSTGRES_PASSWORD }}" \ 
             --set app.name=lncr-app \
             --namespace fiap --create-namespace \
             --force
