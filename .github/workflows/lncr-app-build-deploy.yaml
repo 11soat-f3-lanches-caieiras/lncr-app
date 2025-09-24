@@ -5,6 +5,10 @@ on:
     types: [completed]
     repositories:
       - 11soat-f3-lanches-caieiras/lncr-iac
+    branches:
+      - develop
+      - master
+
 
 env:
   #variáveis
