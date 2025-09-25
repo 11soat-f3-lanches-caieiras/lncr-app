@@ -1,13 +1,15 @@
 name: Construir e Upload da Aplicação lncr-app
 on:
-  workflow_run:
-    workflows: ["Infra Base"]
-    types: [completed]
-    repositories:
-      - "11soat-f3-lanches-caieiras/lncr-iac"
-    branches:
-      - develop
-      - master
+  repository_dispatch:
+    types: [infra-base-completed]
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      branch:
+        description: 'Branch to deploy'
+        required: false
+        default: 'develop'
+        type: string
 
 
 env:
@@ -42,7 +44,7 @@ jobs:
   build-and-upload:
     name: Construir e Fazer Upload da Imagem Docker para ECR
     runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
-    if: github.event.workflow_run.conclusion == 'success'
+    # Disparado via repository_dispatch do repositório lncr-iac
     #if: github.event.pull_request.merged == true || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     environment:
       name: ${{ github.ref_name == 'master' && 'prd' || 'dev' }}
