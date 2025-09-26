@@ -166,7 +166,7 @@ jobs:
             --set secrets.mercadopagoPosId="${{ env.MERCADOPAGO_POS_ID }}" \
             --set secrets.postgresUrl="${{ env.POSTGRES_URL }}" \
             --set secrets.postgresUser="${{ env.POSTGRES_USER }}" \
-            --set secrets.postgresPassword="${{ env.POSTGRES_PASSWORD }}" \ 
+            --set secrets.postgresPassword="${{ env.POSTGRES_PASSWORD }}" \
             --set app.name=lncr-app \
             --namespace fiap --create-namespace \
             --force
