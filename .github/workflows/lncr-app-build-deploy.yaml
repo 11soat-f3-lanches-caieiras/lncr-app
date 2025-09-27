@@ -148,7 +148,8 @@ jobs:
         run: |
           COMMIT_HASH="$(git rev-parse --short HEAD)"
           ECR_REGISTRY="550939688996.dkr.ecr.us-east-1.amazonaws.com"
-          SUBNETS="${{ env.EKS_SUBNETS }}"
+          
+           printf -v SUBNET_ARG -- '--set-string service.nlb.subnets=%s' "${{ env.EKS_SUBNETS }}"
           
           helm upgrade --install lncr-app ./iac/kubernetes \
             --set app.image.repository="$ECR_REGISTRY"/${{ env.ECR_REPOSITORY }} \
@@ -160,7 +161,7 @@ jobs:
             --set app.mercadopago.secretId="${{ env.MERCADOPAGO_SECRET_ID }}" \
             --set app.mercadopago.clientId="${{ env.MERCADOPAGO_CLIENT_ID }}" \
             --set app.mercadopago.posId="${{ env.MERCADOPAGO_POS_ID }}" \
-            --set-string service.nlb.subnets="$SUBNETS" \
+            $SUBNET_ARG \
             --set secrets.oauthAdminClientId="${{ env.LNCR_OAUTH_ADMIN_CLIENT_ID }}"\
             --set secrets.oauthAdminClientSecret="${{ env.LNCR_OAUTH_ADMIN_CLIENT_SECRET }}" \
             --set secrets.oauthMonitorClientId="${{ env.LNCR_OAUTH_MONITOR_CLIENT_ID }}" \
