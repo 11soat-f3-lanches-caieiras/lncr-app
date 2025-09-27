@@ -6,9 +6,6 @@ metadata:
     app: {{ .Values.app.name }}
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
-    service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: "true"
-    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: "nlb-log-teste-lncrr"
-    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: "nlb-logs"
 spec:
   type: LoadBalancer
   ports:
