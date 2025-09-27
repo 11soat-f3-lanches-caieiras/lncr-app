@@ -13,10 +13,11 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-subnets: {{ .Values.service.nlb.subnets | replace "--" "," }}
 spec:
   type: LoadBalancer
+  loadBalancerClass: {{ .Values.service.nlb.loadBalancerClass }}
   ports:
-    - port: 8080
-      targetPort: 8080
-      protocol: TCP
-      name: http
+    - port: {{ .Values.service.nlb.port }}
+      targetPort: {{ .Values.service.nlb.targetPort }}
+      protocol: {{ .Values.service.nlb.protocol }}
+      name: {{ .Values.service.nlb.name }}
   selector:
     app: {{ .Values.app.name }}

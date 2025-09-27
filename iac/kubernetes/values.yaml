@@ -21,10 +21,11 @@ app:
 service:
   nlb:
     type: LoadBalancer
+    loadBalancerClass: service.k8s.aws/nlb
     port: 80
     targetPort: 8080
     protocol: TCP
-    name: lncr-nlb
+    name: http
     subnets: ${EKS_SUBNETS}
 
 
