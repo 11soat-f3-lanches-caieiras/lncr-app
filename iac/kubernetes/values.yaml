@@ -21,10 +21,10 @@ app:
 service:
   nlb:
     type: LoadBalancer
-    port: 8080
+    port: 80
     targetPort: 8080
     protocol: TCP
-    name: http
+    name: lncr-nlb
     subnets: ${EKS_SUBNETS}
 
 
