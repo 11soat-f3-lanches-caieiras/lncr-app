@@ -29,7 +29,7 @@ service:
 #Storage
 storage:
   fsx:
-    server: "10.1.43.189" 
+    server: "10.1.36.90" 
     path: "/fsx"  
 
 
