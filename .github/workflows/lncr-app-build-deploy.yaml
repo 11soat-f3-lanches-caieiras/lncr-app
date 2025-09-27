@@ -141,7 +141,7 @@ jobs:
 
       - name: Obter subredes do EKS
         run: |
-          EKS_SUBNETS=$(aws eks describe-cluster --name ${{ vars.EKS_CLUSTER }} --query 'cluster.resourcesVpcConfig.subnetIds' --output text | tr '\t' ',')
+          EKS_SUBNETS=$(aws eks describe-cluster --name ${{ vars.EKS_CLUSTER }} --query 'cluster.resourcesVpcConfig.subnetIds' --output text | sed 's/\t/--/g')
           echo "EKS_SUBNETS=$EKS_SUBNETS" >> $GITHUB_ENV
 
       - name: Deploy com Helm
