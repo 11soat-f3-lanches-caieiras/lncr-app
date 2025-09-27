@@ -9,6 +9,8 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: "true"
     service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: "nlb-log-teste-lncrr"
     service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: "nlb-logs"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internal"
+    service.beta.kubernetes.io/aws-load-balancer-subnets: {{ .Values.service.nlb.subnets }}
 spec:
   type: LoadBalancer
   ports:

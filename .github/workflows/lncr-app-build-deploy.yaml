@@ -139,6 +139,11 @@ jobs:
         run: |
           aws eks update-kubeconfig --region ${{ vars.AWS_DEFAULT_REGION }} --name ${{ vars.EKS_CLUSTER }}
 
+      - name: Obter subredes do EKS
+        run: |
+          EKS_SUBNETS=$(aws eks --name ${{ vars.EKS_CLUSTER }} --query 'cluster.resourcesVpcConfig.subnetIds' --output text | tr '\t' ',')
+          echo "EKS_SUBNETS=$EKS_SUBNETS" >> $GITHUB_ENV
+
       - name: Deploy com Helm
         run: |
           COMMIT_HASH="$(git rev-parse --short HEAD)"
@@ -154,6 +159,7 @@ jobs:
             --set app.mercadopago.secretId="${{ env.MERCADOPAGO_SECRET_ID }}" \
             --set app.mercadopago.clientId="${{ env.MERCADOPAGO_CLIENT_ID }}" \
             --set app.mercadopago.posId="${{ env.MERCADOPAGO_POS_ID }}" \
+            --set service.nlb.subnets="${{ env.EKS_SUBNETS }}" \
             --set secrets.oauthAdminClientId="${{ env.LNCR_OAUTH_ADMIN_CLIENT_ID }}"\
             --set secrets.oauthAdminClientSecret="${{ env.LNCR_OAUTH_ADMIN_CLIENT_SECRET }}" \
             --set secrets.oauthMonitorClientId="${{ env.LNCR_OAUTH_MONITOR_CLIENT_ID }}" \

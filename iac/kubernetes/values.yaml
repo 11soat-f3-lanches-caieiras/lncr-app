@@ -19,12 +19,14 @@ app:
     posId: ${MERCADOPAGO_POS_ID}
 
 service:
-  lb:
+  nlb:
     type: LoadBalancer
     port: 8080
     targetPort: 8080
     protocol: TCP
     name: http
+    subnets: ${EKS_SUBNETS}
+
 
 #Storage
 storage:
