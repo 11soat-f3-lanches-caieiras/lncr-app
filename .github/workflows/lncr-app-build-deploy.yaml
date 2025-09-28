@@ -147,7 +147,7 @@ jobs:
       - name: Deploy com Helm
         run: |
           COMMIT_HASH="$(git rev-parse --short HEAD)"
-          ECR_REGISTRY="550939688996.dkr.ecr.us-east-1.amazonaws.com"
+          ECR_REGISTRY="080145351546.dkr.ecr.us-east-1.amazonaws.com"
           
            printf -v SUBNET_ARG -- '--set-string service.nlb.subnets=%s' "${{ env.EKS_SUBNETS }}"
           
