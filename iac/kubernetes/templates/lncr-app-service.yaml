@@ -6,14 +6,9 @@ metadata:
     app: {{ .Values.app.name }}
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
-    service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: "true"
-    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: "nlb-log-teste-lncrr"
-    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: "nlb-logs"
-    service.beta.kubernetes.io/aws-load-balancer-scheme: "internal"
-    service.beta.kubernetes.io/aws-load-balancer-subnets: {{ .Values.service.nlb.subnets | replace "--" "," }}
 spec:
   type: LoadBalancer
-  loadBalancerClass: {{ .Values.service.nlb.loadBalancerClass }}
+  #loadBalancerClass: {{ .Values.service.nlb.loadBalancerClass }}
   ports:
     - port: {{ .Values.service.nlb.port }}
       targetPort: {{ .Values.service.nlb.targetPort }}
