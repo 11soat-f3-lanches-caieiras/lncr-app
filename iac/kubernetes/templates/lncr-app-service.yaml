@@ -9,13 +9,6 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: "false"
     service.beta.kubernetes.io/aws-load-balancer-scheme: "internal"
     service.beta.kubernetes.io/aws-load-balancer-subnets: {{ .Values.service.nlb.subnets | replace "--" "," }}
-    service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "TCP"
-    service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "{{ .Values.service.nlb.targetPort }}"
-    service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval-seconds: "30"
-    service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout-seconds: "6"
-    service.beta.kubernetes.io/aws-load-balancer-healthy-threshold-count: "2"
-    service.beta.kubernetes.io/aws-load-balancer-unhealthy-threshold-count: "2"
-spec:
   type: LoadBalancer
   loadBalancerClass: {{ .Values.service.nlb.loadBalancerClass }}
   ports:
