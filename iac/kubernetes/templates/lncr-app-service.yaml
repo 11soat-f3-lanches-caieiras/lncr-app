@@ -11,6 +11,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-subnets: {{ .Values.service.nlb.subnets | replace "--" "," }}
 spec:
   type: LoadBalancer
+  loadBalancerClass: {{ .Values.service.nlb.loadBalancerClass }}
   ports:
     - port: {{ .Values.service.nlb.port }}
       targetPort: {{ .Values.service.nlb.targetPort }}
