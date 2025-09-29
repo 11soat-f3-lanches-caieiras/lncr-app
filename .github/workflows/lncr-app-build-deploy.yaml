@@ -2,13 +2,9 @@ name: Construir e Upload da Aplicação lncr-app
 on:
   repository_dispatch:
     types: [infra-base-completed]
+
   workflow_dispatch:
-    inputs:
-        branch:
-          description: 'Branch to deploy'
-          required: false
-          default: 'develop'
-          type: string
+
   workflow_call:
     inputs:
       branch:
