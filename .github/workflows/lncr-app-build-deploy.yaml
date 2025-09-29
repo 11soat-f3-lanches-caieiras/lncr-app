@@ -4,6 +4,12 @@ on:
     types: [infra-base-completed]
 
   workflow_dispatch:
+    inputs:
+      only-helm-deploy:
+        description: 'Only Helm Deploy (skip build and upload)'
+        required: false
+        default: 'false'
+        type: boolean
 
   workflow_call:
     inputs:
