@@ -16,7 +16,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold: "3"
     service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold: "3"
     service.beta.kubernetes.io/aws-load-balancer-subnets: {{ .Values.service.nlb.subnets | replace "--" "," }}
-
+spec:
   type: LoadBalancer
   loadBalancerClass: {{ .Values.service.nlb.loadBalancerClass }}
   ports:
