@@ -20,6 +20,7 @@ env:
   LNCR_BASE_URL: ${{ vars.LNCR_BASE_URL }}
   MERCADOPAGO_OAUTH_URL: ${{ vars.MERCADOPAGO_OAUTH_URL }}
   MERCADOPAGO_ORDERS_URL: ${{ vars.MERCADOPAGO_ORDERS_URL }}
+  LNCR_EXTERNAL_URL: ${{ vars.LNCR_EXTERNAL_URL }}
 
   # secrets
   LNCR_MAVEN_ACTOR: ${{ secrets.LNCR_MAVEN_ACTOR }}
@@ -105,25 +106,25 @@ jobs:
           
           echo "Imagem enviada para ECR: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG,latest"
 
-#  approve:
-#    name: Manual Approval
-#    runs-on: ubuntu-latest
-#    needs: build-and-upload
-#    #if: github.ref == 'refs/heads/develop' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-#    steps:
-#      - name: Manual Approval
-#        uses: trstringer/manual-approval@v1
-#        with:
-#          secret: ${{ github.TOKEN }}
-#          approvers: gustavo-log,titoparizotto
-#          minimum-approvals: 1
-#          issue-title: "Deploy Infrastructure to Production"
-#          issue-body: "Please approve the deployment of infrastructure changes."
+  approve:
+    name: Manual Approval
+    runs-on: ubuntu-latest
+    needs: build-and-upload
+    #if: github.ref == 'refs/heads/develop' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    steps:
+      - name: Manual Approval
+        uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: gustavo-log,titoparizotto
+          minimum-approvals: 1
+          issue-title: "Deploy Infrastructure to Production"
+          issue-body: "Please approve the deployment of infrastructure changes."
 
   deploy:
     name: Deploy no Cluster Kubernetes
     runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
-    #needs: approve
+    needs: approve
     #if: github.ref == 'refs/heads/develop' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     environment:
       name: ${{ github.ref_name == 'master' && 'prd' || 'dev' }}
@@ -156,6 +157,7 @@ jobs:
             --set app.image.tag="$COMMIT_HASH" \
             --set app.containerName=lncr-app \
             --set app.baseUrl="${{ env.LNCR_BASE_URL }}" \
+            --set app.externalUrl="${{ env.LNCR_EXTERNAL_URL }}" \
             --set app.mercadopago.oauthUrl="${{ env.MERCADOPAGO_OAUTH_URL }}" \
             --set app.mercadopago.ordersUrl="${{ env.MERCADOPAGO_ORDERS_URL }}" \
             --set app.mercadopago.secretId="${{ env.MERCADOPAGO_SECRET_ID }}" \

@@ -11,6 +11,7 @@ app:
   port: 8080
   containerName: lncr-app
   baseUrl: ${LNCR_BASE_URL}
+  externalUrl: ${LNCR_EXTERNAL_URL}
   mercadopago:
     oauthUrl: ${MERCADOPAGO_OAUTH_URL}
     ordersUrl: ${MERCADOPAGO_ORDERS_URL}
