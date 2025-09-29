@@ -1,3 +1,4 @@
+[![Construir e Upload da Aplicação lncr-app](https://github.com/11soat-f3-lanches-caieiras/lncr-app/actions/workflows/lncr-app-build-deploy.yaml/badge.svg?branch=develop&event=repository_dispatch)](https://github.com/11soat-f3-lanches-caieiras/lncr-app/actions/workflows/lncr-app-build-deploy.yaml)
 # Lanches Caieiras
 
 ## Índice
