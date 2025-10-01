@@ -34,4 +34,9 @@ public class ResponseEntityModelUtil {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseListModel<>(body));
     }
+
+    public static <T> ResponseEntity<ResponseModel<T>>  badRequest(T body) {
+        return response(body, HttpStatus.BAD_REQUEST, null);
+    }
+
 }

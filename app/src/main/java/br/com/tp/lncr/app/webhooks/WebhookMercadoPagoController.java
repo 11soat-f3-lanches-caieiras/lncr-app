@@ -3,6 +3,7 @@ package br.com.tp.lncr.app.webhooks;
 import br.com.tp.lncr.app.commons.model.ResponseModel;
 import br.com.tp.lncr.app.commons.utils.ResponseEntityModelUtil;
 import br.com.tp.lncr.app.configs.IntegrationConfig;
+import br.com.tp.lncr.core.commons.utils.Logger;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -29,10 +30,22 @@ public class WebhookMercadoPagoController {
 
     @PostMapping("/payments/mercadoPago/callback")
     public ResponseEntity<ResponseModel<String>> paymentMercadoPagoCallback(
-                    @RequestParam(name = "data.external_reference") String externalReference,
-                    @RequestParam(name = "data.id") String dataId,
-                    @RequestParam(name = "type", defaultValue = "order") String type,
+                    @RequestParam(name = "data.external_reference", required = false) String externalReference,
+                    @RequestParam(name = "data.id",required = false) String dataId,
+                    @RequestParam(name = "type", defaultValue = "order", required = false) String type,
                     @RequestBody Map<String, Object> body) {
+
+        Logger.info("Received MercadoPago webhook:");
+        Logger.info("externalReference = "+ externalReference);
+        Logger.info("dataId = "+ dataId);
+        Logger.info("type =" + type);
+        Logger.info("body = " + body.toString());
+
+        if (externalReference == null || externalReference.isEmpty() || dataId == null || dataId.isEmpty()) {
+            Logger.error("Invalid request: missing required parameters.");
+            return ResponseEntityModelUtil.badRequest("Missing required parameters");
+        }
+
         CompletableFuture.runAsync(() -> {
             HttpEntity<Map<String, Object>> requestEntity = createHttpEntity(body);
             restTemplate.exchange(getUrl(externalReference,dataId,type), HttpMethod.PATCH, requestEntity, new ParameterizedTypeReference<ResponseModel<String>>() {});
