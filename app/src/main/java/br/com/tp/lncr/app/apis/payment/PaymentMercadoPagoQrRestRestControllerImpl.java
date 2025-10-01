@@ -44,14 +44,14 @@ public class PaymentMercadoPagoQrRestRestControllerImpl implements PaymentRestCo
     }
 
     @Override
-    @GetMapping("{customerOrderId}/customerOrder")
+    @GetMapping("/customerOrder/{customerOrderId}/get")
     public ResponseEntity<ResponseModel<PaymentMercadopagoQrDTO>> getPaymentByCustomerOrderId(@PathVariable(name = "customerOrderId")Integer customerOrderId) {
         PaymentMercadopagoQrDTO paymentMercadopagoQrDTO = this.paymentMercadoPagoQrController.getPaymentByCustomerOrderId(this.paymentMercadoPagoQrDataProxy,customerOrderId);
         return ResponseEntityModelUtil.OK(paymentMercadopagoQrDTO);
     }
 
     @Override
-    @PatchMapping("{customerOrderId}/cancel")
+    @PatchMapping("/customerOrder/{customerOrderId}/cancel")
     public ResponseEntity<ResponseModel<PaymentMercadopagoQrDTO>> cancelPaymentByCustomerOrderId(@PathVariable(name = "customerOrderId") Integer customerOrderId) {
         PaymentMercadopagoQrDTO paymentMercadopagoQrDTO = this.paymentMercadoPagoQrController.cancelPaymentByOrderId(this.paymentMercadoPagoQrDataProxy,customerOrderId);
         return ResponseEntityModelUtil.OK(paymentMercadopagoQrDTO);
