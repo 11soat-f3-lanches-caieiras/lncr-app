@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 @Table(name = "food_item_image",
         schema = "public",
         indexes = {
-                @Index(name = "food_item_image_id", columnList = "id"),
+                @Index(name = "food_item_image_id_idx", columnList = "id"),
                 @Index(name = "food_item_image_food_item_id_idx", columnList = "foodItemId")
         })
 @Entity
 public class JpaFoodItemImageEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "food_item_image_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_item_image_id_seq")
     @SequenceGenerator(name = "food_item_image_id_seq", sequenceName = "food_item_image_id_seq", allocationSize = 1)
     public Integer id;
     public Integer foodItemId;

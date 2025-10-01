@@ -11,7 +11,7 @@ import jakarta.persistence.*;
         })
 public class JpaKitchenOrderFoodItemEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "kitchen_order_food_item_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "kitchen_order_food_item_id_seq")
     @SequenceGenerator(name = "kitchen_order_food_item_id_seq", sequenceName = "kitchen_order_food_item_id_seq", allocationSize = 1)
     private Integer id;
     private Integer kitchenOrderId;

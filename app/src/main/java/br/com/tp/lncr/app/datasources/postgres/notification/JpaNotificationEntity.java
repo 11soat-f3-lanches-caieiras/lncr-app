@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class JpaNotificationEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "notifications_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notifications_id_seq")
     @SequenceGenerator(name = "notifications_id_seq", sequenceName = "notifications_id_seq", allocationSize = 1)
     private Integer id;
     private String notificationType;

@@ -12,7 +12,7 @@ import jakarta.persistence.*;
 @Entity
 public class JpaFoodItemEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "food_item_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_item_id_seq")
     @SequenceGenerator(name = "food_item_id_seq", sequenceName = "food_item_id_seq", allocationSize = 1)
     public Integer id;
     public String name;

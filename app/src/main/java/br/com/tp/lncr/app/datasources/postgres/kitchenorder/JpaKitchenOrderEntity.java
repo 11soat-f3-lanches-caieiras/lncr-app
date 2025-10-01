@@ -8,16 +8,17 @@ import java.util.List;
 @Entity
 @Table(name = "kitchen_order",
         schema = "public",
-        uniqueConstraints = @UniqueConstraint(name = "kichen_order_customer_order_id_uk", columnNames = "customerOrderId"),
+        uniqueConstraints = @UniqueConstraint(name = "kitchen_order_customer_order_id_uk", columnNames = "customerOrderId"),
         indexes = {
                 @Index(name = "kitchen_order_id_idx", columnList = "id"),
-                @Index(name = "kitchen_order_id_customer_order_id", columnList = "customerOrderId"),
-                @Index(name = "kitchen_order_id_status_id", columnList = "statusId")
+                @Index(name = "kitchen_order_customer_order_id_idx", columnList = "customerOrderId"),
+                @Index(name = "kitchen_order_status_id_idx", columnList = "statusId"),
+                @Index(name = "kitchen_order_created_idx", columnList = "created")
         })
 public class JpaKitchenOrderEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "kitchen_order_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "kitchen_order_id_seq")
     @SequenceGenerator(name = "kitchen_order_id_seq", sequenceName = "kitchen_order_id_seq", allocationSize = 1)
     private Integer id;
     private Integer customerOrderId;

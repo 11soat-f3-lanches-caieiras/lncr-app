@@ -9,12 +9,13 @@ import java.time.LocalDateTime;
         schema = "public",
         indexes = {
                 @Index(name = "customer_order_id_idx", columnList = "id"),
-                @Index(name = "customer_order_customerid_idx", columnList = "customerId"),
-                @Index(name = "customer_order_status_idx", columnList = "statusId")
+                @Index(name = "customer_order_customer_id_idx", columnList = "customerId"),
+                @Index(name = "customer_order_status_idx", columnList = "statusId"),
+                @Index(name = "customer_order_created_idx", columnList = "created")
         })
 public class JpaCustomerOrderEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "customer_order_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_order_id_seq")
     @SequenceGenerator(name = "customer_order_id_seq", sequenceName = "customer_order_id_seq", allocationSize = 1)
     private Integer id;
     private Double totalCost = 0.0;
