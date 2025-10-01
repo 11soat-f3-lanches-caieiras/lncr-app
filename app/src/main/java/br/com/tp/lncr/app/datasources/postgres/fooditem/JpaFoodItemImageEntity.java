@@ -1,17 +1,20 @@
 package br.com.tp.lncr.app.datasources.postgres.fooditem;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 @Component
-@Table(name = "food_item_image")
+@Table(name = "food_item_image",
+        schema = "public",
+        indexes = {
+                @Index(name = "food_item_image_id", columnList = "id"),
+                @Index(name = "food_item_image_food_item_id_idx", columnList = "foodItemId")
+        })
 @Entity
-
 public class JpaFoodItemImageEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "food_item_image_id_seq")
+    @SequenceGenerator(name = "food_item_image_id_seq", sequenceName = "food_item_image_id_seq", allocationSize = 1)
     public Integer id;
     public Integer foodItemId;
     public String fileName;

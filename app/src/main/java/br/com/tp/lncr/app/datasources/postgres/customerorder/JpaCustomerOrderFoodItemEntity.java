@@ -3,10 +3,16 @@ package br.com.tp.lncr.app.datasources.postgres.customerorder;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "customer_order_food_item")
+@Table(name = "customer_order_food_item",
+        schema = "public",
+        indexes = {
+                @Index(name = "customer_order_food_item_id_idx", columnList = "id"),
+                @Index(name = "customer_order_food_item_order_id_idx", columnList = "orderId")
+        })
 public class JpaCustomerOrderFoodItemEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "customer_order_food_item_id_seq")
+    @SequenceGenerator(name = "customer_order_food_item_id_seq", sequenceName = "customer_order_food_item_id_seq", allocationSize = 1)
     private Integer id;
     private Integer orderId;
     private Integer foodItemId;

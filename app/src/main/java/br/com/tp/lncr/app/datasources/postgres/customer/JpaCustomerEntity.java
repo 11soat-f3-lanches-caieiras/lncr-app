@@ -6,13 +6,19 @@ import jakarta.persistence.*;
 @Table(name = "customer",
         schema = "public",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "documentNumber"),
-                @UniqueConstraint(columnNames = "email")
+                @UniqueConstraint(name = "customer_document_number_uk", columnNames = "documentNumber"),
+                @UniqueConstraint(name = "customer_email_uk", columnNames = "email")
+        },
+        indexes = {
+                @Index(name = "customer_id_idx", columnList = "id"),
+                @Index(name = "customer_document_number_idx", columnList = "documentNumber"),
+                @Index(name = "customer_email_idx", columnList = "email")
         })
 @Entity
 public class JpaCustomerEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "customer_id_seq")
+    @SequenceGenerator(name = "customer_id_seq", sequenceName = "customer_id_seq", allocationSize = 1)
     Integer id;
     String documentNumber;
     String name;

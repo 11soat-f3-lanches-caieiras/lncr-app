@@ -6,13 +6,21 @@ import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "payment", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"orderId"})
-})
+@Table(name = "payment",
+        schema = "public",
+        uniqueConstraints = {
+            @UniqueConstraint(name = "payment_order_id_uk", columnNames = {"orderId"})
+        },
+        indexes = {
+            @Index(name = "payment_id_idx", columnList = "id"),
+            @Index(name = "payment_id_order_id", columnList = "orderId"),
+            @Index(name = "payment_id_status_id_idx", columnList = "statusId")
+        })
 public abstract class AbstractJpaPaymentEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "payment_id_seq")
+    @SequenceGenerator(name = "payment_id_seq", sequenceName = "payment_id_seq", allocationSize = 1)
     private Integer id;
     private Integer orderId;
     private Integer statusId;

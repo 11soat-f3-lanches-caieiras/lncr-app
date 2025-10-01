@@ -1,13 +1,16 @@
 package br.com.tp.lncr.app.datasources.postgres.payment.mercadopago;
 
 import br.com.tp.lncr.app.datasources.postgres.payment.AbstractJpaPaymentEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="payment_mercadopago")
+@Table(name="payment_mercadopago",
+        schema = "public",
+        indexes = {
+                @Index(name = "payment_meli_id_idx", columnList = "id")
+        })
 public class JpaMercadopagoQrEntity extends AbstractJpaPaymentEntity {
     private String meliId;
     private String qrData;

@@ -6,11 +6,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "kitchen_order", uniqueConstraints = @UniqueConstraint(columnNames = "customerOrderId"))
+@Table(name = "kitchen_order",
+        schema = "public",
+        uniqueConstraints = @UniqueConstraint(name = "kichen_order_customer_order_id_uk", columnNames = "customerOrderId"),
+        indexes = {
+                @Index(name = "kitchen_order_id_idx", columnList = "id"),
+                @Index(name = "kitchen_order_id_customer_order_id", columnList = "customerOrderId"),
+                @Index(name = "kitchen_order_id_status_id", columnList = "statusId")
+        })
 public class JpaKitchenOrderEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "kitchen_order_id_seq")
+    @SequenceGenerator(name = "kitchen_order_id_seq", sequenceName = "kitchen_order_id_seq", allocationSize = 1)
     private Integer id;
     private Integer customerOrderId;
     private Integer statusId;
