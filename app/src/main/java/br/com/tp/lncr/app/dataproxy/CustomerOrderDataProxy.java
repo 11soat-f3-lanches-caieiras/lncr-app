@@ -13,6 +13,7 @@ import br.com.tp.lncr.core.commons.dtos.kitchenorder.KitchenOrderDTO;
 import br.com.tp.lncr.core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 import br.com.tp.lncr.core.commons.interfaces.customerorder.CustomerOrderDatabase;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,16 +54,19 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
         this.jpaCustomerOrderMapper = jpaCustomerOrderMapper;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<CustomerOrderFoodItemDTO> findFoodItemsDetailsList(List<Integer> foodItemListIds) {
         return this.foodItemIntegration.getFoodItemDetailList(foodItemListIds);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<CustomerOrderCustomerDTO> findCustomerDetailsList(List<Integer> customerIdList) {
         return this.customerIntegration.getCustomerDetailsList(customerIdList);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public CustomerOrderCustomerDTO findCustomerDetails(Integer customerId) {
         return this.customerIntegration.getCustomerDetails(customerId);
@@ -89,6 +93,7 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
         this.notificationIntegration.sendNotification(notificationSource, artefactId, message);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public CustomerOrderDTO findCustomerOrderById(Integer customerOrderId, Boolean includFoodItems) {
         CustomerOrderDTO customerOrderDTO = this.jpaCustomerOrderRepositoryImpl.findById(customerOrderId,jpaCustomerOrderRepository,jpaCustomerOrderMapper);
@@ -97,6 +102,7 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
         return customerOrderDTO;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<CustomerOrderDTO> findCustomerOrderByStatusList(List<Integer> statusListIds, Boolean includeFoodItems) {
         List<CustomerOrderDTO> customerOrderDTOList = this.jpaCustomerOrderRepositoryImpl.findByStatusList(statusListIds,jpaCustomerOrderRepository,jpaCustomerOrderMapper);
@@ -122,16 +128,19 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
         this.paymentIntegration.cancelPaymentChargeByCustomerOrderId(customerOrderId);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public PaymentMercadopagoQrDTO findPaymentByCustomerOrderId(Integer id) {
         return this.paymentIntegration.getPaymentByCustomerOrderId(id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public KitchenOrderDTO findKitchenOrderByCustomerOrderId(Integer customerOrderId) {
         return this.kitchenOrderIntegration.getKitchenOrderByCustomerOrderId(customerOrderId);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void cancelKitchenOrderById(Integer kitchenOrderOrderId) {
         this.kitchenOrderIntegration.cancelKitchenOrderById(kitchenOrderOrderId);

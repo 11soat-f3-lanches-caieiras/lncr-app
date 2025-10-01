@@ -6,6 +6,7 @@ import br.com.tp.lncr.app.integrations.notifcation.NotificationIntegraionImpl;
 import br.com.tp.lncr.app.integrations.payment.mercadopago.MercadoPagoIntegrationImpl;
 import br.com.tp.lncr.core.commons.dtos.payment.PaymentMercadopagoQrDTO;
 import br.com.tp.lncr.core.commons.interfaces.payment.PaymentDatabase;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,11 +38,13 @@ public class PaymentMercadoPagoQrDataProxy implements PaymentDatabase<PaymentMer
         return paymentDTO;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<PaymentMercadopagoQrDTO> findByStatusList(List<Integer> paymentStatusIdList) {
         return this.jpaMercadoPagoQrPostgresDatabase.findByStatusList(paymentStatusIdList);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public PaymentMercadopagoQrDTO findPaymentByCustomerOrderId(Integer customerOrderId) {
         return Optional.ofNullable(this.jpaMercadoPagoQrPostgresDatabase.findByCustomerOrderId(customerOrderId))
@@ -49,6 +52,7 @@ public class PaymentMercadoPagoQrDataProxy implements PaymentDatabase<PaymentMer
                 .map(paymentMercadopagoQrDTO -> paymentMercadopagoQrDTO).orElse(null);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public PaymentMercadopagoQrDTO findPaymentById(Integer paymentId) {
         return this.jpaMercadoPagoQrPostgresDatabase.findById(paymentId);
