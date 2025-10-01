@@ -5,6 +5,7 @@ import br.com.tp.lncr.app.datasources.storage.FoodItemImageStorageImpl;
 import br.com.tp.lncr.core.commons.dtos.fooditem.FoodItemDTO;
 import br.com.tp.lncr.core.commons.dtos.fooditem.FoodItemImageDTO;
 import br.com.tp.lncr.core.commons.interfaces.fooditem.FoodItemDatabase;
+import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,7 @@ public class FoodItemDataProxy implements FoodItemDatabase {
         this.jpaFoodItemMapper = jpaFoodItemMapper;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public boolean existsByName(String foodItemName) {
         return jpaFoodItemRepositoryImpl.existsByName(foodItemName, jpaFoodItemRepository,jpaFoodItemMapper);
@@ -56,7 +58,7 @@ public class FoodItemDataProxy implements FoodItemDatabase {
         }
         return savedFoodItemDTO;
     }
-
+    @Transactional(readOnly = true)
     @Override
     public List<FoodItemDTO> findAllFoodItems(Integer _limit, Integer categoryId, Boolean includeImages) {
         List<FoodItemDTO> foodItemsDTOList;
@@ -80,6 +82,7 @@ public class FoodItemDataProxy implements FoodItemDatabase {
         return foodItemsDTOList;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public FoodItemDTO findFoodItemById(Integer foodItemId, Boolean includeImages) {
         FoodItemDTO foodItemDTO = this.jpaFoodItemRepositoryImpl.findById(foodItemId,jpaFoodItemRepository,jpaFoodItemMapper);
@@ -90,11 +93,13 @@ public class FoodItemDataProxy implements FoodItemDatabase {
         return foodItemDTO;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<FoodItemDTO> findFoodItemByIdList(List<Integer> foodItemIds) {
         return this.jpaFoodItemRepositoryImpl.findByIdList(foodItemIds, jpaFoodItemRepository, jpaFoodItemMapper);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public FoodItemImageDTO findFoodItemImageById(Integer foodItemImageId) {
         FoodItemImageDTO foodItemImageDTO =  jpaFoodItemImageRepositoryImpl.findById(foodItemImageId,jpaFoodItemImageRepository,jpaFoodItemMapper);
@@ -106,6 +111,7 @@ public class FoodItemDataProxy implements FoodItemDatabase {
         return foodItemImageDTO;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<FoodItemImageDTO> findAllFoodItemImagesByFoodItemId(Integer foodItemId, Boolean includeData) {
         List<FoodItemImageDTO> foodItemImageDTOList = jpaFoodItemImageRepositoryImpl.findAllByFoodItemId(foodItemId, jpaFoodItemImageRepository, jpaFoodItemMapper);

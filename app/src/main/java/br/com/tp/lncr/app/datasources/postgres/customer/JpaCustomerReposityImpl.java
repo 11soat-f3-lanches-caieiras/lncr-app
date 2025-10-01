@@ -4,6 +4,7 @@ import br.com.tp.lncr.core.commons.dtos.customer.CustomerDTO;
 import br.com.tp.lncr.core.commons.interfaces.customer.CustomerDatabase;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +26,14 @@ public class JpaCustomerReposityImpl implements CustomerDatabase {
         return jpaCustomerMapper.jpaCustomerToDTO(jpaCustomerEntity);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<CustomerDTO> findById(Integer id) {
         return this.jpaCustomerRepository.findById(id)
                 .map(jpaCustomerMapper::jpaCustomerToDTO);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<CustomerDTO> findAll(Integer _limit) {
         return jpaCustomerRepository.findAll(Pageable.ofSize(_limit))
@@ -39,6 +42,8 @@ public class JpaCustomerReposityImpl implements CustomerDatabase {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    @Override
     public Optional<CustomerDTO> findByDocumentNumber(String documentNumber) {
         return this.jpaCustomerRepository.findByDocumentNumber(documentNumber)
                 .map(jpaCustomerMapper::jpaCustomerToDTO);
@@ -49,6 +54,7 @@ public class JpaCustomerReposityImpl implements CustomerDatabase {
         this.jpaCustomerRepository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<CustomerDTO> findByIdList(List<Integer> customerIdList) {
         List<JpaCustomerEntity> jpaCustomerList = this.jpaCustomerRepository.findByCustomerIdList(customerIdList);
@@ -56,10 +62,14 @@ public class JpaCustomerReposityImpl implements CustomerDatabase {
 
     }
 
+    @Transactional(readOnly = true)
+    @Override
     public boolean existsByDocumentNumber(String documentNumber) {
         return this.jpaCustomerRepository.existsByDocumentNumber(documentNumber);
     }
 
+    @Transactional(readOnly = true)
+    @Override
     public boolean existsByEmail(String email) {
         return this.jpaCustomerRepository.existsByEmail(email);
     }
