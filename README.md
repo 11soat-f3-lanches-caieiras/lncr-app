@@ -7,10 +7,9 @@
 
 - [Descrição](#descrição)
 - [Requisitos](#requisitos)
-- [Instalação e Execução](#instalação-e-execução)
-- [Demonstração](#demonstração)
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Arquitetura do Projeto](#arquitetura-do-projeto)
+- 
     - [1. Arquitetura de Infraestrutura em Kubernetes](#1-arquitetura-de-infraestrutura-kubernetes)
     - [2. Arquitetura da Aplicação - Clean Architecture](#2-arquitetura-da-aplicação---clean-architecture)
     - [3. Arquitetura Funcional](#3-arquitetura-funcional)
@@ -30,50 +29,12 @@
 
 ## Descrição
 
-Sistema para gerenciamento de pedidos de uma lanchonete, desenvolvido no Tech Challange - Fase 2 da pós-graduação FIAP 11SOAT.
+Sistema para gerenciamento de pedidos de uma lanchonete, desenvolvido no Tech Challange - Fase 3 da pós-graduação FIAP 11SOAT para ambiente Cloud AWS.
 
 Este projeto tem como objetivo simular o funcionamento de uma lanchonete, permitindo o cadastro clientes, items de alimentação, pedidos de clientes, pagamentos e notificações 
 Foram aplicados os conceintos de Clean Archtecture e infraesturura em Kubernetes, utilizando Docker para containerização e Postgres como banco de dados.
 
-
-## Requisitos
-
-- Docker 
-- Docker Desktop ou outro gerenciador de Cluster Kubernetes 
-- Kubectl (para interagir com o cluster Kubernetes)
-- Helm
-- Postman (opcional, para testes de API)
-
-## Instalação e Execução
-
-1. Clone este repositório:
-   ```bash
-   git clone https://github.com/titoparizotto/11soat-f2-lanchonete-caieiras.git
-   ```
-
-2. Crie um arquivo `.env` na raiz do repositório com o seguinte modelo:
-   ```env
-   POSTGRES_URL=jdbc:postgresql://localhost:5432/postgres
-   POSTGRES_DB=postgres
-   POSTGRES_USER= {{ seu usuario }}
-   POSTGRES_PASSWORD= {{sua senha }}
-   LNCR_BASE_URL=http://localhost:8080
-   MERCADOPAGO_ORDERS_URL=https://api.mercadopago.com/v1/orders
-   MERCADOPAGO_OAUTH_URL=https://api.mercadopago.com/oauth/token
-   MERCADOPAGO_CLIENT_ID= {{ seu client_id Mercado Pago }}
-   MERCADOPAGO_SECRET_ID= {{ seu secret_id do Mercado Pago}}
-   MERCADOPAGO_POS_ID= {{ seu pos_id do Mercado Pago }}
-   ```
-
-3. Execute o script para aprovisionar a infraestrutura kubernetes e iniciar aplicação e banco de dados
-```bash
-  run.sh
-```
-
-## Demonstração
-
-Acesse o vídeo de demonstração:
-[Fase 2 - Tech Challange - 11 SOAT](https://www.youtube.com/watch?v=LjR9S2n_6DQ)
+Participantes: Gustavo Silva (361477) e Tito Parizotto (361184) 
 
 # Estrutura do Projeto
 ## Arquitetura do Projeto
@@ -84,13 +45,13 @@ Acesse o vídeo de demonstração:
 │                                CLUSTER KUBERNETES                                   │
 ├─────────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                     │
-│  ┌──────────────────────┐                    ┌──────────────────────┐               │
-│  │    LOAD BALANCER     │◄───────────────────┤   EXTERNAL TRAFFIC   │               │
-│  │    (Service)         │                    │    (Port 8080)       │               │
-│  │                      │                    └──────────────────────┘               │
-│  └──────────┬───────────┘                                                           │
-│             │                                                                       │
-│             ▼                                                                       │
+│                            ┌──────────────────────┐                                 │
+│                            │  AWS LOAD BALANCER   │                                 │
+│                            │    (Service)         │                                 │
+│                            │                      │                                 │
+│                            └──────────┬───────────┘                                 │
+│                                       │                                             │
+│                                       ▼                                             │
 │  ┌──────────────────────────────────────────────────────────────────────────────┐   │
 │  │                        LNCR-APP DEPLOYMENT                                   │   │
 │  │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐               │   │
@@ -102,35 +63,15 @@ Acesse o vídeo de demonstração:
 │  │  │ └─────────────┘ │  │ └─────────────┘ │  │ └─────────────┘ │               │   │
 │  │  └─────────────────┘  └─────────────────┘  └─────────────────┘               │   │
 │  └──────────────────────────────────────────────────────────────────────────────┘   │
-│             │                                                                       │
-│             │ (Internal Communication)                                              │
-│             ▼                                                                       │
-│  ┌──────────────────────────────────────────────────────────────────────────────┐   │
-│  │                      LNCR-DB SERVICE (ClusterIP)                             │   │
-│  │                            Port: 5432                                        │   │
-│  └─────────────────────────────┬────────────────────────────────────────────────┘   │
-│                                │                                                    │
-│                                ▼                                                    │
-│  ┌──────────────────────────────────────────────────────────────────────────────┐   │
-│  │                        LNCR-DB DEPLOYMENT                                    │   │
-│  │  ┌─────────────────────────────────────────────────────────────────────────┐ │   │
-│  │  │                      POSTGRES POD                                       │ │   │
-│  │  │ ┌─────────────────────────────────────────────────────────────────────┐ │ │   │
-│  │  │ │                PostgreSQL 15.7                                      │ │ │   │
-│  │  │ │                Port: 5432                                           │ │ │   │
-│  │  │ │            (Single Replica - Recreate Strategy)                     │ │ │   │
-│  │  │ └─────────────────────────────────────────────────────────────────────┘ │ │   │
-│  │  └─────────────────────────────────────────────────────────────────────────┘ │   │
-│  └──────────────────────────────────────────────────────────────────────────────┘   │
 │                                │                                                    │
 │                                ▼                                                    │
 │  ┌──────────────────────────────────────────────────────────────────────────────┐   │
 │  │                         PERSISTENT VOLUMES                                   │   │
-│  │  ┌────────────────────┐              ┌────────────────────┐                  │   │
-│  │  │   DB STORAGE       │              │  IMAGES STORAGE    │                  │   │
-│  │  │  (Host Path)       │              │   (10Gi Volume)    │                  │   │
-│  │  │ /var/lib/postgres  │              │   /app/images      │                  │   │
-│  │  └────────────────────┘              └────────────────────┘                  │   │
+│  │                         ┌────────────────────┐                               │   │
+│  │                         │  IMAGES STORAGE    │                               │   │
+│  │                         │   (10Gi Volume)    │                               │   │
+│  │                         │   /app/images      │                               │   │
+│  │                         └────────────────────┘                               │   │
 │  └──────────────────────────────────────────────────────────────────────────────┘   │
 │                                                                                     │
 │  ┌──────────────────────────────────────────────────────────────────────────────┐   │
@@ -160,6 +101,13 @@ Componentes principais:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────────┐
+│ ┌─────────────────────────────────────────────────────────────────────────────────┐ │
+│ │                                  SECURITY LAYER                                 │ │
+│ │                                AWS LAMBDA FUNCTION                              │ │
+│ │                             lncr-prd-custom-authorizer                          │ │
+│ └─────────────────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────────────┐
 │                              LANCHES CAIEIRAS - CLEAN ARCHITECTURE                  │
 ├─────────────────────────────────────────────────────────────────────────────────────┤
 │ ┌─────────────────────────────────────────────────────────────────────────────────┐ │
@@ -176,6 +124,7 @@ Componentes principais:
 │ │ │  │ • KitchenOrder   │  │                  │  │ • KitchenOrder   │           │ │ │
 │ │ │  │ • Payment        │  │                  │  │ • Payment        │           │ │ │
 │ │ │  │ • Notification   │  │                  │  │ • Notification   │           │ │ │
+│ │ │  │ • OauthToken     │  │                  │  │ • OauthToken     │           │ │ │
 │ │ │  └──────────────────┘  └──────────────────┘  └──────────────────┘           │ │ │
 │ │ └─────────────────────────────────────────────────────────────────────────────┘ │ │
 │ │                                    │                                            │ │
@@ -198,6 +147,7 @@ Componentes principais:
 │                                    │                                                │
 │ ┌─────────────────────────────────────────────────────────────────────────────────┐ │
 │ │                            MÓDULO CORE (Regras de Negócio)                      │ │
+│ │                       Github Package -br.com.tp.lncr.core 2.0                   │ │
 │ │ ┌─────────────────────────────────────────────────────────────────────────────┐ │ │
 │ │ │                              ADAPTERS LAYER                                 │ │ │
 │ │ │                                                                             │ │ │
@@ -340,13 +290,13 @@ O contrato da API está disponível no arquivo `lanches-caieiras-api-v2.yaml` no
 Para visualizar e interagir com a documentação da API, siga os passos:
 
 1. Acesse o [Swagger Editor](https://editor.swagger.io/).
-2. Clique em "File" > "Import File" e selecione o arquivo `lanches-caieiras-api-v2.yamll` deste repositório.
+2. Clique em "File" > "Import File" e selecione o arquivo `lanches-caieiras-api-v2.yaml` deste repositório.
 
 Assim, você poderá visualizar e testar o contrato da API de forma interativa.
 
 ## Testes via Postman
 Para testar a API, você pode usar o Postman. O arquivo de coleção do Postman está disponível no diretório `/docs/api/`.
-1. Importe o arquivo `lanches-caieiras-f2-collection.json` no Postman.
+1. Importe o arquivo `lanches-caieiras-f3-collection.json` no Postman.
 2. Certifique-se de que o servidor esteja rodando.
 3. A collection está organizada por Domínios:
     - Cliente
@@ -356,6 +306,8 @@ Para testar a API, você pode usar o Postman. O arquivo de coleção do Postman 
     - Ordem de Preparo
     - Notificações
 4. Execute as requisições na seguinte ordem
+   - Solicitação de Token para os escopos admin, totem, monitor, já configurado na collection.
+     - Para o escopo customer o client_id e secret_id do cliente com cpf e e-mail respectivamente.
    - Criação de Clientes
    - Criação de Items de Alimentação
    - Criar Pedido do Cliente

@@ -695,7 +695,7 @@ paths:
           $ref: "#/components/responses/BadRequest"
         '500':
           $ref: "#/components/responses/InternalServerError"
-  '/payments/mercadoPago/{customerOrderId}/get':
+  '/payments/mercadoPago/customerOrder/{customerOrderId}/get':
     get:
       operationId: getPaymentByCustomerOrderId
       description: Buscar pagamento/cobrança pelo id do pedido do cleinte
@@ -716,7 +716,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  '/payments/mercadoPago/{customerOrderId}/cancel':
+  '/payments/mercadoPago/customerOrder/{customerOrderId}/cancel':
     patch:
       operationId: cancelPaymentByCustomerOrderId
       description: Cancela pagamento/cobrança pelo id do pedido do cleinte
