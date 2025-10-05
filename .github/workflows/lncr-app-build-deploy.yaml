@@ -143,8 +143,8 @@ jobs:
   deploy:
     name: Deploy no Cluster Kubernetes
     runs-on: codebuild-github-lncr-app-${{ github.run_id }}-${{ github.run_attempt }}
-    needs: [approve-after-build, approve-helm-only]
-    if: ${{ always() && (needs.approve-after-build.result == 'success' || needs.approve-helm-only.result == 'success') }}
+    #needs: [approve-after-build, approve-helm-only]
+    #if: ${{ always() && (needs.approve-after-build.result == 'success' || needs.approve-helm-only.result == 'success') }}
     environment:
       name: ${{ github.ref_name == 'master' && 'prd' || 'dev' }}
     steps:
