@@ -5,11 +5,16 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "notifications")
+@Table(name = "notifications",
+        schema = "public",
+        indexes = {
+                @Index(name = "notifications_type_idx", columnList = "notificationType")
+        })
 public class JpaNotificationEntity {
 
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notifications_id_seq")
+    @SequenceGenerator(name = "notifications_id_seq", sequenceName = "notifications_id_seq", allocationSize = 1)
     private Integer id;
     private String notificationType;
     private Integer artefactId;

@@ -2,11 +2,18 @@ package br.com.tp.lncr.app.datasources.postgres.fooditem;
 
 import jakarta.persistence.*;
 
-@Table(name = "food_item", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(name = "food_item",
+        schema = "public",
+        uniqueConstraints = @UniqueConstraint(name = "food_item_name_uk", columnNames = "name"),
+        indexes = {
+                @Index(name = "food_item_id_idx", columnList = "id"),
+                @Index(name = "food_item_category_idx", columnList = "categoryId")
+        })
 @Entity
 public class JpaFoodItemEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_item_id_seq")
+    @SequenceGenerator(name = "food_item_id_seq", sequenceName = "food_item_id_seq", allocationSize = 1)
     public Integer id;
     public String name;
     public String description;

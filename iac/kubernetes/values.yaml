@@ -11,6 +11,7 @@ app:
   port: 8080
   containerName: lncr-app
   baseUrl: ${LNCR_BASE_URL}
+  externalUrl: ${LNCR_EXTERNAL_URL}
   mercadopago:
     oauthUrl: ${MERCADOPAGO_OAUTH_URL}
     ordersUrl: ${MERCADOPAGO_ORDERS_URL}
@@ -19,21 +20,22 @@ app:
     posId: ${MERCADOPAGO_POS_ID}
 
 service:
-  lb:
+  nlb:
     type: LoadBalancer
-    port: 8080
+    loadBalancerClass: service.k8s.aws/nlb
+    port: 80
     targetPort: 8080
     protocol: TCP
     name: http
+    subnets: ${EKS_SUBNETS}
+
 
 #Storage
 storage:
-  images:
-    size: "10Gi"
-    mountPath: "/app/images"
-    hostPath: "${PWD}/images"
-    # storageClass: "standard"  # Comentado para usar o storageClass padrão do cluster
-    accessMode: "ReadWriteOnce"
+  fsx:
+    server: "10.1.39.161" 
+    path: "/fsx"  
+
 
 #Deployment
 resources:

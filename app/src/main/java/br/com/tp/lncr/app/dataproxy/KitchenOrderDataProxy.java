@@ -7,6 +7,7 @@ import br.com.tp.lncr.core.commons.dtos.kitchenorder.KitchenOrderDTO;
 import br.com.tp.lncr.core.commons.dtos.kitchenorder.KitchenOrderFoodItemDTO;
 import br.com.tp.lncr.core.commons.interfaces.kitchenorder.KitchenOrderDatabase;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class KitchenOrderDataProxy implements KitchenOrderDatabase {
         return kitchenOrderDto;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public KitchenOrderDTO findByCustomerOrderId(Integer customerOrderId, Boolean includeFoodItems) {
         KitchenOrderDTO kitchenOrderDto = this.jpaKitchenOrderRepositoryImpl.findByCustomerOrderId(customerOrderId, jpaKitchenOrderRepository, jpaKitchenOrderMapper);
@@ -58,6 +60,7 @@ public class KitchenOrderDataProxy implements KitchenOrderDatabase {
         return kitchenOrderDto;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<KitchenOrderDTO> findByStatusList(List<Integer> statusIdsList, Boolean includeFoodItems) {
         List<KitchenOrderDTO> kitchenOrderDTOList = this.jpaKitchenOrderRepositoryImpl.findByStatusId(statusIdsList,jpaKitchenOrderRepository,jpaKitchenOrderMapper);
@@ -65,6 +68,7 @@ public class KitchenOrderDataProxy implements KitchenOrderDatabase {
         return kitchenOrderDTOList;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<KitchenOrderFoodItemDTO> findByKitchenOrderId(Integer kitchenOrderId) {
         return this.jpaKitchenOrderFoodItemRepositoryImpl.findByKitchenOrderId(kitchenOrderId,jpaKitchenOrderFoodItemRepository,jpaKitchenOrderMapper);
@@ -76,6 +80,7 @@ public class KitchenOrderDataProxy implements KitchenOrderDatabase {
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public KitchenOrderDTO save(KitchenOrderDTO kitchenOrderDto) {
         kitchenOrderDto = this.jpaKitchenOrderRepositoryImpl.save(kitchenOrderDto, jpaKitchenOrderRepository, jpaKitchenOrderMapper);
